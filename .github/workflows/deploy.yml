@@ -1,0 +1,31 @@
+---
+name: Deployment
+on:
+  push:
+    branches:
+      - master
+    tags-ignore:
+      - 'v*'
+
+jobs:
+  deploy-fantasion-teaser:
+    name: Deploy polocas napadu static media
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Debug
+        run: ls -lR
+      - name: Install dependencies
+        run: |
+          sudo apt-get install rsync
+          ansible-galaxy install -r requirements-ansible.yml
+      - uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.TEASER_SSH_KEY }}
+          name: id_rsa
+          known_hosts: ${{ secrets.TEASER_KNOWN_HOSTS }}
+      - name: Deploy app
+        run: |
+          cd ./packages/fantasion-teaser
+          echo -e "[web]\n${{ secrets.TEASER_DEPLOY_HOST }}\n" > inventory
+          ansible-playbook deploy.yml -i inventory
