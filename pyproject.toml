@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "silver-wolf"
+name = "fantasion"
 version = "0.1.0"
 description = ""
 authors = ["Pavel Žák <pavel@zak.global>"]
