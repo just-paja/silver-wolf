@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "fantasion"
+name = "fantasion-backend"
 version = "0.1.0"
 description = ""
 authors = ["Pavel Žák <pavel@zak.global>"]

@@ -1,0 +1,23 @@
+{
+  "name": "fantasion-backend",
+  "version": "0.0.0",
+  "description": "Backend for fantasion website",
+  "keywords": [
+    "web",
+    "django",
+    "api",
+    "rest"
+  ],
+  "author": "Pavel Žák <pavel@zak.global>",
+  "homepage": "https://fantasion.cz",
+  "license": "MIT",
+  "directories": {},
+  "files": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/just-paja/fantasion.git"
+  },
+  "bugs": {
+    "url": "https://github.com/just-paja/fantasion/issues"
+  }
+}
