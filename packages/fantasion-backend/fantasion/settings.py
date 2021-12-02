@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'modeltranslation',
     'fantasion_generics',
+    'fantasion_expeditions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
