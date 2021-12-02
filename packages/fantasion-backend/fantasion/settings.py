@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
+    'fantasion_generics',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -103,7 +105,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
+gettext = lambda s: s
+
 LANGUAGE_CODE = 'en-us'
+LANGUAGES= (
+    ('cs', gettext('Czech')),
+    ('en', gettext('English')),
+)
 
 TIME_ZONE = 'UTC'
 
