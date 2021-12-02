@@ -27,5 +27,9 @@ class PublicModel(NamedModel):
     class Meta:
         abstract = True
 
+    title = TitleField()
+    description = DescriptionField()
     slug = AutoSlugField(populate_from=('title',))
 
+    def __str__(self):
+        return self.title
