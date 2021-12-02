@@ -33,8 +33,10 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'modeltranslation',
     'fantasion_generics',
+    'fantasion_locations',
     'fantasion_expeditions',
     'django.contrib.admin',
+    'nested_admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -108,10 +110,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 gettext = lambda s: s
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'cs-cz'
 LANGUAGES= (
     ('cs', gettext('Czech')),
-    ('en', gettext('English')),
 )
 
 TIME_ZONE = 'UTC'
@@ -132,3 +133,7 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DJANGO_ADMIN_SSO = False
+
+APP_WEBSITE_URL = 'http://localhost:8001/'
