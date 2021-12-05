@@ -167,17 +167,15 @@ class LocalVideoModel(Model):
     class Meta:
         abstract = True
 
-    local_video_image = VideoField(
+    local_video = VideoField(
         blank=True,
-        duration_field='local_video_duration',
-        height_field='local_video_height',
+        duration_field='duration',
+        height_field='height',
         max_length=255,
         null=True,
         upload_to=get_upload_path,
         verbose_name=_('Video file'),
-        width_field='local_video_width',
+        width_field='width',
     )
-    local_video_duration = PositiveBigIntegerField(blank=True, null=True)
-    local_video_height = PositiveBigIntegerField(blank=True, null=True)
-    local_video_width = PositiveBigIntegerField(blank=True, null=True)
+    duration = PositiveBigIntegerField(blank=True, null=True)
 

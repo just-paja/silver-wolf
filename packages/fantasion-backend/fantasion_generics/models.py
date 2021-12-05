@@ -1,6 +1,7 @@
 from django_extensions.db.models import AutoSlugField, TimeStampedModel
 from re import sub
 
+from .media import MediaModelMixin
 from .photos import LocalPhotoModel
 from .videos import LocalVideoModel
 from .titles import (
@@ -27,7 +28,7 @@ class NamedModel(TimeStampedModel):
 
 
 
-class MediaObjectModel(NamedModel, LocalPhotoModel, LocalVideoModel):
+class MediaObjectModel(NamedModel, MediaModelMixin, LocalPhotoModel, LocalVideoModel):
     class Meta:
         abstract = True
 
