@@ -11,6 +11,7 @@ class AgeGroup(BaseAdmin):
 
 class LeisureCentreMediaAdmin(NestedStackedInline):
     model = models.LeisureCentreMedia
+    extra = 0
 
 
 class LeisureCentreAdmin(BaseAdmin):
@@ -21,6 +22,7 @@ class LeisureCentreAdmin(BaseAdmin):
 
 class ExpeditionMediaAdmin(NestedStackedInline):
     model = models.ExpeditionMedia
+    extra = 0
 
 
 class ExpeditionAdmin(BaseAdmin):
@@ -30,6 +32,21 @@ class ExpeditionAdmin(BaseAdmin):
         'modified',
     )
     inlines = (ExpeditionMediaAdmin,)
+
+
+class ExpeditionProgramMediaAdmin(NestedStackedInline):
+    model = models.ExpeditionProgramMedia
+    extra = 0
+
+
+class ExpeditionProgramAdmin(BaseAdmin):
+    model = models.ExpeditionProgram
+    list_display = (
+        'title',
+        'modified',
+    )
+    inlines = (ExpeditionProgramMediaAdmin,)
+
 
 
 class BatchAgeGroupAdmin(NestedStackedInline):

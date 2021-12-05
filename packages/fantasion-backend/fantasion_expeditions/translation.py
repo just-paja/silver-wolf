@@ -26,3 +26,13 @@ class ExpeditionTranslationOptions(TranslationOptions):
 @register(models.ExpeditionMedia)
 class ExpeditionMediaOptions(TranslationOptions):
     fields = ('title', 'description',)
+
+
+@register(models.ExpeditionProgram)
+class ExpeditionProgramTranslationOptions(TranslationOptions):
+    fields = ('title', 'description',)
+
+
+@register(models.ExpeditionProgramMedia)
+class ExpeditionProgramMediaOptions(TranslationOptions):
+    fields = ('title', 'description',)
