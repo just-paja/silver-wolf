@@ -8,6 +8,11 @@ class AgeGroupTranslationOptions(TranslationOptions):
     fields = ('title',)
 
 
+@register(models.StaffRole)
+class StaffRoleTranslationOptions(TranslationOptions):
+    fields = ('title', 'description',)
+
+
 @register(models.LeisureCentre)
 class LeisureCentreTranslationOptions(TranslationOptions):
     fields = ('title', 'description',)
