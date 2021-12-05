@@ -93,6 +93,7 @@ class VideoField(FileField):
                     id='fields.E210',
                 )
             ]
+        return []
 
     def deconstruct(self):
         name, path, args, kwargs = super().deconstruct()
