@@ -21,3 +21,8 @@ class LeisureCentreMediaTranslationOptions(TranslationOptions):
 @register(models.Expedition)
 class ExpeditionTranslationOptions(TranslationOptions):
     fields = ('title', 'description',)
+
+
+@register(models.ExpeditionMedia)
+class ExpeditionMediaOptions(TranslationOptions):
+    fields = ('title', 'description',)
