@@ -115,6 +115,26 @@ class AgeGroup(TimeStampedModel):
         )
 
 
+"""
+ExpeditionProgram represents a story or adventure used for an age group on
+the expedition.
+"""
+class ExpeditionProgram(PublicModel):
+    pass
+
+
+class ExpeditionProgramMedia(MediaObjectModel):
+    parent = ForeignKey(
+        ExpeditionProgram,
+        related_name='media',
+        on_delete=CASCADE,
+    )
+
+
+"""
+BatchAgeGroup represents a collective of simillar age expedition participants,
+this is what people get signed up to.
+"""
 class BatchAgeGroup(TimeStampedModel):
     batch = ForeignKey(
         ExpeditionBatch,
@@ -126,11 +146,14 @@ class BatchAgeGroup(TimeStampedModel):
         on_delete=RESTRICT,
         related_name='age_group_batches',
     )
+    program = ForeignKey(
+        ExpeditionProgram,
+        on_delete=RESTRICT,
+        related_name='age_group_batches',
+    )
     starts_at = DateField()
     ends_at = DateField()
 
 
     class Meta:
         unique_together = ('batch', 'age_group')
-
-
