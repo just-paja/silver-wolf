@@ -15,6 +15,11 @@ class ProfileAdmin(BaseAdmin):
     inlines = (ProfileMediaAdmin,)
 
 
+class AllergyAdmin(BaseAdmin):
+    model = models.Allergy
+    list_display = ('title', )
+
+
 class SportAdmin(BaseAdmin):
     model = models.Sport
     list_display = ('title', )

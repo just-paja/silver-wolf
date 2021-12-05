@@ -13,6 +13,11 @@ class ProfileMediaTranslationOptions(TranslationOptions):
     fields = ('title', 'description')
 
 
+@register(models.Allergy)
+class AllergyTranslationOptions(TranslationOptions):
+    fields = ('title', 'description')
+
+
 @register(models.Sport)
 class SportTranslationOptions(TranslationOptions):
     fields = ('title', 'description')
