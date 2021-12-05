@@ -11,3 +11,8 @@ class ProfileTranslationOptions(TranslationOptions):
 @register(models.ProfileMedia)
 class ProfileMediaTranslationOptions(TranslationOptions):
     fields = ('title', 'description')
+
+
+@register(models.Sport)
+class SportTranslationOptions(TranslationOptions):
+    fields = ('title', 'description')
