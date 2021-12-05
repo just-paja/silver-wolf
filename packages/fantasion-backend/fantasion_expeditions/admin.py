@@ -19,12 +19,17 @@ class LeisureCentreAdmin(BaseAdmin):
     inlines = (LeisureCentreMediaAdmin,)
 
 
+class ExpeditionMediaAdmin(NestedStackedInline):
+    model = models.ExpeditionMedia
+
+
 class ExpeditionAdmin(BaseAdmin):
     model = models.Expedition
     list_display = (
         'title',
         'modified',
     )
+    inlines = (ExpeditionMediaAdmin,)
 
 
 class BatchAgeGroupAdmin(NestedStackedInline):

@@ -58,6 +58,14 @@ class Expedition(PublicModel):
     pass
 
 
+class ExpeditionMedia(MediaObjectModel):
+    parent = ForeignKey(
+        Expedition,
+        related_name='media',
+        on_delete=CASCADE,
+    )
+
+
 """
 ExpeditionBatch represents a single batch of the Expedition, it has a start
 and end date. Each ExpeditionBatch has different staff.
