@@ -2,7 +2,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models import BooleanField, ForeignKey, CASCADE, SET_DEFAULT
 from django.contrib.auth.models import User
 
-from fantasion_generics.models import MediaObjectModel, PublicModel
+from fantasion_generics.models import MediaObjectModel, NamedModel, PublicModel
 
 
 class Profile(PublicModel):
@@ -28,3 +28,6 @@ class ProfileMedia(MediaObjectModel):
         on_delete=CASCADE,
     )
 
+
+class Sport(NamedModel):
+    pass

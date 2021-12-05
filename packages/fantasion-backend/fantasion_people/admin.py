@@ -13,3 +13,8 @@ class ProfileAdmin(BaseAdmin):
     model = models.Profile
     list_display = ('title', 'public', 'modified')
     inlines = (ProfileMediaAdmin,)
+
+
+class SportAdmin(BaseAdmin):
+    model = models.Sport
+    list_display = ('title', )
