@@ -29,5 +29,9 @@ class ProfileMedia(MediaObjectModel):
     )
 
 
+class Allergy(NamedModel):
+    pass
+
+
 class Sport(NamedModel):
     pass
