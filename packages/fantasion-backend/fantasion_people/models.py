@@ -52,6 +52,7 @@ class Family(TimeStampedModel):
         User,
         on_delete=RESTRICT,
         related_name='families',
+        help_text=_('Family owner acts as a superadmin.'),
     )
 
 # Admin can assign family roles

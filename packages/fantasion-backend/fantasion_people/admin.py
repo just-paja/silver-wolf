@@ -23,3 +23,14 @@ class AllergyAdmin(BaseAdmin):
 class SportAdmin(BaseAdmin):
     model = models.Sport
     list_display = ('title', )
+
+
+class FamilyMemberAdmin(NestedStackedInline):
+    model = models.FamilyMember
+    extra = 0
+
+
+class FamilyAdmin(BaseAdmin):
+    model = models.Family
+    list_display = ('title', )
+    inlines = (FamilyMemberAdmin,)
