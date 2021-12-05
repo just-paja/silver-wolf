@@ -8,15 +8,12 @@ class LocalPhotoModel(Model):
     class Meta:
         abstract = True
 
-    local_photo_image = ImageField(
+    local_photo = ImageField(
         blank=True,
-        height_field='local_photo_height',
+        height_field='height',
         max_length=255,
         null=True,
         upload_to=get_upload_path,
         verbose_name=_('Image file'),
-        width_field='local_photo_width',
+        width_field='width',
     )
-    local_photo_height = PositiveBigIntegerField(blank=True, null=True)
-    local_photo_width = PositiveBigIntegerField(blank=True, null=True)
-
