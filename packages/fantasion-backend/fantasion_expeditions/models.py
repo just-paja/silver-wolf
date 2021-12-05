@@ -94,6 +94,37 @@ class ExpeditionBatch(TimeStampedModel):
         )
 
 
+class StaffRole(PublicModel):
+    pass
+
+
+class StaffRoleMedia(MediaObjectModel):
+    parent = ForeignKey(
+        StaffRole,
+        related_name='media',
+        on_delete=CASCADE,
+    )
+
+
+
+class BatchStaff(TimeStampedModel):
+    batch = ForeignKey(
+        ExpeditionBatch,
+        on_delete=CASCADE,
+        related_name='staff',
+    )
+    profile = ForeignKey(
+        'fantasion_people.Profile',
+        on_delete=RESTRICT,
+        related_name='expedition_roles',
+    )
+    role = ForeignKey(
+        StaffRole,
+        on_delete=RESTRICT,
+        related_name='staff',
+    )
+
+
 """
 AgeGroup represents a category of children ages that can be put together on
 an Expedition. This usually shapes the program due to physical and mental

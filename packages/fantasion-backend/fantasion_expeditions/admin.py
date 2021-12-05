@@ -9,6 +9,17 @@ class AgeGroup(BaseAdmin):
     list_display = ('title', 'age_min', 'age_max', 'modified')
 
 
+class StaffRoleMediaAdmin(NestedStackedInline):
+    model = models.StaffRoleMedia
+    extra = 0
+
+
+class StaffRole(BaseAdmin):
+    model = models.StaffRole
+    list_display = ('title', 'modified')
+    inlines = (StaffRoleMediaAdmin,)
+
+
 class LeisureCentreMediaAdmin(NestedStackedInline):
     model = models.LeisureCentreMedia
     extra = 0
@@ -54,9 +65,14 @@ class BatchAgeGroupAdmin(NestedStackedInline):
     extra = 0
 
 
+class BatchStaffAdmin(NestedStackedInline):
+    model = models.BatchStaff
+    extra = 0
+
+
 class ExpeditionBatchAdmin(BaseAdmin):
     model = models.ExpeditionBatch
-    inlines = (BatchAgeGroupAdmin,)
+    inlines = (BatchAgeGroupAdmin, BatchStaffAdmin)
     list_display = (
         '__str__',
         'expedition',
