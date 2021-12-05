@@ -50,7 +50,8 @@ class Expedition(PublicModel):
 
 
 """
-
+ExpeditionBatch represents a single batch of the Expedition, it has a start
+and end date. Each ExpeditionBatch has different staff.
 """
 class ExpeditionBatch(TimeStampedModel):
     expedition = ForeignKey(
