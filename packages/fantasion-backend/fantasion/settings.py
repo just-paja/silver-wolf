@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'modeltranslation',
     'fantasion_generics',
     'fantasion_locations',
+    'fantasion_people',
     'fantasion_expeditions',
     'django.contrib.admin',
     'nested_admin',
