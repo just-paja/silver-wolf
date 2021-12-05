@@ -1,3 +1,4 @@
+
 from django_extensions.db.models import TimeStampedModel
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import (
@@ -10,7 +11,7 @@ from django.db.models import (
 )
 
 from fantasion_generics.titles import TitleField
-from fantasion_generics.models import NamedModel, PublicModel
+from fantasion_generics.models import MediaObjectModel, NamedModel, PublicModel
 from fantasion_locations.models import Address, Location
 
 
@@ -37,6 +38,14 @@ class LeisureCentre(PublicModel):
         blank=True,
         max_length=255,
         null=True,
+    )
+
+
+class LeisureCentreMedia(MediaObjectModel):
+    parent = ForeignKey(
+        LeisureCentre,
+        related_name='media',
+        on_delete=CASCADE,
     )
 
 

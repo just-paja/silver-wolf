@@ -9,9 +9,14 @@ class AgeGroup(BaseAdmin):
     list_display = ('title', 'age_min', 'age_max', 'modified')
 
 
+class LeisureCentreMediaAdmin(NestedStackedInline):
+    model = models.LeisureCentreMedia
+
+
 class LeisureCentreAdmin(BaseAdmin):
     model = models.LeisureCentre
     list_display = ('title', 'location', 'modified')
+    inlines = (LeisureCentreMediaAdmin,)
 
 
 class ExpeditionAdmin(BaseAdmin):

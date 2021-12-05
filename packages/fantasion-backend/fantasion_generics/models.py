@@ -1,4 +1,5 @@
 from django_extensions.db.models import AutoSlugField, TimeStampedModel
+from re import sub
 
 from .photos import LocalPhotoModel
 from .videos import LocalVideoModel
@@ -8,6 +9,14 @@ from .titles import (
     FacultativeTitleField,
     TitleField,
 )
+
+
+def kebab(s):
+  return '-'.join(
+    sub(r"(\s|_|-)+"," ",
+    sub(r"[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+",
+    lambda mo: ' ' + mo.group(0).lower(), s)).split())
+
 
 class NamedModel(TimeStampedModel):
     class Meta:
@@ -21,6 +30,13 @@ class NamedModel(TimeStampedModel):
 class MediaObjectModel(NamedModel, LocalPhotoModel, LocalVideoModel):
     class Meta:
         abstract = True
+
+    @property
+    def upload_dir(self):
+        return '{0}/{1}'.format(
+            kebab(self.__class__.parent.field.remote_field.model.__name__),
+            self.parent_id
+        )
 
 
 class PublicModel(NamedModel):
