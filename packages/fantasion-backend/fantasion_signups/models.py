@@ -6,6 +6,7 @@ from django.db.models import (
     CharField,
     DateField,
     ForeignKey,
+    PositiveIntegerField,
     RESTRICT,
 )
 
@@ -17,6 +18,21 @@ class Participant(TimeStampedModel):
         max_length=255
     )
     birthdate = DateField()
+
+
+SIGNUP_STATUS_NEW = 1
+SIGNUP_STATUS_CONFIRMED = 2
+SIGNUP_STATUS_DOWN_PAYMENT_PAID = 3
+SIGNUP_STATUS_PAID = 4
+SIGNUP_STATUS_CANCELLED = 5
+
+SIGNUP_STATES = (
+    (SIGNUP_STATUS_NEW, _('New')),
+    (SIGNUP_STATUS_CONFIRMED, _('Confirmed')),
+    (SIGNUP_STATUS_DOWN_PAYMENT_PAID, _('Down payment paid')),
+    (SIGNUP_STATUS_PAID, _('Paid')),
+    (SIGNUP_STATUS_CANCELLED, _('Cancelled')),
+)
 
 
 class Signup(OrderItem):
@@ -36,6 +52,9 @@ class Signup(OrderItem):
         related_name='signups',
     )
     legal_guardian = BooleanField()
+    status = PositiveIntegerField(
+        choices=SIGNUP_STATES,
+    )
 
     def get_description(self):
         return 'Signup: {participant}'.format(
