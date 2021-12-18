@@ -10,16 +10,17 @@ from django.db.models import (
     RESTRICT,
 )
 
+from fantasion_eshop.models import EshopProduct
 from fantasion_generics.titles import TitleField
-from fantasion_generics.models import MediaObjectModel, NamedModel, PublicModel
-from fantasion_locations.models import Address, Location
+from fantasion_generics.models import MediaObjectModel, PublicModel
+from fantasion_locations.models import Location
 
 
-"""
-LeisureCentre represents a base of operations for Expedition. A typical 
-LeisureCentre consists of accomodation, kitchen and it is located on a map.
-"""
 class LeisureCentre(PublicModel):
+    """
+    LeisureCentre represents a base of operations for Expedition. A typical
+    LeisureCentre consists of accomodation, kitchen and it is located on a map.
+    """
     location = ForeignKey(
         Location,
         help_text=_('This location will be posted on the map and used for navigation.'),
@@ -27,11 +28,11 @@ class LeisureCentre(PublicModel):
         on_delete=RESTRICT,
     )
     mailing_address = ForeignKey(
-        Address,
+        Location,
         blank=True,
         help_text=_('This location will be used as a postal address, instruct people to mail here.'),
         null=True,
-        related_name='leisure_centres',
+        related_name='leisure_centre_mailing_addresses',
         on_delete=RESTRICT,
     )
     website = URLField(
@@ -49,12 +50,12 @@ class LeisureCentreMedia(MediaObjectModel):
     )
 
 
-"""
-Expedition represents an entire summer camp, it is composed of Expedition
-batches. People do not sign up for the expedition, but for the Expedition
-batch. Each Expedition has a name and description.
-"""
 class Expedition(PublicModel):
+    """
+    Expedition represents an entire summer camp, it is composed of Expedition
+    batches. People do not sign up for the expedition, but for the Expedition
+    batch. Each Expedition has a name and description.
+    """
     pass
 
 
@@ -66,11 +67,11 @@ class ExpeditionMedia(MediaObjectModel):
     )
 
 
-"""
-ExpeditionBatch represents a single batch of the Expedition, it has a start
-and end date. Each ExpeditionBatch has different staff.
-"""
 class ExpeditionBatch(TimeStampedModel):
+    """
+    ExpeditionBatch represents a single batch of the Expedition, it has a start
+    and end date. Each ExpeditionBatch has different staff.
+    """
     expedition = ForeignKey(
         Expedition,
         on_delete=CASCADE,
@@ -106,7 +107,6 @@ class StaffRoleMedia(MediaObjectModel):
     )
 
 
-
 class BatchStaff(TimeStampedModel):
     batch = ForeignKey(
         ExpeditionBatch,
@@ -125,12 +125,12 @@ class BatchStaff(TimeStampedModel):
     )
 
 
-"""
-AgeGroup represents a category of children ages that can be put together on
-an Expedition. This usually shapes the program due to physical and mental
-differences in certain age groups.
-"""
 class AgeGroup(TimeStampedModel):
+    """
+    AgeGroup represents a category of children ages that can be put together on
+    an Expedition. This usually shapes the program due to physical and mental
+    differences in certain age groups.
+    """
     title = TitleField()
     age_min = PositiveIntegerField(verbose_name=_('Minimal age'))
     age_max = PositiveIntegerField(verbose_name=_('Maximal age'))
@@ -146,11 +146,11 @@ class AgeGroup(TimeStampedModel):
         )
 
 
-"""
-ExpeditionProgram represents a story or adventure used for an age group on
-the expedition.
-"""
 class ExpeditionProgram(PublicModel):
+    """
+    ExpeditionProgram represents a story or adventure used for an age group on
+    the expedition.
+    """
     pass
 
 
@@ -162,11 +162,11 @@ class ExpeditionProgramMedia(MediaObjectModel):
     )
 
 
-"""
-BatchAgeGroup represents a collective of simillar age expedition participants,
-this is what people get signed up to.
-"""
-class BatchAgeGroup(TimeStampedModel):
+class BatchAgeGroup(EshopProduct):
+    """
+    BatchAgeGroup represents a collective of simillar age expedition
+    participants, this is what people get signed up to.
+    """
     batch = ForeignKey(
         ExpeditionBatch,
         on_delete=CASCADE,
@@ -185,6 +185,11 @@ class BatchAgeGroup(TimeStampedModel):
     starts_at = DateField()
     ends_at = DateField()
 
-
     class Meta:
-        unique_together = ('batch', 'age_group')
+        unique_together = ('batch', 'age_group', 'starts_at')
+
+    def get_description(self):
+        return '{batch}, {age_group}'.format(
+            batch=self.batch,
+            age_group=self.age_group,
+        )

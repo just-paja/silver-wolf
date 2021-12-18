@@ -12,49 +12,50 @@ from django.db.models import (
 class Country(Model):
     name = CharField(max_length=127)
 
-
-class Address(TimeStampedModel):
-    country = ForeignKey(
-        Country,
-        on_delete=CASCADE,
-        related_name='addresses',
-    )
-    city = CharField(max_length=127)
-    street = CharField(max_length=255)
-    street_number = CharField(max_length=63)
-    postal_code = CharField(max_length=63)
-
     def __str__(self):
-        return '{country}, {city}, {street} {street_number}, {postal_code}'.format(
-            country=self.country,
-            city=self.city,
-            street=self.street,
-            street_number=self.street_number,
-            postal_code=self.postal_code,
-        )
-
+        return self.name
 
 
 class Location(TimeStampedModel):
     name = CharField(max_length=63)
-    address = ForeignKey(
-        Address,
+    country = ForeignKey(
+        Country,
         blank=True,
         null=True,
         on_delete=CASCADE,
-        related_name='locations',
+        related_name='addresses',
+    )
+    city = CharField(
+        blank=True,
+        max_length=127,
+        null=True,
+    )
+    street = CharField(
+        blank=True,
+        max_length=255,
+        null=True,
+    )
+    street_number = CharField(
+        blank=True,
+        max_length=63,
+        null=True,
+    )
+    postal_code = CharField(
+        blank=True,
+        max_length=63,
+        null=True,
     )
     lat = DecimalField(
         blank=True,
-        decimal_places=6,
-        max_digits=9,
+        decimal_places=17,
+        max_digits=20,
         null=True,
         verbose_name=_('Latitude'),
     )
     lng = DecimalField(
         blank=True,
-        decimal_places=6,
-        max_digits=9,
+        decimal_places=17,
+        max_digits=20,
         null=True,
         verbose_name=_('Longitude'),
     )

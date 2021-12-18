@@ -83,7 +83,7 @@ class VideoField(FileField):
 
     def check_library_installed(self):
         try:
-            import ffmpeg
+            import ffmpeg # noqa
         except ImportError:
             return [
                 checks.Error(
@@ -109,10 +109,10 @@ class VideoField(FileField):
         return self.duration_field or self.height_field or self.width_field
 
     def has_meta_values(self):
-        dimension_fields_filled = not(
-            (self.duration_field and not getattr(instance, self.duration_field)) or
-            (self.height_field and not getattr(instance, self.height_field)) or
-            (self.width_field and not getattr(instance, self.width_field))
+        return not(
+            (self.duration_field and not getattr(self, self.duration_field)) or
+            (self.height_field and not getattr(self, self.height_field)) or
+            (self.width_field and not getattr(self, self.width_field))
         )
 
     def update_dimension_fields(self, instance, force=False, *args, **kwargs):
@@ -132,7 +132,7 @@ class VideoField(FileField):
             return
 
         dimension_fields_filled = self.has_meta_values()
-        
+
         # When both dimension fields have values, we are most likely loading
         # data from the database or updating an image field that already had
         # an image stored.  In the first case, we don't want to update the
@@ -178,4 +178,3 @@ class LocalVideoModel(Model):
         width_field='width',
     )
     duration = PositiveBigIntegerField(blank=True, null=True)
-

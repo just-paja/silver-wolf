@@ -1,6 +1,7 @@
 from fantasion_generics.admin import BaseAdmin
 from nested_admin import NestedStackedInline
 
+from fantasion_eshop.models import ProductPrice
 from . import models
 
 
@@ -59,10 +60,39 @@ class ExpeditionProgramAdmin(BaseAdmin):
     inlines = (ExpeditionProgramMediaAdmin,)
 
 
+class ProductPriceAdmin(NestedStackedInline):
+    model = ProductPrice
+    extra = 0
 
-class BatchAgeGroupAdmin(NestedStackedInline):
+
+class BatchAgeGroupAdmin(BaseAdmin):
+    model = models.BatchAgeGroup
+    list_display = (
+        'pk',
+        'age_group',
+        'batch',
+        'expedition',
+        'program',
+        'starts_at',
+        'ends_at',
+    )
+    list_filter = (
+        'batch__expedition',
+        'age_group',
+        'batch',
+    )
+    readonly_fields = ('description',)
+    inlines = (ProductPriceAdmin,)
+
+    def expedition(self, instance):
+        return instance.batch.expedition
+
+
+class BatchAgeGroupInlineAdmin(NestedStackedInline):
     model = models.BatchAgeGroup
     extra = 0
+    inlines = (ProductPriceAdmin,)
+    readonly_fields = ('description',)
 
 
 class BatchStaffAdmin(NestedStackedInline):
@@ -72,9 +102,9 @@ class BatchStaffAdmin(NestedStackedInline):
 
 class ExpeditionBatchAdmin(BaseAdmin):
     model = models.ExpeditionBatch
-    inlines = (BatchAgeGroupAdmin, BatchStaffAdmin)
+    inlines = (BatchAgeGroupInlineAdmin, BatchStaffAdmin)
     list_display = (
-        '__str__',
+        'pk',
         'expedition',
         'leisure_centre',
         'starts_at',
