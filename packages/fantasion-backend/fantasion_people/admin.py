@@ -20,8 +20,8 @@ class AllergyAdmin(BaseAdmin):
     list_display = ('title', )
 
 
-class SportAdmin(BaseAdmin):
-    model = models.Sport
+class HobbyAdmin(BaseAdmin):
+    model = models.Hobby
     list_display = ('title', )
 
 

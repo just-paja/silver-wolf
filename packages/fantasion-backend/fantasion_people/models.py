@@ -42,7 +42,7 @@ class Allergy(NamedModel):
     pass
 
 
-class Sport(NamedModel):
+class Hobby(NamedModel):
     pass
 
 

@@ -18,6 +18,6 @@ class AllergyTranslationOptions(TranslationOptions):
     fields = ('title', 'description')
 
 
-@register(models.Sport)
-class SportTranslationOptions(TranslationOptions):
+@register(models.Hobby)
+class HobbyTranslationOptions(TranslationOptions):
     fields = ('title', 'description')
