@@ -6,17 +6,23 @@ from .photos import LocalPhotoModel
 from .videos import LocalVideoModel
 from .titles import (
     DescriptionField,
-    FacultativeDescriptionField, 
+    FacultativeDescriptionField,
     FacultativeTitleField,
     TitleField,
 )
 
 
+ksub = r"[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+"
+
+
 def kebab(s):
-  return '-'.join(
-    sub(r"(\s|_|-)+"," ",
-    sub(r"[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+",
-    lambda mo: ' ' + mo.group(0).lower(), s)).split())
+    return '-'.join(
+        sub(
+            r"(\s|_|-)+",
+            " ",
+            sub(ksub, lambda mo: ' ' + mo.group(0).lower(), s)
+        ).split()
+    )
 
 
 class NamedModel(TimeStampedModel):
@@ -27,8 +33,12 @@ class NamedModel(TimeStampedModel):
     description = FacultativeDescriptionField()
 
 
-
-class MediaObjectModel(NamedModel, MediaModelMixin, LocalPhotoModel, LocalVideoModel):
+class MediaObjectModel(
+    NamedModel,
+    MediaModelMixin,
+    LocalPhotoModel,
+    LocalVideoModel
+):
     class Meta:
         abstract = True
 

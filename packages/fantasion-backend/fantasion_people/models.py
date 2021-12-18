@@ -55,6 +55,13 @@ class Family(TimeStampedModel):
         help_text=_('Family owner acts as a superadmin.'),
     )
 
+    def get_family_member_by_user(self, user):
+        return self.members.filter(user=user).first()
+
+    def can_user_own_order(self, user):
+        return bool(self.get_family_member_by_user(user))
+
+
 # Admin can assign family roles
 FAMILY_ROLE_ADMIN = 1
 # Representative can submit signups

@@ -5,8 +5,14 @@ from django.contrib.admin import AdminSite
 from django.http import Http404
 from nested_admin import NestedModelAdmin
 
+
 def is_admin_model(cls):
-    return isinstance(cls, type) and issubclass(cls, BaseAdmin) and cls != BaseAdmin
+    return (
+        isinstance(cls, type) and
+        issubclass(cls, BaseAdmin) and 
+        cls != BaseAdmin
+    )
+
 
 def get_module_admin_models(module):
     return [cls for name, cls in module.__dict__.items() if is_admin_model(cls)]
@@ -14,6 +20,7 @@ def get_module_admin_models(module):
 
 class BaseAdmin(NestedModelAdmin):
     pass
+
 
 class BaseAdminSite(AdminSite):
     site_header = "Fantasion"

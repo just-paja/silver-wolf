@@ -3,12 +3,9 @@ from fantasion_generics.admin import BaseAdmin
 from . import models
 
 
-class AddressAdmin(BaseAdmin):
-    model = models.Address
-
-
 class CountryAdmin(BaseAdmin):
     model = models.Country
+    list_display = ('name',)
 
 
 class LocationAdmin(BaseAdmin):

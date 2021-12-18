@@ -1,4 +1,4 @@
-from django.db.models import Model, ImageField, PositiveBigIntegerField
+from django.db.models import Model, ImageField
 from django.utils.translation import ugettext_lazy as _
 
 from .upload_path import get_upload_path

@@ -1,0 +1,31 @@
+[
+  {
+    "model": "fantasion_eshop.currency",
+    "pk": 1,
+    "fields": {
+      "code": "CZK",
+      "title": "Koruna česká",
+      "exchange_rate": 1,
+      "enabled": true,
+      "modified": "2021-12-18T22:00:00+00:00",
+      "created": "2021-12-18T22:00:00+00:00"
+    }
+  },
+  {
+    "model": "fantasion_eshop.pricelevel",
+    "pk": 1,
+    "fields": {
+      "title": "Základní",
+      "description": "Výchozí cenová hladina",
+      "modified": "2021-12-18T22:00:00+00:00",
+      "created": "2021-12-18T22:00:00+00:00"
+    }
+  },
+  {
+    "model": "fantasion_locations.country",
+    "pk": 1,
+    "fields": {
+      "name": "Česká republika"
+    }
+  }
+]
