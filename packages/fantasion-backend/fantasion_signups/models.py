@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.models import TimeStampedModel
@@ -5,6 +7,7 @@ from django.db.models import (
     BooleanField,
     CharField,
     DateField,
+    DateTimeField,
     ForeignKey,
     PositiveIntegerField,
     CASCADE,
@@ -59,10 +62,28 @@ class Signup(OrderItem):
     status = PositiveIntegerField(
         choices=SIGNUP_STATES,
     )
+    submitted_at = DateTimeField(
+        null=True,
+        blank=True,
+        help_text=_(
+            'The exact date and time signup was submitted.'
+            'Date is generated automatically'
+        ),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.initial_status = self.status
 
     def get_description(self):
         return 'Signup: {participant}'.format(
             participant=self.participant
+        )
+
+    def was_submitted(self):
+        return (
+            self.status == SIGNUP_STATUS_CONFIRMED and
+            self.status != self.initial_status
         )
 
     def clean(self):
@@ -87,6 +108,8 @@ class Signup(OrderItem):
         impossible for a person to be on one place twice.
         """
         self.amount = 1
+        if not self.submitted_at and self.was_submitted():
+            self.submitted_at = datetime.now()
         super().save(*args, **kwargs)
 
 

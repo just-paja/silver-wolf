@@ -44,6 +44,7 @@ class SignupAdmin(BaseAdmin):
         'expedition',
         'date_range',
         'age_group',
+        'submitted_at',
     )
     list_filter = (
         'batch_age_group__batch__expedition',
