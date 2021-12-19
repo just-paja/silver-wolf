@@ -1,3 +1,5 @@
+from datetime import date
+
 from fantasion_generics.admin import BaseAdmin
 from nested_admin import NestedStackedInline
 
@@ -44,6 +46,7 @@ class SignupAdmin(BaseAdmin):
         'expedition',
         'date_range',
         'age_group',
+        'participant_age',
         'submitted_at',
     )
     list_filter = (
@@ -77,3 +80,14 @@ class SignupAdmin(BaseAdmin):
 
     def participant_name(self, inst):
         return inst.participant.name
+
+    def participant_age(self, inst):
+        today = date.today()
+        born = inst.participant.birthdate
+        return (
+            today.year -
+            born.year -
+            ((today.month, today.day) < (born.month, born.day))
+        )
+
+    participant_age.admin_order_field = 'participant__birthdate'
