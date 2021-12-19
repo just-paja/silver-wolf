@@ -1,7 +1,7 @@
 {
   "name": "fantasion-teaser",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.2.0",
   "description": "Teaser for fantasion website",
   "keywords": [
     "static"
@@ -9,10 +9,8 @@
   "author": "Pavel Žák <pavel@zak.global>",
   "homepage": "https://fantasion.cz",
   "license": "MIT",
-  "directories": {
-  },
-  "files": [
-  ],
+  "directories": {},
+  "files": [],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/just-paja/fantasion.git"
