@@ -52,6 +52,16 @@ class SignupAdmin(BaseAdmin):
         'batch_age_group__age_group',
         'status',
     )
+    search_fields = (
+        'participant__name',
+        'family__title',
+        'family__owner__email',
+        'family__owner__first_name',
+        'family__owner__last_name',
+        'family__members__user__email',
+        'family__members__user__first_name',
+        'family__members__user__last_name',
+    )
 
     def age_group(self, inst):
         return inst.batch_age_group.age_group
