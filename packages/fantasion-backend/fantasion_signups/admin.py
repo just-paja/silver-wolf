@@ -1,4 +1,5 @@
 from fantasion_generics.admin import BaseAdmin
+from nested_admin import NestedStackedInline
 
 from . import models
 
@@ -7,8 +8,36 @@ class ParticipantAdmin(BaseAdmin):
     model = models.Participant
 
 
+class SignupDocumentTypeAdmin(BaseAdmin):
+    model = models.SignupDocumentType
+    list_display = (
+        'title',
+        'required',
+        'modified',
+    )
+    list_filter = ('required',)
+
+
+class SignupDocumentMediaAdmin(NestedStackedInline):
+    model = models.SignupDocumentMedia
+    extra = 0
+    readonly_fields = ('width', 'height',)
+
+
+class SignupDocumentAdmin(BaseAdmin):
+    model = models.SignupDocument
+    inlines = (SignupDocumentMediaAdmin,)
+
+
+class SignupDocumentInlineAdmin(NestedStackedInline):
+    model = models.SignupDocument
+    inlines = (SignupDocumentMediaAdmin,)
+    extra = 0
+
+
 class SignupAdmin(BaseAdmin):
     model = models.Signup
+    inlines = (SignupDocumentInlineAdmin,)
     list_display = (
         'participant_name',
         'status',

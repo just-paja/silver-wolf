@@ -7,9 +7,13 @@ from django.db.models import (
     DateField,
     ForeignKey,
     PositiveIntegerField,
+    CASCADE,
     RESTRICT,
 )
 
+from fantasion_generics.models import PublicModel
+from fantasion_generics.media import MediaModelMixin
+from fantasion_generics.photos import PrivatePhotoModel
 from fantasion_eshop.models import OrderItem
 
 
@@ -84,3 +88,53 @@ class Signup(OrderItem):
         """
         self.amount = 1
         super().save(*args, **kwargs)
+
+
+class SignupDocumentType(PublicModel):
+    required = BooleanField(
+        default=False,
+        help_text=_(
+            'Signup will be marked as incomplete until parent uploads'
+            'this document'
+        )
+    )
+
+
+class SignupDocument(TimeStampedModel):
+    signup = ForeignKey(
+        Signup,
+        on_delete=CASCADE,
+        related_name='documents',
+    )
+    document_type = ForeignKey(
+        SignupDocumentType,
+        on_delete=RESTRICT,
+        related_name='documents',
+    )
+
+
+class SignupDocumentMedia(MediaModelMixin, PrivatePhotoModel):
+    parent = ForeignKey(
+        SignupDocument,
+        on_delete=CASCADE,
+        related_name='media',
+    )
+
+    @property
+    def upload_dir(self):
+        return 'signups/{0}'.format(self.parent_id)
+
+
+class SignupDocumentVerification(TimeStampedModel):
+    document = ForeignKey(
+        SignupDocument,
+        on_delete=CASCADE,
+        related_name='verifications',
+    )
+    verified_by = ForeignKey(
+        'auth.User',
+        on_delete=RESTRICT,
+        related_name='signup_document_verifications',
+    )
+    verified_on = DateField()
+    valid_until = DateField()
