@@ -10,6 +10,7 @@ from django.db.models import (
     DateTimeField,
     ForeignKey,
     PositiveIntegerField,
+    TextField,
     CASCADE,
     RESTRICT,
 )
@@ -69,6 +70,13 @@ class Signup(OrderItem):
             'The exact date and time signup was submitted.'
             'Date is generated automatically'
         ),
+    )
+    cancelled_for = TextField(
+        blank=True,
+        null=True,
+        help_text=_(
+            'Write down a short explanation why was this signup cancelled'
+        )
     )
 
     def __init__(self, *args, **kwargs):
