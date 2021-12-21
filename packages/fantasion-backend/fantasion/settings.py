@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -132,6 +133,7 @@ def gettext(s):
 LANGUAGE_CODE = 'cs-cz'
 LANGUAGES = (
     ('cs', gettext('Czech')),
+    ('en', gettext('English')),
 )
 
 TIME_ZONE = 'UTC'
@@ -152,3 +154,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DJANGO_ADMIN_SSO = False
 
 APP_WEBSITE_URL = 'http://localhost:8001/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': (
+        'rest_framework.pagination.PageNumberPagination'
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'PAGE_SIZE': 20
+}
