@@ -9,7 +9,7 @@ on:
 
 jobs:
   deploy-fantasion-teaser:
-    name: Deploy polocas napadu static media
+    name: Deploy teaser website
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
