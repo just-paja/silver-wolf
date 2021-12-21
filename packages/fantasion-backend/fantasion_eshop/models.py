@@ -6,7 +6,6 @@ from django.db.models import (
     DateTimeField,
     DecimalField,
     ForeignKey,
-    PositiveIntegerField,
     CASCADE,
     RESTRICT,
 )

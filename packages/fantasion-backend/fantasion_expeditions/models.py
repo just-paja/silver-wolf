@@ -23,14 +23,19 @@ class LeisureCentre(PublicModel):
     """
     location = ForeignKey(
         Location,
-        help_text=_('This location will be posted on the map and used for navigation.'),
+        help_text=_(
+            'This location will be posted on the map and used for navigation.'
+        ),
         related_name='leisure_centres',
         on_delete=RESTRICT,
     )
     mailing_address = ForeignKey(
         Location,
         blank=True,
-        help_text=_('This location will be used as a postal address, instruct people to mail here.'),
+        help_text=_(
+            'This location will be used as a postal address,'
+            'instruct people to mail here.'
+        ),
         null=True,
         related_name='leisure_centre_mailing_addresses',
         on_delete=RESTRICT,
