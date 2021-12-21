@@ -31,8 +31,8 @@ class BaseAdminSite(AdminSite):
 
     def __init__(self):
         super().__init__(self.name)
-        if settings.DJANGO_ADMIN_SSO:
-            self.login = gauth
+        #if settings.DJANGO_ADMIN_SSO:
+        #    self.login = gauth
 
     def get_model_sort_helper(self, request):
         return lambda x: czech_sort.key(x['name'][0])
