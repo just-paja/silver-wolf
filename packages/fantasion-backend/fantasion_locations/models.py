@@ -10,7 +10,10 @@ from django.db.models import (
 
 
 class Country(Model):
-    name = CharField(max_length=127)
+    name = CharField(
+        max_length=127,
+        unique=True,
+    )
 
     def __str__(self):
         return self.name
