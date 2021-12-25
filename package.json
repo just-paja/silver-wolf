@@ -3,5 +3,8 @@
   "private": true,
   "devDependencies": {
     "lerna": "^3.10.7"
+  },
+  "scripts": {
+    "backend": "lerna run dev --stream --scope fantasion-backend"
   }
 }
