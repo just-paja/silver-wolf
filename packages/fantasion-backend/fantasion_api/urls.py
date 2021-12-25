@@ -28,6 +28,11 @@ router.register(
     basename='expedition',
 )
 router.register(
+    r'expedition-batches',
+    expeditions.ExpeditionBatchCollection,
+    basename='expedition_batches',
+)
+router.register(
     r'leisure-centres',
     expeditions.LeisureCentreCollection,
     basename='leisure_centres',
