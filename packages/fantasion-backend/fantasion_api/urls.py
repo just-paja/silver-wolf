@@ -22,6 +22,16 @@ router.register(
     locations.LocationCollection,
     basename='locations',
 )
+router.register(
+    r'expeditions',
+    expeditions.ExpeditionCollection,
+    basename='expedition',
+)
+router.register(
+    r'leisure-centres',
+    expeditions.LeisureCentreCollection,
+    basename='leisure_centres',
+)
 
 urlpatterns = [
     path('', include(router.urls)),
