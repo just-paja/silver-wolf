@@ -2,9 +2,9 @@
 name: Deployment
 on:
   push:
-    branches:
-      - master
-    tags-ignore:
+    branches-ignore:
+      - '**'
+    tags:
       - 'v*'
 
 jobs:
