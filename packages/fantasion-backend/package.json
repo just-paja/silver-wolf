@@ -15,7 +15,8 @@
   "directories": {},
   "files": [],
   "scripts": {
-    "dev": "poetry run ./manage.py runserver"
+    "dev": "poetry run ./manage.py runserver",
+    "python-install": "poetry install"
   },
   "repository": {
     "type": "git",
