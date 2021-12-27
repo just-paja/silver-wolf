@@ -1,6 +1,7 @@
 import Head from 'next/head'
 
 import { Component } from 'react'
+import { appWithTranslation } from 'next-i18next'
 
 import '../styles/globals.css'
 
@@ -33,4 +34,4 @@ function MyApp({ Component, pageProps }) {
   )
 }
 
-export default MyApp
+export default appWithTranslation(MyApp)
