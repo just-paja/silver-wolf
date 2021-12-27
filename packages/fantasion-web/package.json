@@ -1,20 +1,16 @@
 {
   "name": "fantasion-web",
   "private": true,
-  "version": "0.2.0",
-  "description": "Fantasion website",
-  "author": "Pavel Žák <pavel@zak.global>",
-  "homepage": "https://fantasion.cz",
-  "license": "MIT",
-  "main": "index.js",
-  "files": [
-    "lib"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/fantasion/fantasion.git"
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "bugs": {
-    "url": "https://github.com/fantasion/fantasion/issues"
+  "dependencies": {
+    "next": "^12.0.8-canary.13",
+    "react": "18.0.0-rc.0",
+    "react-dom": "18.0.0-rc.0",
+    "sass": "^1.45.1"
   }
 }

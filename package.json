@@ -1,10 +1,22 @@
 {
   "name": "root",
   "private": true,
+  "dependencies": {
+    "fantasion-backend": "file:packages/fantasion-backend",
+    "fantasion-teaser": "file:packages/fantasion-teaser",
+    "fantasion-web": "file:packages/fantasion-web"
+  },
   "devDependencies": {
-    "lerna": "^3.10.7"
+    "eslint": "^8.5.0",
+    "eslint-config-next": "^12.0.7",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "lerna": "^3.10.7",
+    "prettier": "^2.5.1"
   },
   "scripts": {
-    "backend": "lerna run dev --stream --scope fantasion-backend"
+    "backend": "lerna run dev --stream --scope fantasion-backend",
+    "postinstall": "lerna run python-install --stream --parallel",
+    "web": "lerna run dev --stream --scope fantasion-web"
   }
 }
