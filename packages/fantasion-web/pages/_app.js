@@ -1,36 +1,25 @@
 import Head from 'next/head'
 
-import { Component } from 'react'
 import { appWithTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
 
 import '../styles/globals.css'
 
-class ErrorBoundary extends Component {
-  state = { hasError: false, error: null }
-  static getDerivedStateFromError(error) {
-    return {
-      hasError: true,
-      error,
-    }
-  }
-  render() {
-    if (this.state.hasError) {
-      return this.props.fallback
-    }
-    return this.props.children
-  }
-}
-
-function MyApp({ Component, pageProps }) {
+function MyApp({ baseUrl, Component, pageProps }) {
+  const router = useRouter()
+  console.log(baseUrl, pageProps)
   return (
-    <ErrorBoundary fallback={<h1>oops</h1>}>
+    <>
       <Head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width" />
+        <meta property="og:title" content="Fantasion" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={router.href} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Component {...pageProps} />
-    </ErrorBoundary>
+    </>
   )
 }
 
