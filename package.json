@@ -16,6 +16,7 @@
   },
   "scripts": {
     "backend": "lerna run dev --stream --scope fantasion-backend",
+    "build": "lerna run build --stream --parallel",
     "postinstall": "lerna run python-install --stream --parallel",
     "web": "lerna run dev --stream --scope fantasion-web"
   }
