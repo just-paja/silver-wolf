@@ -1,5 +1,9 @@
 locals {
-  image_url = "${var.repo}/${var.project}/${var.name}:${var.project_version}"
+  backend_package = jsondecode(file("${var.path}/package.json"))
+}
+
+locals {
+  image_url = "${var.repo}/${var.project}/${var.name}:${local.backend_package.version}"
   actor = "docker@${var.project}.iam.gserviceaccount.com"
   root = "terraform@${var.project}.iam.gserviceaccount.com"
 }

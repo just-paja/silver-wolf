@@ -11,13 +11,22 @@
     "eslint-config-next": "^12.0.7",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.4.5",
+    "jest-runner-eslint": "^1.0.0",
+    "jest-watch-select-projects": "^2.0.0",
+    "jest-watch-typeahead": "^1.0.0",
     "lerna": "^3.10.7",
+    "lerna-jest": "^0.5.4",
     "prettier": "^2.5.1"
   },
   "scripts": {
     "backend": "lerna run dev --stream --scope fantasion-backend",
     "build": "lerna run build --stream --parallel",
     "postinstall": "lerna run python-install --stream --parallel",
+    "test": "jest",
     "web": "lerna run dev --stream --scope fantasion-web"
+  },
+  "engines": {
+    "node": "16"
   }
 }

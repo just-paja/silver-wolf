@@ -13,8 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Debug
-        run: ls -lR
       - name: Install dependencies
         run: |
           sudo apt-get install rsync
@@ -29,3 +27,29 @@ jobs:
           cd ./packages/fantasion-teaser
           echo -e "[web]\n${{ secrets.TEASER_DEPLOY_HOST }}\n" > inventory
           ansible-playbook deploy.yml -i inventory
+
+  terraform:
+    name: Deploy terraform resources
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: packages
+      - name: Configure credentials
+        run: echo -e "${{ secrets.GCP_CREDENTIALS }}" > credentials.json
+      - name: Deploy app
+        env:
+          TF_VAR_GCP_CREDENTIALS: ./credentials.json
+          TF_VAR_GCP_USER: ${{ secrets.GCP_USER }}
+          TF_VAR_GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+        run: |
+          cd ./terraform
+          terraform init
+          terraform validate
+          terraform apply --auto-approve

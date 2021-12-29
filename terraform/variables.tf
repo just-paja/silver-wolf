@@ -1,18 +1,13 @@
-variable "project_version" {
-  type = string
-  default = "0.0.1"
-}
-
-variable "project" {
+variable "GCP_PROJECT" {
   type = string
 }
 
-variable "location" {
+variable "GCP_LOCATION" {
   type = string
   default = "EU"
 }
 
-variable "region" {
+variable "GCP_REGION" {
   type = string
   default = "europe-west3"
 }
@@ -22,11 +17,11 @@ variable "node_runtime" {
   default = "nodejs16"
 }
 
-variable "google_credentials" {
+variable "GCP_CREDENTIALS" {
   type = string
 }
 
-variable "repo" {
+variable "GCP_DOCKER_REPO" {
   type = string
   default = "eu.gcr.io"
 }
