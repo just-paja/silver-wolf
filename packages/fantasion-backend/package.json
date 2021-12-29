@@ -15,6 +15,9 @@
   "directories": {},
   "files": [],
   "scripts": {
+    "build": "npm run build:py && npm run build:requirements",
+    "build:py": "poetry build -f sdist",
+    "build:requirements": "poetry export -f requirements.txt --output requirements.txt",
     "dev": "poetry run ./manage.py runserver",
     "python-install": "poetry install"
   },
