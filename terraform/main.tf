@@ -13,17 +13,28 @@ module "backend_docker" {
   location = var.location
   path = "${local.root_dir}/packages/fantasion-backend"
   project = var.project
-  project_version = "0.1.0"
+  project_version = var.project_version
+  repo = var.repo
   source = "./modules/docker"
 }
 
+module "backend_cloudrun" {
+  envs = []
+  image_url = module.backend_docker.image_url
+  name = "fantasion-backend"
+  project = var.project
+  region = var.region
+  source = "./modules/cloudrun"
+  depends_on = [module.backend_docker]
+}
+
 module "web_cf" {
-  source = "./modules/web_cf"
+  function_description = "Serverless website"
+  function_entry_point = "handleRequest"
+  function_name = "fantasion-web"
   location = var.location
   project = var.project
   region = var.region
   runtime = var.node_runtime
-  function_name = "fantasion-web"
-  function_description = "Serverless website"
-  function_entry_point = "handleRequest"
+  source = "./modules/web_cf"
 }

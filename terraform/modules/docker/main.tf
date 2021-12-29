@@ -1,6 +1,5 @@
 locals {
-  tag = "${var.name}:${var.project_version}"
-  repo = "eu.gcr.io"
+  image_url = "${var.repo}/${var.project}/${var.name}:${var.project_version}"
   actor = "docker@${var.project}.iam.gserviceaccount.com"
   root = "terraform@${var.project}.iam.gserviceaccount.com"
 }
@@ -32,16 +31,20 @@ data "google_service_account_access_token" "repo" {
 
 provider "docker" {
   registry_auth {
-    address = local.repo
+    address = var.repo
     username = "oauth2accesstoken"
     password = data.google_service_account_access_token.repo.access_token
   }
 }
 
 resource "docker_registry_image" "image" {
-  name = "${local.repo}/${var.project}/${local.tag}"
+  name = local.image_url
   insecure_skip_verify = true
   build {
     context = var.path
   }
+}
+
+output "image_url" {
+  value = local.image_url
 }

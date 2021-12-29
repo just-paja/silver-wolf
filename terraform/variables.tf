@@ -1,3 +1,8 @@
+variable "project_version" {
+  type = string
+  default = "0.0.1"
+}
+
 variable "project" {
   type = string
 }
@@ -19,4 +24,9 @@ variable "node_runtime" {
 
 variable "google_credentials" {
   type = string
+}
+
+variable "repo" {
+  type = string
+  default = "eu.gcr.io"
 }
