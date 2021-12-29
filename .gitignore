@@ -3,5 +3,4 @@ __pycache__
 db.sqlite3
 *.tfstate
 *.tfstate*
-*.lock.hcl
 .terraform
