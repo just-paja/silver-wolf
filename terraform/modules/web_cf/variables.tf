@@ -1,4 +1,5 @@
 variable "project" {}
+variable "location" {}
 variable "region" {}
 variable "runtime" {}
 variable "function_name" {}
