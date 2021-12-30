@@ -38,6 +38,10 @@ module "backend_cloudrun" {
       name = "ALLOWED_HOSTS",
       value = var.BACKEND_HOSTS,
     },
+    {
+      name = "PROJECT_ENVIRONMENT",
+      value = var.PROJECT_ENVIRONMENT,
+    },
   ]
   image_url = module.backend_docker.image_url
   name = "fantasion-backend"
