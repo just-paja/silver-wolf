@@ -1,3 +1,4 @@
+variable "connection_name" {}
 variable "project" {}
 variable "region" {}
 variable "name" {}

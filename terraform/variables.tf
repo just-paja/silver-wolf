@@ -49,3 +49,11 @@ variable "WEBSITE_URL" {
   type = string
   default = "https://fantasion.cz"
 }
+
+variable "DB_USER" {
+  type = string
+}
+
+variable "DB_PASS" {
+  type = string
+}

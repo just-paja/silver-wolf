@@ -3,6 +3,14 @@ locals {
   root_dir = abspath("../")
 }
 
+resource "google_project_service" "cloudbuild" {
+  service = "cloudbuild.googleapis.com"
+}
+
+resource "google_project_service" "cloudfunctions" {
+  service = "cloudfunctions.googleapis.com"
+}
+
 data "archive_file" "source" {
   type = "zip"
   source_dir = "${local.root_dir}/packages/fantasion-web"
@@ -19,16 +27,6 @@ resource "google_storage_bucket_object" "zip" {
   name = "source.zip#${data.archive_file.source.output_md5}"
   bucket = google_storage_bucket.bucket.name
   source = data.archive_file.source.output_path
-}
-
-resource "google_project_service" "cf" {
-  project = var.project
-  service = "cloudfunctions.googleapis.com"
-}
-
-resource "google_project_service" "cb" {
-  project = var.project
-  service = "cloudbuild.googleapis.com"
 }
 
 resource "google_cloudfunctions_function" "function" {
