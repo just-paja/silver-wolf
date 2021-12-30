@@ -17,10 +17,10 @@ def get_schemed_netloc(url):
 BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_ENVIRONMENT = os.environ.get('PROJECT_ENVIRONMENT', None)
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',') + (
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',') + [
     gethostname(),
     gethostbyname(gethostname()),
-)
+]
 
 APPEND_SLASH = False
 DEBUG = PROJECT_ENVIRONMENT != 'production'
