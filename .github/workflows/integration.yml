@@ -96,6 +96,8 @@ jobs:
       - name: Deploy app
         working-directory: ./terraform
         env:
+          TF_VAR_DB_PASS: ${{ secrets.DB_PASS }}
+          TF_VAR_DB_USER: ${{ secrets.DB_USER }}
           TF_VAR_GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
           TF_VAR_GCP_USER: ${{ secrets.GCP_USER }}
         run: |
