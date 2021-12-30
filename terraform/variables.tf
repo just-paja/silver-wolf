@@ -34,3 +34,8 @@ variable "ROOT_DIR" {
   type = string
   default = ""
 }
+
+variable "BACKEND_HOSTS" {
+  type = string
+  default = "api.fantasion.cz"
+}
