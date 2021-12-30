@@ -1,6 +1,6 @@
 locals {
-  timestamp = timestamp()
   root_dir = abspath("../")
+  package = jsondecode(file("${var.path}/package.json"))
 }
 
 resource "google_project_service" "cloudbuild" {
@@ -13,8 +13,8 @@ resource "google_project_service" "cloudfunctions" {
 
 data "archive_file" "source" {
   type = "zip"
-  source_dir = "${local.root_dir}/packages/fantasion-web"
-  output_path = "/tmp/function-${local.timestamp}.zip"
+  source_dir = "${var.path}"
+  output_path = "/tmp/function-${local.package.version}.zip"
 }
 
 resource "google_storage_bucket" "bucket" {

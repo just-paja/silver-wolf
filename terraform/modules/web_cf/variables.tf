@@ -1,3 +1,4 @@
+variable "path" {}
 variable "project" {}
 variable "location" {}
 variable "region" {}

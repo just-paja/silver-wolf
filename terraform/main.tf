@@ -101,6 +101,7 @@ module "web_cf" {
   function_entry_point = "handleRequest"
   function_name = "fantasion-web"
   location = local.location
+  path = "${local.root_dir}/packages/fantasion-web"
   project = local.project
   region = local.region
   runtime = var.node_runtime
