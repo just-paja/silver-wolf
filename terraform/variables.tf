@@ -44,3 +44,8 @@ variable "PROJECT_ENVIRONMENT" {
   type = string
   default = "production"
 }
+
+variable "WEBSITE_URL" {
+  type = string
+  default = "https://fantasion.cz"
+}

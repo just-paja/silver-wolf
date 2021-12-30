@@ -42,6 +42,10 @@ module "backend_cloudrun" {
       name = "PROJECT_ENVIRONMENT",
       value = var.PROJECT_ENVIRONMENT,
     },
+    {
+      name = "APP_WEBSITE_URL",
+      value = var.WEBSITE_URL,
+    },
   ]
   image_url = module.backend_docker.image_url
   name = "fantasion-backend"
