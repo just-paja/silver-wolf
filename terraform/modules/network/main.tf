@@ -1,3 +1,7 @@
+resource "google_project_service" "servicenetworking" {
+  service = "servicenetworking.googleapis.com"
+}
+
 resource "google_compute_network" "vpc" {
   name = "${var.project}-network"
   routing_mode = "GLOBAL"

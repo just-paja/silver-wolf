@@ -1,7 +1,14 @@
+resource "google_project_service" "sqladmin" {
+  service = "sqladmin.googleapis.com"
+}
+
 resource "google_sql_database_instance" "master" {
   name = "${var.project}-db-instance"
   region = var.region
   database_version = "POSTGRES_13"
+  depends_on = [
+    google_project_service.sqladmin
+  ]
 
   settings {
     tier = "db-f1-micro"
