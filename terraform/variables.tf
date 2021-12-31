@@ -13,7 +13,7 @@ variable "GCP_LOCATION" {
 
 variable "GCP_REGION" {
   type = string
-  default = "europe-west3"
+  default = "europe-west1"
 }
 
 variable "node_runtime" {
