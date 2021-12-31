@@ -13,7 +13,7 @@ resource "google_project_service" "cf" {
 }
 
 resource "google_cloud_run_service" "service" {
-  name = "${var.name}-${var.protocol}"
+  name = var.name
   location = var.region
   
   template {

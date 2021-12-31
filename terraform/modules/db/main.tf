@@ -3,7 +3,7 @@ resource "google_project_service" "sqladmin" {
 }
 
 resource "google_sql_database_instance" "master" {
-  name = "${var.project}-db-instance"
+  name = "${var.project}-db"
   region = var.region
   database_version = "POSTGRES_13"
   depends_on = [
