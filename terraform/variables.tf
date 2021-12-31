@@ -57,3 +57,7 @@ variable "DB_USER" {
 variable "DB_PASS" {
   type = string
 }
+
+variable "SECRET_KEY" {
+  type = string
+}

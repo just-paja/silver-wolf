@@ -19,6 +19,7 @@
     "build:py": "poetry build -f sdist",
     "build:requirements": "poetry export -f requirements.txt --output requirements.txt",
     "dev": "poetry run ./manage.py runserver",
+    "migrate": "poetry run ./manage.py migrate",
     "python-install": "poetry install"
   },
   "repository": {

@@ -42,6 +42,17 @@ module "db" {
   vpc = module.network.vpc
 }
 
+module "db_migrations" {
+  db_host = module.db.db_instance.public_ip_address
+  db_name = local.db_name
+  db_pass = var.DB_PASS
+  db_user = var.DB_USER
+  depends_on = [module.db]
+  secret_key = var.SECRET_KEY
+  source = "./modules/db_migrations"
+  path = "${local.root_dir}/packages/fantasion-backend"
+}
+
 module "backend_docker" {
   name = "fantasion-backend"
   location = local.location
@@ -59,10 +70,6 @@ module "backend_cloudrun" {
     {
       name = "ALLOWED_HOSTS",
       value = var.BACKEND_HOSTS,
-    },
-    {
-      name = "PROJECT_ENVIRONMENT",
-      value = var.PROJECT_ENVIRONMENT,
     },
     {
       name = "APP_WEBSITE_URL",
@@ -83,6 +90,14 @@ module "backend_cloudrun" {
     {
       name = "DB_USER",
       value = var.DB_USER,
+    },
+    {
+      name = "PROJECT_ENVIRONMENT",
+      value = var.PROJECT_ENVIRONMENT,
+    },
+    {
+      name = "SECRET_KEY",
+      value = var.SECRET_KEY,
     },
   ]
   image_url = module.backend_docker.image_url
