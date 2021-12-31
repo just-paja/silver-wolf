@@ -117,6 +117,7 @@ jobs:
           TF_VAR_DB_USER: ${{ secrets.DB_USER }}
           TF_VAR_GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
           TF_VAR_GCP_USER: ${{ secrets.GCP_USER }}
+          TF_VAR_SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
           terraform init
           terraform validate
