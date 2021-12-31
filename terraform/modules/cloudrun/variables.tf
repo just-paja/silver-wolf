@@ -1,7 +1,9 @@
 variable "connection_name" {}
+variable "hostname" {}
+variable "name" {}
 variable "project" {}
 variable "region" {}
-variable "name" {}
+
 variable "image_url" {
   type = string
 }

@@ -69,7 +69,7 @@ module "backend_cloudrun" {
   envs = [
     {
       name = "ALLOWED_HOSTS",
-      value = var.BACKEND_HOSTS,
+      value = var.BACKEND_HOST,
     },
     {
       name = "APP_WEBSITE_URL",
@@ -100,6 +100,7 @@ module "backend_cloudrun" {
       value = var.SECRET_KEY,
     },
   ]
+  hostname = var.BACKEND_HOST
   image_url = module.backend_docker.image_url
   name = "fantasion-backend"
   project = local.project

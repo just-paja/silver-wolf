@@ -57,3 +57,22 @@ resource "google_cloud_run_service_iam_policy" "noauth_policy" {
   service = google_cloud_run_service.service.name
   policy_data = data.google_iam_policy.noauth.policy_data
 }
+
+resource "google_cloud_run_domain_mapping" "default" {
+  location = var.region
+  name = var.hostname
+  metadata {
+    namespace = var.project
+    annotations = {
+      "serving.knative.dev/creator" = "just.paja@gmail.com"
+      "serving.knative.dev/lastModifier" = "just.paja@gmail.com"
+    }
+    labels = {
+      "cloud.googleapis.com/location" = var.region
+    }
+  }
+  spec {
+    force_override = false
+    route_name = google_cloud_run_service.service.name
+  }
+}

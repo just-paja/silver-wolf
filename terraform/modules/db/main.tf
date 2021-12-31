@@ -18,6 +18,10 @@ resource "google_sql_database_instance" "master" {
     ip_configuration {
       ipv4_enabled = true
       private_network = var.vpc
+      authorized_networks {
+          name = "Global"
+          value = "0.0.0.0/0"
+      }
     }
   }
 }
