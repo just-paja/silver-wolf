@@ -33,6 +33,13 @@ resource "google_cloudfunctions_function" "function" {
   name        = var.function_name
   description = var.function_description
   runtime     = var.runtime
+  depends_on = [
+    google_project_service.cloudbuild,
+    google_project_service.cloudfunctions,
+  ]
+  environment_variables = {
+    GCLOUD_PROJECT = var.project
+  }
 
   available_memory_mb   = 128
   source_archive_bucket = google_storage_bucket.bucket.name
