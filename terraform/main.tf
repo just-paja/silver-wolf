@@ -53,12 +53,22 @@ module "db_migrations" {
   path = "${local.root_dir}/packages/fantasion-backend"
 }
 
-module "backend_public_storage" {
+module "backend_storage_public" {
   name = var.BUCKET_PUBLIC
   location = local.location
   project = local.project
   origins = [var.WEBSITE_URL]
   source = "./modules/bucket"
+}
+
+module "static_files" {
+  bucket_public = var.BUCKET_PUBLIC
+  depends_on = [module.backend_storage_public]
+  gcp_project = local.project
+  gs_credentials = var.GS_CREDENTIALS
+  path = "${local.root_dir}/packages/fantasion-backend"
+  secret_key = var.SECRET_KEY
+  source = "./modules/static_files"
 }
 
 module "backend_docker" {
@@ -129,6 +139,7 @@ module "backend_cloudrun" {
   depends_on = [
     module.db,
     module.backend_docker,
+    module.backend_storage_public,
   ]
 }
 
