@@ -61,3 +61,11 @@ variable "DB_PASS" {
 variable "SECRET_KEY" {
   type = string
 }
+
+variable "BUCKET_PUBLIC" {
+  type = string
+}
+
+variable "GS_CREDENTIALS" {
+  type = string
+}
