@@ -189,12 +189,12 @@ BUCKET_PUBLIC = os.environ.get('BUCKET_PUBLIC', None)
 if BUCKET_PUBLIC:
     from google.oauth2 import service_account
     import json
-    DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
-    STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+    DEFAULT_FILE_STORAGE = 'fantasion_generics.storages.MediaStorage'
+    STATICFILES_STORAGE = 'fantasion_generics.storages.StaticStorage'
     GS_BUCKET_NAME = BUCKET_PUBLIC
     GS_PROJECT_ID = os.environ.get('GCP_PROJECT')
     GS_CREDENTIALS = service_account.Credentials.from_service_account_info(
-        json.load(os.environ.get('GS_CREDENTIALS'))
+        json.loads(os.environ.get('GS_CREDENTIALS'))
     )
 
 LOGGING = {

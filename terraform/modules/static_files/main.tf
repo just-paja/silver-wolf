@@ -1,4 +1,4 @@
-resource "null_resource" "migrations" {
+resource "null_resource" "static_files" {
   provisioner "local-exec" {
     working_dir = var.path
     environment = {

@@ -9,9 +9,11 @@ resource "google_storage_bucket" "bucket" {
   }
 }
 
-resource "google_storage_bucket_access_control" "public_rule" {
+resource "google_storage_bucket_iam_binding" "public_rule" {
   count = var.public ? 1 : 0
   bucket = google_storage_bucket.bucket.name
-  role   = "READER"
-  entity = "allUsers"
+  role = "roles/storage.objectViewer"
+  members = [
+    "allUsers"
+  ]
 }
