@@ -57,7 +57,10 @@ module "backend_storage_public" {
   name = var.BUCKET_PUBLIC
   location = local.location
   project = local.project
-  origins = [var.WEBSITE_URL]
+  origins = [
+    "https://${var.BACKEND_HOST}",
+    var.WEBSITE_URL
+  ]
   source = "./modules/bucket"
 }
 
