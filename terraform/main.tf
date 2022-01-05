@@ -102,7 +102,7 @@ module "backend_cloudrun" {
     },
     {
       name = "DB_HOST",
-      value = module.db.db_instance.connection_name,
+      value = "/cloudsql/${module.db.db_instance.connection_name}",
     },
     {
       name = "DB_NAME",
