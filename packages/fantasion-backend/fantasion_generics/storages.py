@@ -5,11 +5,11 @@ from storages.backends.gcloud import GoogleCloudStorage
 
 
 def MediaStorage():
-    return GoogleCloudStorage(location='media')
+    return GoogleCloudStorage(location='media', querystring_auth=False)
 
 
 def StaticStorage():
-    return GoogleCloudStorage(location='static')
+    return GoogleCloudStorage(location='static', querystring_auth=False)
 
 
 def get_private_storage_class(import_path=None):
