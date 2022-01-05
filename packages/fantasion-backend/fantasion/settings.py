@@ -160,6 +160,8 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 LOG_LEVEL = 'INFO'
+EMAIL_ROBOT_NAME = 'Cítí'
+EMAIL_ROBOT_ADDR = 'citi@polocas-napadu.cz'
 
 if DEBUG:
     MEDIA_ROOT = BASE_DIR
