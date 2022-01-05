@@ -196,8 +196,7 @@ if BUCKET_PUBLIC:
     GS_BUCKET_NAME = BUCKET_PUBLIC
     GS_PROJECT_ID = os.environ.get('GCP_PROJECT')
     GS_CREDENTIALS = service_account.Credentials.from_service_account_info(
-        json.loads(os.environ.get('GS_CREDENTIALS'))
-    )
+        json.loads(os.environ.get('GS_CREDENTIALS')))
 
 LOGGING = {
     'version': 1,
