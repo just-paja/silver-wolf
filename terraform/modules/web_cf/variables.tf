@@ -1,8 +1,10 @@
-variable "path" {}
-variable "project" {}
-variable "location" {}
-variable "region" {}
-variable "runtime" {}
-variable "function_name" {}
 variable "function_description" {}
 variable "function_entry_point" {}
+variable "function_name" {}
+variable "location" {}
+variable "path" {}
+variable "project" {}
+variable "region" {}
+variable "runtime" {}
+variable "static_bucket_name" {}
+variable "static_bucket_url" {}

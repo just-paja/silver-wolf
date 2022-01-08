@@ -17,3 +17,11 @@ resource "google_storage_bucket_iam_binding" "public_rule" {
     "allUsers"
   ]
 }
+
+output "bucket" {
+  value = google_storage_bucket.bucket
+}
+
+output "base_url" {
+  value = google_storage_bucket.bucket.url
+}

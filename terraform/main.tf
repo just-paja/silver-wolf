@@ -64,14 +64,23 @@ module "backend_storage_public" {
   source = "./modules/bucket"
 }
 
-module "static_files" {
+module "backend_static_files" {
   bucket_public = var.BUCKET_PUBLIC
   depends_on = [module.backend_storage_public]
   gcp_project = local.project
   gs_credentials = var.GS_CREDENTIALS
   path = "${local.root_dir}/packages/fantasion-backend"
   secret_key = var.SECRET_KEY
-  source = "./modules/static_files"
+  source = "./modules/django_static_files"
+}
+
+module "frontend_static_files" {
+  bucket_public = var.BUCKET_PUBLIC
+  depends_on = [module.backend_storage_public]
+  gcp_project = local.project
+  gs_credentials = var.GS_CREDENTIALS
+  path = "${local.root_dir}/packages/fantasion-web"
+  source = "./modules/next_static_files"
 }
 
 module "backend_docker" {
@@ -156,5 +165,9 @@ module "web_cf" {
   region = local.region
   runtime = var.node_runtime
   source = "./modules/web_cf"
-  depends_on = []
+  static_bucket_name = var.BUCKET_PUBLIC
+  static_bucket_url = module.backend_storage_public.bucket.url
+  depends_on = [
+    module.backend_storage_public
+  ]
 }

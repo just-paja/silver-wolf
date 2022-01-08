@@ -32,10 +32,12 @@ export const MetaUrl = ({ url }) => (
   </Head>
 )
 
-export const asPage = (PageComp) => (props) =>
-  (
-    <>
-      <MetaUrl url={props.href} />
-      <PageComp {...props} />
-    </>
-  )
+export const asPage = (PageComp) =>
+  function MetaPageWrapper(props) {
+    return (
+      <>
+        <MetaUrl url={props.href} />
+        <PageComp {...props} />
+      </>
+    )
+  }

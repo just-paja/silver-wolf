@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "collectstatic": "node ./scripts/collect-static.js",
     "lint": "next lint",
     "lock": "npm i --package-lock-only",
     "start": "next start"

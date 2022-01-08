@@ -1,6 +1,6 @@
 locals {
   root_dir = abspath("../")
-  npm_package = jsondecode(file("${var.path}/package.json"))
+  npm = jsondecode(file("${var.path}/package.json"))
 }
 
 resource "google_project_service" "cloudbuild" {
@@ -14,7 +14,7 @@ resource "google_project_service" "cloudfunctions" {
 data "archive_file" "source" {
   type = "zip"
   source_dir = "${var.path}"
-  output_path = "/tmp/${var.project}-${local.npm_package.version}.zip"
+  output_path = "/tmp/${var.project}-${local.npm.version}.zip"
 }
 
 resource "google_storage_bucket" "bucket" {
@@ -24,7 +24,7 @@ resource "google_storage_bucket" "bucket" {
 }
 
 resource "google_storage_bucket_object" "zip" {
-  name = "${var.project}-${local.npm_package.version}.zip"
+  name = "${var.project}-${local.npm.version}.zip"
   bucket = google_storage_bucket.bucket.name
   source = data.archive_file.source.output_path
 }
@@ -39,6 +39,7 @@ resource "google_cloudfunctions_function" "function" {
   ]
   environment_variables = {
     GCLOUD_PROJECT = var.project
+    STATIC_ROOT = var.static_bucket_url
   }
 
   available_memory_mb   = 128
