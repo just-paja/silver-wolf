@@ -1,32 +1,28 @@
-import getAbsoluteUrl from 'next-absolute-url'
-import Head from 'next/head'
+import Container from 'react-bootstrap/Container'
 import React from 'react'
 
+import { asPage, MetaPage } from '../components/meta'
+import { GeneralNewsletterForm } from '../components/GeneralNewsletterForm'
+import { getPageProps } from '../server/props'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-export const getServerSideProps = async ({ locale, req }) => ({
-  props: {
-    baseUrl: getAbsoluteUrl(req),
-    ...(await serverSideTranslations(locale)),
-  },
-})
+export const getServerSideProps = getPageProps
 
-export default function Home(props) {
-  console.log(props)
+const Home = () => {
   const { t } = useTranslation()
   return (
-    <div>
-      <Head>
-        <title>Fantasion</title>
-        <meta name="description" content={t('fantasion-general-description')} />
-        <meta property="og:title" content="Fantasion" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://fantasion.cz" />
-      </Head>
-      <main>
-        <h1>Fantasion</h1>
-      </main>
-    </div>
+    <main>
+      <MetaPage
+        title={t('fantasion-title')}
+        description={t('fantasion-general-description')}
+      />
+      <Container>
+        <h1>{t('fantasion-title')}</h1>
+        <p>{t('fantasion-general-description')}</p>
+        <GeneralNewsletterForm />
+      </Container>
+    </main>
   )
 }
+
+export default asPage(Home)
