@@ -15,7 +15,8 @@ def get_schemed_netloc(url):
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+CONFIG_DIR = Path(__file__).resolve().parent
+BASE_DIR = CONFIG_DIR.parent
 PROJECT_ENVIRONMENT = os.environ.get('PROJECT_ENVIRONMENT', None)
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',') + [
@@ -61,7 +62,7 @@ MIDDLEWARE = [
 ]
 
 LOCALE_PATHS = [
-    os.path.join(BASE_DIR, 'locale'),
+    os.path.join(CONFIG_DIR, 'locale'),
 ]
 
 ROOT_URLCONF = 'fantasion.urls'

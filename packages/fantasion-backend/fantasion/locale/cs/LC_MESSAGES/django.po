@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-08 14:57+0100\n"
+"POT-Creation-Date: 2022-01-08 15:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,11 +23,11 @@ msgstr ""
 msgid "Base"
 msgstr "Fantasion"
 
-#: fantasion/settings.py:131
+#: fantasion/settings.py:132
 msgid "Czech"
 msgstr "Čeština"
 
-#: fantasion/settings.py:132
+#: fantasion/settings.py:133
 msgid "English"
 msgstr "Angličtina"
 
