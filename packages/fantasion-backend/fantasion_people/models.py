@@ -11,10 +11,15 @@ from django.db.models import (
 )
 
 from fantasion_generics.models import MediaObjectModel, NamedModel, PublicModel
+from fantasion_generics.media import MediaParentField
 from fantasion_generics.titles import TitleField
 
 
 class Profile(PublicModel):
+    class Meta:
+        verbose_name = _('Profile')
+        verbose_name_plural = _('Profiles')
+
     public = BooleanField(
         help_text=_('Public profiles will be visible on the website'),
         default=False,
@@ -31,22 +36,26 @@ class Profile(PublicModel):
 
 
 class ProfileMedia(MediaObjectModel):
-    parent = ForeignKey(
-        Profile,
-        related_name='media',
-        on_delete=CASCADE,
-    )
+    parent = MediaParentField(Profile, )
 
 
 class Allergy(NamedModel):
-    pass
+    class Meta:
+        verbose_name = _('Allergy')
+        verbose_name_plural = _('Allergies')
 
 
 class Hobby(NamedModel):
-    pass
+    class Meta:
+        verbose_name = _('Hobby')
+        verbose_name_plural = _('Hobbies')
 
 
 class Family(TimeStampedModel):
+    class Meta:
+        verbose_name = _('Family')
+        verbose_name_plural = _('Families')
+
     title = TitleField()
     owner = ForeignKey(
         User,
@@ -77,17 +86,24 @@ FAMILY_ROLE_CHOICES = (
 
 
 class FamilyMember(TimeStampedModel):
+    class Meta:
+        verbose_name = _('Family member')
+        verbose_name_plural = _('Family members')
+
     family = ForeignKey(
         Family,
         on_delete=CASCADE,
         related_name='members',
+        verbose_name=_('Family'),
     )
     user = ForeignKey(
         User,
         on_delete=CASCADE,
         related_name='family_members',
+        verbose_name=_('User'),
     )
     role = PositiveIntegerField(
         choices=FAMILY_ROLE_CHOICES,
         default=FAMILY_ROLE_SPECTATOR,
+        verbose_name=_('Family Role'),
     )

@@ -16,16 +16,21 @@ from django.db.models import (
 )
 
 from fantasion_generics.models import PublicModel
-from fantasion_generics.media import MediaModelMixin
+from fantasion_generics.media import MediaParentField, MediaModelMixin
 from fantasion_generics.photos import PrivatePhotoModel
 from fantasion_eshop.models import OrderItem
 
 
 class Participant(TimeStampedModel):
+    class Meta:
+        verbose_name = _('Participant')
+        verbose_name_plural = _('Participants')
+
     name = CharField(
-        max_length=255
+        max_length=255,
+        verbose_name=_('Name'),
     )
-    birthdate = DateField()
+    birthdate = DateField(verbose_name=_('Birth date'))
 
 
 SIGNUP_STATUS_NEW = 1
@@ -44,55 +49,57 @@ SIGNUP_STATES = (
 
 
 class Signup(OrderItem):
+    class Meta:
+        verbose_name = _('Signup')
+        verbose_name_plural = _('Signups')
+
     family = ForeignKey(
         'fantasion_people.Family',
         on_delete=RESTRICT,
         related_name='signups',
+        verbose_name=_('Family'),
     )
     batch_age_group = ForeignKey(
         'fantasion_expeditions.BatchAgeGroup',
         on_delete=RESTRICT,
         related_name='signups',
+        verbose_name=_('Age Group'),
     )
     participant = ForeignKey(
         Participant,
         on_delete=RESTRICT,
         related_name='signups',
+        verbose_name=_('Participant'),
     )
-    legal_guardian = BooleanField()
+    legal_guardian = BooleanField(verbose_name=_('Legal Guardian'), )
     status = PositiveIntegerField(
         choices=SIGNUP_STATES,
+        verbose_name=_('Signup Status'),
     )
     submitted_at = DateTimeField(
         null=True,
         blank=True,
-        help_text=_(
-            'The exact date and time signup was submitted.'
-            'Date is generated automatically'
-        ),
+        verbose_name=_('Submitted at'),
+        help_text=_('The exact date and time signup was submitted.'
+                    'Date is generated automatically'),
     )
     cancelled_for = TextField(
         blank=True,
         null=True,
+        verbose_name=_('Cancelled for'),
         help_text=_(
-            'Write down a short explanation why was this signup cancelled'
-        )
-    )
+            'Write down a short explanation why was this signup cancelled'))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.initial_status = self.status
 
     def get_description(self):
-        return 'Signup: {participant}'.format(
-            participant=self.participant
-        )
+        return 'Signup: {participant}'.format(participant=self.participant)
 
     def was_submitted(self):
-        return (
-            self.status == SIGNUP_STATUS_CONFIRMED and
-            self.status != self.initial_status
-        )
+        return (self.status == SIGNUP_STATUS_CONFIRMED
+                and self.status != self.initial_status)
 
     def clean(self):
         """
@@ -100,14 +107,11 @@ class Signup(OrderItem):
         """
         if self.family.can_user_own_order(self.order.owner):
             raise ValidationError(
-                _((
-                    'User {user_name} is not allowed to make signups on',
-                    'behalf of Family#{family_id}.'
-                )).format(
-                    user_name=self.order.owner.get_full_name(),
-                    family_id=self.family.id,
-                )
-            )
+                _(('User {user_name} is not allowed to make signups on',
+                   'behalf of Family#{family_id}.')).format(
+                       user_name=self.order.owner.get_full_name(),
+                       family_id=self.family.id,
+                   ))
 
     def save(self, *args, **kwargs):
         """
@@ -122,34 +126,38 @@ class Signup(OrderItem):
 
 
 class SignupDocumentType(PublicModel):
+    class Meta:
+        verbose_name = _('Signup Document Type')
+        verbose_name_plural = _('Signup Document Type')
+
     required = BooleanField(
         default=False,
-        help_text=_(
-            'Signup will be marked as incomplete until parent uploads'
-            'this document'
-        )
-    )
+        verbose_name=_('Required'),
+        help_text=_('Signup will be marked as incomplete until parent uploads'
+                    'this document'))
 
 
 class SignupDocument(TimeStampedModel):
+    class Meta:
+        verbose_name = _('Signup Document')
+        verbose_name_plural = _('Signup Document')
+
     signup = ForeignKey(
         Signup,
         on_delete=CASCADE,
         related_name='documents',
+        verbose_name=_('Signup'),
     )
     document_type = ForeignKey(
         SignupDocumentType,
         on_delete=RESTRICT,
         related_name='documents',
+        verbose_name=_('Document type'),
     )
 
 
 class SignupDocumentMedia(MediaModelMixin, PrivatePhotoModel):
-    parent = ForeignKey(
-        SignupDocument,
-        on_delete=CASCADE,
-        related_name='media',
-    )
+    parent = MediaParentField(SignupDocument)
 
     @property
     def upload_dir(self):
@@ -157,15 +165,27 @@ class SignupDocumentMedia(MediaModelMixin, PrivatePhotoModel):
 
 
 class SignupDocumentVerification(TimeStampedModel):
+    class Meta:
+        verbose_name = _('Document Verification')
+        verbose_name_plural = _('Document Verifications')
+
     document = ForeignKey(
         SignupDocument,
         on_delete=CASCADE,
         related_name='verifications',
+        verbose_name=_('Signup Document'),
     )
     verified_by = ForeignKey(
         'auth.User',
         on_delete=RESTRICT,
         related_name='signup_document_verifications',
+        verbose_name=_('Verified by'),
     )
-    verified_on = DateField()
-    valid_until = DateField()
+    verified_on = DateField(
+        verbose_name=_('Verified on'),
+        help_text=_('Date this document was verified'),
+    )
+    valid_until = DateField(
+        verbose_name=_('Valid until'),
+        help_text=_('This document will stay valid until it expires'),
+    )

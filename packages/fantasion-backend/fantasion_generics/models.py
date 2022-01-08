@@ -1,4 +1,5 @@
 from django_extensions.db.models import AutoSlugField, TimeStampedModel
+from django.utils.translation import ugettext_lazy as _
 from re import sub
 
 from .media import MediaModelMixin
@@ -11,18 +12,13 @@ from .titles import (
     TitleField,
 )
 
-
 ksub = r"[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+"
 
 
 def kebab(s):
     return '-'.join(
-        sub(
-            r"(\s|_|-)+",
-            " ",
-            sub(ksub, lambda mo: ' ' + mo.group(0).lower(), s)
-        ).split()
-    )
+        sub(r"(\s|_|-)+", " ",
+            sub(ksub, lambda mo: ' ' + mo.group(0).lower(), s)).split())
 
 
 class NamedModel(TimeStampedModel):
@@ -34,20 +30,21 @@ class NamedModel(TimeStampedModel):
 
 
 class MediaObjectModel(
-    NamedModel,
-    MediaModelMixin,
-    LocalPhotoModel,
-    LocalVideoModel
+        NamedModel,
+        MediaModelMixin,
+        LocalPhotoModel,
+        LocalVideoModel,
 ):
     class Meta:
         abstract = True
+        verbose_name = _('Media Object')
+        verbose_name_plural = _('Media Objects')
 
     @property
     def upload_dir(self):
         return '{0}/{1}'.format(
             kebab(self.__class__.parent.field.remote_field.model.__name__),
-            self.parent_id
-        )
+            self.parent_id)
 
 
 class PublicModel(NamedModel):
@@ -56,7 +53,7 @@ class PublicModel(NamedModel):
 
     title = TitleField()
     description = DescriptionField()
-    slug = AutoSlugField(populate_from=('title',))
+    slug = AutoSlugField(populate_from=('title', ))
 
     def __str__(self):
         return self.title

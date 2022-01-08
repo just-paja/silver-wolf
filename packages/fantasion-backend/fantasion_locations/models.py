@@ -10,9 +10,14 @@ from django.db.models import (
 
 
 class Country(Model):
+    class Meta:
+        verbose_name = _('Country')
+        verbose_name_plural = _('Countries')
+
     name = CharField(
         max_length=127,
         unique=True,
+        verbose_name=_('Country name'),
     )
 
     def __str__(self):
@@ -20,33 +25,45 @@ class Country(Model):
 
 
 class Location(TimeStampedModel):
-    name = CharField(max_length=63)
+    class Meta:
+        verbose_name = _('Location')
+        verbose_name_plural = _('Locations')
+
+    name = CharField(
+        max_length=63,
+        verbose_name=_('Name'),
+    )
     country = ForeignKey(
         Country,
         blank=True,
         null=True,
         on_delete=CASCADE,
         related_name='addresses',
+        verbose_name=_('Country'),
     )
     city = CharField(
         blank=True,
         max_length=127,
         null=True,
+        verbose_name=_('City'),
     )
     street = CharField(
         blank=True,
         max_length=255,
         null=True,
+        verbose_name=_('Street'),
     )
     street_number = CharField(
         blank=True,
         max_length=63,
         null=True,
+        verbose_name=_('Street number'),
     )
     postal_code = CharField(
         blank=True,
         max_length=63,
         null=True,
+        verbose_name=_('Postal code'),
     )
     lat = DecimalField(
         blank=True,
