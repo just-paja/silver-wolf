@@ -1,11 +1,11 @@
 locals {
-  backend_package = jsondecode(file("${var.path}/package.json"))
+  npm = jsondecode(file("${var.path}/package.json"))
   user_domain = "${var.project}.iam.gserviceaccount.com"
   user_prefix = "projects/-/serviceAccounts"
 }
 
 locals {
-  image_url = "${var.repo}/${var.project}/${var.name}:${local.backend_package.version}"
+  image_url = "${var.repo}/${var.project}/${var.name}:${local.npm.version}"
   actor = "${var.actor}@${local.user_domain}"
   root = "${var.user}@${local.user_domain}"
 }
