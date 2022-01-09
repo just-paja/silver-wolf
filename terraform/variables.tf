@@ -40,6 +40,11 @@ variable "BACKEND_HOST" {
   default = "api.fantasion.cz"
 }
 
+variable "FRONTEND_HOST" {
+  type = string
+  default = "fantasion.cz"
+}
+
 variable "PROJECT_ENVIRONMENT" {
   type = string
   default = "production"

@@ -6,7 +6,7 @@ import { GeneralNewsletterForm } from '../components/GeneralNewsletterForm'
 import { getPageProps } from '../server/props'
 import { useTranslation } from 'next-i18next'
 
-export const getServerSideProps = getPageProps
+export const getStaticProps = getPageProps
 
 const Home = () => {
   const { t } = useTranslation()

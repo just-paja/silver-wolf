@@ -1,13 +1,12 @@
-import getAbsoluteUrl from 'next-absolute-url'
-
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-export const getPageProps = async ({ locale, req }) => {
-  const absUrl = getAbsoluteUrl(req)
+const origin = 'https://fantasion.cz'
+
+export const getPageProps = async ({ locale }) => {
   return {
     props: {
-      origin: absUrl.origin,
-      href: `${absUrl.origin}/${locale}${req.url}`,
+      origin,
+      baseUrl: `${origin}/${locale}`,
       ...(await serverSideTranslations(locale)),
     },
   }

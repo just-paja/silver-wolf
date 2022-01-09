@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import React from 'react'
 
+import { useRouter } from 'next/router'
+
 export const MetaBase = () => {
   return (
     <Head>
@@ -22,6 +24,7 @@ export const MetaPage = ({ description, title }) => {
         property="og:description"
         content={description}
       />
+      <meta key="description" property="description" content={description} />
     </Head>
   )
 }
@@ -34,9 +37,10 @@ export const MetaUrl = ({ url }) => (
 
 export const asPage = (PageComp) =>
   function MetaPageWrapper(props) {
+    const router = useRouter()
     return (
       <>
-        <MetaUrl url={props.href} />
+        <MetaUrl url={`${props.baseUrl}${router.pathname}`} />
         <PageComp {...props} />
       </>
     )

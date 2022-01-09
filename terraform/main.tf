@@ -155,19 +155,39 @@ module "backend_cloudrun" {
   ]
 }
 
-module "web_cf" {
-  function_description = "Serverless website"
-  function_entry_point = "handleRequest"
-  function_name = "fantasion-web"
+module "frontend_docker" {
+  name = "fantasion-frontend"
   location = local.location
   path = "${local.root_dir}/packages/fantasion-web"
   project = local.project
+  repo = local.repo
+  source = "./modules/docker"
+  user = local.gcp_user
+  depends_on = []
+}
+
+module "frontend_cloudrun" {
+  envs = [
+    {
+      name = "NEXT_TELEMETRY_DISABLED",
+      value = 1,
+    },
+    {
+      name = "NODE_ENV",
+      value = "production",
+    },
+    {
+      name = "STATIC_ROOT",
+      value = module.backend_storage_public.base_url
+    },
+  ]
+  hostname = var.FRONTEND_HOST
+  image_url = module.frontend_docker.image_url
+  name = "fantasion-frontend"
+  project = local.project
   region = local.region
-  runtime = var.node_runtime
-  source = "./modules/web_cf"
-  static_bucket_name = var.BUCKET_PUBLIC
-  static_bucket_url = module.backend_storage_public.bucket.url
+  source = "./modules/cloudrun"
   depends_on = [
-    module.backend_storage_public
+    module.frontend_docker,
   ]
 }

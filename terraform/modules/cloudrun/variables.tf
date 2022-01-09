@@ -1,8 +1,12 @@
-variable "connection_name" {}
 variable "hostname" {}
 variable "name" {}
 variable "project" {}
 variable "region" {}
+
+variable "connection_name" {
+  type = string
+  default = ""
+}
 
 variable "image_url" {
   type = string
