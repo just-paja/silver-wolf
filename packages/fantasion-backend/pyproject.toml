@@ -6,6 +6,7 @@ authors = ["Pavel Žák <pavel@zak.global>"]
 packages = [
   { include = "fantasion" },
   { include = "fantasion_api" },
+  { include = "fantasion_content" },
   { include = "fantasion_eshop" },
   { include = "fantasion_expeditions" },
   { include = "fantasion_generics" },
