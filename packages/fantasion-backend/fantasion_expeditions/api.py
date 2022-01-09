@@ -48,6 +48,7 @@ class ExpeditionSerializer(HyperlinkedModelSerializer):
             'description',
             'media',
             'slug',
+            'title',
         )
 
 
@@ -97,8 +98,7 @@ class BatchAgeGroupSerializer(HyperlinkedModelSerializer):
 class ExpeditionBatchSerializer(HyperlinkedModelSerializer):
     age_groups = BatchAgeGroupSerializer(many=True)
     leisure_centre = HyperlinkedIdentityField(
-        view_name='leisure_centres-detail'
-    )
+        view_name='leisure_centres-detail')
 
     class Meta:
         model = models.ExpeditionBatch

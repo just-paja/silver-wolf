@@ -169,6 +169,10 @@ module "frontend_docker" {
 module "frontend_cloudrun" {
   envs = [
     {
+      name = "API_URL",
+      value = "https://${var.BACKEND_HOST}/api/v1",
+    },
+    {
       name = "NEXT_TELEMETRY_DISABLED",
       value = 1,
     },
