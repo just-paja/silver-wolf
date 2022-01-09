@@ -269,11 +269,11 @@ msgstr "Táborové programy"
 
 #: fantasion_expeditions/models.py:185
 msgid "Batch Age Group"
-msgstr "Věková skupina"
+msgstr "Věková skupina na turnuse"
 
 #: fantasion_expeditions/models.py:186
 msgid "Batch Age Groups"
-msgstr "Věkové skupiny"
+msgstr "Věkové skupiny na turnuse"
 
 #: fantasion_generics/media.py:17
 msgid "Height"
