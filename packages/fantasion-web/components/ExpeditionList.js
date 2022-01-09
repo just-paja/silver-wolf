@@ -30,9 +30,9 @@ const Expedition = ({ expedition }) => {
     <Card className="mt-1">
       <Card.Body>
         <Card.Title>{expedition.title}</Card.Title>
-        <Card.Text>
+        <Card.Body>
           <Article text={expedition.description} media={expedition.media} />
-        </Card.Text>
+        </Card.Body>
         {expedition.batches.map((batch) => (
           <ExpeditionBatch key={batch.id} batch={batch} />
         ))}
