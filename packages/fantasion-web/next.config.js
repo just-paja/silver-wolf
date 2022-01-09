@@ -12,4 +12,19 @@ module.exports = {
   sassOptions: {
     includePaths: [resolve(__dirname, '..', '..')],
   },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        permanent: true,
+        has: [
+          {
+            type: 'host',
+            value: '(fantazion.cz|www.fantazion.cz|www.fantasion.cz)',
+          },
+        ],
+        destination: 'https://fantasion.cz/:path*',
+      },
+    ]
+  },
 }
