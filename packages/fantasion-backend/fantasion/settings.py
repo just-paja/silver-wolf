@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'fantasion_people',
     'fantasion_expeditions',
     'fantasion_signups',
+    'fantasion_content',
     "corsheaders",
     'django.contrib.admin',
     'nested_admin',

@@ -1,6 +1,7 @@
 from django.contrib.auth import admin as auth_admin
 from django.utils.translation import ugettext_lazy as _
 
+from fantasion_content import admin as content
 from fantasion_generics.admin import BaseAdminSite
 from fantasion_eshop import admin as eshop
 from fantasion_expeditions import admin as expeditions
@@ -15,6 +16,7 @@ class ContentAdminSite(BaseAdminSite):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.hookup_module(content)
         self.hookup_module(eshop)
         self.hookup_module(expeditions)
         self.hookup_module(locations)

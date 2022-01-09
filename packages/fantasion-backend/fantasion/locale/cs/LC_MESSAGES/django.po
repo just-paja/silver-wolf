@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-08 15:00+0100\n"
+"POT-Creation-Date: 2022-01-09 03:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,17 +19,43 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
 "<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
-#: fantasion/admin.py:14
+#: fantasion/admin.py:15
 msgid "Base"
 msgstr "Fantasion"
 
-#: fantasion/settings.py:132
+#: fantasion/settings.py:133
 msgid "Czech"
 msgstr "Čeština"
 
-#: fantasion/settings.py:133
+#: fantasion/settings.py:134
 msgid "English"
 msgstr "Angličtina"
+
+#: fantasion_content/apps.py:7
+msgid "Fantasion Content"
+msgstr "Obsah"
+
+#: fantasion_content/models.py:8 fantasion_content/models.py:12
+msgid "Short Promotion Text"
+msgstr "Krátký propagační text"
+
+#: fantasion_content/models.py:9
+msgid "Short Promotion Texts"
+msgstr "Krátké propagační texty"
+
+#: fantasion_content/models.py:14
+msgid ""
+"Write down a short quote displayed on the web for fun and topromote the "
+"atmosphere on the summer camp"
+msgstr "Napiš krátký text, který propaguje atmosféru na táboře"
+
+#: fantasion_content/models.py:19
+msgid "Quote Owner"
+msgstr "Autor hlášky"
+
+#: fantasion_content/models.py:21
+msgid "A name that will be displayed as the original author of the quote"
+msgstr "Jméno, které se zobrazí jako původní autor textu"
 
 #: fantasion_eshop/apps.py:7
 msgid "Fantasion Eshop"
