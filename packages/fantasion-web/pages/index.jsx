@@ -31,7 +31,7 @@ const Home = ({ expeditions }) => {
         <h1>{t('fantasion-title')}</h1>
         <p>{t('fantasion-general-description')}</p>
         <ExpeditionList expeditions={expeditions} />
-        <GeneralNewsletterForm />
+        <GeneralNewsletterForm className="mt-3" />
       </Container>
     </main>
   )

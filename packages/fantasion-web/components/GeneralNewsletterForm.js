@@ -7,11 +7,11 @@ import { useTranslation } from 'next-i18next'
 
 import styles from './GeneralNewsletterForm.module.scss'
 
-export const GeneralNewsletterForm = () => {
+export const GeneralNewsletterForm = (props) => {
   const { t } = useTranslation()
   return (
     <>
-      <h2>{t('newsletter-general-title')}</h2>
+      <h2 {...props}>{t('newsletter-general-title')}</h2>
       <form
         action="https://fantasion.us20.list-manage.com/subscribe/post?u=7af44209676d38653a2a4a1a0&amp;id=a01ed947e0"
         method="post"
