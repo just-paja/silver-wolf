@@ -27,7 +27,7 @@ resource "google_service_account_iam_binding" "token-creator-iam" {
 data "google_service_account_access_token" "repo" {
   target_service_account = "${local.actor}"
   scopes = ["cloud-platform"]
-  lifetime = "300s"
+  lifetime = "600s"
   delegates = ["${local.user_prefix}/${local.root}"]
 }
 
