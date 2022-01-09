@@ -1,8 +1,5 @@
 from rest_framework.viewsets import ReadOnlyModelViewSet
-from rest_framework.serializers import (
-    HyperlinkedModelSerializer,
-    HyperlinkedIdentityField,
-)
+from rest_framework.serializers import HyperlinkedModelSerializer
 
 from fantasion_locations.api import LocationSerializer
 from fantasion_generics.api import media_fields
