@@ -40,18 +40,6 @@ class ExpeditionMediaSerializer(HyperlinkedModelSerializer):
         fields = media_fields
 
 
-class ExpeditionSerializer(HyperlinkedModelSerializer):
-    class Meta:
-        model = models.Expedition
-        fields = (
-            'id',
-            'description',
-            'media',
-            'slug',
-            'title',
-        )
-
-
 class AgeGroupSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = models.AgeGroup
@@ -97,8 +85,7 @@ class BatchAgeGroupSerializer(HyperlinkedModelSerializer):
 
 class ExpeditionBatchSerializer(HyperlinkedModelSerializer):
     age_groups = BatchAgeGroupSerializer(many=True)
-    leisure_centre = HyperlinkedIdentityField(
-        view_name='leisure_centres-detail')
+    leisure_centre = LeisureCentreSerializer()
 
     class Meta:
         model = models.ExpeditionBatch
@@ -109,6 +96,21 @@ class ExpeditionBatchSerializer(HyperlinkedModelSerializer):
             'id',
             'leisure_centre',
             'starts_at',
+        )
+
+
+class ExpeditionSerializer(HyperlinkedModelSerializer):
+    batches = ExpeditionBatchSerializer(many=True)
+
+    class Meta:
+        model = models.Expedition
+        fields = (
+            'id',
+            'batches',
+            'description',
+            'media',
+            'slug',
+            'title',
         )
 
 
