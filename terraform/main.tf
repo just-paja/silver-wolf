@@ -182,7 +182,7 @@ module "frontend_cloudrun" {
     },
     {
       name = "STATIC_ROOT",
-      value = module.backend_storage_public.base_url
+      value = "https://storage.googleapis.com/${var.BUCKET_PUBLIC}"
     },
   ]
   hostname = var.FRONTEND_HOST
