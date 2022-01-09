@@ -51,7 +51,7 @@ jobs:
           name: dist
           path: |
             packages/fantasion-backend/dist/
-            packages/fantasion-web/.next
+            packages/fantasion-web/*.tgz
 
   terraform:
     name: Deploy terraform resources
