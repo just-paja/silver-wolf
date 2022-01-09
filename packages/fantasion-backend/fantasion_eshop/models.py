@@ -97,6 +97,7 @@ class ProductPrice(TimeStampedModel):
     ProductPrice represents product price in a price level and a currency.
     """
     class Meta:
+        unique_together = ('product', 'price_level', 'currency')
         verbose_name = _('E-shop Product Price')
         verbose_name_plural = _('E-shop Product Prices')
 
@@ -133,9 +134,6 @@ class ProductPrice(TimeStampedModel):
         blank=True,
         verbose_name=_('Available until'),
     )
-
-    class Meta:
-        unique_together = ('product', 'price_level', 'currency')
 
     def __str__(self):
         return '{product} {price_level} ({currency})'.format(
