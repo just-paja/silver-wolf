@@ -50,29 +50,6 @@ jobs:
             packages/fantasion-backend/dist/
             packages/fantasion-web/.next
 
-  deploy-fantasion-teaser:
-    name: Deploy teaser website
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
-    needs:
-      - test-and-build
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: |
-          sudo apt-get install rsync
-          ansible-galaxy install -r requirements-ansible.yml
-      - uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.TEASER_SSH_KEY }}
-          name: id_rsa
-          known_hosts: ${{ secrets.TEASER_KNOWN_HOSTS }}
-      - name: Deploy app
-        run: |
-          cd ./packages/fantasion-teaser
-          echo -e "[web]\n${{ secrets.TEASER_DEPLOY_HOST }}\n" > inventory
-          ansible-playbook deploy.yml -i inventory
-
   terraform:
     name: Deploy terraform resources
     runs-on: ubuntu-latest
