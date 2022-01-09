@@ -6,15 +6,7 @@ import { ExpeditionList } from '../components/ExpeditionList'
 import { GeneralNewsletterForm } from '../components/GeneralNewsletterForm'
 import { getPageProps } from '../server/props'
 import { useTranslation } from 'next-i18next'
-
-import fetch from 'cross-fetch'
-
-const apiUrl = process.env.API_URL || 'http://localhost:8000/api/v1'
-
-const apiFetch = async (path, options = {}) => {
-  const res = await fetch(`${apiUrl}${path}`, options)
-  return await res.json()
-}
+import { apiFetch } from '../api'
 
 const getExpeditions = async () => apiFetch('/expeditions')
 
