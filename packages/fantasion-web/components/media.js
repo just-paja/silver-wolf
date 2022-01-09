@@ -1,9 +1,13 @@
+import Image from 'next/image'
+
 const Heading = ({ level, children }) => {
   const Component = `h${level}`
   return <Component>{children}</Component>
 }
 
-const LocalPhoto = ({ localPhoto }) => <img src={localPhoto} />
+const LocalPhoto = ({ height, width, localPhoto }) => (
+  <Image alt="" src={localPhoto} height={height} width={width} />
+)
 
 const MediaObject = ({ mediaObject }) => <LocalPhoto {...mediaObject} />
 
