@@ -16,6 +16,7 @@ packages = [
 ]
 include = [
   "manage.py",
+  "**/*.mo",
 ]
 
 [tool.poetry.dependencies]
