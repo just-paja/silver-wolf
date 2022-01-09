@@ -3,7 +3,6 @@
   "private": true,
   "dependencies": {
     "fantasion-backend": "file:packages/fantasion-backend",
-    "fantasion-teaser": "file:packages/fantasion-teaser",
     "fantasion-web": "file:packages/fantasion-web"
   },
   "devDependencies": {
