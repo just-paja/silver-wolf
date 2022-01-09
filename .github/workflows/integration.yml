@@ -31,7 +31,9 @@ jobs:
             ~/.cache/pypoetry
           key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/poetry.lock') }}
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          sudo apt-get install -y gettext
       - name: Check coding style
         working-directory: ${{env.dir_backend}}
         run: poetry run flake8
