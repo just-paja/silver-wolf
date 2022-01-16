@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-09 03:54+0100\n"
+"POT-Creation-Date: 2022-01-16 19:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,11 +23,11 @@ msgstr ""
 msgid "Base"
 msgstr "Fantasion"
 
-#: fantasion/settings.py:133
+#: fantasion/settings.py:135
 msgid "Czech"
 msgstr "Čeština"
 
-#: fantasion/settings.py:134
+#: fantasion/settings.py:136
 msgid "English"
 msgstr "Angličtina"
 
@@ -65,8 +65,8 @@ msgstr "E-shop"
 msgid "Enabled"
 msgstr "Povoleno"
 
-#: fantasion_eshop/models.py:30 fantasion_eshop/models.py:119
-#: fantasion_eshop/models.py:186
+#: fantasion_eshop/models.py:30 fantasion_eshop/models.py:120
+#: fantasion_eshop/models.py:184
 msgid "Currency"
 msgstr "Měna"
 
@@ -106,59 +106,59 @@ msgstr "Objednávka"
 msgid "E-shop Products"
 msgstr "Objednávky"
 
-#: fantasion_eshop/models.py:100
+#: fantasion_eshop/models.py:101
 msgid "E-shop Product Price"
 msgstr "Cena produktu"
 
-#: fantasion_eshop/models.py:101
+#: fantasion_eshop/models.py:102
 msgid "E-shop Product Prices"
 msgstr "Cena produktu"
 
-#: fantasion_eshop/models.py:107
+#: fantasion_eshop/models.py:108
 msgid "Product"
 msgstr "Produkt"
 
-#: fantasion_eshop/models.py:113
+#: fantasion_eshop/models.py:114
 msgid "Price level"
 msgstr "Cenová hladina"
 
-#: fantasion_eshop/models.py:124
+#: fantasion_eshop/models.py:125
 msgid "Amount"
 msgstr "Částka"
 
-#: fantasion_eshop/models.py:129
+#: fantasion_eshop/models.py:130
 msgid "Available since"
 msgstr "Dostupné od"
 
-#: fantasion_eshop/models.py:134
+#: fantasion_eshop/models.py:135
 msgid "Available until"
 msgstr "Dostupné do"
 
-#: fantasion_eshop/models.py:150 fantasion_eshop/models.py:170
+#: fantasion_eshop/models.py:148 fantasion_eshop/models.py:168
 msgid "E-shop Order"
 msgstr "Objednávka"
 
-#: fantasion_eshop/models.py:151
+#: fantasion_eshop/models.py:149
 msgid "E-shop Orders"
 msgstr "Objednávky"
 
-#: fantasion_eshop/models.py:157
+#: fantasion_eshop/models.py:155
 msgid "Order owner"
 msgstr "Majitel objednávky"
 
-#: fantasion_eshop/models.py:163
+#: fantasion_eshop/models.py:161
 msgid "E-shop Order Item"
 msgstr "Položka objednávky"
 
-#: fantasion_eshop/models.py:164
+#: fantasion_eshop/models.py:162
 msgid "E-shop Order Items"
 msgstr "Položky objednávky"
 
-#: fantasion_eshop/models.py:176
+#: fantasion_eshop/models.py:174
 msgid "Product Price"
 msgstr "Cena produktu"
 
-#: fantasion_eshop/models.py:181
+#: fantasion_eshop/models.py:179
 msgid "Price"
 msgstr "Cena"
 
@@ -166,112 +166,112 @@ msgstr "Cena"
 msgid "Fantasion Expeditions"
 msgstr "Tábory"
 
-#: fantasion_expeditions/models.py:21 fantasion_expeditions/models.py:93
+#: fantasion_expeditions/models.py:25 fantasion_expeditions/models.py:99
 msgid "Leisure Centre"
 msgstr "Rekreační středisko"
 
-#: fantasion_expeditions/models.py:22
+#: fantasion_expeditions/models.py:26
 msgid "Leisure Centres"
 msgstr "Rekreační střediska"
 
-#: fantasion_expeditions/models.py:31
+#: fantasion_expeditions/models.py:35
 msgid "This location will be posted on the map and used for navigation."
 msgstr "Umístění bude zobrazeno na mapě a použito k navigaci"
 
-#: fantasion_expeditions/models.py:35 fantasion_locations/models.py:29
+#: fantasion_expeditions/models.py:39 fantasion_locations/models.py:29
 msgid "Location"
 msgstr "Umístění"
 
-#: fantasion_expeditions/models.py:40
+#: fantasion_expeditions/models.py:44
 msgid ""
 "This location will be used as a postal address,instruct people to mail here."
 msgstr ""
 "Umístění bude označeno jako poštovní adresa a uživatelé budou naváděni aby "
 "posílali poštu sem"
 
-#: fantasion_expeditions/models.py:45
+#: fantasion_expeditions/models.py:49
 msgid "Mailing address"
 msgstr "Poštovní adresa"
 
-#: fantasion_expeditions/models.py:51
+#: fantasion_expeditions/models.py:55
 msgid "Website"
 msgstr "Webové stránky"
 
-#: fantasion_expeditions/models.py:66 fantasion_expeditions/models.py:87
+#: fantasion_expeditions/models.py:70 fantasion_expeditions/models.py:93
 msgid "Expedition"
 msgstr "Tábor"
 
-#: fantasion_expeditions/models.py:67
+#: fantasion_expeditions/models.py:71
 msgid "Expeditions"
 msgstr "Tábory"
 
-#: fantasion_expeditions/models.py:80 fantasion_expeditions/models.py:125
-#: fantasion_expeditions/models.py:192
+#: fantasion_expeditions/models.py:86 fantasion_expeditions/models.py:132
+#: fantasion_expeditions/models.py:199
 msgid "Expedition Batch"
 msgstr "Turnus"
 
-#: fantasion_expeditions/models.py:81
+#: fantasion_expeditions/models.py:87
 msgid "Expedition Batches"
 msgstr "Turnusy"
 
-#: fantasion_expeditions/models.py:95 fantasion_expeditions/models.py:206
+#: fantasion_expeditions/models.py:101 fantasion_expeditions/models.py:213
 msgid "Starts at"
 msgstr "Začátek"
 
-#: fantasion_expeditions/models.py:96 fantasion_expeditions/models.py:207
+#: fantasion_expeditions/models.py:102 fantasion_expeditions/models.py:214
 msgid "Ends at"
 msgstr "Konec"
 
-#: fantasion_expeditions/models.py:108
+#: fantasion_expeditions/models.py:115
 msgid "Staff Role"
 msgstr "Zaměstnanecká role"
 
-#: fantasion_expeditions/models.py:109
+#: fantasion_expeditions/models.py:116
 msgid "Staff Roles"
 msgstr "Zaměstnanecké role"
 
-#: fantasion_expeditions/models.py:118 fantasion_expeditions/models.py:119
+#: fantasion_expeditions/models.py:125 fantasion_expeditions/models.py:126
 msgid "Batch Staff"
 msgstr "Zaměstnanci"
 
-#: fantasion_expeditions/models.py:131 fantasion_people/models.py:20
+#: fantasion_expeditions/models.py:138 fantasion_people/models.py:24
 msgid "Profile"
 msgstr "Profil"
 
-#: fantasion_expeditions/models.py:137
+#: fantasion_expeditions/models.py:144
 msgid "Role"
 msgstr "Role"
 
-#: fantasion_expeditions/models.py:149 fantasion_expeditions/models.py:198
+#: fantasion_expeditions/models.py:156 fantasion_expeditions/models.py:205
 #: fantasion_signups/models.py:66
 msgid "Age Group"
 msgstr "Věková skupina"
 
-#: fantasion_expeditions/models.py:150
+#: fantasion_expeditions/models.py:157
 msgid "Age Groups"
 msgstr "Věkové skupiny"
 
-#: fantasion_expeditions/models.py:153
+#: fantasion_expeditions/models.py:160
 msgid "Minimal age"
 msgstr "Minimální věk"
 
-#: fantasion_expeditions/models.py:154
+#: fantasion_expeditions/models.py:161
 msgid "Maximal age"
 msgstr "Maximální věk"
 
-#: fantasion_expeditions/models.py:170 fantasion_expeditions/models.py:204
+#: fantasion_expeditions/models.py:177 fantasion_expeditions/models.py:211
 msgid "Expedition Program"
 msgstr "Táborový program"
 
-#: fantasion_expeditions/models.py:171
+#: fantasion_expeditions/models.py:178
 msgid "Expedition Programs"
 msgstr "Táborové programy"
 
-#: fantasion_expeditions/models.py:185
+#: fantasion_expeditions/models.py:192
 msgid "Batch Age Group"
 msgstr "Věková skupina na turnuse"
 
-#: fantasion_expeditions/models.py:186
+#: fantasion_expeditions/models.py:193
 msgid "Batch Age Groups"
 msgstr "Věkové skupiny na turnuse"
 
@@ -287,15 +287,23 @@ msgstr "Šířka"
 msgid "Parent object"
 msgstr "Rodičovský objekt"
 
-#: fantasion_generics/models.py:40
+#: fantasion_generics/models.py:41
 msgid "Media Object"
 msgstr "Médium"
 
-#: fantasion_generics/models.py:41
+#: fantasion_generics/models.py:42
 msgid "Media Objects"
 msgstr "Média"
 
-#: fantasion_generics/photos.py:18 fantasion_generics/photos.py:34
+#: fantasion_generics/models.py:66
+msgid "Public"
+msgstr ""
+
+#: fantasion_generics/models.py:69
+msgid "Public objects will be visible on the website"
+msgstr "Veřejné objekty budou vidět na webu"
+
+#: fantasion_generics/photos.py:23 fantasion_generics/photos.py:39
 msgid "Image file"
 msgstr "Soubor s obrázkem"
 
@@ -375,72 +383,68 @@ msgstr "Zeměpisná délka"
 msgid "Fantasion People"
 msgstr "Lidé"
 
-#: fantasion_people/models.py:21
+#: fantasion_people/models.py:25
 msgid "Profiles"
 msgstr "Profily"
 
-#: fantasion_people/models.py:24
-msgid "Public profiles will be visible on the website"
-msgstr "Veřejné profily budou vidět na webu"
-
-#: fantasion_people/models.py:31
+#: fantasion_people/models.py:32
 msgid "Owner of the profile will be able to edit the profile"
 msgstr "Majitel profilu může upravovat svůj popisek"
 
-#: fantasion_people/models.py:44
+#: fantasion_people/models.py:45
 msgid "Allergy"
 msgstr "Alergie"
 
-#: fantasion_people/models.py:45
+#: fantasion_people/models.py:46
 msgid "Allergies"
 msgstr "Alergie"
 
-#: fantasion_people/models.py:50
+#: fantasion_people/models.py:51
 msgid "Hobby"
 msgstr "Zájem"
 
-#: fantasion_people/models.py:51
+#: fantasion_people/models.py:52
 msgid "Hobbies"
 msgstr "Zájmy"
 
-#: fantasion_people/models.py:56 fantasion_people/models.py:97
+#: fantasion_people/models.py:57 fantasion_people/models.py:98
 #: fantasion_signups/models.py:60
 msgid "Family"
 msgstr "Rodina"
 
-#: fantasion_people/models.py:57
+#: fantasion_people/models.py:58
 msgid "Families"
 msgstr "Rodiny"
 
-#: fantasion_people/models.py:64
+#: fantasion_people/models.py:65
 msgid "Family owner acts as a superadmin."
 msgstr "Vůdce rodiny jedná jako její superuživatel"
 
-#: fantasion_people/models.py:82
+#: fantasion_people/models.py:83
 msgid "Administrator"
 msgstr "Administrátor"
 
-#: fantasion_people/models.py:83
+#: fantasion_people/models.py:84
 msgid "Legal representative"
 msgstr "Zákonný zástupce"
 
-#: fantasion_people/models.py:84
+#: fantasion_people/models.py:85
 msgid "Spectator"
 msgstr "Divák"
 
-#: fantasion_people/models.py:90
+#: fantasion_people/models.py:91
 msgid "Family member"
 msgstr "Rodinný člen"
 
-#: fantasion_people/models.py:91
+#: fantasion_people/models.py:92
 msgid "Family members"
 msgstr "Členové rodiny"
 
-#: fantasion_people/models.py:103
+#: fantasion_people/models.py:104
 msgid "User"
 msgstr "Uživatel"
 
-#: fantasion_people/models.py:108
+#: fantasion_people/models.py:109
 msgid "Family Role"
 msgstr "Rodinná role"
 
