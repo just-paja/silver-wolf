@@ -59,7 +59,10 @@ const CopyrightNotice = () => (
 
 export const Footer = () => (
   <Container as="footer" className={styles.footer}>
-    <SocialNetworks className={styles.social} />
+    <div>
+      <strong>Sledujte nás</strong>
+      <SocialNetworks className={styles.social} />
+    </div>
     <div className={styles.footerInfo}>
       <FooterLinks />
       <CopyrightNotice />
