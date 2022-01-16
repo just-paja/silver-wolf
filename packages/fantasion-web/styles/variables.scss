@@ -1,4 +1,8 @@
-$primary: #472a7e;
+$color-early-dawn: #fffaea;
+$color-minsk: #472a7e;
+
+$primary: $color-minsk;
+$body-bg: $color-early-dawn;
 
 @import 'bootstrap/scss/_functions.scss';
 @import 'bootstrap/scss/_variables.scss';
