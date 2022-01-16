@@ -8,6 +8,11 @@ class AgeGroupTranslationOptions(TranslationOptions):
     fields = ('title',)
 
 
+@register(models.StaffRoleMedia)
+class StaffRoleMediaTranslationOptions(TranslationOptions):
+    fields = ('title', 'description',)
+
+
 @register(models.StaffRole)
 class StaffRoleTranslationOptions(TranslationOptions):
     fields = ('title', 'description',)

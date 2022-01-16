@@ -1,43 +1,41 @@
-from fantasion_generics.admin import BaseAdmin
+from fantasion_generics.admin import BaseAdmin, MediaAdmin
 from nested_admin import NestedStackedInline
+from modeltranslation.admin import TranslationAdmin
 
 from fantasion_eshop.models import ProductPrice
 from . import models
 
 
-class AgeGroup(BaseAdmin):
+class AgeGroup(BaseAdmin, TranslationAdmin):
     model = models.AgeGroup
     list_display = ('title', 'age_min', 'age_max', 'modified')
 
 
-class StaffRoleMediaAdmin(NestedStackedInline):
+class StaffRoleMediaAdmin(MediaAdmin):
     model = models.StaffRoleMedia
-    extra = 0
 
 
-class StaffRole(BaseAdmin):
+class StaffRole(BaseAdmin, TranslationAdmin):
     model = models.StaffRole
     list_display = ('title', 'modified')
     inlines = (StaffRoleMediaAdmin,)
 
 
-class LeisureCentreMediaAdmin(NestedStackedInline):
+class LeisureCentreMediaAdmin(MediaAdmin):
     model = models.LeisureCentreMedia
-    extra = 0
 
 
-class LeisureCentreAdmin(BaseAdmin):
+class LeisureCentreAdmin(BaseAdmin, TranslationAdmin):
     model = models.LeisureCentre
     list_display = ('title', 'location', 'modified')
     inlines = (LeisureCentreMediaAdmin,)
 
 
-class ExpeditionMediaAdmin(NestedStackedInline):
+class ExpeditionMediaAdmin(MediaAdmin):
     model = models.ExpeditionMedia
-    extra = 0
 
 
-class ExpeditionAdmin(BaseAdmin):
+class ExpeditionAdmin(BaseAdmin, TranslationAdmin):
     model = models.Expedition
     list_display = (
         'title',
@@ -46,12 +44,11 @@ class ExpeditionAdmin(BaseAdmin):
     inlines = (ExpeditionMediaAdmin,)
 
 
-class ExpeditionProgramMediaAdmin(NestedStackedInline):
+class ExpeditionProgramMediaAdmin(MediaAdmin):
     model = models.ExpeditionProgramMedia
-    extra = 0
 
 
-class ExpeditionProgramAdmin(BaseAdmin):
+class ExpeditionProgramAdmin(BaseAdmin, TranslationAdmin):
     model = models.ExpeditionProgram
     list_display = (
         'title',
@@ -60,9 +57,8 @@ class ExpeditionProgramAdmin(BaseAdmin):
     inlines = (ExpeditionProgramMediaAdmin,)
 
 
-class ProductPriceAdmin(NestedStackedInline):
+class ProductPriceAdmin(MediaAdmin):
     model = ProductPrice
-    extra = 0
 
 
 class BatchAgeGroupAdmin(BaseAdmin):
@@ -95,9 +91,8 @@ class BatchAgeGroupInlineAdmin(NestedStackedInline):
     readonly_fields = ('description',)
 
 
-class BatchStaffAdmin(NestedStackedInline):
+class BatchStaffAdmin(MediaAdmin):
     model = models.BatchStaff
-    extra = 0
 
 
 class ExpeditionBatchAdmin(BaseAdmin):

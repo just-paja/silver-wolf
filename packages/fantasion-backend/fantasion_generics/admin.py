@@ -3,7 +3,8 @@ import czech_sort
 from django.conf import settings
 from django.contrib.admin import AdminSite
 from django.http import Http404
-from nested_admin import NestedModelAdmin
+from modeltranslation.admin import TranslationStackedInline
+from nested_admin import NestedModelAdmin, NestedStackedInline
 
 
 def is_admin_model(cls):
@@ -65,3 +66,7 @@ class BaseAdminSite(AdminSite):
 
     def hookup_module(self, module):
         self.hookup_all(get_module_admin_models(module))
+
+
+class MediaAdmin(NestedStackedInline, TranslationStackedInline):
+    extra = 0

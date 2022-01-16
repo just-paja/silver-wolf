@@ -1,9 +1,10 @@
 from fantasion_generics.admin import BaseAdmin
+from modeltranslation.admin import TranslationAdmin
 
 from . import models
 
 
-class CurrencyAdmin(BaseAdmin):
+class CurrencyAdmin(BaseAdmin, TranslationAdmin):
     model = models.Currency
     list_display = (
         'code',
@@ -17,7 +18,7 @@ class OrderAdmin(BaseAdmin):
     model = models.Order
 
 
-class PriceLevelAdmin(BaseAdmin):
+class PriceLevelAdmin(BaseAdmin, TranslationAdmin):
     model = models.PriceLevel
     list_display = (
         'title',

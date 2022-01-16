@@ -1,26 +1,26 @@
-from fantasion_generics.admin import BaseAdmin
+from fantasion_generics.admin import BaseAdmin, MediaAdmin
 from nested_admin import NestedStackedInline
+from modeltranslation.admin import TranslationAdmin
 
 from . import models
 
 
-class ProfileMediaAdmin(NestedStackedInline):
+class ProfileMediaAdmin(MediaAdmin):
     model = models.ProfileMedia
-    extra = 0
 
 
-class ProfileAdmin(BaseAdmin):
+class ProfileAdmin(BaseAdmin, TranslationAdmin):
     model = models.Profile
     list_display = ('title', 'public', 'modified')
     inlines = (ProfileMediaAdmin,)
 
 
-class AllergyAdmin(BaseAdmin):
+class AllergyAdmin(BaseAdmin, TranslationAdmin):
     model = models.Allergy
     list_display = ('title', )
 
 
-class HobbyAdmin(BaseAdmin):
+class HobbyAdmin(BaseAdmin, TranslationAdmin):
     model = models.Hobby
     list_display = ('title', )
 

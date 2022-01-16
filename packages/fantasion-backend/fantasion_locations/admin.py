@@ -1,14 +1,15 @@
 from fantasion_generics.admin import BaseAdmin
+from modeltranslation.admin import TranslationAdmin
 
 from . import models
 
 
-class CountryAdmin(BaseAdmin):
+class CountryAdmin(BaseAdmin, TranslationAdmin):
     model = models.Country
     list_display = ('name', )
 
 
-class LocationAdmin(BaseAdmin):
+class LocationAdmin(BaseAdmin, TranslationAdmin):
     model = models.Location
     list_display = (
         'name',
