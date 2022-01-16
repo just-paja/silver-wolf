@@ -5,6 +5,7 @@ import { asPage, MetaPage } from '../components/meta'
 import { ExpeditionList } from '../components/ExpeditionList'
 import { GeneralNewsletterForm } from '../components/GeneralNewsletterForm'
 import { getPageProps } from '../server/props'
+import { SiteNavbar } from '../components/SiteNavbar'
 import { useTranslation } from 'next-i18next'
 import { apiFetch } from '../api'
 
@@ -27,6 +28,7 @@ const Home = ({ expeditions }) => {
         title={t('fantasion-title')}
         description={t('fantasion-general-description')}
       />
+      <SiteNavbar />
       <Container>
         <h1>{t('fantasion-title')}</h1>
         <p>{t('fantasion-general-description')}</p>

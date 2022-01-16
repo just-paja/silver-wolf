@@ -9,7 +9,7 @@ const GalleryPreview = ({ localPhoto }) => (
   <Image alt="" src={localPhoto.galleryPreview} height={256} width={256} />
 )
 
-const LocalPhoto = ({ height, width, localPhoto }) => (
+const LocalPhoto = ({ localPhoto }) => (
   <GalleryPreview localPhoto={localPhoto} />
 )
 
