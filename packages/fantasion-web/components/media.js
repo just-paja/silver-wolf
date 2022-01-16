@@ -5,8 +5,12 @@ const Heading = ({ level, children }) => {
   return <Component>{children}</Component>
 }
 
+const GalleryPreview = ({ localPhoto }) => (
+  <Image alt="" src={localPhoto.galleryPreview} height={256} width={256} />
+)
+
 const LocalPhoto = ({ height, width, localPhoto }) => (
-  <Image alt="" src={localPhoto} height={height} width={width} />
+  <GalleryPreview localPhoto={localPhoto} />
 )
 
 const MediaObject = ({ mediaObject }) => <LocalPhoto {...mediaObject} />
