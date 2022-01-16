@@ -21,7 +21,7 @@
   font-size: 2 * $spacer;
 
   a {
-    margin-left: $spacer / 2;
+    margin-left: calc($spacer / 2);
 
     &:first-child {
       margin: 0
@@ -59,8 +59,8 @@
   li {
     border-left: 1px solid $primary;
     display: inline-block;
-    margin: 0 0 0 $spacer / 2;
-    padding: 0 0 0 $spacer / 2;
+    margin: 0 0 0 calc($spacer / 2);
+    padding: 0 0 0 calc($spacer / 2);
 
     &:first-child {
       border: none;
