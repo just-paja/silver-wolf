@@ -22,7 +22,7 @@ const SocialIcon = ({ service, link }) => {
   )
 }
 
-export const SocialNetworks = (props) => {
+export const SocialNetworks = ({ subscribable, ...props }) => {
   return (
     <div {...props}>
       <SocialIcon service="facebook" link="https://fb.com/fantasioncz" />
@@ -34,7 +34,9 @@ export const SocialNetworks = (props) => {
         service="instagram"
         link="https://www.instagram.com/fantasion_cz/"
       />
-      <SocialIcon service="email" link="mailto:info@fantasion.cz" />
+      {subscribable ? (
+        <SocialIcon service="email" link="mailto:info@fantasion.cz" />
+      ) : null}
     </div>
   )
 }
