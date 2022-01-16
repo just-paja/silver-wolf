@@ -182,8 +182,8 @@ EMAIL_ROBOT_NAME = 'Ciri'
 EMAIL_ROBOT_ADDR = 'ciri@fantasion.cz'
 
 if DEBUG:
-    MEDIA_ROOT = BASE_DIR
-    MEDIA_URL = "/media/"
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    MEDIA_URL = "/"
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     CORS_ORIGIN_WHITELIST += (
         "http://localhost",
@@ -266,7 +266,6 @@ LOGGING = {
 
 VERSATILEIMAGEFIELD_SETTINGS = {
     'cache_length': math.inf,
-    'cache_name': 'thumbs',
     'create_images_on_demand': False,
     'jpeg_resize_quality': 75,
 }
