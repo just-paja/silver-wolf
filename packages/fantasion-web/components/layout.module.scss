@@ -1,0 +1,23 @@
+@import '../styles/variables.scss';
+
+.content {
+  background-color: $color-early-dawn;
+  padding-bottom: $spacer;
+}
+
+.footer {
+  padding-bottom: $spacer;
+  padding-top: $spacer;
+}
+
+.social {
+  font-size: 24px;
+
+  a {
+    margin-left: 8px;
+
+    &:first-child {
+      margin: 0
+    }
+  }
+}

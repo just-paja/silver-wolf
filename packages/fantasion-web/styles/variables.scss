@@ -1,9 +1,11 @@
+$color-buddha-gold: #d7a600;
 $color-early-dawn: #fffaea;
 $color-minsk: #472a7e;
 
 $primary: $color-minsk;
-$body-bg: $color-early-dawn;
+$body-bg: $color-buddha-gold;
 
 @import 'bootstrap/scss/_functions.scss';
 @import 'bootstrap/scss/_variables.scss';
 
+$input-bg: $white;
