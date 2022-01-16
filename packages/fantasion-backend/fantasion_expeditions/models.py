@@ -11,9 +11,13 @@ from django.db.models import (
 
 from fantasion_eshop.models import EshopProduct
 from fantasion_generics.titles import TitleField
-from fantasion_generics.models import MediaObjectModel, PublicModel
 from fantasion_generics.media import MediaParentField
 from fantasion_locations.models import Location
+from fantasion_generics.models import (
+    MediaObjectModel,
+    PublicModel,
+    VisibilityField,
+)
 
 
 class LeisureCentre(PublicModel):
@@ -65,6 +69,8 @@ class Expedition(PublicModel):
     class Meta:
         verbose_name = _('Expedition')
         verbose_name_plural = _('Expeditions')
+
+    public = VisibilityField()
 
 
 class ExpeditionMedia(MediaObjectModel):

@@ -1,4 +1,5 @@
 from django_extensions.db.models import AutoSlugField, TimeStampedModel
+from django.db.models import BooleanField
 from django.utils.translation import ugettext_lazy as _
 from re import sub
 
@@ -57,3 +58,14 @@ class PublicModel(NamedModel):
 
     def __str__(self):
         return self.title
+
+
+class VisibilityField(BooleanField):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('default', True)
+        kwargs.setdefault('verbose_name', _('Public'))
+        kwargs.setdefault(
+            'help_text',
+            _('Public objects will be visible on the website'),
+        )
+        super().__init__(*args, **kwargs)

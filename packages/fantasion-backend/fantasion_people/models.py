@@ -2,7 +2,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django_extensions.db.models import TimeStampedModel
 from django.db.models import (
-    BooleanField,
     ForeignKey,
     PositiveIntegerField,
     CASCADE,
@@ -10,9 +9,14 @@ from django.db.models import (
     SET_DEFAULT,
 )
 
-from fantasion_generics.models import MediaObjectModel, NamedModel, PublicModel
 from fantasion_generics.media import MediaParentField
 from fantasion_generics.titles import TitleField
+from fantasion_generics.models import (
+    MediaObjectModel,
+    NamedModel,
+    PublicModel,
+    VisibilityField,
+)
 
 
 class Profile(PublicModel):
@@ -20,10 +24,7 @@ class Profile(PublicModel):
         verbose_name = _('Profile')
         verbose_name_plural = _('Profiles')
 
-    public = BooleanField(
-        help_text=_('Public profiles will be visible on the website'),
-        default=False,
-    )
+    public = VisibilityField()
     owner = ForeignKey(
         User,
         blank=True,
