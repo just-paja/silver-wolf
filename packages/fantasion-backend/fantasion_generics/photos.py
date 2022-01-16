@@ -1,5 +1,6 @@
-from django.db.models import Model, ImageField
+from django.db.models import Model
 from django.utils.translation import ugettext_lazy as _
+from versatileimagefield.fields import VersatileImageField
 
 from .upload_path import get_upload_path
 from .storages import private_storage
@@ -9,7 +10,7 @@ class LocalPhotoModel(Model):
     class Meta:
         abstract = True
 
-    local_photo = ImageField(
+    local_photo = VersatileImageField(
         blank=True,
         height_field='height',
         max_length=255,
@@ -24,7 +25,7 @@ class PrivatePhotoModel(Model):
     class Meta:
         abstract = True
 
-    private_photo = ImageField(
+    private_photo = VersatileImageField(
         blank=True,
         height_field='height',
         max_length=255,

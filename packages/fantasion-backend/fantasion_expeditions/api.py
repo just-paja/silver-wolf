@@ -2,12 +2,12 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework.serializers import HyperlinkedModelSerializer
 
 from fantasion_locations.api import LocationSerializer
-from fantasion_generics.api import media_fields
+from fantasion_generics.api import PublicMediaSerializer, media_fields
 
 from . import models
 
 
-class LeisureCentreMediaSerializer(HyperlinkedModelSerializer):
+class LeisureCentreMediaSerializer(PublicMediaSerializer):
     class Meta:
         model = models.LeisureCentreMedia
         fields = media_fields
@@ -31,7 +31,7 @@ class LeisureCentreSerializer(HyperlinkedModelSerializer):
         )
 
 
-class ExpeditionMediaSerializer(HyperlinkedModelSerializer):
+class ExpeditionMediaSerializer(PublicMediaSerializer):
     class Meta:
         model = models.ExpeditionMedia
         fields = media_fields
@@ -48,7 +48,7 @@ class AgeGroupSerializer(HyperlinkedModelSerializer):
         )
 
 
-class ExpeditionProgramMediaSerializer(HyperlinkedModelSerializer):
+class ExpeditionProgramMediaSerializer(PublicMediaSerializer):
     class Meta:
         model = models.ExpeditionProgramMedia
         fields = media_fields
@@ -98,6 +98,7 @@ class ExpeditionBatchSerializer(HyperlinkedModelSerializer):
 
 class ExpeditionSerializer(HyperlinkedModelSerializer):
     batches = ExpeditionBatchSerializer(many=True)
+    media = ExpeditionMediaSerializer(many=True)
 
     class Meta:
         model = models.Expedition
