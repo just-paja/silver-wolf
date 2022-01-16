@@ -118,10 +118,10 @@ class LeisureCentreCollection(ReadOnlyModelViewSet):
 
 
 class ExpeditionCollection(ReadOnlyModelViewSet):
-    queryset = models.Expedition.objects.all()
+    queryset = models.Expedition.objects.filter(public=True).all()
     serializer_class = ExpeditionSerializer
 
 
 class ExpeditionBatchCollection(ReadOnlyModelViewSet):
-    queryset = models.ExpeditionBatch.objects.all()
+    queryset = models.ExpeditionBatch.objects.filter(public=True).all()
     serializer_class = ExpeditionBatchSerializer
