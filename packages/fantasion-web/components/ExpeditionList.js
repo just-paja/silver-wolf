@@ -1,7 +1,7 @@
 import Card from 'react-bootstrap/Card'
 
-import { DateRange } from './dates'
 import { Article } from './media'
+import { DateRange } from './dates'
 
 const LeisureCentreSummary = ({ leisureCentre }) => {
   return (
@@ -41,7 +41,13 @@ const Expedition = ({ expedition }) => {
   )
 }
 
+// @TODO: Design expeditions empty state
+const NoExpeditions = () => null
+
 export const ExpeditionList = ({ expeditions }) => {
+  if (expeditions.results.length === 0) {
+    return <NoExpeditions />
+  }
   return expeditions.results.map((expedition) => (
     <Expedition expedition={expedition} key={expedition.id} />
   ))
