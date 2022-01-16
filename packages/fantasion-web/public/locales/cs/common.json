@@ -1,8 +1,13 @@
 {
+  "cookies": "Cookies",
+  "personal-information": "Osobní údaje",
   "fantasion-brand": "Fantasion",
+  "fantasion-company-name": "Fantasion, z. s.",
   "fantasion-title": "Fantasion",
   "fantasion-general-description": "Učíme děti rozvíjet schopnosti neobyčejnými zážitky",
   "newsletter-general-title": "Chci znát novinky",
   "newsletter-your-email": "Váš e-mail",
-  "newsletter-submit": "Přihlásit k odběru"
+  "newsletter-submit": "Přihlásit k odběru",
+  "terms-and-conditions": "Obchodní podmínky",
+  "usage-terms": "Podmínky užití"
 }
