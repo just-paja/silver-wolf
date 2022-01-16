@@ -25,7 +25,6 @@ const SocialIcon = ({ service, link }) => {
 export const SocialNetworks = (props) => {
   return (
     <div {...props}>
-      <SocialIcon service="email" link="mailto:info@fantasion.cz" />
       <SocialIcon service="facebook" link="https://fb.com/fantasioncz" />
       <SocialIcon
         service="tiktok"
@@ -35,6 +34,7 @@ export const SocialNetworks = (props) => {
         service="instagram"
         link="https://www.instagram.com/fantasion_cz/"
       />
+      <SocialIcon service="email" link="mailto:info@fantasion.cz" />
     </div>
   )
 }
