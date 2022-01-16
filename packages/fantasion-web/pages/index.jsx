@@ -5,7 +5,7 @@ import { asPage, MetaPage } from '../components/meta'
 import { ExpeditionList } from '../components/ExpeditionList'
 import { GeneralNewsletterForm } from '../components/GeneralNewsletterForm'
 import { getPageProps } from '../server/props'
-import { SiteNavbar } from '../components/SiteNavbar'
+import { SiteNavbar } from '../components/layout'
 import { useTranslation } from 'next-i18next'
 import { apiFetch } from '../api'
 

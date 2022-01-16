@@ -1,12 +1,28 @@
 import Container from 'react-bootstrap/Container'
 import Link from 'next/link'
-import Nav from 'react-bootstrap/Nav'
+import Navbar from 'react-bootstrap/Navbar'
 
 import { A } from './links'
 import { SocialNetworks } from '../components/social'
 import { useTranslation } from 'next-i18next'
+import { SiteLogo } from './SiteLogo'
 
 import styles from './layout.module.scss'
+
+export const SiteNavbar = () => {
+  const { t } = useTranslation()
+  return (
+    <Navbar className="pt-1 pb-1 mb-3" expand="lg" variant="dark" bg="primary">
+      <Container>
+        <Link href="/" passHref>
+          <Navbar.Brand>
+            <SiteLogo className={styles.logo} /> {t('fantasion-brand')}
+          </Navbar.Brand>
+        </Link>
+      </Container>
+    </Navbar>
+  )
+}
 
 export const PageContent = ({ children }) => (
   <div className={styles.content}>{children}</div>
