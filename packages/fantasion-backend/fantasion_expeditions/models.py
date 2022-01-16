@@ -100,6 +100,7 @@ class ExpeditionBatch(TimeStampedModel):
     )
     starts_at = DateField(verbose_name=_('Starts at'))
     ends_at = DateField(verbose_name=_('Ends at'))
+    public = VisibilityField()
 
     def __str__(self):
         return '{expedition_title} ({starts_at} - {ends_at})'.format(
