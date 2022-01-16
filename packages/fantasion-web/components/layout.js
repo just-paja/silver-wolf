@@ -1,6 +1,8 @@
+import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Link from 'next/link'
 import Navbar from 'react-bootstrap/Navbar'
+import Row from 'react-bootstrap/Row'
 
 import { A } from './links'
 import { SocialNetworks } from '../components/social'
@@ -59,13 +61,20 @@ const CopyrightNotice = () => (
 
 export const Footer = () => (
   <Container as="footer" className={styles.footer}>
-    <div>
-      <strong>Sledujte nás</strong>
-      <SocialNetworks className={styles.social} />
-    </div>
-    <div className={styles.footerInfo}>
-      <FooterLinks />
-      <CopyrightNotice />
-    </div>
+    <Row>
+      <Col md={9}>
+        <div>
+          <strong>Sledujte nás</strong>
+          <SocialNetworks className={styles.social} />
+        </div>
+        <div className={styles.footerInfo}>
+          <FooterLinks />
+          <CopyrightNotice />
+        </div>
+      </Col>
+      <Col className="d-flex justify-content-end" md={3}>
+        <SiteLogo className={styles.footerLogo} />
+      </Col>
+    </Row>
   </Container>
 )
