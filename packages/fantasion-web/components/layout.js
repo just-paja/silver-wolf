@@ -1,10 +1,10 @@
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-import Link from 'next/link'
 import Navbar from 'react-bootstrap/Navbar'
+import Nav from 'react-bootstrap/Nav'
 import Row from 'react-bootstrap/Row'
 
-import { A } from './links'
+import { A, Linker } from './links'
 import { SocialNetworks } from '../components/social'
 import { useTranslation } from 'next-i18next'
 import { SiteLogo } from './SiteLogo'
@@ -16,11 +16,18 @@ export const SiteNavbar = () => {
   return (
     <Navbar className="pt-1 pb-1 mb-3" expand="lg" variant="dark" bg="primary">
       <Container>
-        <Link href="/" passHref>
+        <Linker route="home">
           <Navbar.Brand>
             <SiteLogo className={styles.logo} /> {t('fantasion-brand')}
           </Navbar.Brand>
-        </Link>
+        </Linker>
+        <Navbar.Collapse id="site-navbar">
+          <Nav>
+            <Linker route="contacts">
+              <Nav.Link>{t('contacts-link')}</Nav.Link>
+            </Linker>
+          </Nav>
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   )

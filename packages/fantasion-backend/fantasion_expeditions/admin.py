@@ -57,7 +57,7 @@ class ExpeditionProgramAdmin(BaseAdmin, TranslationAdmin):
     inlines = (ExpeditionProgramMediaAdmin,)
 
 
-class ProductPriceAdmin(MediaAdmin):
+class ProductPriceAdmin(NestedStackedInline):
     model = ProductPrice
 
 

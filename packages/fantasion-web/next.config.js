@@ -1,3 +1,4 @@
+const { getRewrites } = require('./routes')
 const { i18n } = require('./next-i18next.config.js')
 const { resolve } = require('path')
 const { version } = require('./package.json')
@@ -34,6 +35,9 @@ module.exports = {
         destination: 'https://fantasion.cz/:path*',
       },
     ]
+  },
+  async rewrites() {
+    return getRewrites()
   },
   webpack(config) {
     config.module.rules.push({
