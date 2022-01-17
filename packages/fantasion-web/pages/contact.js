@@ -7,7 +7,7 @@ import { getPageProps } from '../server/props'
 import { SiteNavbar } from '../components/layout'
 import { useTranslation } from 'next-i18next'
 
-export const getStaticProps = async (props) => {
+export const getServerSideProps = async (props) => {
   return {
     props: {
       ...(await getPageProps(props)).props,
