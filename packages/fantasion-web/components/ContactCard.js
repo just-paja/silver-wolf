@@ -16,6 +16,16 @@ export const ContactCard = () => {
           {t('contact-phone')}:{' '}
           <a href="tel:+420 605 527 276">+420 605 527 276</a>
         </ListGroup.Item>
+        <ListGroup.Item>
+          {t('contact-address')}:<br />
+          <adress>
+            Zborovská 512/40
+            <br />
+            Praha 5 Smíchov
+            <br />
+            150 00
+          </adress>
+        </ListGroup.Item>
       </ListGroup>
     </Card>
   )
