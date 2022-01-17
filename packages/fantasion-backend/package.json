@@ -1,7 +1,7 @@
 {
   "name": "fantasion-backend",
   "private": true,
-  "version": "0.3.11",
+  "version": "0.3.12",
   "description": "Backend for fantasion website",
   "keywords": [
     "web",
