@@ -91,7 +91,7 @@ class BatchAgeGroupInlineAdmin(NestedStackedInline):
     readonly_fields = ('description',)
 
 
-class BatchStaffAdmin(MediaAdmin):
+class BatchStaffAdmin(NestedStackedInline):
     model = models.BatchStaff
 
 
