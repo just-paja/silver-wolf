@@ -53,9 +53,6 @@ const FooterLinks = () => {
           <Link route="privacyPolicy">{t('personal-information')}</Link>
         </li>
         <li>
-          <A href="">{t('usage-terms')}</A>
-        </li>
-        <li>
           <A href="">{t('terms-and-conditions')}</A>
         </li>
       </ul>
