@@ -2,7 +2,13 @@ from django_extensions.db.models import TimeStampedModel
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import CharField, TextField
 
-from fantasion_generics.models import PublicModel, VisibilityField
+from fantasion_generics.media import MediaParentField
+
+from fantasion_generics.models import (
+    MediaObjectModel,
+    PublicModel,
+    VisibilityField,
+)
 
 
 class ShortPromotionText(TimeStampedModel):
@@ -37,4 +43,12 @@ class StaticArticle(PublicModel):
         help_text=_(
             'Unique key used to reference the article directly on the API'),
     )
+    text = TextField(
+        verbose_name=_('Article text'),
+        help_text=_('Your article content formatted in Markdown'),
+    )
     public = VisibilityField()
+
+
+class StaticArticleMedia(MediaObjectModel):
+    parent = MediaParentField(StaticArticle)

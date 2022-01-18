@@ -10,4 +10,9 @@ class ShortPromotionTextOptions(TranslationOptions):
 
 @register(models.StaticArticle)
 class StaticArticleTranslationOptions(TranslationOptions):
-    fields = ('title', 'description')
+    fields = ('title', 'description', 'text')
+
+
+@register(models.StaticArticleMedia)
+class StaticArticleMediaTranslationOptions(TranslationOptions):
+    fields = ('title', 'description',)

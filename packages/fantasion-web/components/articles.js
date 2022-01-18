@@ -5,23 +5,19 @@ import Markdown from 'react-markdown'
 
 import { asPage, MetaPage } from '../components/meta'
 import { SiteNavbar } from '../components/layout'
-import { useTranslation } from 'next-i18next'
 
 export const StaticArticlePage = asPage(({ article, statusCode }) => {
-  const { t } = useTranslation()
   if (statusCode !== 200) {
     return <Error statusCode={statusCode} />
   }
   return (
     <main>
-      <MetaPage
-        title={article.title}
-        description={t('fantasion-general-description')}
-      />
+      <MetaPage title={article.title} description={article.description} />
       <SiteNavbar />
       <Container>
         <h1>{article.title}</h1>
         <Markdown>{article.description}</Markdown>
+        <Markdown>{article.text}</Markdown>
       </Container>
     </main>
   )

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-16 19:26+0100\n"
+"POT-Creation-Date: 2022-01-18 22:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,27 +35,47 @@ msgstr "Angličtina"
 msgid "Fantasion Content"
 msgstr "Obsah"
 
-#: fantasion_content/models.py:8 fantasion_content/models.py:12
+#: fantasion_content/models.py:10 fantasion_content/models.py:14
 msgid "Short Promotion Text"
 msgstr "Krátký propagační text"
 
-#: fantasion_content/models.py:9
+#: fantasion_content/models.py:11
 msgid "Short Promotion Texts"
 msgstr "Krátké propagační texty"
 
-#: fantasion_content/models.py:14
+#: fantasion_content/models.py:16
 msgid ""
 "Write down a short quote displayed on the web for fun and topromote the "
 "atmosphere on the summer camp"
 msgstr "Napiš krátký text, který propaguje atmosféru na táboře"
 
-#: fantasion_content/models.py:19
+#: fantasion_content/models.py:21
 msgid "Quote Owner"
 msgstr "Autor hlášky"
 
-#: fantasion_content/models.py:21
+#: fantasion_content/models.py:23
 msgid "A name that will be displayed as the original author of the quote"
 msgstr "Jméno, které se zobrazí jako původní autor textu"
+
+#: fantasion_content/models.py:30 fantasion_content/models.py:31
+msgid "Static Articles"
+msgstr "Statické články"
+
+#: fantasion_content/models.py:36
+msgid "Article key"
+msgstr "Identifikátor článku"
+
+#: fantasion_content/models.py:38
+msgid "Unique key used to reference the article directly on the API"
+msgstr "Jedinečný identifikátor, pomocí kterého bude článek referencován na webu"
+
+#: fantasion_content/models.py:41
+msgid "Article text"
+msgstr "Text článku"
+
+#: fantasion_content/models.py:42
+msgid "Your article content formatted in Markdown"
+msgstr "Kompletní text článku bez perexu formátovaný pomocí jazyka Markdown"
 
 #: fantasion_eshop/apps.py:7
 msgid "Fantasion Eshop"
