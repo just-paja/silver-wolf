@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import NextLink from 'next/link'
 
 import { useTranslation } from 'next-i18next'
 import { reverse } from '../routes'
@@ -8,14 +8,20 @@ export const Linker = ({ children, href, route }) => {
   const target = route ? reverse(i18n.resolvedLanguage, route) : href
 
   return (
-    <Link href={target} passHref>
+    <NextLink href={target} passHref>
       {children}
-    </Link>
+    </NextLink>
   )
 }
 
+export const Link = ({ children, href, route }) => (
+  <Linker href={href} route={route}>
+    <a>{children}</a>
+  </Linker>
+)
+
 export const A = ({ href, children, props, As = 'a' }) => (
-  <Link href={href} passHref>
+  <NextLink href={href} passHref>
     <As {...props}>{children}</As>
-  </Link>
+  </NextLink>
 )

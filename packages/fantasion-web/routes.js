@@ -11,6 +11,10 @@ const cs = {
     source: '/',
     destination: '/index',
   },
+  privacyPolicy: {
+    source: '/zasady-ochrany-osobnich-udaju',
+    destination: '/privacy-policy',
+  },
 }
 
 const routes = {

@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Row from 'react-bootstrap/Row'
 
-import { A, Linker } from './links'
+import { A, Link, Linker } from './links'
 import { SocialNetworks } from '../components/social'
 import { useTranslation } from 'next-i18next'
 import { SiteLogo } from './SiteLogo'
@@ -46,10 +46,10 @@ const FooterLinks = () => {
     <nav>
       <ul className={styles.quickLinks}>
         <li>
-          <A href="/cookies">{t('cookies')}</A>
+          <Link route="privacyPolicy">{t('cookies')}</Link>
         </li>
         <li>
-          <A href="">{t('personal-information')}</A>
+          <Link route="privacyPolicy">{t('personal-information')}</Link>
         </li>
         <li>
           <A href="">{t('usage-terms')}</A>
