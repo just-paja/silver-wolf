@@ -28,7 +28,7 @@ export const SocialNetworks = ({ subscribable, ...props }) => {
       <SocialIcon service="facebook" link="https://fb.com/fantasioncz" />
       <SocialIcon
         service="tiktok"
-        link="https://www.tiktok.com/@fantasion_cz"
+        link="https://www.tiktok.com/@fantasion_tabory"
       />
       <SocialIcon
         service="instagram"
