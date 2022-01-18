@@ -1,11 +1,15 @@
 const cs = {
-  home: {
-    source: '/',
-    destination: '/index',
+  about: {
+    source: '/o-nas',
+    destination: '/about',
   },
   contacts: {
     source: '/kontakty',
     destination: '/contact',
+  },
+  home: {
+    source: '/',
+    destination: '/index',
   },
 }
 

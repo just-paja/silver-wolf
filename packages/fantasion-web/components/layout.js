@@ -23,6 +23,9 @@ export const SiteNavbar = () => {
         </Linker>
         <Navbar.Collapse id="site-navbar">
           <Nav>
+            <Linker route="about">
+              <Nav.Link>{t('about-us')}</Nav.Link>
+            </Linker>
             <Linker route="contacts">
               <Nav.Link>{t('contacts-link')}</Nav.Link>
             </Linker>
