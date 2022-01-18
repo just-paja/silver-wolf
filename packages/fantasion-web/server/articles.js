@@ -15,7 +15,6 @@ const getArticleByKey = async (articleKey) => {
 export const createStaticArticlePageGetter = (articleKey) => async (props) => {
   const defaults = await getPageProps(props)
   const article = await getArticleByKey(articleKey)
-  console.log(article)
   return {
     props: {
       statusCode: article ? 200 : 404,

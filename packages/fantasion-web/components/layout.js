@@ -89,3 +89,13 @@ export const Footer = () => (
     </Row>
   </Container>
 )
+
+export const GenericPage = ({ children }) => (
+  <>
+    <PageContent>
+      <SiteNavbar />
+      <main>{children}</main>
+    </PageContent>
+    <Footer />
+  </>
+)

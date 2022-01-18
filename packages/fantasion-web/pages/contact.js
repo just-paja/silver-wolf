@@ -3,8 +3,8 @@ import React from 'react'
 
 import { asPage, MetaPage } from '../components/meta'
 import { ContactCard } from '../components/ContactCard'
+import { GenericPage } from '../components/layout'
 import { getPageProps } from '../server/props'
-import { SiteNavbar } from '../components/layout'
 import { useTranslation } from 'next-i18next'
 
 export const getServerSideProps = async (props) => {
@@ -18,17 +18,16 @@ export const getServerSideProps = async (props) => {
 const Contacts = () => {
   const { t } = useTranslation()
   return (
-    <main>
+    <GenericPage>
       <MetaPage
         title={t('fantasion-title')}
         description={t('fantasion-general-description')}
       />
-      <SiteNavbar />
       <Container>
         <h1>{t('contacts-title')}</h1>
         <ContactCard />
       </Container>
-    </main>
+    </GenericPage>
   )
 }
 
