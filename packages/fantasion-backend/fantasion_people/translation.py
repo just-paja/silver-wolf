@@ -5,7 +5,7 @@ from . import models
 
 @register(models.Profile)
 class ProfileTranslationOptions(TranslationOptions):
-    fields = ('title', 'description')
+    fields = ('title', 'description', 'text')
 
 
 @register(models.ProfileMedia)

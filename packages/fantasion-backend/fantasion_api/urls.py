@@ -4,6 +4,7 @@ from rest_framework import routers
 from fantasion_content import api as content
 from fantasion_locations import api as locations
 from fantasion_expeditions import api as expeditions
+from fantasion_people import api as people
 
 
 class NoSlashRouter(routers.DefaultRouter):
@@ -42,6 +43,11 @@ router.register(
     r'leisure-centres',
     expeditions.LeisureCentreCollection,
     basename='leisure_centres',
+)
+router.register(
+    r'profiles',
+    people.ProfileCollection,
+    basename='profiles',
 )
 
 urlpatterns = [

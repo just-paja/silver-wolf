@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-18 22:03+0100\n"
+"POT-Creation-Date: 2022-01-18 22:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,45 +35,46 @@ msgstr "Angličtina"
 msgid "Fantasion Content"
 msgstr "Obsah"
 
-#: fantasion_content/models.py:10 fantasion_content/models.py:14
+#: fantasion_content/models.py:16 fantasion_content/models.py:20
 msgid "Short Promotion Text"
 msgstr "Krátký propagační text"
 
-#: fantasion_content/models.py:11
+#: fantasion_content/models.py:17
 msgid "Short Promotion Texts"
 msgstr "Krátké propagační texty"
 
-#: fantasion_content/models.py:16
+#: fantasion_content/models.py:22
 msgid ""
 "Write down a short quote displayed on the web for fun and topromote the "
 "atmosphere on the summer camp"
 msgstr "Napiš krátký text, který propaguje atmosféru na táboře"
 
-#: fantasion_content/models.py:21
+#: fantasion_content/models.py:27
 msgid "Quote Owner"
 msgstr "Autor hlášky"
 
-#: fantasion_content/models.py:23
+#: fantasion_content/models.py:29
 msgid "A name that will be displayed as the original author of the quote"
 msgstr "Jméno, které se zobrazí jako původní autor textu"
 
-#: fantasion_content/models.py:30 fantasion_content/models.py:31
+#: fantasion_content/models.py:36 fantasion_content/models.py:37
 msgid "Static Articles"
 msgstr "Statické články"
 
-#: fantasion_content/models.py:36
+#: fantasion_content/models.py:42
 msgid "Article key"
 msgstr "Identifikátor článku"
 
-#: fantasion_content/models.py:38
+#: fantasion_content/models.py:44
 msgid "Unique key used to reference the article directly on the API"
-msgstr "Jedinečný identifikátor, pomocí kterého bude článek referencován na webu"
+msgstr ""
+"Jedinečný identifikátor, pomocí kterého bude článek referencován na webu"
 
-#: fantasion_content/models.py:41
+#: fantasion_content/models.py:47
 msgid "Article text"
 msgstr "Text článku"
 
-#: fantasion_content/models.py:42
+#: fantasion_content/models.py:48
 msgid "Your article content formatted in Markdown"
 msgstr "Kompletní text článku bez perexu formátovaný pomocí jazyka Markdown"
 
@@ -254,7 +255,7 @@ msgstr "Zaměstnanecké role"
 msgid "Batch Staff"
 msgstr "Zaměstnanci"
 
-#: fantasion_expeditions/models.py:138 fantasion_people/models.py:24
+#: fantasion_expeditions/models.py:138 fantasion_people/models.py:25
 msgid "Profile"
 msgstr "Profil"
 
@@ -403,68 +404,78 @@ msgstr "Zeměpisná délka"
 msgid "Fantasion People"
 msgstr "Lidé"
 
-#: fantasion_people/models.py:25
+#: fantasion_people/models.py:26
 msgid "Profiles"
 msgstr "Profily"
 
-#: fantasion_people/models.py:32
+#: fantasion_people/models.py:29
+msgid "Profile text"
+msgstr "Text profilu"
+
+#: fantasion_people/models.py:30
+msgid "Full text of the profile formatted in Markdown"
+msgstr ""
+"Celý text profilu, kromě perexu, formátovaný pomocí jazyka Markdown psaný v "
+"třetí osobě (Fantasion vypráví o někom)"
+
+#: fantasion_people/models.py:37
 msgid "Owner of the profile will be able to edit the profile"
 msgstr "Majitel profilu může upravovat svůj popisek"
 
-#: fantasion_people/models.py:45
+#: fantasion_people/models.py:50
 msgid "Allergy"
 msgstr "Alergie"
 
-#: fantasion_people/models.py:46
+#: fantasion_people/models.py:51
 msgid "Allergies"
 msgstr "Alergie"
 
-#: fantasion_people/models.py:51
+#: fantasion_people/models.py:56
 msgid "Hobby"
 msgstr "Zájem"
 
-#: fantasion_people/models.py:52
+#: fantasion_people/models.py:57
 msgid "Hobbies"
 msgstr "Zájmy"
 
-#: fantasion_people/models.py:57 fantasion_people/models.py:98
+#: fantasion_people/models.py:62 fantasion_people/models.py:103
 #: fantasion_signups/models.py:60
 msgid "Family"
 msgstr "Rodina"
 
-#: fantasion_people/models.py:58
+#: fantasion_people/models.py:63
 msgid "Families"
 msgstr "Rodiny"
 
-#: fantasion_people/models.py:65
+#: fantasion_people/models.py:70
 msgid "Family owner acts as a superadmin."
 msgstr "Vůdce rodiny jedná jako její superuživatel"
 
-#: fantasion_people/models.py:83
+#: fantasion_people/models.py:88
 msgid "Administrator"
 msgstr "Administrátor"
 
-#: fantasion_people/models.py:84
+#: fantasion_people/models.py:89
 msgid "Legal representative"
 msgstr "Zákonný zástupce"
 
-#: fantasion_people/models.py:85
+#: fantasion_people/models.py:90
 msgid "Spectator"
 msgstr "Divák"
 
-#: fantasion_people/models.py:91
+#: fantasion_people/models.py:96
 msgid "Family member"
 msgstr "Rodinný člen"
 
-#: fantasion_people/models.py:92
+#: fantasion_people/models.py:97
 msgid "Family members"
 msgstr "Členové rodiny"
 
-#: fantasion_people/models.py:104
+#: fantasion_people/models.py:109
 msgid "User"
 msgstr "Uživatel"
 
-#: fantasion_people/models.py:109
+#: fantasion_people/models.py:114
 msgid "Family Role"
 msgstr "Rodinná role"
 

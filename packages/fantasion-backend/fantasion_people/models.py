@@ -4,6 +4,7 @@ from django_extensions.db.models import TimeStampedModel
 from django.db.models import (
     ForeignKey,
     PositiveIntegerField,
+    TextField,
     CASCADE,
     RESTRICT,
     SET_DEFAULT,
@@ -24,6 +25,10 @@ class Profile(PublicModel):
         verbose_name = _('Profile')
         verbose_name_plural = _('Profiles')
 
+    text = TextField(
+        verbose_name=_('Profile text'),
+        help_text=_('Full text of the profile formatted in Markdown'),
+    )
     public = VisibilityField()
     owner = ForeignKey(
         User,
