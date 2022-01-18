@@ -16,6 +16,7 @@ export const ContactCard = () => {
           {t('contact-phone')}:{' '}
           <a href="tel:+420 605 527 276">+420 605 527 276</a>
         </ListGroup.Item>
+        <ListGroup.Item>{t('contact-in')}: 14166658</ListGroup.Item>
         <ListGroup.Item>
           {t('contact-address')}:<br />
           <adress>
