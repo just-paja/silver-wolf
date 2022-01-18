@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Row from 'react-bootstrap/Row'
 
-import { A, Link, Linker } from './links'
+import { Link, Linker } from './links'
 import { SocialNetworks } from '../components/social'
 import { useTranslation } from 'next-i18next'
 import { SiteLogo } from './SiteLogo'
@@ -53,7 +53,7 @@ const FooterLinks = () => {
           <Link route="privacyPolicy">{t('personal-information')}</Link>
         </li>
         <li>
-          <A href="">{t('terms-and-conditions')}</A>
+          <Link route="termsAndConditions">{t('terms-and-conditions')}</Link>
         </li>
       </ul>
     </nav>

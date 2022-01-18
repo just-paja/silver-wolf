@@ -15,6 +15,10 @@ const cs = {
     source: '/zasady-ochrany-osobnich-udaju',
     destination: '/privacy-policy',
   },
+  termsAndConditions: {
+    source: '/obchodni-podminky',
+    destination: '/terms-and-conditons',
+  },
 }
 
 const routes = {
