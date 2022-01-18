@@ -17,7 +17,7 @@ class StaticArticleSerializer(HyperlinkedModelSerializer):
 
     class Meta:
         model = models.StaticArticle
-        fields = ['id', 'title', 'description', 'key', 'media']
+        fields = ['id', 'title', 'description', 'text', 'key', 'media']
 
 
 class StaticArticleView(ReadOnlyModelViewSet):
