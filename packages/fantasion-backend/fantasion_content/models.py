@@ -2,6 +2,8 @@ from django_extensions.db.models import TimeStampedModel
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import CharField, TextField
 
+from fantasion_generics.models import PublicModel, VisibilityField
+
 
 class ShortPromotionText(TimeStampedModel):
     class Meta:
@@ -21,3 +23,18 @@ class ShortPromotionText(TimeStampedModel):
             'A name that will be displayed as the original author of the quote'
         ),
     )
+
+
+class StaticArticle(PublicModel):
+    class Meta:
+        verbose_name = _('Static Articles')
+        verbose_name_plural = _('Static Articles')
+
+    key = CharField(
+        max_length=32,
+        unique=True,
+        verbose_name=_('Article key'),
+        help_text=_(
+            'Unique key used to reference the article directly on the API'),
+    )
+    public = VisibilityField()

@@ -4,5 +4,10 @@ from . import models
 
 
 @register(models.ShortPromotionText)
-class CountryTranslationOptions(TranslationOptions):
+class ShortPromotionTextOptions(TranslationOptions):
     fields = ('text', 'quote_owner')
+
+
+@register(models.StaticArticle)
+class StaticArticleTranslationOptions(TranslationOptions):
+    fields = ('title', 'description')

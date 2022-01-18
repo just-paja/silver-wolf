@@ -1,6 +1,7 @@
 from django.urls import include, path
 from rest_framework import routers
 
+from fantasion_content import api as content
 from fantasion_locations import api as locations
 from fantasion_expeditions import api as expeditions
 
@@ -12,6 +13,11 @@ class NoSlashRouter(routers.DefaultRouter):
 
 
 router = NoSlashRouter()
+router.register(
+    r'static-articles',
+    content.StaticArticleView,
+    basename='static_article',
+)
 router.register(
     r'countries',
     locations.CountryCollection,
