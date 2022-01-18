@@ -21,6 +21,7 @@ export const SiteNavbar = () => {
             <SiteLogo className={styles.logo} /> {t('fantasion-brand')}
           </Navbar.Brand>
         </Linker>
+        <Navbar.Toggle aria-controls="site-navbar" />
         <Navbar.Collapse id="site-navbar">
           <Nav>
             <Linker route="about">
