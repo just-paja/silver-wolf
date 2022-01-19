@@ -18,3 +18,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
+p {
+  max-width: $paragraph-max-width;
+}
