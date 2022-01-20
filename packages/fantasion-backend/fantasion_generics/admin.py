@@ -70,3 +70,4 @@ class BaseAdminSite(AdminSite):
 
 class MediaAdmin(NestedStackedInline, TranslationStackedInline):
     extra = 0
+    fields = ('local_photo', 'local_video', 'title', 'description')
