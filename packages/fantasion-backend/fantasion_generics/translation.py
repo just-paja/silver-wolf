@@ -15,4 +15,4 @@ class PublicModelTranslationOptions(TranslationOptions):
 
 @register(MediaObjectModel)
 class MediaObjectModelTranslationOptions(TranslationOptions):
-    fields = ('title', 'description',)
+    fields = ('description',)

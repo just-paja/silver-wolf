@@ -10,7 +10,7 @@ class AgeGroupTranslationOptions(TranslationOptions):
 
 @register(models.StaffRoleMedia)
 class StaffRoleMediaTranslationOptions(TranslationOptions):
-    fields = ('title', 'description',)
+    fields = ('description',)
 
 
 @register(models.StaffRole)
@@ -25,7 +25,7 @@ class LeisureCentreTranslationOptions(TranslationOptions):
 
 @register(models.LeisureCentreMedia)
 class LeisureCentreMediaTranslationOptions(TranslationOptions):
-    fields = ('title', 'description',)
+    fields = ('description',)
 
 
 @register(models.Expedition)
@@ -35,7 +35,7 @@ class ExpeditionTranslationOptions(TranslationOptions):
 
 @register(models.ExpeditionMedia)
 class ExpeditionMediaOptions(TranslationOptions):
-    fields = ('title', 'description',)
+    fields = ('description',)
 
 
 @register(models.ExpeditionProgram)
@@ -45,4 +45,4 @@ class ExpeditionProgramTranslationOptions(TranslationOptions):
 
 @register(models.ExpeditionProgramMedia)
 class ExpeditionProgramMediaOptions(TranslationOptions):
-    fields = ('title', 'description',)
+    fields = ('description',)

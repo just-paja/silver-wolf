@@ -15,4 +15,4 @@ class StaticArticleTranslationOptions(TranslationOptions):
 
 @register(models.StaticArticleMedia)
 class StaticArticleMediaTranslationOptions(TranslationOptions):
-    fields = ('title', 'description',)
+    fields = ('description',)

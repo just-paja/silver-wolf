@@ -31,7 +31,6 @@ class NamedModel(TimeStampedModel):
 
 
 class MediaObjectModel(
-        NamedModel,
         MediaModelMixin,
         LocalPhotoModel,
         LocalVideoModel,
@@ -40,6 +39,8 @@ class MediaObjectModel(
         abstract = True
         verbose_name = _('Media Object')
         verbose_name_plural = _('Media Objects')
+
+    description = FacultativeDescriptionField()
 
     @property
     def upload_dir(self):

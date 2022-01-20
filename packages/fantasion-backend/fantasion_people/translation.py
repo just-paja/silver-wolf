@@ -10,7 +10,7 @@ class ProfileTranslationOptions(TranslationOptions):
 
 @register(models.ProfileMedia)
 class ProfileMediaTranslationOptions(TranslationOptions):
-    fields = ('title', 'description')
+    fields = ('description',)
 
 
 @register(models.Allergy)

@@ -26,6 +26,5 @@ media_fields = (
     'id',
     'local_photo',
     'local_video',
-    'title',
     'width',
 )
