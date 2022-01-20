@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Markdown from 'react-markdown'
 
 const Heading = ({ level, children }) => {
   const Component = `h${level}`
@@ -29,7 +30,9 @@ export const Article = ({ level = 1, title, text, media }) => {
   return (
     <article>
       <Heading level={level}>{title}</Heading>
-      <div>{text}</div>
+      <div>
+        <Markdown>{text}</Markdown>
+      </div>
       {media ? <ArticleGallery media={media} /> : null}
     </article>
   )
