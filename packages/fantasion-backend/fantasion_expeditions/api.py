@@ -55,6 +55,8 @@ class ExpeditionProgramMediaSerializer(PublicMediaSerializer):
 
 
 class ExpeditionProgramSerializer(HyperlinkedModelSerializer):
+    media = ExpeditionProgramMediaSerializer(many=True)
+
     class Meta:
         model = models.ExpeditionProgram
         fields = (
