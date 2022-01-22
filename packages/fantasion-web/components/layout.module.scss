@@ -1,14 +1,57 @@
 @import '../styles/variables.scss';
 
 .navbar {
+  transition: all 0.2s;
 
-  .navbarBrand {
+  .navbarBrand,
+  .navbarToggle {
     color: $primary;
     font-weight: bold;
   }
 
   .navbarToggle {
     border: none;
+  }
+
+  :global(.navbar-nav) :global(.nav-link) {
+    color: $primary;
+    font-weight: bold;
+
+    &:hover,
+    &:focus {
+      color: lighten($primary, 20%);
+    }
+  }
+}
+
+.navbarInverse,
+.navbarExpanded {
+  background-color: $primary;
+
+  .navbarBrand {
+    color: $white;
+  }
+
+  .navbarToggle {
+    color: $white;
+  }
+
+  :global(.navbar-nav) :global(.nav-link) {
+    color: $white;
+
+    &:hover,
+    &:focus {
+      color: $white;
+      opacity: .66;
+    }
+  }
+}
+
+.navbarExpanded {
+  :global(.navbar-nav) {
+    border-top: 1px solid rgba($white, 0.2);
+    margin-top: calc($spacer / 2);
+    padding-top: calc($spacer / 2);
   }
 }
 

@@ -9,13 +9,28 @@ import { Link, Linker } from './links'
 import { SocialNetworks } from '../components/social'
 import { useTranslation } from 'next-i18next'
 import { SiteLogo } from './SiteLogo'
+import { useScroll } from './scroll'
+import { HiMenu } from 'react-icons/hi'
+import { useState } from 'react'
 
 import styles from './layout.module.scss'
 
 export const SiteNavbar = () => {
   const { t } = useTranslation()
+  const [scrollTop] = useScroll()
+  const [expanded, setExpanded] = useState(false)
+
   return (
-    <Navbar className={classnames('pt-1 pb-1 mb-3', styles.navbar)} expand="lg">
+    <Navbar
+      className={classnames('pt-1 pb-1 mb-3', styles.navbar, {
+        [styles.navbarInverse]: scrollTop > 30,
+        [styles.navbarExpanded]: expanded,
+      })}
+      expand="lg"
+      expanded={expanded}
+      sticky="top"
+      onToggle={setExpanded}
+    >
       <Container>
         <Linker route="home">
           <Navbar.Brand
@@ -31,7 +46,9 @@ export const SiteNavbar = () => {
         <Navbar.Toggle
           aria-controls="site-navbar"
           className={styles.navbarToggle}
-        />
+        >
+          <HiMenu />
+        </Navbar.Toggle>
         <Navbar.Collapse id="site-navbar">
           <Nav>
             <Linker route="about">
