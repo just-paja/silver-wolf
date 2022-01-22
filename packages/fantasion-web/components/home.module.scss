@@ -1,14 +1,23 @@
 @import '../styles/variables.scss';
 
-.flavourText {
+.flavour {
+  max-width: 420px;
   margin: calc($spacer * 3);
+}
+
+.flavourText {
+  font-style: italic;
+  font-size: $h4-font-size;
+  text-align: center;
+}
+
+.missionText {
   font-size: $spacer * 2;
   font-weight: bold;
-  max-width: 420px;
 }
 
 @media (min-width: 400px) {
-  .flavourText {
+  .missionText {
     font-size: $spacer * 3;
   }
 }

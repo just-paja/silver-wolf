@@ -12,16 +12,19 @@ import { HomeFlavour } from '../components/home'
 
 const getExpeditions = async () => apiFetch('/expeditions')
 
+const getFlavourTexts = async () => apiFetch('/flavour-texts')
+
 export const getServerSideProps = async (props) => {
   return {
     props: {
       expeditions: await getExpeditions(),
+      flavourTexts: await getFlavourTexts(),
       ...(await getPageProps(props)).props,
     },
   }
 }
 
-const Home = ({ expeditions }) => {
+const Home = ({ expeditions, flavourTexts }) => {
   const { t } = useTranslation()
   return (
     <GenericPage>
@@ -29,7 +32,7 @@ const Home = ({ expeditions }) => {
         title={t('fantasion-title')}
         description={t('fantasion-general-description')}
       />
-      <HomeFlavour />
+      <HomeFlavour flavourTexts={flavourTexts.results} />
       <Container>
         <ExpeditionList expeditions={expeditions} />
         <GeneralNewsletterForm className="mt-3" />
