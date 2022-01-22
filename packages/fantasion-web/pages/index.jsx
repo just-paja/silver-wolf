@@ -33,7 +33,7 @@ const Home = ({ expeditions, flavourTexts }) => {
         description={t('fantasion-general-description')}
       />
       <HomeFlavour flavourTexts={flavourTexts.results} />
-      <Container>
+      <Container className="above-decoration">
         <ExpeditionList expeditions={expeditions} />
         <GeneralNewsletterForm className="mt-3" />
       </Container>

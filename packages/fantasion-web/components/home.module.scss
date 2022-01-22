@@ -1,5 +1,39 @@
 @import '../styles/variables.scss';
 
+.bgShapes {
+  position: relative;
+  & > div {
+    position: relative;
+    z-index: 2;
+  }
+  
+  &:after,
+  &:before {
+    background-repeat: no-repeat;
+    content: "";
+    display: block;
+    pointer-events: none;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    right: 0;
+  }
+
+  &:before {
+    background-image: url(../public/bg-shapes-left.webp);
+    background-position: center left;
+    bottom: -75%;
+    top: 50%;
+  }
+
+  &:after {
+    background-image: url(../public/bg-shapes-right.webp);
+    background-position: center right;
+    bottom: -50%;
+    top: -50%;
+  }
+}
+
 .flavour {
   max-width: 420px;
   margin: calc($spacer * 3);

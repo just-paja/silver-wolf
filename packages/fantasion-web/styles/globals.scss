@@ -23,3 +23,8 @@ a {
 p {
   max-width: $paragraph-max-width;
 }
+
+.above-decoration {
+  position: relative;
+  z-index: 1;
+}

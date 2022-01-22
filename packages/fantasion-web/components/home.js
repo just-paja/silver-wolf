@@ -85,24 +85,26 @@ const Witcher = () => {
 export const HomeFlavour = ({ flavourTexts }) => {
   const { t } = useTranslation()
   return (
-    <Container>
-      <Row className="align-items-center">
-        <Col xs={12} md={6} className="d-flex justify-content-center">
-          <h1 className="d-none">{t('fantasion-title')}</h1>
-          <div className={styles.flavour}>
-            <p className={classnames('text-center', styles.missionText)}>
-              {t('fantasion-general-description')}
-            </p>
-            <FlavourTextCarousel
-              className={classnames('d-none d-md-block', styles.flavourText)}
-              flavourTexts={flavourTexts}
-            />
-          </div>
-        </Col>
-        <Col xs={12} md={6}>
-          <Witcher />
-        </Col>
-      </Row>
-    </Container>
+    <div className={styles.bgShapes}>
+      <Container>
+        <Row className="align-items-center">
+          <Col xs={12} md={6} className="d-flex justify-content-center">
+            <h1 className="d-none">{t('fantasion-title')}</h1>
+            <div className={styles.flavour}>
+              <p className={classnames('text-center', styles.missionText)}>
+                {t('fantasion-general-description')}
+              </p>
+              <FlavourTextCarousel
+                className={classnames('d-none d-md-block', styles.flavourText)}
+                flavourTexts={flavourTexts}
+              />
+            </div>
+          </Col>
+          <Col xs={12} md={6}>
+            <Witcher />
+          </Col>
+        </Row>
+      </Container>
+    </div>
   )
 }
