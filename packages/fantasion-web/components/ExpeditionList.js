@@ -14,10 +14,27 @@ const LeisureCentreSummary = ({ leisureCentre }) => {
   )
 }
 
+const AgeGroupTitle = ({ ageGroup }) => (
+  <span title={ageGroup.title}>
+    {ageGroup.ageMin} - {ageGroup.ageMax}
+  </span>
+)
+
+const BatchAgeGroup = ({ batchAgeGroup }) => (
+  <div>
+    <div>
+      <AgeGroupTitle ageGroup={batchAgeGroup.ageGroup} />
+    </div>
+  </div>
+)
+
 const ExpeditionBatch = ({ batch }) => {
   return (
     <div>
       <DateRange start={batch.startsAt} end={batch.endsAt} />
+      {batch.ageGroups.map((ageGroup) => (
+        <BatchAgeGroup batchAgeGroup={ageGroup} key={ageGroup.id} />
+      ))}
       {batch.leisureCentre ? (
         <LeisureCentreSummary leisureCentre={batch.leisureCentre} />
       ) : null}
