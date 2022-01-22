@@ -1,3 +1,4 @@
+import classnames from 'classnames'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
@@ -14,14 +15,23 @@ import styles from './layout.module.scss'
 export const SiteNavbar = () => {
   const { t } = useTranslation()
   return (
-    <Navbar className="pt-1 pb-1 mb-3" expand="lg" variant="dark" bg="primary">
+    <Navbar className={classnames('pt-1 pb-1 mb-3', styles.navbar)} expand="lg">
       <Container>
         <Linker route="home">
-          <Navbar.Brand>
-            <SiteLogo className={styles.logo} /> {t('fantasion-brand')}
+          <Navbar.Brand
+            className={classnames(
+              styles.navbarBrand,
+              'd-inline-flex align-items-center'
+            )}
+          >
+            <SiteLogo className={styles.logo} />{' '}
+            <span>{t('fantasion-brand')}</span>
           </Navbar.Brand>
         </Linker>
-        <Navbar.Toggle aria-controls="site-navbar" />
+        <Navbar.Toggle
+          aria-controls="site-navbar"
+          className={styles.navbarToggle}
+        />
         <Navbar.Collapse id="site-navbar">
           <Nav>
             <Linker route="about">
