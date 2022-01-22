@@ -4,8 +4,8 @@ from modeltranslation.admin import TranslationAdmin
 from . import models
 
 
-class ShortPromotionTextAdmin(BaseAdmin, TranslationAdmin):
-    model = models.ShortPromotionText
+class FlavourTextAdmin(BaseAdmin, TranslationAdmin):
+    model = models.FlavourText
     list_display = ('text', 'quote_owner', 'modified')
     list_filter = ('quote_owner', )
 

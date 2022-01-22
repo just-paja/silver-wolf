@@ -11,13 +11,13 @@ from fantasion_generics.models import (
 )
 
 
-class ShortPromotionText(TimeStampedModel):
+class FlavourText(TimeStampedModel):
     class Meta:
-        verbose_name = _('Short Promotion Text')
-        verbose_name_plural = _('Short Promotion Texts')
+        verbose_name = _('Flavour Text')
+        verbose_name_plural = _('Flavour Texts')
 
     text = TextField(
-        verbose_name=_('Short Promotion Text'),
+        verbose_name=_('Flavour Text'),
         help_text=_(
             'Write down a short quote displayed on the web for fun and to'
             'promote the atmosphere on the summer camp'),

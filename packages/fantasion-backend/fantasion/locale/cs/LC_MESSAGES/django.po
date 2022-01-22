@@ -36,12 +36,12 @@ msgid "Fantasion Content"
 msgstr "Obsah"
 
 #: fantasion_content/models.py:16 fantasion_content/models.py:20
-msgid "Short Promotion Text"
-msgstr "Krátký propagační text"
+msgid "Flavour Text"
+msgstr "Chuťový text"
 
 #: fantasion_content/models.py:17
-msgid "Short Promotion Texts"
-msgstr "Krátké propagační texty"
+msgid "Flavour Texts"
+msgstr "Chuťové texty"
 
 #: fantasion_content/models.py:22
 msgid ""

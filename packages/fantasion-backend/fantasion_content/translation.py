@@ -3,8 +3,8 @@ from modeltranslation.translator import register, TranslationOptions
 from . import models
 
 
-@register(models.ShortPromotionText)
-class ShortPromotionTextOptions(TranslationOptions):
+@register(models.FlavourText)
+class FlavourTextOptions(TranslationOptions):
     fields = ('text', 'quote_owner')
 
 
