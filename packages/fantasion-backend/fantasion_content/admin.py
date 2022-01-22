@@ -6,7 +6,7 @@ from . import models
 
 class FlavourTextAdmin(BaseAdmin, TranslationAdmin):
     model = models.FlavourText
-    list_display = ('text', 'quote_owner', 'modified')
+    list_display = ('text', 'quote_owner', 'modified', 'importance')
     list_filter = ('quote_owner', )
 
 

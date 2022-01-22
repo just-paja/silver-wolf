@@ -5,6 +5,7 @@ from django.db.models import CharField, TextField
 from fantasion_generics.media import MediaParentField
 
 from fantasion_generics.models import (
+    ImportanceField,
     MediaObjectModel,
     PublicModel,
     VisibilityField,
@@ -13,6 +14,7 @@ from fantasion_generics.models import (
 
 class FlavourText(TimeStampedModel):
     class Meta:
+        ordering = ['-importance']
         verbose_name = _('Flavour Text')
         verbose_name_plural = _('Flavour Texts')
 
@@ -29,6 +31,7 @@ class FlavourText(TimeStampedModel):
             'A name that will be displayed as the original author of the quote'
         ),
     )
+    importance = ImportanceField()
 
 
 class StaticArticle(PublicModel):

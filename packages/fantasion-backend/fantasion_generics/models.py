@@ -1,5 +1,5 @@
 from django_extensions.db.models import AutoSlugField, TimeStampedModel
-from django.db.models import BooleanField
+from django.db.models import BooleanField, IntegerField
 from django.utils.translation import ugettext_lazy as _
 from re import sub
 
@@ -70,3 +70,18 @@ class VisibilityField(BooleanField):
             _('Public objects will be visible on the website'),
         )
         super().__init__(*args, **kwargs)
+
+
+class ImportanceField(IntegerField):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('default', 0)
+        kwargs.setdefault('verbose_name', _('Object Importance'))
+        kwargs.setdefault(
+            'help_text',
+            _(
+                'More important objects will appear on the top or sooner on '
+                'the page'
+            ),
+        )
+        super().__init__(*args, **kwargs)
+
