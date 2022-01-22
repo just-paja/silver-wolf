@@ -12,6 +12,7 @@
   background-position: top center;
   background-size: contain;
   background-repeat: no-repeat;
+  filter: drop-shadow(0 0 calc($spacer) rgba(darken($primary, 50%), 0.33));
   width: 100%;
 
   &:after {
