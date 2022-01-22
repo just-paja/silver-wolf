@@ -9,6 +9,13 @@
   font-style: italic;
   font-size: $h4-font-size;
   text-align: center;
+  transition: height .2s;
+  overflow: hidden;
+}
+
+.flavourLine {
+  display: block;
+  min-height: 1rem;
 }
 
 .missionText {
