@@ -1,3 +1,4 @@
+import classnames from 'classnames'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -15,9 +16,11 @@ export const HomeFlavour = () => {
   return (
     <Container>
       <Row className="align-items-center">
-        <Col xs={12} md={6}>
+        <Col xs={12} md={6} className="d-flex justify-content-center">
           <h1 className="d-none">{t('fantasion-title')}</h1>
-          <p className="lead fs-1 text-center">
+          <p
+            className={classnames('lead fs-1 text-center', styles.flavourText)}
+          >
             {t('fantasion-general-description')}
           </p>
         </Col>
