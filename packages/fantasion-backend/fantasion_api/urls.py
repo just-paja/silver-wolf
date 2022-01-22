@@ -25,6 +25,11 @@ router.register(
     basename='countries',
 )
 router.register(
+    r'flavour-texts',
+    content.FlavourTextView,
+    basename='flavour_text',
+)
+router.register(
     r'locations',
     locations.LocationCollection,
     basename='locations',
