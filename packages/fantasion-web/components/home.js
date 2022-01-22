@@ -1,6 +1,7 @@
 import classnames from 'classnames'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import Markdown from 'react-markdown'
 import Row from 'react-bootstrap/Row'
 
 import { useEffect, useState, useRef } from 'react'
@@ -36,7 +37,11 @@ const FlavourText = ({ quoteOwner, text, ...props }) => {
   return (
     <blockquote {...props} style={{ height }}>
       <span className={styles.flavourLine} ref={lineRef}>
-        <span>&quot;{text}&quot;</span>
+        <div className={styles.flavourQuote}>
+          &quot;
+          <Markdown>{text}</Markdown>
+          &quot;
+        </div>
         {' -'}&nbsp;
         <span>{quoteOwner}</span>
       </span>

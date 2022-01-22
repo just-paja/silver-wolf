@@ -18,6 +18,12 @@
   min-height: 1rem;
 }
 
+.flavourQuote {
+  &, & * {
+    display: inline;
+  }
+}
+
 .missionText {
   font-size: $spacer * 2;
   font-weight: bold;
