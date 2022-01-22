@@ -1,4 +1,9 @@
+@import '../styles/variables.scss';
+
 .flavourText {
+  margin: calc($spacer * 3);
+  font-size: $spacer * 3;
+  font-weight: bold;
   max-width: 420px;
 }
 
