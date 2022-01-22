@@ -8,6 +8,7 @@ import { GeneralNewsletterForm } from '../components/GeneralNewsletterForm'
 import { GenericPage } from '../components/layout'
 import { getPageProps } from '../server/props'
 import { useTranslation } from 'next-i18next'
+import { HomeFlavour } from '../components/home'
 
 const getExpeditions = async () => apiFetch('/expeditions')
 
@@ -28,9 +29,8 @@ const Home = ({ expeditions }) => {
         title={t('fantasion-title')}
         description={t('fantasion-general-description')}
       />
+      <HomeFlavour />
       <Container>
-        <h1>{t('fantasion-title')}</h1>
-        <p>{t('fantasion-general-description')}</p>
         <ExpeditionList expeditions={expeditions} />
         <GeneralNewsletterForm className="mt-3" />
       </Container>
