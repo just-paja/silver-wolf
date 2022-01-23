@@ -7,6 +7,10 @@ const cs = {
     source: '/kontakty',
     destination: '/contact',
   },
+  faq: {
+    source: '/casto-kladene-otazky',
+    destination: '/faq',
+  },
   home: {
     source: '/',
     destination: '/index',
