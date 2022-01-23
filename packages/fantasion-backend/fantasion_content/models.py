@@ -43,15 +43,19 @@ class FrequentlyAskedQuestion(TimeStampedModel):
     question = TextField(
         verbose_name=_('Question'),
         help_text=_(
-            'Write the question from perspective of the person asking it.'
-        ),
+            'Write the question from perspective of the person asking it.'),
     )
-    answer = TextField(
+    short_answer = TextField(
         verbose_name=_('Answer'),
         help_text=_(
-            'Write the best positive answer that resolves all issues of the '
-            'questioner and gives hope for the future.'
-        ),
+            'Write a quick summarizing positive answer that resolves the '
+            'question'),
+    )
+    detailed_answer = TextField(
+        verbose_name=_('Detailed Answer'),
+        help_text=_('Write all the details, do not spare the letters'),
+        blank=True,
+        null=True,
     )
     importance = ImportanceField()
     public = VisibilityField()

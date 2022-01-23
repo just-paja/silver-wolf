@@ -28,7 +28,7 @@ class FrequentlyAskedQuestionSerializer(HyperlinkedModelSerializer):
 
     class Meta:
         model = models.FrequentlyAskedQuestion
-        fields = ('id', 'question', 'answer', 'media')
+        fields = ('id', 'question', 'short_answer', 'detailed_answer', 'media')
 
 
 class FrequentlyAskedQuestionView(ReadOnlyModelViewSet):

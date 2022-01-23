@@ -10,7 +10,7 @@ class FlavourTextOptions(TranslationOptions):
 
 @register(models.FrequentlyAskedQuestion)
 class FrequentlyAskedQuestionOptions(TranslationOptions):
-    fields = ('question', 'answer')
+    fields = ('question', 'short_answer', 'detailed_answer')
 
 
 @register(models.FrequentlyAskedQuestionMedia)
