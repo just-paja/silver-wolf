@@ -48,8 +48,8 @@ const GalleryPreview = ({ localPhoto, ...props }) => (
       layout="responsive"
       alt=""
       src={localPhoto.galleryPreview}
-      height={256}
-      width={256}
+      height={512}
+      width={512}
     />
   </div>
 )
@@ -59,7 +59,7 @@ const LocalPhoto = ({ localPhoto, ...props }) => (
 )
 
 const MediaObject = ({ mediaObject, ...props }) => (
-  <LocalPhoto {...mediaObject} {...props} />
+  <LocalPhoto localPhoto={mediaObject.localPhoto} {...props} />
 )
 
 export const SlideShowGallery = ({ media, ...props }) => {
