@@ -15,6 +15,9 @@ class LocalPhotoSerializer(VersatileImageFieldSerializer):
                 ))
         super().__init__(sizes=sizes, *args, **kwargs)
 
+    def to_native(self, *args, **kwargs):
+        return super().to_native(*args, **kwargs) or None
+
 
 class PublicMediaSerializer(HyperlinkedModelSerializer):
     local_photo = LocalPhotoSerializer()
