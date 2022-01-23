@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-18 22:42+0100\n"
+"POT-Creation-Date: 2022-01-23 03:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,46 +35,46 @@ msgstr "Angličtina"
 msgid "Fantasion Content"
 msgstr "Obsah"
 
-#: fantasion_content/models.py:16 fantasion_content/models.py:20
+#: fantasion_content/models.py:18 fantasion_content/models.py:22
 msgid "Flavour Text"
 msgstr "Chuťový text"
 
-#: fantasion_content/models.py:17
+#: fantasion_content/models.py:19
 msgid "Flavour Texts"
 msgstr "Chuťové texty"
 
-#: fantasion_content/models.py:22
+#: fantasion_content/models.py:24
 msgid ""
 "Write down a short quote displayed on the web for fun and topromote the "
 "atmosphere on the summer camp"
 msgstr "Napiš krátký text, který propaguje atmosféru na táboře"
 
-#: fantasion_content/models.py:27
+#: fantasion_content/models.py:29
 msgid "Quote Owner"
 msgstr "Autor hlášky"
 
-#: fantasion_content/models.py:29
+#: fantasion_content/models.py:31
 msgid "A name that will be displayed as the original author of the quote"
 msgstr "Jméno, které se zobrazí jako původní autor textu"
 
-#: fantasion_content/models.py:36 fantasion_content/models.py:37
+#: fantasion_content/models.py:39 fantasion_content/models.py:40
 msgid "Static Articles"
 msgstr "Statické články"
 
-#: fantasion_content/models.py:42
+#: fantasion_content/models.py:45
 msgid "Article key"
 msgstr "Identifikátor článku"
 
-#: fantasion_content/models.py:44
+#: fantasion_content/models.py:47
 msgid "Unique key used to reference the article directly on the API"
 msgstr ""
 "Jedinečný identifikátor, pomocí kterého bude článek referencován na webu"
 
-#: fantasion_content/models.py:47
+#: fantasion_content/models.py:50
 msgid "Article text"
 msgstr "Text článku"
 
-#: fantasion_content/models.py:48
+#: fantasion_content/models.py:51
 msgid "Your article content formatted in Markdown"
 msgstr "Kompletní text článku bez perexu formátovaný pomocí jazyka Markdown"
 
@@ -308,21 +308,29 @@ msgstr "Šířka"
 msgid "Parent object"
 msgstr "Rodičovský objekt"
 
-#: fantasion_generics/models.py:41
+#: fantasion_generics/models.py:40
 msgid "Media Object"
 msgstr "Médium"
 
-#: fantasion_generics/models.py:42
+#: fantasion_generics/models.py:41
 msgid "Media Objects"
 msgstr "Média"
 
-#: fantasion_generics/models.py:66
+#: fantasion_generics/models.py:67
 msgid "Public"
-msgstr ""
+msgstr "Veřejné"
 
-#: fantasion_generics/models.py:69
+#: fantasion_generics/models.py:70
 msgid "Public objects will be visible on the website"
 msgstr "Veřejné objekty budou vidět na webu"
+
+#: fantasion_generics/models.py:78
+msgid "Object Importance"
+msgstr "Důležitost"
+
+#: fantasion_generics/models.py:82
+msgid "More important objects will appear on the top or sooner on the page"
+msgstr "Důležitější objekty budou vidět nahoře nebo dříve na stránce"
 
 #: fantasion_generics/photos.py:23 fantasion_generics/photos.py:39
 msgid "Image file"
@@ -356,7 +364,7 @@ msgstr "Soubor s videem"
 msgid "Fantasion Locations"
 msgstr "Umístění"
 
-#: fantasion_locations/models.py:14 fantasion_locations/models.py:42
+#: fantasion_locations/models.py:14 fantasion_locations/models.py:48
 msgid "Country"
 msgstr "Země"
 
@@ -376,27 +384,31 @@ msgstr "Umístění"
 msgid "Name"
 msgstr "Jméno"
 
-#: fantasion_locations/models.py:48
+#: fantasion_locations/models.py:40
+msgid "Fuzzy name"
+msgstr "Zjednodušená lokace"
+
+#: fantasion_locations/models.py:54
 msgid "City"
 msgstr "Město"
 
-#: fantasion_locations/models.py:54
+#: fantasion_locations/models.py:60
 msgid "Street"
 msgstr "Ulice"
 
-#: fantasion_locations/models.py:60
+#: fantasion_locations/models.py:66
 msgid "Street number"
 msgstr "Číslo popisné"
 
-#: fantasion_locations/models.py:66
+#: fantasion_locations/models.py:72
 msgid "Postal code"
 msgstr "Poštovní směrovací číslo"
 
-#: fantasion_locations/models.py:73
+#: fantasion_locations/models.py:79
 msgid "Latitude"
 msgstr "Zeměpisná šířka"
 
-#: fantasion_locations/models.py:80
+#: fantasion_locations/models.py:86
 msgid "Longitude"
 msgstr "Zeměpisná délka"
 
