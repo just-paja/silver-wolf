@@ -8,6 +8,16 @@ class FlavourTextOptions(TranslationOptions):
     fields = ('text', 'quote_owner')
 
 
+@register(models.FrequentlyAskedQuestion)
+class FrequentlyAskedQuestionOptions(TranslationOptions):
+    fields = ('question', 'answer')
+
+
+@register(models.FrequentlyAskedQuestionMedia)
+class FrequentlyAskedQuestionMediaOptions(TranslationOptions):
+    fields = ('description', )
+
+
 @register(models.StaticArticle)
 class StaticArticleTranslationOptions(TranslationOptions):
     fields = ('title', 'description', 'text')
@@ -15,4 +25,4 @@ class StaticArticleTranslationOptions(TranslationOptions):
 
 @register(models.StaticArticleMedia)
 class StaticArticleMediaTranslationOptions(TranslationOptions):
-    fields = ('description',)
+    fields = ('description', )

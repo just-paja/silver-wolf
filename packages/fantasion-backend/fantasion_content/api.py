@@ -17,6 +17,25 @@ class FlavourTextView(ReadOnlyModelViewSet):
     serializer_class = FlavourTextSerializer
 
 
+class FrequentlyAskedQuestionMediaSerializer(PublicMediaSerializer):
+    class Meta:
+        model = models.FrequentlyAskedQuestionMedia
+        fields = media_fields
+
+
+class FrequentlyAskedQuestionSerializer(HyperlinkedModelSerializer):
+    media = FrequentlyAskedQuestionMediaSerializer(many=True)
+
+    class Meta:
+        model = models.FrequentlyAskedQuestion
+        fields = ('id', 'question', 'answer', 'media')
+
+
+class FrequentlyAskedQuestionView(ReadOnlyModelViewSet):
+    queryset = models.FrequentlyAskedQuestion.objects.filter(public=True).all()
+    serializer_class = FrequentlyAskedQuestionSerializer
+
+
 class StaticArticleMediaSerializer(PublicMediaSerializer):
     class Meta:
         model = models.StaticArticleMedia

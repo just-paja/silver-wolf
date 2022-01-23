@@ -10,6 +10,17 @@ class FlavourTextAdmin(BaseAdmin, TranslationAdmin):
     list_filter = ('quote_owner', )
 
 
+class FrequentlyAskedQuestionMediaAdmin(MediaAdmin):
+    model = models.FrequentlyAskedQuestionMedia
+
+
+class FrequentlyAskedQuestion(BaseAdmin, TranslationAdmin):
+    model = models.FrequentlyAskedQuestion
+    list_display = ('id', 'question')
+    list_filter = ('public', )
+    inlines = (FrequentlyAskedQuestionMediaAdmin, )
+
+
 class StaticArticleMediaAdmin(MediaAdmin):
     model = models.StaticArticleMedia
 
@@ -19,4 +30,4 @@ class StaticArticleAdmin(BaseAdmin, TranslationAdmin):
     list_display = ('key', 'title', 'modified')
     list_filter = ('public', )
     fields = ('key', 'title', 'description', 'text', 'public')
-    inlines = (StaticArticleMediaAdmin,)
+    inlines = (StaticArticleMediaAdmin, )

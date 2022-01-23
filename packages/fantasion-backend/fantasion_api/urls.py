@@ -30,6 +30,11 @@ router.register(
     basename='flavour_text',
 )
 router.register(
+    r'faqs',
+    content.FrequentlyAskedQuestionView,
+    basename='faqs',
+)
+router.register(
     r'locations',
     locations.LocationCollection,
     basename='locations',

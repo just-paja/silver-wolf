@@ -34,6 +34,33 @@ class FlavourText(TimeStampedModel):
     importance = ImportanceField()
 
 
+class FrequentlyAskedQuestion(TimeStampedModel):
+    class Meta:
+        ordering = ['-importance']
+        verbose_name = _('Frequently Asked Question')
+        verbose_name_plural = _('Frequently Asked Questions')
+
+    question = TextField(
+        verbose_name=_('Question'),
+        help_text=_(
+            'Write the question from perspective of the person asking it.'
+        ),
+    )
+    answer = TextField(
+        verbose_name=_('Answer'),
+        help_text=_(
+            'Write the best positive answer that resolves all issues of the '
+            'questioner and gives hope for the future.'
+        ),
+    )
+    importance = ImportanceField()
+    public = VisibilityField()
+
+
+class FrequentlyAskedQuestionMedia(MediaObjectModel):
+    parent = MediaParentField(FrequentlyAskedQuestion)
+
+
 class StaticArticle(PublicModel):
     class Meta:
         verbose_name = _('Static Articles')

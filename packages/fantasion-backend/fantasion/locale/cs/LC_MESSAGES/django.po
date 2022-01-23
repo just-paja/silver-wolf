@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-23 03:38+0100\n"
+"POT-Creation-Date: 2022-01-23 15:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,24 +57,52 @@ msgstr "Autor hlášky"
 msgid "A name that will be displayed as the original author of the quote"
 msgstr "Jméno, které se zobrazí jako původní autor textu"
 
-#: fantasion_content/models.py:39 fantasion_content/models.py:40
+#: fantasion_content/models.py:40
+msgid "Frequently Asked Question"
+msgstr "Často kladená otázka"
+
+#: fantasion_content/models.py:41
+msgid "Frequently Asked Questions"
+msgstr "Často kladené otázky"
+
+#: fantasion_content/models.py:44
+msgid "Question"
+msgstr "Otázka"
+
+#: fantasion_content/models.py:46
+msgid "Write the question from perspective of the person asking it."
+msgstr "Napište otázku z perspektivy člověka, který se na ní ptá"
+
+#: fantasion_content/models.py:50
+msgid "Answer"
+msgstr "Odpověď"
+
+#: fantasion_content/models.py:52
+msgid ""
+"Write the best positive answer that resolves all issues of the questioner "
+"and gives hope for the future."
+msgstr ""
+"Napište tu nejlepší pozitivní odpověď, která řeší všechny problémy tazatele "
+"a dává naději do budoucna."
+
+#: fantasion_content/models.py:66 fantasion_content/models.py:67
 msgid "Static Articles"
 msgstr "Statické články"
 
-#: fantasion_content/models.py:45
+#: fantasion_content/models.py:72
 msgid "Article key"
 msgstr "Identifikátor článku"
 
-#: fantasion_content/models.py:47
+#: fantasion_content/models.py:74
 msgid "Unique key used to reference the article directly on the API"
 msgstr ""
 "Jedinečný identifikátor, pomocí kterého bude článek referencován na webu"
 
-#: fantasion_content/models.py:50
+#: fantasion_content/models.py:77
 msgid "Article text"
 msgstr "Text článku"
 
-#: fantasion_content/models.py:51
+#: fantasion_content/models.py:78
 msgid "Your article content formatted in Markdown"
 msgstr "Kompletní text článku bez perexu formátovaný pomocí jazyka Markdown"
 
@@ -87,7 +115,7 @@ msgid "Enabled"
 msgstr "Povoleno"
 
 #: fantasion_eshop/models.py:30 fantasion_eshop/models.py:120
-#: fantasion_eshop/models.py:184
+#: fantasion_eshop/models.py:186
 msgid "Currency"
 msgstr "Měna"
 
@@ -155,7 +183,7 @@ msgstr "Dostupné od"
 msgid "Available until"
 msgstr "Dostupné do"
 
-#: fantasion_eshop/models.py:148 fantasion_eshop/models.py:168
+#: fantasion_eshop/models.py:148 fantasion_eshop/models.py:170
 msgid "E-shop Order"
 msgstr "Objednávka"
 
@@ -163,23 +191,23 @@ msgstr "Objednávka"
 msgid "E-shop Orders"
 msgstr "Objednávky"
 
-#: fantasion_eshop/models.py:155
+#: fantasion_eshop/models.py:157
 msgid "Order owner"
 msgstr "Majitel objednávky"
 
-#: fantasion_eshop/models.py:161
+#: fantasion_eshop/models.py:163
 msgid "E-shop Order Item"
 msgstr "Položka objednávky"
 
-#: fantasion_eshop/models.py:162
+#: fantasion_eshop/models.py:164
 msgid "E-shop Order Items"
 msgstr "Položky objednávky"
 
-#: fantasion_eshop/models.py:174
+#: fantasion_eshop/models.py:176
 msgid "Product Price"
 msgstr "Cena produktu"
 
-#: fantasion_eshop/models.py:179
+#: fantasion_eshop/models.py:181
 msgid "Price"
 msgstr "Cena"
 
