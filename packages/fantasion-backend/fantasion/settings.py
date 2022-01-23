@@ -272,7 +272,8 @@ VERSATILEIMAGEFIELD_SETTINGS = {
 
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
     'gallery': [
-        ('preview', 'crop__256x256'),
+        ('thumb', 'crop__256x256'),
+        ('preview', 'crop__512x512'),
         ('detail', 'thumbnail__1920x800'),
     ],
     'profile': [
