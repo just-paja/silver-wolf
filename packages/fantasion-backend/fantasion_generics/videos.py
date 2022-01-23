@@ -22,15 +22,15 @@ class VideoFile(File):
     """
     @property
     def width(self):
-        return self.get_video_meta().width
+        return self.get_video_meta()['width']
 
     @property
     def height(self):
-        return self.get_video_meta().height
+        return self.get_video_meta()['height']
 
     @property
     def duration(self):
-        return self.get_video_meta().duration
+        return self.get_video_meta()['duration']
 
     def get_video_meta(self):
         if not hasattr(self, 'dimensions_cache'):
@@ -108,11 +108,11 @@ class VideoField(FileField):
     def has_meta_fields(self):
         return self.duration_field or self.height_field or self.width_field
 
-    def has_meta_values(self):
+    def has_meta_values(self, inst):
         return not(
-            (self.duration_field and not getattr(self, self.duration_field)) or
-            (self.height_field and not getattr(self, self.height_field)) or
-            (self.width_field and not getattr(self, self.width_field))
+            (self.duration_field and not getattr(inst, self.duration_field)) or
+            (self.height_field and not getattr(inst, self.height_field)) or
+            (self.width_field and not getattr(inst, self.width_field))
         )
 
     def update_dimension_fields(self, instance, force=False, *args, **kwargs):
@@ -131,7 +131,7 @@ class VideoField(FileField):
         if not file and not force:
             return
 
-        dimension_fields_filled = self.has_meta_values()
+        dimension_fields_filled = self.has_meta_values(instance)
 
         # When both dimension fields have values, we are most likely loading
         # data from the database or updating an image field that already had
