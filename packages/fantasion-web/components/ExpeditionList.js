@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row'
 
 import { slug } from './slugs'
 import { SlideShowGallery, Heading } from './media'
+import { GeneralNewsletterForm } from './GeneralNewsletterForm'
 import { DateRange } from './dates'
 import { Link } from './links'
 import { useTranslation } from 'next-i18next'
@@ -97,7 +98,20 @@ const Expedition = ({ expedition }) => {
 }
 
 // @TODO: Design expeditions empty state
-const NoExpeditions = () => null
+const NoExpeditions = () => {
+  const { t } = useTranslation()
+  return (
+    <Container>
+      <div className="above-decoration p-4 bg-primary text-white">
+        <p>{t('expedition-list-empty')}</p>
+        <GeneralNewsletterForm
+          title={t('expedition-get-in-touch')}
+          variant="secondary"
+        />
+      </div>
+    </Container>
+  )
+}
 
 export const ExpeditionList = ({ expeditions }) => {
   if (expeditions.results.length === 0) {
