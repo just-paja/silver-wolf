@@ -33,6 +33,12 @@ class Location(TimeStampedModel):
         max_length=63,
         verbose_name=_('Name'),
     )
+    fuzzy_name = CharField(
+        blank=True,
+        max_length=63,
+        null=True,
+        verbose_name=_('Fuzzy name'),
+    )
     country = ForeignKey(
         Country,
         blank=True,

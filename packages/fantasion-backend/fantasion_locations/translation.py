@@ -10,4 +10,4 @@ class CountryTranslationOptions(TranslationOptions):
 
 @register(models.Location)
 class LocationTranslationOptions(TranslationOptions):
-    fields = ('name',)
+    fields = ('name', 'fuzzy_name')
