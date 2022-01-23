@@ -70,7 +70,7 @@
 .footer {
   color: $primary;
   padding-bottom: $spacer;
-  padding-top: $spacer;
+  padding-top: calc(2 * $spacer);
   position: relative;
 }
 
@@ -95,9 +95,9 @@
 .footerLogo {
   opacity: 0.66;
   position: absolute;
-  right: 0;
+  right: $spacer;
   top: $spacer;
-  width: $spacer * 4;
+  width: $spacer * 5;
 }
 
 @media (min-width: map-get($grid-breakpoints, 'md')) {

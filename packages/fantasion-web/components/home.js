@@ -1,12 +1,14 @@
+import Button from 'react-bootstrap/Button'
 import classnames from 'classnames'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Markdown from 'react-markdown'
 import Row from 'react-bootstrap/Row'
 
+import { Link } from './links'
+import { Heading, useRotatingIndex } from './media'
 import { useEffect, useState, useRef } from 'react'
 import { useTranslation } from 'next-i18next'
-import { useRotatingIndex } from './media'
 
 import styles from './home.module.scss'
 
@@ -78,5 +80,17 @@ export const HomeFlavour = ({ flavourTexts }) => {
         </Row>
       </Container>
     </div>
+  )
+}
+
+export const HomeAbout = ({ article }) => {
+  return (
+    <article>
+      <Heading>{article.title}</Heading>
+      <Markdown>{article.description}</Markdown>
+      <Link as={Button} route="about" variant="link">
+        Více o nás
+      </Link>
+    </article>
   )
 }

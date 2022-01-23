@@ -1,7 +1,7 @@
 import { apiFetch, NotFound } from '../api'
 import { getPageProps } from './props'
 
-const getArticleByKey = async (articleKey) => {
+export const getArticleByKey = async (articleKey) => {
   try {
     return await apiFetch(`/static-articles/${articleKey}`)
   } catch (e) {
