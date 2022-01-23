@@ -16,7 +16,12 @@ class FrequentlyAskedQuestionMediaAdmin(MediaAdmin):
 
 class FrequentlyAskedQuestion(BaseAdmin, TranslationAdmin):
     model = models.FrequentlyAskedQuestion
-    list_display = ('id', 'question')
+    list_display = (
+        'id',
+        'question',
+        'modified',
+        'public',
+    )
     list_filter = ('public', )
     inlines = (FrequentlyAskedQuestionMediaAdmin, )
 
