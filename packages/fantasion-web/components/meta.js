@@ -9,7 +9,7 @@ export const MetaBase = () => {
       <meta charSet="utf-8" />
       <meta key="viewport" name="viewport" content="width=device-width" />
       <meta key="og:type" property="og:type" content="website" />
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/favicon.svg" />
     </Head>
   )
 }
