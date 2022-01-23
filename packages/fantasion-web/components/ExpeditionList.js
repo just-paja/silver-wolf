@@ -13,7 +13,11 @@ import { useTranslation } from 'next-i18next'
 import styles from './ExpeditionList.module.scss'
 
 const LeisureCentreSummary = ({ leisureCentre }) => {
-  return leisureCentre.title
+  return (
+    leisureCentre.location?.fuzzyName ||
+    leisureCentre.location?.title ||
+    leisureCentre.title
+  )
 }
 
 const ExpeditionBatchStamp = ({ batch }) => {
