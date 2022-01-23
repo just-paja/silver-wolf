@@ -18,6 +18,7 @@ class LocationSerializer(HyperlinkedModelSerializer):
         fields = [
             'id',
             'name',
+            'fuzzy_name',
             'country',
             'city',
             'street',
