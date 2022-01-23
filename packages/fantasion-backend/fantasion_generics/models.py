@@ -78,10 +78,7 @@ class ImportanceField(IntegerField):
         kwargs.setdefault('verbose_name', _('Object Importance'))
         kwargs.setdefault(
             'help_text',
-            _(
-                'More important objects will appear on the top or sooner on '
-                'the page'
-            ),
+            _('More important objects will appear on the top or sooner on '
+              'the page'),
         )
         super().__init__(*args, **kwargs)
-
