@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container'
 import Markdown from 'react-markdown'
 import Row from 'react-bootstrap/Row'
 
+import { slug } from './slugs'
 import { SlideShowGallery, Heading } from './media'
 import { DateRange } from './dates'
 import { Link } from './links'
@@ -40,13 +41,14 @@ const ExpeditionBatches = ({ batches }) => (
   </div>
 )
 
-const ExpeditionC2A = () => {
+const ExpeditionC2A = ({ expedition }) => {
   const { t } = useTranslation()
   return (
     <div className="mt-3">
       <Link
         as={Button}
-        route="home"
+        route="expeditionDetail"
+        params={{ expeditionSlug: slug(expedition.id, expedition.title) }}
         size="lg"
         variant="secondary"
         className={styles.bfb}
@@ -68,7 +70,14 @@ const Expedition = ({ expedition }) => {
         )}
       >
         <div className={styles.expeditionDescription}>
-          <Heading>{expedition.title}</Heading>
+          <Heading>
+            <Link
+              route="expeditionDetail"
+              params={{ expeditionSlug: slug(expedition.id, expedition.title) }}
+            >
+              {expedition.title}
+            </Link>
+          </Heading>
           <Markdown>{expedition.description}</Markdown>
           <ExpeditionBatches batches={expedition.batches} />
           <ExpeditionC2A expedition={expedition} />

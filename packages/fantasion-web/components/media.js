@@ -42,37 +42,70 @@ export const Heading = ({ level = 1, children }) => {
   return <Component>{children}</Component>
 }
 
-const GalleryPreview = ({ localPhoto, ...props }) => (
-  <div {...props}>
-    <Image
-      layout="responsive"
-      alt=""
-      src={localPhoto.galleryPreview}
-      height={512}
-      width={512}
-    />
-  </div>
-)
+const dimensions = {
+  galleryPreview: [512, 512],
+  galleryThumb: [256, 256],
+}
+
+const GalleryPreview = ({ layout, localPhoto, size, ...props }) => {
+  const [width, height] = dimensions[size]
+  return (
+    <div {...props}>
+      <Image
+        layout={layout}
+        alt=""
+        src={localPhoto[size]}
+        height={height}
+        width={width}
+      />
+    </div>
+  )
+}
 
 const LocalPhoto = ({ localPhoto, ...props }) => (
   <GalleryPreview localPhoto={localPhoto} {...props} />
 )
 
-const MediaObject = ({ mediaObject, ...props }) => (
-  <LocalPhoto localPhoto={mediaObject.localPhoto} {...props} />
-)
+const MediaObject = ({ mediaObject, ...props }) => {
+  if (mediaObject.localPhoto) {
+    return <LocalPhoto localPhoto={mediaObject.localPhoto} {...props} />
+  }
+  return null
+}
+
+const isValid = (mediaObject) => {
+  return Boolean(mediaObject.localPhoto)
+}
 
 export const SlideShowGallery = ({ media, ...props }) => {
-  const [activeIndex] = useRotatingIndex(media, 24000)
+  const validMedia = media.filter(isValid)
+  const [activeIndex] = useRotatingIndex(validMedia, 24000)
   return (
     <div className={styles.slideShow} {...props}>
-      {media.map((mediaObject, index) => (
+      {validMedia.map((mediaObject, index) => (
         <MediaObject
           className={classnames(styles.slideShowThumb, {
             [styles.slideShowCurrent]: activeIndex === index,
           })}
           key={mediaObject.id}
           mediaObject={mediaObject}
+          layout="responsive"
+          size="galleryPreview"
+        />
+      ))}
+    </div>
+  )
+}
+
+export const ThumbGallery = ({ media, ...props }) => {
+  return (
+    <div className={styles.thumbGallery} {...props}>
+      {media.filter(isValid).map((mediaObject) => (
+        <MediaObject
+          className={styles.thumb}
+          key={mediaObject.id}
+          mediaObject={mediaObject}
+          size="galleryThumb"
         />
       ))}
     </div>
