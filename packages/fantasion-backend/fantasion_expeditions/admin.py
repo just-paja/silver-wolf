@@ -40,7 +40,9 @@ class ExpeditionAdmin(BaseAdmin, TranslationAdmin):
     list_display = (
         'title',
         'modified',
+        'public',
     )
+    list_filter = ('public',)
     inlines = (ExpeditionMediaAdmin,)
 
 
