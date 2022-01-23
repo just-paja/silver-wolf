@@ -1,5 +1,8 @@
 from rest_framework.viewsets import ReadOnlyModelViewSet
-from rest_framework.serializers import HyperlinkedModelSerializer
+from rest_framework.serializers import (
+    HyperlinkedModelSerializer,
+    SerializerMethodField,
+)
 
 from fantasion_locations.api import LocationSerializer
 from fantasion_generics.api import PublicMediaSerializer, media_fields
@@ -99,7 +102,7 @@ class ExpeditionBatchSerializer(HyperlinkedModelSerializer):
 
 
 class ExpeditionSerializer(HyperlinkedModelSerializer):
-    batches = ExpeditionBatchSerializer(many=True)
+    batches = SerializerMethodField('get_batches')
     media = ExpeditionMediaSerializer(many=True)
 
     class Meta:
@@ -112,6 +115,14 @@ class ExpeditionSerializer(HyperlinkedModelSerializer):
             'slug',
             'title',
         )
+
+    def get_batches(self, obj):
+        serializer = ExpeditionBatchSerializer(
+            obj.batches.filter(public=True),
+            many=True,
+            context=self.context,
+        )
+        return serializer.data
 
 
 class LeisureCentreCollection(ReadOnlyModelViewSet):
