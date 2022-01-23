@@ -135,7 +135,7 @@ export const Input = ({
     : field.onChange
   return (
     <BsForm.Group controlId={controlId} className="mt-2">
-      <BsForm.Label>{label}</BsForm.Label>
+      {label ? <BsForm.Label>{label}</BsForm.Label> : null}
       <Component
         as={resolveType(type)}
         type={type}

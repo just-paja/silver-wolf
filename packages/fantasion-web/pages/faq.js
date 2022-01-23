@@ -23,7 +23,7 @@ const Faq = ({ faqs }) => {
   const { t } = useTranslation()
   return (
     <GenericPage>
-      <MetaPage title={t('faqs-title')} description={t('faqs-description')} />
+      <MetaPage title={t('faq-title')} description={t('faq-description')} />
       <Container className="above-decoration mt-3">
         <Faqs faqs={faqs} />
       </Container>
