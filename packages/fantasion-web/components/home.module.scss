@@ -72,10 +72,12 @@
 .witcher {
   background-image: url('../public/fantasion-witcher.webp');
   background-position: top center;
-  background-size: contain;
   background-repeat: no-repeat;
+  background-size: contain;
   filter: drop-shadow(0 0 calc($spacer) rgba(darken($primary, 50%), 0.33));
+  position: relative;
   width: 100%;
+  z-index: 10;
 
   &:after {
     content: "";

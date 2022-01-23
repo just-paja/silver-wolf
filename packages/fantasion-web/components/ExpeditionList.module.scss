@@ -1,0 +1,32 @@
+@import '../styles/variables.scss';
+
+.descriptionColumn,
+.galleryColumn {
+  padding: 0;
+}
+
+.descriptionColumn {
+  position: relative;
+  z-index: 10;
+  align-self: stretch;
+}
+
+.expeditionDescription {
+  background: $primary;
+  color: $white;
+  padding: calc($spacer * 2);
+  
+  .batches {
+    color: $secondary;
+    font-weight: bold;
+    font-size: $h5-font-size;
+  }
+}
+
+.bfb {
+  color: $primary;
+  font-weight: bold;
+}
+
+.expedition {
+}

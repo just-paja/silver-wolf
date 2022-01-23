@@ -1,39 +1,80 @@
+import classnames from 'classnames'
 import Image from 'next/image'
-import Markdown from 'react-markdown'
 
-const Heading = ({ level, children }) => {
+import { useEffect, useState } from 'react'
+
+import styles from './media.module.scss'
+
+const getRandomIndex = (items) => Math.floor(Math.random() * items.length)
+
+const getRandomFilteredIndex = (items, currentIndex) => {
+  // Oh my glob. There has to be a better way to do this. But time is mana.
+  const baseArray = Object.keys(items)
+    .map((key) => parseInt(key, 10))
+    .filter((key) => key !== currentIndex)
+  if (baseArray.length === 0) {
+    return null
+  }
+  return baseArray[getRandomIndex(baseArray)]
+}
+
+export const useRotatingIndex = (items, ttl = 16000) => {
+  const [index, setIndex] = useState(0)
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const nextIndex = getRandomFilteredIndex(items, index)
+      if (nextIndex !== null) {
+        setIndex(nextIndex)
+      }
+    }, ttl)
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  })
+
+  return [index, setIndex]
+}
+
+export const Heading = ({ level = 1, children }) => {
   const Component = `h${level}`
   return <Component>{children}</Component>
 }
 
-const GalleryPreview = ({ localPhoto }) => (
-  <Image alt="" src={localPhoto.galleryPreview} height={256} width={256} />
+const GalleryPreview = ({ localPhoto, ...props }) => (
+  <div {...props}>
+    <Image
+      layout="responsive"
+      alt=""
+      src={localPhoto.galleryPreview}
+      height={256}
+      width={256}
+    />
+  </div>
 )
 
-const LocalPhoto = ({ localPhoto }) => (
-  <GalleryPreview localPhoto={localPhoto} />
+const LocalPhoto = ({ localPhoto, ...props }) => (
+  <GalleryPreview localPhoto={localPhoto} {...props} />
 )
 
-const MediaObject = ({ mediaObject }) => <LocalPhoto {...mediaObject} />
+const MediaObject = ({ mediaObject, ...props }) => (
+  <LocalPhoto {...mediaObject} {...props} />
+)
 
-const ArticleGallery = ({ media }) => {
+export const SlideShowGallery = ({ media, ...props }) => {
+  const [activeIndex] = useRotatingIndex(media, 24000)
   return (
-    <>
-      {media.map((mediaObject) => (
-        <MediaObject key={mediaObject.id} mediaObject={mediaObject} />
+    <div className={styles.slideShow} {...props}>
+      {media.map((mediaObject, index) => (
+        <MediaObject
+          className={classnames(styles.slideShowThumb, {
+            [styles.slideShowCurrent]: activeIndex === index,
+          })}
+          key={mediaObject.id}
+          mediaObject={mediaObject}
+        />
       ))}
-    </>
-  )
-}
-
-export const Article = ({ level = 1, title, text, media }) => {
-  return (
-    <article>
-      <Heading level={level}>{title}</Heading>
-      <div>
-        <Markdown>{text}</Markdown>
-      </div>
-      {media ? <ArticleGallery media={media} /> : null}
-    </article>
+    </div>
   )
 }

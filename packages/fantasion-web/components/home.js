@@ -6,23 +6,9 @@ import Row from 'react-bootstrap/Row'
 
 import { useEffect, useState, useRef } from 'react'
 import { useTranslation } from 'next-i18next'
+import { useRotatingIndex } from './media'
 
 import styles from './home.module.scss'
-
-const FLAVOUR_TEXT_TTL = 16000
-
-const getRandomIndex = (items) => Math.floor(Math.random() * items.length)
-
-const getRandomFilteredIndex = (items, currentIndex) => {
-  // Oh my glob. There has to be a better way to do this. But time is mana.
-  const baseArray = Object.keys(items)
-    .map((key) => parseInt(key, 10))
-    .filter((key) => key !== currentIndex)
-  if (baseArray.length === 0) {
-    return null
-  }
-  return baseArray[getRandomIndex(baseArray)]
-}
 
 const FlavourText = ({ quoteOwner, text, ...props }) => {
   const [height, setHeight] = useState(32)
@@ -50,21 +36,7 @@ const FlavourText = ({ quoteOwner, text, ...props }) => {
 }
 
 const FlavourTextCarousel = ({ flavourTexts, ...props }) => {
-  const [flavourIndex, setFlavourIndex] = useState(0)
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      const nextIndex = getRandomFilteredIndex(flavourTexts, flavourIndex)
-      if (nextIndex !== null) {
-        setFlavourIndex(nextIndex)
-      }
-    }, FLAVOUR_TEXT_TTL)
-
-    return () => {
-      clearTimeout(timeout)
-    }
-  })
-
+  const [flavourIndex] = useRotatingIndex(flavourTexts)
   const flavour = flavourTexts[flavourIndex]
   if (!flavour) {
     return null

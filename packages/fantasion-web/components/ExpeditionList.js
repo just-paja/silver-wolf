@@ -1,40 +1,26 @@
-import Card from 'react-bootstrap/Card'
+import Button from 'react-bootstrap/Button'
+import classnames from 'classnames'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+import Markdown from 'react-markdown'
+import Row from 'react-bootstrap/Row'
 
-import { Article } from './media'
+import { SlideShowGallery, Heading } from './media'
 import { DateRange } from './dates'
+import { Link } from './links'
+import { useTranslation } from 'next-i18next'
+
+import styles from './ExpeditionList.module.scss'
 
 const LeisureCentreSummary = ({ leisureCentre }) => {
-  return (
-    <Article
-      level={6}
-      title={leisureCentre.title}
-      text={leisureCentre.description}
-      media={leisureCentre.media}
-    />
-  )
+  return leisureCentre.title
 }
 
-const AgeGroupTitle = ({ ageGroup }) => (
-  <span title={ageGroup.title}>
-    {ageGroup.ageMin} - {ageGroup.ageMax}
-  </span>
-)
-
-const BatchAgeGroup = ({ batchAgeGroup }) => (
-  <div>
-    <div>
-      <AgeGroupTitle ageGroup={batchAgeGroup.ageGroup} />
-    </div>
-  </div>
-)
-
-const ExpeditionBatch = ({ batch }) => {
+const ExpeditionBatchStamp = ({ batch }) => {
   return (
     <div>
       <DateRange start={batch.startsAt} end={batch.endsAt} />
-      {batch.ageGroups.map((ageGroup) => (
-        <BatchAgeGroup batchAgeGroup={ageGroup} key={ageGroup.id} />
-      ))}
+      <br />
       {batch.leisureCentre ? (
         <LeisureCentreSummary leisureCentre={batch.leisureCentre} />
       ) : null}
@@ -42,19 +28,58 @@ const ExpeditionBatch = ({ batch }) => {
   )
 }
 
+const ExpeditionBatches = ({ batches }) => (
+  <div className={styles.batches}>
+    {batches.map((batch) => (
+      <ExpeditionBatchStamp batch={batch} key={batch.id} />
+    ))}
+  </div>
+)
+
+const ExpeditionC2A = () => {
+  const { t } = useTranslation()
+  return (
+    <div className="mt-3">
+      <Link
+        as={Button}
+        route="home"
+        size="lg"
+        variant="secondary"
+        className={styles.bfb}
+      >
+        {t('expedition-button-more-info')}
+      </Link>
+    </div>
+  )
+}
+
 const Expedition = ({ expedition }) => {
   return (
-    <Card className="mt-1">
-      <Card.Body>
-        <Card.Title>{expedition.title}</Card.Title>
-        <Card.Body>
-          <Article text={expedition.description} media={expedition.media} />
-        </Card.Body>
-        {expedition.batches.map((batch) => (
-          <ExpeditionBatch key={batch.id} batch={batch} />
-        ))}
-      </Card.Body>
-    </Card>
+    <Row as="article" className={styles.expedition}>
+      <Col
+        md={6}
+        className={classnames(
+          'd-flex align-items-center',
+          styles.descriptionColumn
+        )}
+      >
+        <div className={styles.expeditionDescription}>
+          <Heading>{expedition.title}</Heading>
+          <Markdown>{expedition.description}</Markdown>
+          <ExpeditionBatches batches={expedition.batches} />
+          <ExpeditionC2A expedition={expedition} />
+        </div>
+      </Col>
+      <Col
+        md={6}
+        className={classnames(
+          'd-flex align-items-center',
+          styles.galleryColumn
+        )}
+      >
+        <SlideShowGallery media={expedition.media} />
+      </Col>
+    </Row>
   )
 }
 
@@ -65,7 +90,11 @@ export const ExpeditionList = ({ expeditions }) => {
   if (expeditions.results.length === 0) {
     return <NoExpeditions />
   }
-  return expeditions.results.map((expedition) => (
-    <Expedition expedition={expedition} key={expedition.id} />
-  ))
+  return (
+    <Container fluid="lg">
+      {expeditions.results.map((expedition) => (
+        <Expedition expedition={expedition} key={expedition.id} />
+      ))}
+    </Container>
+  )
 }

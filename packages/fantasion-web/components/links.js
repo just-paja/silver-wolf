@@ -14,9 +14,9 @@ export const Linker = ({ children, href, route }) => {
   )
 }
 
-export const Link = ({ children, href, route }) => (
+export const Link = ({ as: As = 'a', children, href, route, ...props }) => (
   <Linker href={href} route={route}>
-    <a>{children}</a>
+    <As {...props}>{children}</As>
   </Linker>
 )
 
