@@ -150,8 +150,10 @@ class Order(TimeStampedModel):
 
     owner = ForeignKey(
         'auth.User',
-        related_name='orders',
+        blank=True,
+        null=True,
         on_delete=RESTRICT,
+        related_name='orders',
         verbose_name=_('Order owner'),
     )
 
