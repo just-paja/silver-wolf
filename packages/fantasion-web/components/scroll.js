@@ -14,5 +14,9 @@ export const useScroll = () => {
     return () => window.removeEventListener('scroll', onScroll)
   }, [scrollTop])
 
+  useEffect(() => {
+    setScrollTop(global.document.documentElement.scrollTop)
+  }, [])
+
   return [scrollTop, scrolling]
 }
