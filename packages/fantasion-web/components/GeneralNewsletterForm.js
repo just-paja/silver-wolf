@@ -24,14 +24,11 @@ export const GeneralNewsletterForm = ({
         target="_blank"
         noValidate
       >
-        <Form.Group className="row">
-          <Form.Label
-            className="col-xs-12 col-md-2 col-form-label"
-            htmlFor="mce-EMAIL"
-          >
+        <Form.Group>
+          <Form.Label htmlFor="mce-EMAIL">
             {t('newsletter-your-email')}:
           </Form.Label>
-          <Col xs={12} md={10}>
+          <Col>
             <Form.Control
               type="email"
               name="EMAIL"
