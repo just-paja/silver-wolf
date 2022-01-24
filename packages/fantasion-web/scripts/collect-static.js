@@ -5,8 +5,8 @@ const { readdir } = require('fs').promises
 const { Storage } = require('@google-cloud/storage')
 const { version } = require('../package.json')
 
-const staticDir = path.resolve(__dirname, '..', '.next')
-const staticDest = `web/${version}/_next`
+const staticDir = path.resolve(__dirname, '..', '.next', 'static')
+const staticDest = `web/${version}/_next/static`
 const storage = new Storage({
   projectId: process.env.GCP_PROJECT,
   credentials: JSON.parse(process.env.GS_CREDENTIALS),
