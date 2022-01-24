@@ -1,5 +1,5 @@
 import classnames from 'classnames'
-import Image from 'next/image'
+import Col from 'react-bootstrap/Col'
 
 import { useEffect, useState } from 'react'
 
@@ -42,29 +42,34 @@ export const Heading = ({ level = 1, children }) => {
   return <Component>{children}</Component>
 }
 
-const dimensions = {
-  galleryPreview: [512, 512],
-  galleryThumb: [256, 256],
-}
-
-const GalleryPreview = ({ layout, localPhoto, size, ...props }) => {
-  const [width, height] = dimensions[size]
+const PreviewImage = ({ localPhoto, size, ...props }) => {
   return (
     <div {...props}>
-      <Image
-        layout={layout}
+      <img
+        className={styles.galleryImage}
         alt=""
         src={localPhoto[size]}
-        height={height}
-        width={width}
+        {...props}
       />
     </div>
   )
 }
 
-const LocalPhoto = ({ localPhoto, ...props }) => (
-  <GalleryPreview localPhoto={localPhoto} {...props} />
-)
+const PreviewDiv = ({ className, localPhoto, size, ...props }) => {
+  return (
+    <div
+      {...props}
+      className={classnames(className, styles.previewDiv)}
+      style={{ backgroundImage: `url(${localPhoto[size]})` }}
+    />
+  )
+}
+
+const LocalPhoto = ({
+  previewComponent: PreviewComponent = PreviewImage,
+  localPhoto,
+  ...props
+}) => <PreviewComponent localPhoto={localPhoto} {...props} />
 
 const MediaObject = ({ mediaObject, ...props }) => {
   if (mediaObject.localPhoto) {
@@ -77,11 +82,23 @@ const isValid = (mediaObject) => {
   return Boolean(mediaObject.localPhoto)
 }
 
-export const SlideShowGallery = ({ media, ...props }) => {
+export const SlideShowGallery = ({
+  className,
+  media,
+  previewComponent,
+  size = 'galleryPreview',
+  square,
+  ...props
+}) => {
   const validMedia = media.filter(isValid)
   const [activeIndex] = useRotatingIndex(validMedia, 24000)
   return (
-    <div className={styles.slideShow} {...props}>
+    <div
+      className={classnames(className, styles.slideShow, {
+        [styles.squareLayout]: square,
+      })}
+      {...props}
+    >
       {validMedia.map((mediaObject, index) => (
         <MediaObject
           className={classnames(styles.slideShowThumb, {
@@ -89,8 +106,8 @@ export const SlideShowGallery = ({ media, ...props }) => {
           })}
           key={mediaObject.id}
           mediaObject={mediaObject}
-          layout="responsive"
-          size="galleryPreview"
+          previewComponent={previewComponent}
+          size={size}
         />
       ))}
     </div>
@@ -109,5 +126,21 @@ export const ThumbGallery = ({ media, ...props }) => {
         />
       ))}
     </div>
+  )
+}
+
+export const PageTopGallery = ({ media }) => {
+  if (media.length === 0) {
+    return null
+  }
+  return (
+    <Col className={styles.pageTopGalleryContainer} xl={5}>
+      <SlideShowGallery
+        className={styles.pageTopGallery}
+        media={media}
+        previewComponent={PreviewDiv}
+        size="galleryDetail"
+      />
+    </Col>
   )
 }

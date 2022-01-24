@@ -91,7 +91,7 @@ const Expedition = ({ expedition }) => {
           styles.galleryColumn
         )}
       >
-        <SlideShowGallery media={expedition.media} />
+        <SlideShowGallery media={expedition.media} square />
       </Col>
     </Row>
   )

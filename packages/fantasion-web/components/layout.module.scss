@@ -2,6 +2,7 @@
 
 .navbar {
   transition: all 0.2s;
+  user-select: none;
 
   .navbarBrand,
   .navbarToggle {
@@ -22,36 +23,46 @@
       color: lighten($primary, 20%);
     }
   }
-}
 
-.navbarInverse,
-.navbarExpanded {
-  background-color: $primary;
+  &:global(.fixed-top) {
+    background: rgba($primary, 0.01);
 
-  .navbarBrand {
-    color: $white;
-  }
-
-  .navbarToggle {
-    color: $white;
-  }
-
-  :global(.navbar-nav) :global(.nav-link) {
-    color: $white;
-
-    &:hover,
-    &:focus {
-      color: $white;
-      opacity: .66;
+    :global(.navbar-nav) :global(.nav-link),
+    .navbarBrand,
+    .navbarToggle {
+      &:hover,
+      &:focus {
+        color: $secondary;
+      }
     }
   }
-}
 
-.navbarExpanded {
-  :global(.navbar-nav) {
-    border-top: 1px solid rgba($white, 0.2);
-    margin-top: calc($spacer / 2);
-    padding-top: calc($spacer / 2);
+  &.navbarInverse,
+  &.navbarExpanded {
+    background-color: $primary;
+
+    .navbarBrand,
+    .navbarToggle {
+      color: $white;
+    }
+
+    :global(.navbar-nav) :global(.nav-link) {
+      color: $white;
+
+      &:hover,
+      &:focus {
+        color: $white;
+        opacity: .66;
+      }
+    }
+  }
+
+  &.navbarExpanded {
+    :global(.navbar-nav) {
+      border-top: 1px solid rgba($white, 0.2);
+      margin-top: calc($spacer / 2);
+      padding-top: calc($spacer / 2);
+    }
   }
 }
 
@@ -124,5 +135,11 @@
       margin: 0;
       padding: 0;
     } 
+  }
+}
+
+.galleryPageRow {
+  & > * {
+    padding: 0;
   }
 }

@@ -1,9 +1,10 @@
 @import '../styles/variables.scss';
 
-.slideShow {
-  align-items: center;
-  overflow: hidden;
-  position: relative;
+.galleryImage {
+  width: 100%;
+}
+
+.squareLayout {
   width: 100%;
 
   &:after {
@@ -11,6 +12,13 @@
     display: block;
     padding-bottom: 66%;
   }
+}
+
+.slideShow {
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
 
   .slideShowThumb {
     bottom: 0;
@@ -29,7 +37,7 @@
 }
 
 @media (min-width: map-get($grid-breakpoints, 'md')) {
-  .slideShow {
+  .squareLayout {
     &:after {
       padding-bottom: 100%;
     }
@@ -43,5 +51,54 @@
 
   .thumb {
     margin: calc($spacer / 4);
+  }
+}
+
+.pageTopGallery {
+  background-color: #000;
+  height: 320px;
+}
+
+.previewDiv {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+@media (min-width: map-get($grid-breakpoints, 'sm')) {
+  .pageTopGallery {
+    height: 380px;
+  }
+}
+
+@media (min-width: map-get($grid-breakpoints, 'md')) {
+  .pageTopGallery {
+    height: 420px;
+  }
+}
+
+@media (min-width: map-get($grid-breakpoints, 'lg')) {
+  .pageTopGallery {
+    height: 500px;
+  }
+}
+
+@media (min-width: map-get($grid-breakpoints, 'xl')) {
+  .pageTopGalleryContainer {
+    bottom: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    padding: 0;
+  }
+
+  .pageTopGallery {
+    height: 100%;
+    position: relative;
+
+    .previewDiv {
+      background-size: contain;
+      height: 100%;
+    }
   }
 }

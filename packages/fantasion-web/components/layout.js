@@ -5,17 +5,18 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Row from 'react-bootstrap/Row'
 
-import { Link, Linker } from './links'
-import { SocialNetworks } from '../components/social'
-import { useTranslation } from 'next-i18next'
-import { SiteLogo } from './SiteLogo'
-import { useScroll } from './scroll'
 import { HiMenu } from 'react-icons/hi'
-import { useState } from 'react'
+import { Link, Linker } from './links'
+import { PageTopGallery } from './media'
+import { SiteLogo } from './SiteLogo'
+import { SocialNetworks } from '../components/social'
+import { useCallback, useEffect, useState } from 'react'
+import { useScroll } from './scroll'
+import { useTranslation } from 'next-i18next'
 
 import styles from './layout.module.scss'
 
-export const SiteNavbar = () => {
+export const SiteNavbar = ({ fixed, sticky }) => {
   const { t } = useTranslation()
   const [scrollTop] = useScroll()
   const [expanded, setExpanded] = useState(false)
@@ -28,7 +29,8 @@ export const SiteNavbar = () => {
       })}
       expand="lg"
       expanded={expanded}
-      sticky="top"
+      sticky={sticky ? 'top' : null}
+      fixed={fixed ? 'top' : null}
       onToggle={setExpanded}
     >
       <Container>
@@ -120,9 +122,39 @@ export const Footer = () => (
 export const GenericPage = ({ children }) => (
   <>
     <PageContent>
-      <SiteNavbar />
+      <SiteNavbar sticky />
       <main>{children}</main>
     </PageContent>
     <Footer />
   </>
 )
+
+export const GalleryPage = ({ children, media }) => {
+  const [width, setWidth] = useState(0)
+  const resize = useCallback(() => {
+    setWidth(global.window.innerWidth)
+  }, [])
+  useEffect(() => {
+    global.window.addEventListener('resize', resize)
+    return () => {
+      global.window.removeEventListener('resize', resize)
+    }
+  }, [resize])
+  const fixed = width < 1200
+  return (
+    <Container fluid>
+      <Row className={styles.galleryPageRow}>
+        <PageTopGallery media={media} size="galleryDetail" />
+        <Col xl={media.length === 0 ? 12 : 7}>
+          <PageContent>
+            <main>
+              <SiteNavbar sticky={!fixed} fixed={fixed} />
+              {children}
+            </main>
+          </PageContent>
+          <Footer />
+        </Col>
+      </Row>
+    </Container>
+  )
+}
