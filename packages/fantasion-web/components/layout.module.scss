@@ -25,18 +25,18 @@
   }
 
   &:global(.fixed-top) {
-    background: rgba($primary, 0.01);
+    opacity: 0.66;
 
-    :global(.navbar-nav) :global(.nav-link),
-    .navbarBrand,
-    .navbarToggle {
-      &:hover,
-      &:focus {
-        color: $secondary;
-      }
+    &:hover {
+      opacity: 1;
     }
   }
 
+  &.navbarInverse {
+    opacity: 1;
+  }
+
+  &:global(.fixed-top),
   &.navbarInverse,
   &.navbarExpanded {
     background-color: $primary;
