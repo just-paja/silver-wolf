@@ -45,12 +45,7 @@ export const Heading = ({ level = 1, children }) => {
 const PreviewImage = ({ localPhoto, size, ...props }) => {
   return (
     <div {...props}>
-      <img
-        className={styles.galleryImage}
-        alt=""
-        src={localPhoto[size]}
-        {...props}
-      />
+      <img className={styles.galleryImage} alt="" src={localPhoto[size]} />
     </div>
   )
 }
