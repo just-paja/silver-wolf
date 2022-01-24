@@ -11,6 +11,7 @@
   "rules": {
     "prettier/prettier": ["error"],
     "quotes": [2, "single"],
-    "@next/next/no-html-link-for-pages": ["error", "packages/fantasion-web/pages"]
+    "@next/next/no-html-link-for-pages": ["error", "packages/fantasion-web/pages"],
+    "@next/next/no-img-element": [0]
   }
 }
