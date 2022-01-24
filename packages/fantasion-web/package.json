@@ -1,7 +1,7 @@
 {
   "name": "fantasion-web",
   "private": true,
-  "version": "0.3.20",
+  "version": "0.3.21",
   "scripts": {
     "dev": "next dev",
     "build": "next build && npm run lock && npm pack",
