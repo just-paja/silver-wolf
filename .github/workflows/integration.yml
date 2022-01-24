@@ -45,6 +45,9 @@ jobs:
         run: npm run test -- --coverage
       - name: Build all packages
         run: NODE_ENV=production npm run build
+        env:
+          NODE_ENV: production
+          STATIC_ROOT: https://storage.googleapis.com/${{secrets.BUCKET_PUBLIC}}
       - name: Store artifacts
         uses: actions/upload-artifact@v2
         with:
