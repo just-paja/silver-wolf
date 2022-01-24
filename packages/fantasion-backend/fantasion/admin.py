@@ -23,6 +23,7 @@ class ContentAdminSite(BaseAdminSite):
         self.hookup_module(people)
         self.hookup_module(signups)
         self.register(auth_admin.User, auth_admin.UserAdmin)
+        self.register(auth_admin.Group, auth_admin.GroupAdmin)
 
 
 CONTENT_ADMIN = ContentAdminSite()
