@@ -25,6 +25,7 @@
     "build": "lerna run build --stream --parallel",
     "postinstall": "lerna run python-install --stream --parallel",
     "test": "jest",
+    "posttest": "lerna run lint --stream --scope fantasion-backend",
     "web": "lerna run dev --stream --scope fantasion-web"
   },
   "engines": {

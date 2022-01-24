@@ -21,6 +21,7 @@
     "build:requirements": "poetry export -f requirements.txt --output requirements.txt",
     "collectstatic": "poetry run ./manage.py collectstatic --no-input",
     "dev": "poetry run ./manage.py runserver",
+    "lint": "poetry run flake8",
     "migrate": "poetry run ./manage.py migrate",
     "python-install": "poetry install"
   },
