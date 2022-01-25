@@ -111,5 +111,6 @@ class ExpeditionBatchAdmin(BaseAdmin):
     )
     list_filter = (
         'expedition',
+        'leisure_centre',
         'public',
     )
