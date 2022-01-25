@@ -19,7 +19,7 @@ const ExpeditionBatch = ({ batch }) => {
 export const ExpeditionBatches = ({ batches }) => {
   const { t } = useTranslation()
   if (batches.length === 0) {
-    return 0
+    return null
   }
   return (
     <div className="mt-3">
