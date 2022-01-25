@@ -13,6 +13,14 @@ module.exports = {
   sassOptions: {
     includePaths: [resolve(__dirname, '..', '..')],
   },
+  images: {
+    domains: [
+      'localhost',
+      process.env.STATIC_ROOT
+        ? new URL(process.env.STATIC_ROOT).hostname
+        : null,
+    ].filter(Boolean),
+  },
   async redirects() {
     return [
       {
