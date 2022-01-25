@@ -136,6 +136,7 @@ export const GalleryPage = ({ children, media }) => {
   }, [])
   useEffect(() => {
     global.window.addEventListener('resize', resize)
+    resize()
     return () => {
       global.window.removeEventListener('resize', resize)
     }
