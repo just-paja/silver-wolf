@@ -16,7 +16,7 @@
     "cross-fetch": "^3.1.4",
     "flexsearch": "^0.7.21",
     "locale": "^0.1.0",
-    "next": "^12.0.7",
+    "next": "^12.0.9",
     "next-i18next": "^10.0.1",
     "react": "17.0.2",
     "react-bootstrap": "^2.1.0",
