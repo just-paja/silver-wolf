@@ -27,7 +27,7 @@ resource "google_sql_database_instance" "master" {
 }
 
 resource "google_sql_database" "database" {
-  name = "${var.project}-db"
+  name = "${var.project}-db-${terraform.workspace}"
   instance = google_sql_database_instance.master.name
 }
 

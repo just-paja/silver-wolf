@@ -1,9 +1,7 @@
 terraform {
-  cloud {
-    organization = "fantasion"
-    workspaces {
-      name = "fantasion"
-    }
+  backend "gcs" {
+    bucket = "fantasion-terraform-state"
+    prefix = "terraform/state"
   }
 }
 
@@ -17,7 +15,7 @@ locals {
 }
 
 locals {
-  db_name = "${local.project}-db"
+  db_name = "${local.project}-db-${terraform.workspace}"
 }
 
 provider "google" {
@@ -144,7 +142,7 @@ module "backend_cloudrun" {
   ]
   hostname = var.BACKEND_HOST
   image_url = module.backend_docker.image_url
-  name = "fantasion-backend"
+  name = "fantasion-backend-${terraform.workspace}"
   project = local.project
   region = local.region
   source = "./modules/cloudrun"
@@ -187,7 +185,7 @@ module "frontend_cloudrun" {
   ]
   hostname = var.FRONTEND_HOST
   image_url = module.frontend_docker.image_url
-  name = "fantasion-frontend"
+  name = "fantasion-frontend-${terraform.workspace}"
   project = local.project
   region = local.region
   source = "./modules/cloudrun"
