@@ -21,24 +21,48 @@ jobs:
             echo "::set-output name=env_name::production"
           elif [ "${{ github.ref }}" = "refs/heads/master" ]; then
             echo "::set-output name=env_name::staging"
-          else
-            echo "::set-output name=env_name::test"
           fi
 
-  build:
-    name: Test and build
+  build_frontend:
+    name: Build frontend
     runs-on: ubuntu-latest
-    needs:
-      - setenv
-    environment:
-      name: needs.setenv.outputs.env_name
-    env:
-      dir_backend: ./packages/fantasion-backend
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: '16'
+      - uses: actions/cache@v1
+        with:
+          path: |
+            ~/.npm
+            .next/cache
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        run: |
+          npm ci
+          sudo apt-get install -y gettext
+      - name: Run frontend tests
+        run: npm run test -- --coverage
+      - name: Build all packages
+        run: NODE_ENV=production npm run build -- --scope fantasion-web
+        env:
+          NODE_ENV: production
+          STATIC_ROOT: https://storage.googleapis.com/${{secrets.BUCKET_PUBLIC}}
+      - name: Store artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: |
+            packages/fantasion-web/.next
+            packages/fantasion-web/*.tgz
+
+  build_backend:
+    name: Build backend
+    runs-on: ubuntu-latest
+    env:
+      dir_backend: ./packages/fantasion-backend
+    steps:
+      - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: 3.10.1
@@ -48,43 +72,40 @@ jobs:
       - uses: actions/cache@v1
         with:
           path: |
-            ~/.npm
             ~/.cache/pypoetry
-            .next/cache
-          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/poetry.lock') }}
+          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
       - name: Install dependencies
+        working-directory: ${{env.dir_backend}}
         run: |
-          npm ci
+          poetry install
           sudo apt-get install -y gettext
       - name: Check coding style
         working-directory: ${{env.dir_backend}}
         run: poetry run flake8
-      - name: Run backend tests
+      - name: Test
         working-directory: ${{env.dir_backend}}
         run: poetry run ./manage.py test
-      - name: Run frontend tests
-        run: npm run test -- --coverage
-      - name: Build all packages
-        run: NODE_ENV=production npm run build
-        env:
-          NODE_ENV: production
-          STATIC_ROOT: https://storage.googleapis.com/${{secrets.BUCKET_PUBLIC}}
+      - name: Build
+        working-directory: ${{env.dir_backend}}
+        run: |
+          poetry run ./manage.py compilemessages
+          poetry build -f sdist
+          poetry export -f requirements.txt --output requirements.txt
       - name: Store artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: dist
+          name: backend-dist
           path: |
             packages/fantasion-backend/dist/
-            packages/fantasion-web/.next
-            packages/fantasion-web/*.tgz
 
   terraform:
     name: Deploy terraform resources
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: needs.setenv.outputs.env_name
     needs:
       - setenv
-      - build
+      - build_backend
+      - build_frontend
     environment:
       name: needs.setenv.outputs.env_name
     steps:
@@ -116,8 +137,12 @@ jobs:
         run: npm ci
       - uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: packages
+          name: backend-dist
+          path: packages/fantasion-backend/dist/
+      - uses: actions/download-artifact@v2
+        with:
+          name: frontend-dist
+          path: packages/fantasion-web/
       - name: Deploy app
         working-directory: ./terraform
         env:
