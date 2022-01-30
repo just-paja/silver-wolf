@@ -29,6 +29,6 @@
     "web": "lerna run dev --stream --scope fantasion-web"
   },
   "engines": {
-    "node": "16"
+    "node": ">=16"
   }
 }
