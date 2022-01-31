@@ -41,9 +41,9 @@ jobs:
         run: |
           npm ci
           sudo apt-get install -y gettext
-      - name: Run frontend tests
+      - name: Test
         run: npm run test -- --coverage
-      - name: Build all packages
+      - name: Build
         run: NODE_ENV=production npm run build -- --scope fantasion-web
         env:
           NODE_ENV: production
@@ -132,7 +132,13 @@ jobs:
             ~/.npm
             ~/.cache/pypoetry
             .next/cache
-          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/poetry.lock') }}
+          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+      - uses: actions/cache@v1
+        with:
+          path: |
+            ~/.npm
+            .next/cache
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
       - uses: actions/download-artifact@v2
