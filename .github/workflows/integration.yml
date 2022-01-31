@@ -51,7 +51,7 @@ jobs:
       - name: Store artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: dist
+          name: frontend-dist
           path: |
             packages/fantasion-web/.next
             packages/fantasion-web/*.tgz
