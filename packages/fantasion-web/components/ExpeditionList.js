@@ -64,7 +64,7 @@ const Expedition = ({ expedition }) => {
   return (
     <Row as="article" className={styles.expedition}>
       <Col
-        md={6}
+        md={expedition.media.length === 0 ? 12 : 6}
         className={classnames(
           'd-flex align-items-center',
           styles.descriptionColumn
@@ -84,15 +84,17 @@ const Expedition = ({ expedition }) => {
           <ExpeditionC2A expedition={expedition} />
         </div>
       </Col>
-      <Col
-        md={6}
-        className={classnames(
-          'd-flex align-items-center',
-          styles.galleryColumn
-        )}
-      >
-        <SlideShowGallery media={expedition.media} square />
-      </Col>
+      {expedition.media.length === 0 ? null : (
+        <Col
+          md={6}
+          className={classnames(
+            'd-flex align-items-center',
+            styles.galleryColumn
+          )}
+        >
+          <SlideShowGallery media={expedition.media} square />
+        </Col>
+      )}
     </Row>
   )
 }
