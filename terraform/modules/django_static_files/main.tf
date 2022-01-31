@@ -4,7 +4,7 @@ locals {
 
 resource "null_resource" "static_files" {
   triggers = {
-    always_run = local.npm.version
+    always_run = terraform.workspace == "production" ? local.npm.version : var.revision
   }
 
   provisioner "local-exec" {

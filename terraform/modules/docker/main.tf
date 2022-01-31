@@ -5,12 +5,8 @@ locals {
   image_prefix = "${var.repo}/${var.project}/${var.name}-${terraform.workspace}"
 }
 
-data "external" "git_checkout" {
-  program = ["${path.module}/get_sha.sh"]
-}
-
 locals {
-  image_url = terraform.workspace == "production" ? "${local.image_prefix}:${local.npm.version}" : "${local.image_prefix}:${data.external.git_checkout.result.sha}"
+  image_url = terraform.workspace == "production" ? "${local.image_prefix}:${local.npm.version}" : "${local.image_prefix}:${var.revision}"
   actor = "${var.actor}@${local.user_domain}"
   root = "${var.user}@${local.user_domain}"
 }
@@ -50,7 +46,7 @@ resource "docker_registry_image" "image" {
   build {
     context = var.path
     labels = {
-      revision = data.external.git_checkout.result.sha,
+      revision = var.revision,
       version = local.npm.version,
     }
   }

@@ -48,7 +48,7 @@ jobs:
       - name: Test
         run: npm run test -- --coverage
       - name: Build
-        run: NODE_ENV=production npm run build -- --scope fantasion-web
+        run: npm run build -- --scope fantasion-web
         env:
           FRONTEND_HOST: ${{ secrets.FRONTEND_HOST }}
           NODE_ENV: production

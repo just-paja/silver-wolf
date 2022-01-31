@@ -18,6 +18,10 @@ locals {
   db_name = "${local.project}-db-${terraform.workspace}"
 }
 
+data "external" "git_checkout" {
+  program = ["${path.module}/get_sha.sh"]
+}
+
 provider "google" {
   project = local.project
   region = local.region
@@ -68,6 +72,7 @@ module "backend_static_files" {
   gcp_project = local.project
   gs_credentials = var.GS_CREDENTIALS
   path = "${local.root_dir}/packages/fantasion-backend"
+  revision = data.external.git_checkout.result.sha
   secret_key = var.SECRET_KEY
   source = "./modules/django_static_files"
 }
@@ -78,6 +83,7 @@ module "frontend_static_files" {
   gcp_project = local.project
   gs_credentials = var.GS_CREDENTIALS
   path = "${local.root_dir}/packages/fantasion-web"
+  revision = data.external.git_checkout.result.sha
   source = "./modules/next_static_files"
 }
 
@@ -87,6 +93,7 @@ module "backend_docker" {
   path = "${local.root_dir}/packages/fantasion-backend"
   project = local.project
   repo = local.repo
+  revision = data.external.git_checkout.result.sha
   source = "./modules/docker"
   user = local.gcp_user
   depends_on = []
@@ -159,6 +166,7 @@ module "frontend_docker" {
   path = "${local.root_dir}/packages/fantasion-web"
   project = local.project
   repo = local.repo
+  revision = data.external.git_checkout.result.sha
   source = "./modules/docker"
   user = local.gcp_user
   depends_on = []

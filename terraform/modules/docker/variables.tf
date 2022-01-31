@@ -3,6 +3,7 @@ variable "name" {}
 variable "path" {}
 variable "project" {}
 variable "repo" {}
+variable "revision" {}
 variable "user" {}
 
 variable "actor" {
