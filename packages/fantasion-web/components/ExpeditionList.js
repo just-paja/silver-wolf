@@ -2,7 +2,6 @@ import Button from 'react-bootstrap/Button'
 import classnames from 'classnames'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-import Markdown from 'react-markdown'
 import Row from 'react-bootstrap/Row'
 
 import { slug } from './slugs'
@@ -10,6 +9,7 @@ import { SlideShowGallery, Heading } from './media'
 import { GeneralNewsletterForm } from './GeneralNewsletterForm'
 import { DateRange } from './dates'
 import { Link } from './links'
+import { MarkdownContent } from './content'
 import { useTranslation } from 'next-i18next'
 
 import styles from './ExpeditionList.module.scss'
@@ -79,7 +79,7 @@ const Expedition = ({ expedition }) => {
               {expedition.title}
             </Link>
           </Heading>
-          <Markdown>{expedition.description}</Markdown>
+          <MarkdownContent>{expedition.description}</MarkdownContent>
           <ExpeditionBatches batches={expedition.batches} />
           <ExpeditionC2A expedition={expedition} />
         </div>

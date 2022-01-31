@@ -1,9 +1,8 @@
-import Markdown from 'react-markdown'
-
 import { ControlledForm, Input } from './forms'
 import { FormProvider, useForm } from 'react-hook-form'
 import { Heading } from './media'
 import { Index } from 'flexsearch'
+import { MarkdownContent } from './content'
 import { reverse } from '../routes'
 import { useEffect, useMemo } from 'react'
 import { useRouter } from 'next/router'
@@ -13,13 +12,13 @@ const Faq = ({ question, detailedAnswer, shortAnswer }) => {
   return (
     <>
       <dt>
-        <Markdown>{question}</Markdown>
+        <MarkdownContent>{question}</MarkdownContent>
       </dt>
       <dd>
         <div className="lead">
-          <Markdown>{shortAnswer}</Markdown>
+          <MarkdownContent>{shortAnswer}</MarkdownContent>
         </div>
-        <Markdown>{detailedAnswer}</Markdown>
+        <MarkdownContent>{detailedAnswer}</MarkdownContent>
       </dd>
     </>
   )

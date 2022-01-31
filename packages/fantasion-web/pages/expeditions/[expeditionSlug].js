@@ -3,13 +3,13 @@ import Container from 'react-bootstrap/Container'
 import Error from 'next/error'
 import React from 'react'
 import Row from 'react-bootstrap/Row'
-import Markdown from 'react-markdown'
 
 import { apiFetch, NotFound } from '../../api'
 import { asPage, MetaPage } from '../../components/meta'
 import { Heading } from '../../components/media'
 import { GalleryPage } from '../../components/layout'
 import { getPageProps } from '../../server/props'
+import { MarkdownContent } from '../../components/content'
 import { parseSlug } from '../../components/slugs'
 import {
   ExpeditionBatches,
@@ -53,7 +53,7 @@ const ExpeditionDetail = ({ expedition, statusCode }) => {
         <Row className="pt-3 pt-xl-0">
           <Col>
             <Heading>{expedition.title}</Heading>
-            <Markdown>{expedition.description}</Markdown>
+            <MarkdownContent>{expedition.description}</MarkdownContent>
             <ExpeditionBatches batches={expedition.batches} />
             {defaultBase && <ExpeditionBase base={defaultBase} />}
           </Col>

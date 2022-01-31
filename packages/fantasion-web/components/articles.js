@@ -4,10 +4,10 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Error from 'next/error'
 import React from 'react'
-import Markdown from 'react-markdown'
 
 import { asPage, MetaPage } from './meta'
 import { GenericPage } from './layout'
+import { MarkdownContent } from './content'
 
 const GalleryPhoto = ({ mediaObject }) => {
   return (
@@ -37,13 +37,13 @@ const ArticleGallery = ({ media }) => (
 
 const ArticleLead = ({ text }) => (
   <div className="lead">
-    <Markdown>{text}</Markdown>
+    <MarkdownContent>{text}</MarkdownContent>
   </div>
 )
 
 const ArticleBody = ({ text }) => (
   <div className="mt-3">
-    <Markdown>{text}</Markdown>
+    <MarkdownContent>{text}</MarkdownContent>
   </div>
 )
 

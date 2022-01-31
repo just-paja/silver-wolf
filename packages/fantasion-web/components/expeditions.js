@@ -1,11 +1,11 @@
 import Col from 'react-bootstrap/Col'
 import React from 'react'
 import Row from 'react-bootstrap/Row'
-import Markdown from 'react-markdown'
 
 import { Heading, ThumbGallery } from './media'
 import { DateRange } from './dates'
 import { LocationAddress, LocationMap } from './locations'
+import { MarkdownContent } from './content'
 import { useTranslation } from 'next-i18next'
 
 const ExpeditionBatch = ({ batch }) => {
@@ -39,7 +39,7 @@ export const ExpeditionBase = ({ base }) => {
         <Heading level={2}>{t('expedition-base-location')}</Heading>
         <p>{base.title}</p>
       </header>
-      <Markdown>{base.description}</Markdown>
+      <MarkdownContent>{base.description}</MarkdownContent>
       <ThumbGallery media={base.media} />
       <Row className="mt-3">
         <Col sm={6} lg={4} xl={3}>

@@ -2,11 +2,11 @@ import Button from 'react-bootstrap/Button'
 import classnames from 'classnames'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-import Markdown from 'react-markdown'
 import Row from 'react-bootstrap/Row'
 
 import { Link } from './links'
 import { Heading, useRotatingIndex } from './media'
+import { MarkdownContent } from './content'
 import { useEffect, useState, useRef } from 'react'
 import { useTranslation } from 'next-i18next'
 
@@ -27,7 +27,7 @@ const FlavourText = ({ quoteOwner, text, ...props }) => {
       <span className={styles.flavourLine} ref={lineRef}>
         <div className={styles.flavourQuote}>
           &quot;
-          <Markdown>{text}</Markdown>
+          <MarkdownContent>{text}</MarkdownContent>
           &quot;
         </div>
         {' -'}&nbsp;
@@ -87,7 +87,7 @@ export const HomeAbout = ({ article }) => {
   return (
     <article>
       <Heading>{article.title}</Heading>
-      <Markdown>{article.description}</Markdown>
+      <MarkdownContent>{article.description}</MarkdownContent>
       <Link as={Button} route="about" variant="link">
         Více o nás
       </Link>
