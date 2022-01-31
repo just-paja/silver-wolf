@@ -4,17 +4,17 @@ import Error from 'next/error'
 import React from 'react'
 import Row from 'react-bootstrap/Row'
 
+import { ArticleBody, ArticleLead } from '../../components/articles'
 import { apiFetch, NotFound } from '../../api'
 import { asPage, MetaPage } from '../../components/meta'
 import { Heading } from '../../components/media'
-import { GalleryPage } from '../../components/layout'
+import { GenericPage } from '../../components/layout'
 import { getPageProps } from '../../server/props'
-import { MarkdownContent } from '../../components/content'
 import { parseSlug } from '../../components/slugs'
 import {
+  ExpeditionBase,
   ExpeditionBatches,
   getDefaultBase,
-  ExpeditionBase,
 } from '../../components/expeditions'
 
 export const getExpedition = async (expeditionId) => {
@@ -47,19 +47,20 @@ const ExpeditionDetail = ({ expedition, statusCode }) => {
   }
   const defaultBase = getDefaultBase(expedition.batches)
   return (
-    <GalleryPage media={expedition.media}>
+    <GenericPage>
       <MetaPage title={expedition.title} description={expedition.description} />
-      <Container className="pt-5 pt-xl-3">
-        <Row className="pt-3 pt-xl-0">
+      <Container as="article">
+        <Row>
           <Col>
             <Heading>{expedition.title}</Heading>
-            <MarkdownContent>{expedition.description}</MarkdownContent>
+            <ArticleLead text={expedition.description} />
+            <ArticleBody text={expedition.detailed_description} />
             <ExpeditionBatches batches={expedition.batches} />
-            {defaultBase && <ExpeditionBase base={defaultBase} />}
+            {defaultBase ? <ExpeditionBase base={defaultBase} /> : null}
           </Col>
         </Row>
       </Container>
-    </GalleryPage>
+    </GenericPage>
   )
 }
 

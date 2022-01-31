@@ -23,6 +23,10 @@ const cs = {
     source: '/stredisko',
     destination: '/leisure-centres',
   },
+  leisureCentreDetail: {
+    source: '/strediska/:leisureCentreSlug',
+    destination: '/leisure-centres/:leisureCentreSlug',
+  },
   privacyPolicy: {
     source: '/zasady-ochrany-osobnich-udaju',
     destination: '/privacy-policy',

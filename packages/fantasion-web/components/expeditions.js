@@ -1,11 +1,11 @@
-import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button'
 import React from 'react'
-import Row from 'react-bootstrap/Row'
 
-import { Heading, ThumbGallery } from './media'
+import { ArticleBody } from './articles'
+import { Heading } from './media'
 import { DateRange } from './dates'
-import { LocationAddress, LocationMap } from './locations'
-import { MarkdownContent } from './content'
+import { Link } from './links'
+import { slug } from './slugs'
 import { useTranslation } from 'next-i18next'
 
 const ExpeditionBatch = ({ batch }) => {
@@ -36,27 +36,22 @@ export const ExpeditionBase = ({ base }) => {
   return (
     <section className="mt-3">
       <header>
-        <Heading level={2}>{t('expedition-base-location')}</Heading>
+        <Heading level={2}>{t('expedition-where-is-it')}</Heading>
         <p>{base.title}</p>
       </header>
-      <MarkdownContent>{base.description}</MarkdownContent>
-      <ThumbGallery media={base.media} />
-      <Row className="mt-3">
-        <Col sm={6} lg={4} xl={3}>
-          <Heading level={3}>{t('leisure-centre-location')}</Heading>
-          <LocationAddress location={base.location} title={base.title} />
-        </Col>
-        {base.mailingAddress && (
-          <Col sm={6}>
-            <Heading level={3}>{t('leisure-centre-mailing-address')}</Heading>
-            <LocationAddress
-              location={base.mailingAddress}
-              title={base.title}
-            />
-          </Col>
-        )}
-      </Row>
-      <LocationMap location={base.location} />
+      <ArticleBody text={base.description} />
+      <div className="mt-3">
+        <Link
+          as={Button}
+          route="leisureCentreDetail"
+          params={{
+            leisureCentreSlug: slug(base.id, base.title),
+          }}
+          variant="secondary"
+        >
+          {t('expedition-base-more-info')}
+        </Link>
+      </div>
     </section>
   )
 }

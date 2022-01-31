@@ -1,3 +1,4 @@
+import classnames from 'classnames'
 import Image from 'next/image'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -35,16 +36,14 @@ const ArticleGallery = ({ media }) => (
   </div>
 )
 
-const ArticleLead = ({ text }) => (
-  <div className="lead">
-    <MarkdownContent>{text}</MarkdownContent>
-  </div>
+export const ArticleBody = ({ className, text }) => (
+  <MarkdownContent className={classnames('mt-3', className)}>
+    {text}
+  </MarkdownContent>
 )
 
-const ArticleBody = ({ text }) => (
-  <div className="mt-3">
-    <MarkdownContent>{text}</MarkdownContent>
-  </div>
+export const ArticleLead = ({ text }) => (
+  <ArticleBody className="lead" text={text} />
 )
 
 export const Article = ({
