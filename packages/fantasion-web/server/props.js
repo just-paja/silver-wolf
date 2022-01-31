@@ -1,6 +1,10 @@
+import getConfig from 'next/config'
+
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-const origin = 'https://fantasion.cz'
+const { publicRuntimeConfig } = getConfig()
+
+const origin = `https://${publicRuntimeConfig.baseDomain}`
 
 export const getPageProps = async ({ locale }) => {
   return {

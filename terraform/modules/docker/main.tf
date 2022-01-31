@@ -5,7 +5,7 @@ locals {
 }
 
 locals {
-  image_url = "${var.repo}/${var.project}/${var.name}:${local.npm.version}"
+  image_url = "${var.repo}/${var.project}/${var.name}-${terraform.workspace}:${local.npm.version}"
   actor = "${var.actor}@${local.user_domain}"
   root = "${var.user}@${local.user_domain}"
 }

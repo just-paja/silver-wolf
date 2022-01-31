@@ -3,6 +3,9 @@ const { i18n } = require('./next-i18next.config.js')
 const { resolve } = require('path')
 const { version } = require('./package.json')
 
+const baseDomain = process.env.FRONTEND_HOST || 'fantasion.cz'
+const typoDomains = ['fantazion.cz', 'www.fantazion.cz']
+
 module.exports = {
   assetPrefix: process.env.STATIC_ROOT
     ? `${process.env.STATIC_ROOT}/web/${version}`
@@ -12,6 +15,9 @@ module.exports = {
   trailingSlash: true,
   sassOptions: {
     includePaths: [resolve(__dirname, '..', '..')],
+  },
+  publicRuntimeConfig: {
+    baseDomain,
   },
   images: {
     domains: [
@@ -29,10 +35,10 @@ module.exports = {
         has: [
           {
             type: 'host',
-            value: '(fantazion.cz|www.fantazion.cz|www.fantasion.cz)',
+            value: `(${typoDomains.join('|')}|www.${baseDomain})`,
           },
         ],
-        destination: 'https://fantasion.cz/:path*',
+        destination: `https://${baseDomain}/:path*`,
       },
     ]
   },
