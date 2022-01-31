@@ -19,6 +19,10 @@ const cs = {
     source: '/tabory/:expeditionSlug',
     destination: '/expeditions/:expeditionSlug',
   },
+  leisureCentreList: {
+    source: '/stredisko',
+    destination: '/leisure-centres',
+  },
   privacyPolicy: {
     source: '/zasady-ochrany-osobnich-udaju',
     destination: '/privacy-policy',

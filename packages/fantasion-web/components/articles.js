@@ -30,6 +30,34 @@ const GalleryMediaObject = ({ mediaObject }) => {
 const ArticleGallery = ({ media }) =>
   media.map((item) => <GalleryMediaObject mediaObject={item} key={item.id} />)
 
+const ArticleLead = ({ text }) => (
+  <div className="lead">
+    <Markdown>{text}</Markdown>
+  </div>
+)
+
+const ArticleBody = ({ text }) => (
+  <div className="mt-3">
+    <Markdown>{text}</Markdown>
+  </div>
+)
+
+export const Article = ({ beforeText, title, description, media, text }) => (
+  <Container as="article">
+    <Row>
+      <Col lg={7}>
+        <h1>{title}</h1>
+        {description ? <ArticleLead text={description} /> : null}
+        {beforeText ? <div>{beforeText}</div> : null}
+        {text ? <ArticleBody text={text} /> : null}
+      </Col>
+      <Col lg={5}>
+        <ArticleGallery media={media} />
+      </Col>
+    </Row>
+  </Container>
+)
+
 export const StaticArticlePage = asPage(({ article, statusCode }) => {
   if (statusCode !== 200) {
     return <Error statusCode={statusCode} />
@@ -37,18 +65,12 @@ export const StaticArticlePage = asPage(({ article, statusCode }) => {
   return (
     <GenericPage>
       <MetaPage title={article.title} description={article.description} />
-      <Container>
-        <Row>
-          <Col lg={7}>
-            <h1>{article.title}</h1>
-            <Markdown>{article.description}</Markdown>
-            <Markdown>{article.text}</Markdown>
-          </Col>
-          <Col lg={5}>
-            <ArticleGallery media={article.media} />
-          </Col>
-        </Row>
-      </Container>
+      <Article
+        title={article.title}
+        description={article.description}
+        media={article.media}
+        text={article.text}
+      />
     </GenericPage>
   )
 })
