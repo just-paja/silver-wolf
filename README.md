@@ -17,10 +17,16 @@ This project requires you to have current version of Python and Node.js installe
 
 ## Installation
 
-Install dependencies with npm. It should trigger installation of Python dependencies as well.
+Install dependencies with npm. It will not trigger installation of Python dependencies automatically, there is another manual step for that.
 
 ```shell
 npm ci
+```
+
+There is an npm shortcut to install python dependencies, that works assuming you have all the requirements in place.
+
+```shell
+npm run poetry-install
 ```
 
 ## Running
