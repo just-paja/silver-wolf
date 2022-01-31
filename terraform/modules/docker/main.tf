@@ -2,10 +2,15 @@ locals {
   npm = jsondecode(file("${var.path}/package.json"))
   user_domain = "${var.project}.iam.gserviceaccount.com"
   user_prefix = "projects/-/serviceAccounts"
+  image_prefix = "${var.repo}/${var.project}/${var.name}-${terraform.workspace}"
+}
+
+data "external" "git_checkout" {
+  program = ["${path.module}/get_sha.sh"]
 }
 
 locals {
-  image_url = "${var.repo}/${var.project}/${var.name}-${terraform.workspace}:${local.npm.version}"
+  image_url = terraform.workspace == "production" ? "${local.image_prefix}:${local.npm.version}" : "${local.image_prefix}:${data.external.git_checkout.result.sha}"
   actor = "${var.actor}@${local.user_domain}"
   root = "${var.user}@${local.user_domain}"
 }
@@ -44,6 +49,10 @@ resource "docker_registry_image" "image" {
   insecure_skip_verify = true
   build {
     context = var.path
+    labels = {
+      revision = data.external.git_checkout.result.sha,
+      version = local.npm.version,
+    }
   }
 }
 
