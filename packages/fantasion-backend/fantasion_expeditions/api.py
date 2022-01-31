@@ -25,6 +25,7 @@ class LeisureCentreSerializer(HyperlinkedModelSerializer):
         model = models.LeisureCentre
         fields = (
             'description',
+            'detailed_description',
             'id',
             'location',
             'mailing_address',

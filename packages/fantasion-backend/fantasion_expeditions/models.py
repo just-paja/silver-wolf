@@ -14,6 +14,7 @@ from fantasion_generics.titles import TitleField
 from fantasion_generics.media import MediaParentField
 from fantasion_locations.models import Location
 from fantasion_generics.models import (
+    DetailedDescriptionField,
     MediaObjectModel,
     PublicModel,
     VisibilityField,
@@ -29,6 +30,7 @@ class LeisureCentre(PublicModel):
     LeisureCentre represents a base of operations for Expedition. A typical
     LeisureCentre consists of accomodation, kitchen and it is located on a map.
     """
+    detailed_description = DetailedDescriptionField()
     location = ForeignKey(
         Location,
         help_text=_(

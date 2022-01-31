@@ -4,8 +4,13 @@ from django.utils.translation import ugettext_lazy as _
 
 class DescriptionField(TextField):
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault('help_text', _('Object description'))
-        kwargs.setdefault('verbose_name', _('Description'))
+        kwargs.setdefault('verbose_name', _('Short Description'))
+        kwargs.setdefault(
+            'help_text',
+            _('Describe this in a couple of sentences. Use Markdown if '
+              'necessary, but keeping this a plain text will yield better '
+              'results'),
+        )
         super().__init__(*args, **kwargs)
 
 

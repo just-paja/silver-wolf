@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-23 15:49+0100\n"
+"POT-Creation-Date: 2022-01-31 22:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,36 +73,40 @@ msgstr "Otázka"
 msgid "Write the question from perspective of the person asking it."
 msgstr "Napište otázku z perspektivy člověka, který se na ní ptá"
 
-#: fantasion_content/models.py:50
+#: fantasion_content/models.py:49
 msgid "Answer"
 msgstr "Odpověď"
 
-#: fantasion_content/models.py:52
-msgid ""
-"Write the best positive answer that resolves all issues of the questioner "
-"and gives hope for the future."
-msgstr ""
-"Napište tu nejlepší pozitivní odpověď, která řeší všechny problémy tazatele "
-"a dává naději do budoucna."
+#: fantasion_content/models.py:51
+msgid "Write a quick summarizing positive answer that resolves the question"
+msgstr "Napiš krátkou shrnující pozitivní odpověď, která řeší tuto otázku"
 
-#: fantasion_content/models.py:66 fantasion_content/models.py:67
+#: fantasion_content/models.py:55
+msgid "Detailed Answer"
+msgstr "Detailní odpověď"
+
+#: fantasion_content/models.py:56
+msgid "Write all the details, do not spare the letters"
+msgstr "Napiš všechny detaily a nešetři písmenka"
+
+#: fantasion_content/models.py:70 fantasion_content/models.py:71
 msgid "Static Articles"
 msgstr "Statické články"
 
-#: fantasion_content/models.py:72
+#: fantasion_content/models.py:76
 msgid "Article key"
 msgstr "Identifikátor článku"
 
-#: fantasion_content/models.py:74
+#: fantasion_content/models.py:78
 msgid "Unique key used to reference the article directly on the API"
 msgstr ""
 "Jedinečný identifikátor, pomocí kterého bude článek referencován na webu"
 
-#: fantasion_content/models.py:77
+#: fantasion_content/models.py:81
 msgid "Article text"
 msgstr "Text článku"
 
-#: fantasion_content/models.py:78
+#: fantasion_content/models.py:82
 msgid "Your article content formatted in Markdown"
 msgstr "Kompletní text článku bez perexu formátovaný pomocí jazyka Markdown"
 
@@ -215,112 +219,112 @@ msgstr "Cena"
 msgid "Fantasion Expeditions"
 msgstr "Tábory"
 
-#: fantasion_expeditions/models.py:25 fantasion_expeditions/models.py:99
+#: fantasion_expeditions/models.py:26 fantasion_expeditions/models.py:101
 msgid "Leisure Centre"
 msgstr "Rekreační středisko"
 
-#: fantasion_expeditions/models.py:26
+#: fantasion_expeditions/models.py:27
 msgid "Leisure Centres"
 msgstr "Rekreační střediska"
 
-#: fantasion_expeditions/models.py:35
+#: fantasion_expeditions/models.py:37
 msgid "This location will be posted on the map and used for navigation."
 msgstr "Umístění bude zobrazeno na mapě a použito k navigaci"
 
-#: fantasion_expeditions/models.py:39 fantasion_locations/models.py:29
+#: fantasion_expeditions/models.py:41 fantasion_locations/models.py:29
 msgid "Location"
 msgstr "Umístění"
 
-#: fantasion_expeditions/models.py:44
+#: fantasion_expeditions/models.py:46
 msgid ""
 "This location will be used as a postal address,instruct people to mail here."
 msgstr ""
 "Umístění bude označeno jako poštovní adresa a uživatelé budou naváděni aby "
 "posílali poštu sem"
 
-#: fantasion_expeditions/models.py:49
+#: fantasion_expeditions/models.py:51
 msgid "Mailing address"
 msgstr "Poštovní adresa"
 
-#: fantasion_expeditions/models.py:55
+#: fantasion_expeditions/models.py:57
 msgid "Website"
 msgstr "Webové stránky"
 
-#: fantasion_expeditions/models.py:70 fantasion_expeditions/models.py:93
+#: fantasion_expeditions/models.py:72 fantasion_expeditions/models.py:95
 msgid "Expedition"
 msgstr "Tábor"
 
-#: fantasion_expeditions/models.py:71
+#: fantasion_expeditions/models.py:73
 msgid "Expeditions"
 msgstr "Tábory"
 
-#: fantasion_expeditions/models.py:86 fantasion_expeditions/models.py:132
-#: fantasion_expeditions/models.py:199
+#: fantasion_expeditions/models.py:88 fantasion_expeditions/models.py:134
+#: fantasion_expeditions/models.py:201
 msgid "Expedition Batch"
 msgstr "Turnus"
 
-#: fantasion_expeditions/models.py:87
+#: fantasion_expeditions/models.py:89
 msgid "Expedition Batches"
 msgstr "Turnusy"
 
-#: fantasion_expeditions/models.py:101 fantasion_expeditions/models.py:213
+#: fantasion_expeditions/models.py:103 fantasion_expeditions/models.py:215
 msgid "Starts at"
 msgstr "Začátek"
 
-#: fantasion_expeditions/models.py:102 fantasion_expeditions/models.py:214
+#: fantasion_expeditions/models.py:104 fantasion_expeditions/models.py:216
 msgid "Ends at"
 msgstr "Konec"
 
-#: fantasion_expeditions/models.py:115
+#: fantasion_expeditions/models.py:117
 msgid "Staff Role"
 msgstr "Zaměstnanecká role"
 
-#: fantasion_expeditions/models.py:116
+#: fantasion_expeditions/models.py:118
 msgid "Staff Roles"
 msgstr "Zaměstnanecké role"
 
-#: fantasion_expeditions/models.py:125 fantasion_expeditions/models.py:126
+#: fantasion_expeditions/models.py:127 fantasion_expeditions/models.py:128
 msgid "Batch Staff"
 msgstr "Zaměstnanci"
 
-#: fantasion_expeditions/models.py:138 fantasion_people/models.py:25
+#: fantasion_expeditions/models.py:140 fantasion_people/models.py:25
 msgid "Profile"
 msgstr "Profil"
 
-#: fantasion_expeditions/models.py:144
+#: fantasion_expeditions/models.py:146
 msgid "Role"
 msgstr "Role"
 
-#: fantasion_expeditions/models.py:156 fantasion_expeditions/models.py:205
+#: fantasion_expeditions/models.py:158 fantasion_expeditions/models.py:207
 #: fantasion_signups/models.py:66
 msgid "Age Group"
 msgstr "Věková skupina"
 
-#: fantasion_expeditions/models.py:157
+#: fantasion_expeditions/models.py:159
 msgid "Age Groups"
 msgstr "Věkové skupiny"
 
-#: fantasion_expeditions/models.py:160
+#: fantasion_expeditions/models.py:162
 msgid "Minimal age"
 msgstr "Minimální věk"
 
-#: fantasion_expeditions/models.py:161
+#: fantasion_expeditions/models.py:163
 msgid "Maximal age"
 msgstr "Maximální věk"
 
-#: fantasion_expeditions/models.py:177 fantasion_expeditions/models.py:211
+#: fantasion_expeditions/models.py:179 fantasion_expeditions/models.py:213
 msgid "Expedition Program"
 msgstr "Táborový program"
 
-#: fantasion_expeditions/models.py:178
+#: fantasion_expeditions/models.py:180
 msgid "Expedition Programs"
 msgstr "Táborové programy"
 
-#: fantasion_expeditions/models.py:192
+#: fantasion_expeditions/models.py:194
 msgid "Batch Age Group"
 msgstr "Věková skupina na turnuse"
 
-#: fantasion_expeditions/models.py:193
+#: fantasion_expeditions/models.py:195
 msgid "Batch Age Groups"
 msgstr "Věkové skupiny na turnuse"
 
@@ -356,27 +360,40 @@ msgstr "Veřejné objekty budou vidět na webu"
 msgid "Object Importance"
 msgstr "Důležitost"
 
-#: fantasion_generics/models.py:82
+#: fantasion_generics/models.py:81
 msgid "More important objects will appear on the top or sooner on the page"
 msgstr "Důležitější objekty budou vidět nahoře nebo dříve na stránce"
+
+#: fantasion_generics/models.py:89
+msgid "Detailed Description"
+msgstr "Detailní popis"
+
+#: fantasion_generics/models.py:92
+msgid ""
+"Detailed verbose description formatted in Markdown. Thereis no text limit."
+msgstr ""
 
 #: fantasion_generics/photos.py:23 fantasion_generics/photos.py:39
 msgid "Image file"
 msgstr "Soubor s obrázkem"
 
 #: fantasion_generics/titles.py:7
-msgid "Object description"
-msgstr "Popište v co největším detailu o co se jedná"
+msgid "Short Description"
+msgstr "Krátký popis"
 
-#: fantasion_generics/titles.py:8
-msgid "Description"
-msgstr "Detailní popis"
+#: fantasion_generics/titles.py:10
+msgid ""
+"Describe this in a couple of sentences. Use Markdown if necessary, but "
+"keeping this a plain text will yield better results"
+msgstr ""
+"Popiš to v pár větách. Použij Markdown, pokud je to nutné, ale lepší "
+"výsledky vzejdou z prostého textu"
 
-#: fantasion_generics/titles.py:22
+#: fantasion_generics/titles.py:27
 msgid "Object name"
 msgstr "Popište o co se jedná ve třech slovech"
 
-#: fantasion_generics/titles.py:23
+#: fantasion_generics/titles.py:28
 msgid "Title"
 msgstr "Titulek"
 

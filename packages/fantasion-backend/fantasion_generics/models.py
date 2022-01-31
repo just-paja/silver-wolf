@@ -1,5 +1,5 @@
 from django_extensions.db.models import AutoSlugField, TimeStampedModel
-from django.db.models import BooleanField, IntegerField
+from django.db.models import BooleanField, IntegerField, TextField
 from django.utils.translation import ugettext_lazy as _
 from re import sub
 
@@ -81,4 +81,17 @@ class ImportanceField(IntegerField):
             _('More important objects will appear on the top or sooner on '
               'the page'),
         )
+        super().__init__(*args, **kwargs)
+
+
+class DetailedDescriptionField(TextField):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('verbose_name', _('Detailed Description'))
+        kwargs.setdefault(
+            'help_text',
+            _('Detailed verbose description formatted in Markdown. There'
+              'is no text limit.'),
+        )
+        kwargs.setdefault('null', True)
+        kwargs.setdefault('blank', True)
         super().__init__(*args, **kwargs)
