@@ -4,7 +4,7 @@ const { resolve } = require('path')
 const { version } = require('./package.json')
 
 const baseDomain = process.env.FRONTEND_HOST || 'fantasion.cz'
-const typoDomains = ['fantazion.cz', 'www.fantazion.cz']
+const typoDomains = ['fantazion.cz', 'www.fantazion.cz', 'www.fantasion.cz']
 
 module.exports = {
   assetPrefix: process.env.STATIC_ROOT
@@ -35,7 +35,7 @@ module.exports = {
         has: [
           {
             type: 'host',
-            value: `(${typoDomains.join('|')}|www.${baseDomain})`,
+            value: `(${typoDomains.join('|')})`,
           },
         ],
         destination: `https://${baseDomain}/:path*`,
