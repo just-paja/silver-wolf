@@ -47,7 +47,14 @@ const ArticleBody = ({ text }) => (
   </div>
 )
 
-export const Article = ({ beforeText, title, description, media, text }) => (
+export const Article = ({
+  afterText,
+  beforeText,
+  description,
+  media,
+  text,
+  title,
+}) => (
   <Container as="article">
     <Row>
       <Col lg={7}>
@@ -55,6 +62,7 @@ export const Article = ({ beforeText, title, description, media, text }) => (
         {description ? <ArticleLead text={description} /> : null}
         {beforeText ? <div>{beforeText}</div> : null}
         {text ? <ArticleBody text={text} /> : null}
+        {afterText ? <div>{afterText}</div> : null}
       </Col>
       <Col lg={5}>
         <ArticleGallery media={media} />
