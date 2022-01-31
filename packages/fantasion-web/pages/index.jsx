@@ -35,9 +35,11 @@ const Home = ({ aboutUs, expeditions, flavourTexts }) => {
       />
       <HomeFlavour flavourTexts={flavourTexts.results} />
       <ExpeditionList expeditions={expeditions} />
-      <Container className="above-decoration mt-3">
-        <HomeAbout article={aboutUs} />
-      </Container>
+      {aboutUs ? (
+        <Container className="above-decoration mt-3">
+          <HomeAbout article={aboutUs} />
+        </Container>
+      ) : null}
     </GenericPage>
   )
 }
