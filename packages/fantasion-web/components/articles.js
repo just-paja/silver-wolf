@@ -27,8 +27,13 @@ const GalleryMediaObject = ({ mediaObject }) => {
   return null
 }
 
-const ArticleGallery = ({ media }) =>
-  media.map((item) => <GalleryMediaObject mediaObject={item} key={item.id} />)
+const ArticleGallery = ({ media }) => (
+  <div className="mt-3">
+    {media.map((item) => (
+      <GalleryMediaObject mediaObject={item} key={item.id} />
+    ))}
+  </div>
+)
 
 const ArticleLead = ({ text }) => (
   <div className="lead">
