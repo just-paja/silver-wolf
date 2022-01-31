@@ -3,10 +3,10 @@ import Image from 'next/image'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Error from 'next/error'
 import React from 'react'
 
 import { asPage, MetaPage } from './meta'
+import { asStatusCodePage } from './references'
 import { GenericPage } from './layout'
 import { MarkdownContent } from './content'
 
@@ -70,11 +70,8 @@ export const Article = ({
   </Container>
 )
 
-export const StaticArticlePage = asPage(({ article, statusCode }) => {
-  if (statusCode !== 200) {
-    return <Error statusCode={statusCode} />
-  }
-  return (
+export const StaticArticlePage = asPage(
+  asStatusCodePage(({ article }) => (
     <GenericPage>
       <MetaPage title={article.title} description={article.description} />
       <Article
@@ -84,5 +81,5 @@ export const StaticArticlePage = asPage(({ article, statusCode }) => {
         text={article.text}
       />
     </GenericPage>
-  )
-})
+  ))
+)

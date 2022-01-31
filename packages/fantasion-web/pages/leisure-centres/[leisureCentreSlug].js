@@ -1,8 +1,8 @@
-import Error from 'next/error'
 import React from 'react'
 
 import { apiFetch, NotFound } from '../../api'
 import { asPage, MetaPage } from '../../components/meta'
+import { asStatusCodePage } from '../../components/references'
 import { GenericPage } from '../../components/layout'
 import { getPageProps } from '../../server/props'
 import { parseSlug } from '../../components/slugs'
@@ -32,19 +32,14 @@ export const getServerSideProps = async (props) => {
   }
 }
 
-const ExpeditionDetail = ({ leisureCentre, statusCode }) => {
-  if (statusCode !== 200) {
-    return <Error statusCode={statusCode} />
-  }
-  return (
-    <GenericPage>
-      <MetaPage
-        title={leisureCentre.title}
-        description={leisureCentre.description}
-      />
-      <LeisureCentre leisureCentre={leisureCentre} />
-    </GenericPage>
-  )
-}
+const ExpeditionDetail = ({ leisureCentre }) => (
+  <GenericPage>
+    <MetaPage
+      title={leisureCentre.title}
+      description={leisureCentre.description}
+    />
+    <LeisureCentre leisureCentre={leisureCentre} />
+  </GenericPage>
+)
 
-export default asPage(ExpeditionDetail)
+export default asPage(asStatusCodePage(ExpeditionDetail))

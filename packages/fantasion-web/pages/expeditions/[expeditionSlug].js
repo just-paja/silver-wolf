@@ -1,12 +1,12 @@
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-import Error from 'next/error'
 import React from 'react'
 import Row from 'react-bootstrap/Row'
 
 import { ArticleBody, ArticleLead } from '../../components/articles'
 import { apiFetch, NotFound } from '../../api'
 import { asPage, MetaPage } from '../../components/meta'
+import { asStatusCodePage } from '../../components/references'
 import { Heading } from '../../components/media'
 import { GenericPage } from '../../components/layout'
 import { getPageProps } from '../../server/props'
@@ -41,10 +41,7 @@ export const getServerSideProps = async (props) => {
   }
 }
 
-const ExpeditionDetail = ({ expedition, statusCode }) => {
-  if (statusCode !== 200) {
-    return <Error statusCode={statusCode} />
-  }
+const ExpeditionDetail = ({ expedition }) => {
   const defaultBase = getDefaultBase(expedition.batches)
   return (
     <GenericPage>
@@ -64,4 +61,4 @@ const ExpeditionDetail = ({ expedition, statusCode }) => {
   )
 }
 
-export default asPage(ExpeditionDetail)
+export default asPage(asStatusCodePage(ExpeditionDetail))
