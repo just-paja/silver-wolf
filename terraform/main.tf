@@ -50,6 +50,7 @@ module "db_migrations" {
   db_pass = var.DB_PASS
   db_user = var.DB_USER
   depends_on = [module.db]
+  revision = data.external.git_checkout.result.sha
   secret_key = var.SECRET_KEY
   source = "./modules/db_migrations"
   path = "${local.root_dir}/packages/fantasion-backend"
