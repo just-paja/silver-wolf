@@ -67,6 +67,7 @@ class ExpeditionProgramSerializer(HyperlinkedModelSerializer):
             'id',
             'title',
             'description',
+            'detailed_description',
             'media',
         )
 
@@ -112,6 +113,7 @@ class ExpeditionSerializer(HyperlinkedModelSerializer):
             'id',
             'batches',
             'description',
+            'detailed_description',
             'media',
             'slug',
             'title',

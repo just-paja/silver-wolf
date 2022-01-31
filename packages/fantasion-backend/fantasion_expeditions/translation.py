@@ -36,6 +36,7 @@ class ExpeditionTranslationOptions(TranslationOptions):
     fields = (
         'title',
         'description',
+        'detailed_description',
     )
 
 
@@ -49,6 +50,7 @@ class ExpeditionProgramTranslationOptions(TranslationOptions):
     fields = (
         'title',
         'description',
+        'detailed_description',
     )
 
 

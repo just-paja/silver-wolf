@@ -72,6 +72,7 @@ class Expedition(PublicModel):
         verbose_name = _('Expedition')
         verbose_name_plural = _('Expeditions')
 
+    detailed_description = DetailedDescriptionField()
     public = VisibilityField()
 
 
@@ -178,6 +179,8 @@ class ExpeditionProgram(PublicModel):
     class Meta:
         verbose_name = _('Expedition Program')
         verbose_name_plural = _('Expedition Programs')
+
+    detailed_description = DetailedDescriptionField()
 
 
 class ExpeditionProgramMedia(MediaObjectModel):
