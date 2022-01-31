@@ -18,14 +18,14 @@
     "flexsearch": "^0.7.21",
     "locale": "^0.1.0",
     "next": "^12.0.7",
-    "next-i18next": "^10.0.1",
+    "next-i18next": "^10.2.0",
     "react": "17.0.2",
-    "react-bootstrap": "^2.1.0",
+    "react-bootstrap": "^2.1.1",
     "react-dom": "17.0.2",
-    "react-hook-form": "^7.25.0",
+    "react-hook-form": "^7.25.3",
     "react-icons": "^4.3.1",
     "react-markdown": "^8.0.0",
-    "sass": "^1.45.1"
+    "sass": "1.49"
   },
   "files": [
     "*.js",
