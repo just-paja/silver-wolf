@@ -24,3 +24,15 @@ class PriceLevelAdmin(BaseAdmin, TranslationAdmin):
         'title',
         'enabled',
     )
+
+
+class PromotionCodeAdmin(BaseAdmin):
+    model = models.PromotionCode
+    list_display = (
+        'code',
+        'max_usages',
+        'enabled',
+        'valid_from',
+        'valid_until',
+    )
+    list_filter = ('enabled', )

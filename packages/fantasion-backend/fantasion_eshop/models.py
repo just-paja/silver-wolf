@@ -1,3 +1,4 @@
+from django.core.validators import MinLengthValidator, MinValueValidator
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.models import TimeStampedModel
 from django.db.models import (
@@ -6,6 +7,7 @@ from django.db.models import (
     DateTimeField,
     DecimalField,
     ForeignKey,
+    PositiveIntegerField,
     CASCADE,
     RESTRICT,
 )
@@ -201,3 +203,38 @@ class OrderItem(TimeStampedModel):
 
     def get_description(self):
         raise NotImplementedError()
+
+
+class PromotionCode(TimeStampedModel):
+    code = CharField(
+        max_length=63,
+        unique=True,
+        validators=[MinLengthValidator(8)],
+        verbose_name=_('Promotion Code'),
+        help_text=_(
+            'Type an unique code with combination of letters, numbers and '
+            'symbols that are not too difficult to type'),
+    )
+    max_usages = PositiveIntegerField(
+        default=10,
+        validators=[MinValueValidator(1)],
+        verbose_name=_('Maximum Usages'),
+        help_text=_(
+            'This Promotion Code can be used only so many times, then it '
+            'will be deactivated'),
+    )
+    enabled = EnabledField()
+    valid_from = DateTimeField(
+        blank=True,
+        null=True,
+        verbose_name=_('Valid from'),
+        help_text=_(
+            'This Promotion Code will be invalid until this date and time'),
+    )
+    valid_until = DateTimeField(
+        blank=True,
+        null=True,
+        verbose_name=_('Valid until'),
+        help_text=_(
+            'This Promotion Code will be invalid after this date and time'),
+    )
