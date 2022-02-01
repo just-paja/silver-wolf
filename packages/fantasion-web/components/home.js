@@ -60,7 +60,7 @@ export const HomeFlavour = ({ flavourTexts }) => {
   const { t } = useTranslation()
   return (
     <div className={styles.bgShapes}>
-      <Container>
+      <Container className={styles.container} fluid="xl">
         <Row className="align-items-center">
           <Col xs={12} md={6} className="d-flex justify-content-center">
             <h1 className="d-none">{t('fantasion-title')}</h1>

@@ -10,6 +10,8 @@ import { getPageProps } from '../server/props'
 import { HomeAbout, HomeFlavour } from '../components/home'
 import { useTranslation } from 'next-i18next'
 
+import styles from './index.module.scss'
+
 const getExpeditions = async () => apiFetch('/expeditions')
 
 const getFlavourTexts = async () => apiFetch('/flavour-texts')
@@ -34,7 +36,10 @@ const Home = ({ aboutUs, expeditions, flavourTexts }) => {
         description={t('fantasion-general-description')}
       />
       <HomeFlavour flavourTexts={flavourTexts.results} />
-      <ExpeditionList expeditions={expeditions} />
+      <ExpeditionList
+        className={styles.expeditionList}
+        expeditions={expeditions}
+      />
       {aboutUs ? (
         <Container className="above-decoration mt-3">
           <HomeAbout article={aboutUs} />

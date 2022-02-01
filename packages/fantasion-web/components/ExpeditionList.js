@@ -90,12 +90,12 @@ const NoExpeditions = () => {
   )
 }
 
-export const ExpeditionList = ({ expeditions }) => {
+export const ExpeditionList = ({ expeditions, ...props }) => {
   if (expeditions.results.length === 0) {
     return <NoExpeditions />
   }
   return (
-    <Container fluid="lg">
+    <Container fluid="lg" {...props}>
       {expeditions.results.map((expedition) => (
         <Expedition expedition={expedition} key={expedition.id} />
       ))}
