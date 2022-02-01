@@ -38,9 +38,9 @@ export const useRotatingIndex = (items, ttl = 16000) => {
   return [index, setIndex]
 }
 
-export const Heading = ({ level, children }) => {
+export const Heading = ({ level, relativeLevel = 0, children }) => {
   const headingLevel = useHeadingLevel()
-  const Component = `h${level || headingLevel + 1}`
+  const Component = `h${level || headingLevel + (relativeLevel || 1)}`
   return <Component>{children}</Component>
 }
 
