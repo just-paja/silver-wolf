@@ -14,6 +14,7 @@ from django.db.models import (
 from fantasion_generics.media import MediaParentField
 from fantasion_generics.titles import TitleField
 from fantasion_generics.models import (
+    ImportanceField,
     MediaObjectModel,
     NamedModel,
     PublicModel,
@@ -23,6 +24,7 @@ from fantasion_generics.models import (
 
 class Profile(PublicModel):
     class Meta:
+        ordering = ['-importance']
         verbose_name = _('Profile')
         verbose_name_plural = _('Profiles')
 
@@ -41,6 +43,7 @@ class Profile(PublicModel):
         null=True,
         verbose_name=_('Profile text'),
     )
+    importance = ImportanceField()
     public = VisibilityField()
     owner = ForeignKey(
         User,

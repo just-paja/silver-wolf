@@ -10,9 +10,17 @@ class ProfileMediaAdmin(MediaAdmin):
 
 class ProfileAdmin(TranslatedAdmin):
     model = models.Profile
-    list_display = ('title', 'public', 'modified')
+    list_display = ('title', 'public', 'modified', 'importance')
     inlines = (ProfileMediaAdmin, )
-    fields = ('title', 'job_title', 'owner', 'description', 'text', 'public')
+    fields = (
+        'title',
+        'job_title',
+        'owner',
+        'description',
+        'text',
+        'importance',
+        'public',
+    )
     search_fields = ('title', 'job_title', 'description')
 
 
