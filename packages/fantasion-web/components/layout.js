@@ -56,6 +56,9 @@ export const SiteNavbar = ({ fixed, sticky }) => {
             <Linker route="about">
               <Nav.Link>{t('about-us')}</Nav.Link>
             </Linker>
+            <Linker route="adventureList">
+              <Nav.Link>{t('adventures-title')}</Nav.Link>
+            </Linker>
             <Linker route="leisureCentreList">
               <Nav.Link>{t('leisure-centre-title')}</Nav.Link>
             </Linker>

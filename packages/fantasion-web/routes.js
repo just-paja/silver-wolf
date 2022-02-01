@@ -15,6 +15,10 @@ const cs = {
     source: '/',
     destination: '/index',
   },
+  adventureList: {
+    source: '/dobrodruzstvi',
+    destination: '/adventures',
+  },
   expeditionDetail: {
     source: '/tabory/:expeditionSlug',
     destination: '/expeditions/:expeditionSlug',
