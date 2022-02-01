@@ -81,7 +81,7 @@ export const SlideShowGallery = ({
   className,
   media,
   previewComponent,
-  size = 'galleryPreview',
+  size = 'galleryDecoration',
   square,
   ...props
 }) => {
@@ -117,7 +117,7 @@ export const ThumbGallery = ({ media, ...props }) => {
           className={styles.thumb}
           key={mediaObject.id}
           mediaObject={mediaObject}
-          size="galleryPreview"
+          size="galleryDecoration"
         />
       ))}
     </div>
