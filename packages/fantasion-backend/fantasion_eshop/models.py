@@ -210,6 +210,10 @@ class OrderItem(TimeStampedModel):
 
 
 class PromotionCode(TimeStampedModel):
+    class Meta:
+        verbose_name = _('Promotion Code')
+        verbose_name_plural = _('Promotion Codes')
+
     code = CharField(
         max_length=63,
         unique=True,
