@@ -53,14 +53,14 @@ export const SiteNavbar = ({ fixed, sticky }) => {
         </Navbar.Toggle>
         <Navbar.Collapse id="site-navbar">
           <Nav>
-            <Linker route="about">
-              <Nav.Link>{t('about-us')}</Nav.Link>
-            </Linker>
             <Linker route="adventureList">
               <Nav.Link>{t('adventures-title')}</Nav.Link>
             </Linker>
             <Linker route="leisureCentreList">
               <Nav.Link>{t('leisure-centre-title')}</Nav.Link>
+            </Linker>
+            <Linker route="about">
+              <Nav.Link>{t('about-us')}</Nav.Link>
             </Linker>
             <Linker route="contacts">
               <Nav.Link>{t('contacts-link')}</Nav.Link>
