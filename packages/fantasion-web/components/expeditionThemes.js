@@ -37,6 +37,10 @@ const ExpeditionThemeArticle = ({ theme }) => {
       description={theme.description}
       media={theme.media}
       text={theme.detailedDescription}
+      selfLink={{
+        route: 'expeditionThemeDetail',
+        params: { expeditionThemeSlug: slug(theme.id, theme.title) },
+      }}
       afterText={
         theme.expeditions.length === 0 ? null : (
           <ExpeditionLinks expeditions={theme.expeditions} />

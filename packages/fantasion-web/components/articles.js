@@ -7,8 +7,9 @@ import Row from 'react-bootstrap/Row'
 import { asPage, MetaPage } from './meta'
 import { asStatusCodePage } from './references'
 import { GenericPage } from './layout'
+import { Link } from './links'
 import { MarkdownContent } from './content'
-import { ThumbGallery } from './media'
+import { Heading, ThumbGallery } from './media'
 
 export const ArticleBody = ({ className, text }) => (
   <MarkdownContent className={classnames('mt-3', className)}>
@@ -20,18 +21,24 @@ export const ArticleLead = ({ text }) => (
   <ArticleBody className="lead" text={text} />
 )
 
+export const ArticleHeading = ({ selfLink, children }) => {
+  const content = selfLink ? <Link {...selfLink}>{children}</Link> : children
+  return <Heading>{content}</Heading>
+}
+
 export const Article = ({
   afterText,
   beforeText,
   description,
   media,
+  selfLink,
   text,
   title,
 }) => (
   <Container as="article">
     <Row>
       <Col lg={7}>
-        <h1>{title}</h1>
+        <ArticleHeading selfLink={selfLink}>{title}</ArticleHeading>
         {description ? <ArticleLead text={description} /> : null}
         {beforeText ? <div>{beforeText}</div> : null}
         {text ? <ArticleBody text={text} /> : null}
