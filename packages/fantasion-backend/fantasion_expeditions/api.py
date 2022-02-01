@@ -16,7 +16,7 @@ class LeisureCentreMediaSerializer(PublicMediaSerializer):
         fields = media_fields
 
 
-class LeisureCentreSerializer(HyperlinkedModelSerializer):
+class LeisureCentreBaseSerializer(HyperlinkedModelSerializer):
     location = LocationSerializer()
     mailing_address = LocationSerializer()
     media = LeisureCentreMediaSerializer(many=True)
@@ -33,6 +33,37 @@ class LeisureCentreSerializer(HyperlinkedModelSerializer):
             'slug',
             'title',
         )
+
+
+class LeisureCentreSerializer(LeisureCentreBaseSerializer):
+    expeditions = SerializerMethodField('get_expeditions')
+
+    class Meta:
+        model = models.LeisureCentre
+        fields = (
+            'description',
+            'detailed_description',
+            'expeditions',
+            'id',
+            'location',
+            'mailing_address',
+            'media',
+            'slug',
+            'title',
+        )
+
+    def get_expeditions(self, obj):
+        expedition_ids = obj.expedition_batches.filter(
+            public=True).values('id').distinct()
+        serializer = PlainExpeditionSerializer(
+            models.Expedition.objects.filter(
+                pk__in=expedition_ids,
+                public=True,
+            ),
+            many=True,
+            context=self.context,
+        )
+        return serializer.data
 
 
 class ExpeditionThemeMediaSerializer(PublicMediaSerializer):
@@ -136,7 +167,7 @@ class BatchAgeGroupSerializer(HyperlinkedModelSerializer):
 
 class ExpeditionBatchSerializer(HyperlinkedModelSerializer):
     age_groups = BatchAgeGroupSerializer(many=True)
-    leisure_centre = LeisureCentreSerializer()
+    leisure_centre = LeisureCentreBaseSerializer()
 
     class Meta:
         model = models.ExpeditionBatch

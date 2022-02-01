@@ -3,10 +3,11 @@ import Col from 'react-bootstrap/Col'
 import React from 'react'
 import Row from 'react-bootstrap/Row'
 
-import { useTranslation } from 'next-i18next'
 import { Article } from './articles'
+import { ExpeditionLinks } from './expeditionLinks'
 import { LocationAddress } from './locations'
 import { slug } from './slugs'
+import { useTranslation } from 'next-i18next'
 
 const LeisureCentreLocationBlock = ({ location, mailingAddress }) => {
   const { t } = useTranslation()
@@ -47,6 +48,11 @@ export const LeisureCentre = ({ leisureCentre }) => (
         location={leisureCentre.location}
         mailingAddress={leisureCentre.mailingAddress}
       />
+    }
+    afterText={
+      leisureCentre.expeditions.length === 0 ? null : (
+        <ExpeditionLinks expeditions={leisureCentre.expeditions} />
+      )
     }
     selfLink={{
       route: 'leisureCentreDetail',

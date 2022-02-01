@@ -1,35 +1,8 @@
 import React from 'react'
 
 import { Article } from './articles'
-import { Heading } from './media'
+import { ExpeditionLinks } from './expeditionLinks'
 import { slug } from './slugs'
-import { Link } from './links'
-import { useTranslation } from 'next-i18next'
-
-const ExpeditionLink = ({ expedition }) => (
-  <li>
-    <Link
-      route="expeditionDetail"
-      params={{ expeditionSlug: slug(expedition) }}
-    >
-      {expedition.title}
-    </Link>
-  </li>
-)
-
-const ExpeditionLinks = ({ expeditions }) => {
-  const { t } = useTranslation()
-  return (
-    <section className="mt-3">
-      <Heading>{t('adventure-expeditions-title')}</Heading>
-      <ul>
-        {expeditions.map((expedition) => (
-          <ExpeditionLink key={expedition.id} expedition={expedition} />
-        ))}
-      </ul>
-    </section>
-  )
-}
 
 const ExpeditionThemeArticle = ({ theme }) => {
   return (
