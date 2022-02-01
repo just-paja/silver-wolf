@@ -9,13 +9,16 @@ import styles from './GeneralNewsletterForm.module.scss'
 
 export const GeneralNewsletterForm = ({
   title,
+  hideTitle,
   variant = 'primary',
   ...props
 }) => {
   const { t } = useTranslation()
   return (
     <>
-      <h2 {...props}>{title || t('newsletter-general-title')}</h2>
+      {hideTitle ? null : (
+        <h2 {...props}>{title || t('newsletter-general-title')}</h2>
+      )}
       <form
         action="https://fantasion.us20.list-manage.com/subscribe/post?u=7af44209676d38653a2a4a1a0&amp;id=a01ed947e0"
         method="post"

@@ -1,9 +1,13 @@
 import Button from 'react-bootstrap/Button'
-import React from 'react'
+import Col from 'react-bootstrap/Col'
+import Modal from 'react-bootstrap/Modal'
+import React, { useState } from 'react'
+import Row from 'react-bootstrap/Row'
 
 import { ArticleBody } from './articles'
 import { Heading } from './media'
 import { DateRange } from './dates'
+import { GeneralNewsletterForm } from './GeneralNewsletterForm'
 import { Link } from './links'
 import { slug } from './slugs'
 import { useTranslation } from 'next-i18next'
@@ -12,9 +16,46 @@ import styles from './expeditions.module.scss'
 
 const ExpeditionBatch = ({ batch }) => {
   return (
-    <div>
-      <DateRange start={batch.startsAt} end={batch.endsAt} />
-    </div>
+    <Row className="mt-1 d-flex align-items-center">
+      <Col>
+        <strong>
+          <DateRange start={batch.startsAt} end={batch.endsAt} />
+        </strong>
+      </Col>
+    </Row>
+  )
+}
+
+const SignupPopup = ({ onHide, show }) => {
+  return (
+    <Modal show={show} onHide={onHide}>
+      <Modal.Header closeButton>
+        <Modal.Title>Přihlášky ještě nejsou otevřené</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <p>
+          Na tábor se zatím přihlásit nedá, ale když nám zanecháte váš e-mail,
+          pošleme vám na něj promo kód s 5% slevou jakmile se otevřou.
+        </p>
+        <hr />
+        <GeneralNewsletterForm hideTitle />
+      </Modal.Body>
+    </Modal>
+  )
+}
+
+const SignupButton = () => {
+  const [show, setShow] = useState(false)
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
+
+  return (
+    <>
+      <Button size="lg" onClick={handleShow}>
+        Přihlásit na tábor
+      </Button>
+      <SignupPopup show={show} onHide={handleClose} />
+    </>
   )
 }
 
@@ -26,9 +67,16 @@ export const ExpeditionBatches = ({ batches }) => {
   return (
     <div className="mt-3">
       <Heading level={2}>{t('expedition-batches')}</Heading>
-      {batches.map((batch) => (
-        <ExpeditionBatch batch={batch} key={batch.id} />
-      ))}
+      <Row>
+        <Col sm={6}>
+          {batches.map((batch) => (
+            <ExpeditionBatch batch={batch} key={batch.id} />
+          ))}
+        </Col>
+        <Col sm={6} className="mt-2 d-flex justify-content-end">
+          <SignupButton />
+        </Col>
+      </Row>
     </div>
   )
 }
