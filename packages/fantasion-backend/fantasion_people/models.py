@@ -2,6 +2,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django_extensions.db.models import TimeStampedModel
 from django.db.models import (
+    CharField,
     ForeignKey,
     PositiveIntegerField,
     TextField,
@@ -25,6 +26,15 @@ class Profile(PublicModel):
         verbose_name = _('Profile')
         verbose_name_plural = _('Profiles')
 
+    job_title = CharField(
+        blank=True,
+        max_length=63,
+        null=True,
+        verbose_name=_('Job Title'),
+        help_text=_(
+            'Extremely short description of the relationship between this '
+            'person and Fantasion, three or four words ideal'),
+    )
     text = TextField(
         blank=True,
         help_text=_('Full text of the profile formatted in Markdown'),

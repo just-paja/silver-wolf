@@ -13,7 +13,8 @@ class ProfileAdmin(BaseAdmin, TranslationAdmin):
     model = models.Profile
     list_display = ('title', 'public', 'modified')
     inlines = (ProfileMediaAdmin, )
-    search_fields = ('title', )
+    fields = ('title', 'job_title', 'owner', 'description', 'text', 'public')
+    search_fields = ('title', 'job_title', 'description')
 
 
 class AllergyAdmin(BaseAdmin, TranslationAdmin):

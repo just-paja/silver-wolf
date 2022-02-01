@@ -5,12 +5,12 @@ from . import models
 
 @register(models.Profile)
 class ProfileTranslationOptions(TranslationOptions):
-    fields = ('title', 'description', 'text')
+    fields = ('title', 'job_title', 'description', 'text')
 
 
 @register(models.ProfileMedia)
 class ProfileMediaTranslationOptions(TranslationOptions):
-    fields = ('description',)
+    fields = ('description', )
 
 
 @register(models.Allergy)
