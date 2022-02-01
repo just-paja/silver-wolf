@@ -131,7 +131,7 @@ export const ExpeditionTheme = ({ theme }) => {
       <header>
         <Heading level={2}>
           <Link
-            route="expeditionThemeDetail"
+            route="adventureDetail"
             params={{
               expeditionThemeSlug: slug(theme.id, theme.title),
             }}
@@ -144,7 +144,7 @@ export const ExpeditionTheme = ({ theme }) => {
       <div className="mt-3">
         <Link
           as={Button}
-          route="expeditionThemeDetail"
+          route="adventureDetail"
           params={{
             expeditionThemeSlug: slug(theme.id, theme.title),
           }}

@@ -23,9 +23,9 @@ const cs = {
     source: '/tabory/:expeditionSlug',
     destination: '/expeditions/:expeditionSlug',
   },
-  expeditionThemeDetail: {
-    source: '/taborove-hry/:expeditionThemeSlug',
-    destination: '/expedition-themes/:expeditionThemeSlug',
+  adventureDetail: {
+    source: '/dobrodruzstvi/:expeditionThemeSlug',
+    destination: '/adventures/:expeditionThemeSlug',
   },
   leisureCentreList: {
     source: '/stredisko',
