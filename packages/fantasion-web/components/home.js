@@ -86,7 +86,9 @@ export const HomeFlavour = ({ flavourTexts }) => {
 export const HomeAbout = ({ article }) => {
   return (
     <article>
-      <Heading>{article.title}</Heading>
+      <Heading>
+        <Link route="about">{article.title}</Link>
+      </Heading>
       <MarkdownContent>{article.description}</MarkdownContent>
       <Link as={Button} route="about" variant="link">
         Více o nás
