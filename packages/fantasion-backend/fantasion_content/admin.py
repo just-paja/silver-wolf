@@ -1,10 +1,9 @@
-from fantasion_generics.admin import BaseAdmin, MediaAdmin
-from modeltranslation.admin import TranslationAdmin
+from fantasion_generics.admin import MediaAdmin, TranslatedAdmin
 
 from . import models
 
 
-class FlavourTextAdmin(BaseAdmin, TranslationAdmin):
+class FlavourTextAdmin(TranslatedAdmin):
     model = models.FlavourText
     list_display = ('text', 'quote_owner', 'modified', 'importance')
     list_filter = ('quote_owner', )
@@ -14,7 +13,7 @@ class FrequentlyAskedQuestionMediaAdmin(MediaAdmin):
     model = models.FrequentlyAskedQuestionMedia
 
 
-class FrequentlyAskedQuestion(BaseAdmin, TranslationAdmin):
+class FrequentlyAskedQuestion(TranslatedAdmin):
     model = models.FrequentlyAskedQuestion
     list_display = (
         'id',
@@ -30,7 +29,7 @@ class StaticArticleMediaAdmin(MediaAdmin):
     model = models.StaticArticleMedia
 
 
-class StaticArticleAdmin(BaseAdmin, TranslationAdmin):
+class StaticArticleAdmin(TranslatedAdmin):
     model = models.StaticArticle
     list_display = ('key', 'title', 'modified')
     list_filter = ('public', )

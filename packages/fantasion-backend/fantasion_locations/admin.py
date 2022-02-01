@@ -1,16 +1,15 @@
-from fantasion_generics.admin import BaseAdmin
-from modeltranslation.admin import TranslationAdmin
+from fantasion_generics.admin import TranslatedAdmin
 
 from . import models
 
 
-class CountryAdmin(BaseAdmin, TranslationAdmin):
+class CountryAdmin(TranslatedAdmin):
     model = models.Country
     list_display = ('name', )
     search_fields = ('name', )
 
 
-class LocationAdmin(BaseAdmin, TranslationAdmin):
+class LocationAdmin(TranslatedAdmin):
     model = models.Location
     list_display = (
         'name',

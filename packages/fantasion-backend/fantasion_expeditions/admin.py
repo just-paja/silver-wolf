@@ -1,12 +1,11 @@
-from fantasion_generics.admin import BaseAdmin, MediaAdmin
+from fantasion_generics.admin import BaseAdmin, MediaAdmin, TranslatedAdmin
 from nested_admin import NestedStackedInline
-from modeltranslation.admin import TranslationAdmin
 
 from fantasion_eshop.models import ProductPrice
 from . import models
 
 
-class AgeGroup(BaseAdmin, TranslationAdmin):
+class AgeGroup(TranslatedAdmin):
     model = models.AgeGroup
     list_display = ('title', 'age_min', 'age_max', 'modified')
 
@@ -15,7 +14,7 @@ class StaffRoleMediaAdmin(MediaAdmin):
     model = models.StaffRoleMedia
 
 
-class StaffRole(BaseAdmin, TranslationAdmin):
+class StaffRole(TranslatedAdmin):
     model = models.StaffRole
     list_display = ('title', 'modified')
     inlines = (StaffRoleMediaAdmin, )
@@ -25,7 +24,7 @@ class LeisureCentreMediaAdmin(MediaAdmin):
     model = models.LeisureCentreMedia
 
 
-class LeisureCentreAdmin(BaseAdmin, TranslationAdmin):
+class LeisureCentreAdmin(TranslatedAdmin):
     model = models.LeisureCentre
     list_display = ('title', 'location', 'modified')
     inlines = (LeisureCentreMediaAdmin, )
@@ -39,7 +38,7 @@ class ExpeditionThemeMediaAdmin(MediaAdmin):
     model = models.ExpeditionThemeMedia
 
 
-class ExpeditionThemeAdmin(BaseAdmin, TranslationAdmin):
+class ExpeditionThemeAdmin(TranslatedAdmin):
     model = models.ExpeditionTheme
     list_display = (
         'title',
@@ -53,7 +52,7 @@ class ExpeditionMediaAdmin(MediaAdmin):
     model = models.ExpeditionMedia
 
 
-class ExpeditionAdmin(BaseAdmin, TranslationAdmin):
+class ExpeditionAdmin(TranslatedAdmin):
     model = models.Expedition
     list_display = (
         'title',
@@ -77,7 +76,7 @@ class ExpeditionProgramMediaAdmin(MediaAdmin):
     model = models.ExpeditionProgramMedia
 
 
-class ExpeditionProgramAdmin(BaseAdmin, TranslationAdmin):
+class ExpeditionProgramAdmin(TranslatedAdmin):
     model = models.ExpeditionProgram
     list_display = (
         'title',

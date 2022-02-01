@@ -3,16 +3,16 @@ import czech_sort
 from django.conf import settings
 from django.contrib.admin import AdminSite
 from django.http import Http404
-from modeltranslation.admin import TranslationStackedInline
 from nested_admin import NestedModelAdmin, NestedStackedInline
+from modeltranslation.admin import (
+    TranslationStackedInline,
+    TabbedDjangoJqueryTranslationAdmin,
+)
 
 
 def is_admin_model(cls):
-    return (
-        isinstance(cls, type) and
-        issubclass(cls, BaseAdmin) and
-        cls != BaseAdmin
-    )
+    return (isinstance(cls, type) and issubclass(cls, BaseAdmin)
+            and cls != BaseAdmin and cls != TranslatedAdmin)
 
 
 def get_module_admin_models(module):
@@ -23,6 +23,11 @@ def get_module_admin_models(module):
 
 class BaseAdmin(NestedModelAdmin):
     pass
+
+
+class TranslatedAdmin(BaseAdmin, TabbedDjangoJqueryTranslationAdmin):
+    class Media:
+        css = {'all': ('css/fantasion-admin.css', )}
 
 
 class BaseAdminSite(AdminSite):
@@ -53,8 +58,7 @@ class BaseAdminSite(AdminSite):
         app_dict['models'].sort(key=self.get_model_sort_helper(request))
         app_list = [app_dict]
         return super().app_index(request, app_label, {
-            **(extra_context or {}),
-            'app_list': app_list
+            **(extra_context or {}), 'app_list': app_list
         })
 
     def hookup(self, admin_model):
