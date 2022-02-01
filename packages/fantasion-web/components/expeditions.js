@@ -38,7 +38,16 @@ export const ExpeditionBase = ({ base }) => {
   return (
     <section className="mt-3">
       <header>
-        <Heading level={2}>{t('expedition-where-is-it')}</Heading>
+        <Heading level={2}>
+          <Link
+            route="leisureCentreDetail"
+            params={{
+              leisureCentreSlug: slug(base.id, base.title),
+            }}
+          >
+            {t('expedition-where-is-it')}
+          </Link>
+        </Heading>
         <p>{base.title}</p>
       </header>
       <ArticleBody text={base.description} />
@@ -72,7 +81,16 @@ export const ExpeditionTheme = ({ theme }) => {
   return (
     <section className="mt-3">
       <header>
-        <Heading level={2}>{t('expedition-what-is-it-about')}</Heading>
+        <Heading level={2}>
+          <Link
+            route="expeditionThemeDetail"
+            params={{
+              expeditionThemeSlug: slug(theme.id, theme.title),
+            }}
+          >
+            {t('expedition-what-is-it-about')}
+          </Link>
+        </Heading>
       </header>
       <ArticleBody text={theme.description} />
       <div className="mt-3">
