@@ -1,4 +1,4 @@
-import { FaFacebook, FaInstagram, FaTiktok } from 'react-icons/fa'
+import { FaFacebook, FaInstagram, FaTiktok, FaTwitter } from 'react-icons/fa'
 import { HiMailOpen } from 'react-icons/hi'
 
 const icons = {
@@ -6,6 +6,7 @@ const icons = {
   facebook: FaFacebook,
   instagram: FaInstagram,
   tiktok: FaTiktok,
+  twitter: FaTwitter,
 }
 
 const linkToNewWindow = (e) => {
@@ -26,6 +27,7 @@ export const SocialNetworks = ({ subscribable, ...props }) => {
   return (
     <div {...props}>
       <SocialIcon service="facebook" link="https://fb.com/fantasioncz" />
+      <SocialIcon service="twitter" link="https://twitter.com/fantasion_cz" />
       <SocialIcon
         service="tiktok"
         link="https://www.tiktok.com/@fantasion_tabory"
