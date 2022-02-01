@@ -39,6 +39,10 @@ const cs = {
     source: '/zasady-ochrany-osobnich-udaju',
     destination: '/privacy-policy',
   },
+  team: {
+    source: '/tym',
+    destination: '/team',
+  },
   termsAndConditions: {
     source: '/obchodni-podminky',
     destination: '/terms-and-conditons',

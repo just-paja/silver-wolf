@@ -2,6 +2,7 @@ import classnames from 'classnames'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
+import NavDropdown from 'react-bootstrap/NavDropdown'
 import Nav from 'react-bootstrap/Nav'
 import Row from 'react-bootstrap/Row'
 
@@ -59,9 +60,14 @@ export const SiteNavbar = ({ fixed, sticky }) => {
             <Linker route="leisureCentreList">
               <Nav.Link>{t('leisure-centre-title')}</Nav.Link>
             </Linker>
-            <Linker route="about">
-              <Nav.Link>{t('about-us')}</Nav.Link>
-            </Linker>
+            <NavDropdown title={t('about-fantasion')} id="about-nav">
+              <Linker route="about">
+                <NavDropdown.Item>{t('about-us')}</NavDropdown.Item>
+              </Linker>
+              <Linker route="team">
+                <NavDropdown.Item>{t('our-team')}</NavDropdown.Item>
+              </Linker>
+            </NavDropdown>
             <Linker route="contacts">
               <Nav.Link>{t('contacts-link')}</Nav.Link>
             </Linker>

@@ -17,7 +17,7 @@ class ProfileSerializer(HyperlinkedModelSerializer):
 
     class Meta:
         model = models.Profile
-        fields = ['id', 'title', 'description', 'text', 'media']
+        fields = ('id', 'title', 'job_title', 'description', 'text', 'media')
 
 
 class ProfileCollection(ReadOnlyModelViewSet):

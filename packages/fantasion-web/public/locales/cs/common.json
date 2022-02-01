@@ -1,8 +1,9 @@
 {
+  "about-fantasion": "O Fantasionu",
   "about-us": "O nás",
   "adventures-general-description": "Podívejte se, jaká dobrodružství s námi můžete zažít v létě na táboře.",
   "adventures-title": "Dobrodružství",
-  "adventure-expeditions-title": "Líbí? Pojeď s námi!",
+  "adventure-expeditions-title": "Pojeď s námi!",
   "contact-address": "Sídlo spolku",
   "contact-email": "E-mail",
   "contact-in": "IČ",
@@ -35,6 +36,8 @@
   "newsletter-general-title": "Chci znát novinky",
   "newsletter-submit": "Přihlásit k odběru",
   "newsletter-your-email": "Váš e-mail",
+  "our-team": "Náš tým",
+  "our-team-general-description": "Tým našich instruktorů je plný různorodých talentů, tvoří ho budoucí učitelé i budoucí vědci a velmi zruční mistři.",
   "personal-information": "Osobní údaje",
   "terms-and-conditions": "Obchodní podmínky",
   "usage-terms": "Podmínky užití"
