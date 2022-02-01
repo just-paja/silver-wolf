@@ -8,6 +8,8 @@ import { Link } from './links'
 import { slug } from './slugs'
 import { useTranslation } from 'next-i18next'
 
+import styles from './expeditions.module.scss'
+
 const ExpeditionBatch = ({ batch }) => {
   return (
     <div>
@@ -86,5 +88,51 @@ export const ExpeditionTheme = ({ theme }) => {
         </Link>
       </div>
     </section>
+  )
+}
+
+const LeisureCentreSummary = ({ leisureCentre }) => {
+  return (
+    <span className={styles.baseStamp}>
+      {leisureCentre.location?.fuzzyName ||
+        leisureCentre.location?.title ||
+        leisureCentre.title}
+    </span>
+  )
+}
+
+const ExpeditionBatchStamp = ({ batch, showBase = true }) => {
+  return (
+    <div>
+      <DateRange start={batch.startsAt} end={batch.endsAt} />
+      {showBase ? (
+        <>
+          <br />
+          {batch.leisureCentre ? (
+            <LeisureCentreSummary leisureCentre={batch.leisureCentre} />
+          ) : null}
+        </>
+      ) : null}
+    </div>
+  )
+}
+
+export const ExpeditionBatchSummary = ({ batches, className }) => {
+  const defaultBase = getDefaultBase(batches)
+  return (
+    <div className={className}>
+      {batches.map((batch) => (
+        <ExpeditionBatchStamp
+          batch={batch}
+          key={batch.id}
+          showBase={!defaultBase}
+        />
+      ))}
+      {defaultBase ? (
+        <>
+          <LeisureCentreSummary leisureCentre={defaultBase} />
+        </>
+      ) : null}
+    </div>
   )
 }

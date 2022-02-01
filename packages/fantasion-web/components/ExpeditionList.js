@@ -4,43 +4,15 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 
+import { ExpeditionBatchSummary } from './expeditions'
 import { slug } from './slugs'
 import { SlideShowGallery, Heading } from './media'
 import { GeneralNewsletterForm } from './GeneralNewsletterForm'
-import { DateRange } from './dates'
 import { Link } from './links'
 import { MarkdownContent } from './content'
 import { useTranslation } from 'next-i18next'
 
 import styles from './ExpeditionList.module.scss'
-
-const LeisureCentreSummary = ({ leisureCentre }) => {
-  return (
-    leisureCentre.location?.fuzzyName ||
-    leisureCentre.location?.title ||
-    leisureCentre.title
-  )
-}
-
-const ExpeditionBatchStamp = ({ batch }) => {
-  return (
-    <div>
-      <DateRange start={batch.startsAt} end={batch.endsAt} />
-      <br />
-      {batch.leisureCentre ? (
-        <LeisureCentreSummary leisureCentre={batch.leisureCentre} />
-      ) : null}
-    </div>
-  )
-}
-
-const ExpeditionBatches = ({ batches }) => (
-  <div className={styles.batches}>
-    {batches.map((batch) => (
-      <ExpeditionBatchStamp batch={batch} key={batch.id} />
-    ))}
-  </div>
-)
 
 const ExpeditionC2A = ({ expedition }) => {
   const { t } = useTranslation()
@@ -80,7 +52,10 @@ const Expedition = ({ expedition }) => {
             </Link>
           </Heading>
           <MarkdownContent>{expedition.description}</MarkdownContent>
-          <ExpeditionBatches batches={expedition.batches} />
+          <ExpeditionBatchSummary
+            batches={expedition.batches}
+            className={styles.batches}
+          />
           <ExpeditionC2A expedition={expedition} />
         </div>
       </Col>
