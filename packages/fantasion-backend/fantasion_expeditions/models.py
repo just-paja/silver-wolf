@@ -233,6 +233,8 @@ class BatchAgeGroup(EshopProduct):
     )
     program = ForeignKey(
         ExpeditionProgram,
+        blank=True,
+        null=True,
         on_delete=RESTRICT,
         related_name='age_group_batches',
         verbose_name=_('Expedition Program'),
