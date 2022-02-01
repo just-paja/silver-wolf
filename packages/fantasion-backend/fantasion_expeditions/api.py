@@ -8,6 +8,7 @@ from fantasion_locations.api import LocationSerializer
 from fantasion_generics.api import PublicMediaSerializer, media_fields
 
 from . import models
+from fantasion_people import models as people
 
 
 class LeisureCentreMediaSerializer(PublicMediaSerializer):
@@ -165,9 +166,31 @@ class BatchAgeGroupSerializer(HyperlinkedModelSerializer):
         )
 
 
+class StaffRoleSerializer(HyperlinkedModelSerializer):
+    class Meta:
+        model = models.StaffRole
+        fields = ('id', 'title', 'description')
+
+
+class StaffProfileSerializer(HyperlinkedModelSerializer):
+    class Meta:
+        model = people.Profile
+        fields = ('id', 'title')
+
+
+class BatchStaffSerializer(HyperlinkedModelSerializer):
+    profile = StaffProfileSerializer()
+    role = StaffRoleSerializer()
+
+    class Meta:
+        model = models.BatchStaff
+        fields = ('id', 'profile', 'role')
+
+
 class ExpeditionBatchSerializer(HyperlinkedModelSerializer):
     age_groups = BatchAgeGroupSerializer(many=True)
     leisure_centre = LeisureCentreBaseSerializer()
+    staff = BatchStaffSerializer(many=True)
 
     class Meta:
         model = models.ExpeditionBatch
@@ -178,6 +201,7 @@ class ExpeditionBatchSerializer(HyperlinkedModelSerializer):
             'id',
             'leisure_centre',
             'starts_at',
+            'staff',
         )
 
 
