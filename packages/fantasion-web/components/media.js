@@ -117,7 +117,7 @@ export const ThumbGallery = ({ media, ...props }) => {
           className={styles.thumb}
           key={mediaObject.id}
           mediaObject={mediaObject}
-          size="galleryThumb"
+          size="galleryPreview"
         />
       ))}
     </div>

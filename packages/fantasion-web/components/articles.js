@@ -1,40 +1,14 @@
 import classnames from 'classnames'
-import Image from 'next/image'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 import React from 'react'
+import Row from 'react-bootstrap/Row'
 
 import { asPage, MetaPage } from './meta'
 import { asStatusCodePage } from './references'
 import { GenericPage } from './layout'
 import { MarkdownContent } from './content'
-
-const GalleryPhoto = ({ mediaObject }) => {
-  return (
-    <Image
-      src={mediaObject.localPhoto.galleryPreview}
-      alt={mediaObject.description}
-      width={256}
-      height={256}
-    />
-  )
-}
-
-const GalleryMediaObject = ({ mediaObject }) => {
-  if (mediaObject.localPhoto || mediaObject.privatePhoto) {
-    return <GalleryPhoto mediaObject={mediaObject} />
-  }
-  return null
-}
-
-const ArticleGallery = ({ media }) => (
-  <div className="mt-3">
-    {media.map((item) => (
-      <GalleryMediaObject mediaObject={item} key={item.id} />
-    ))}
-  </div>
-)
+import { ThumbGallery } from './media'
 
 export const ArticleBody = ({ className, text }) => (
   <MarkdownContent className={classnames('mt-3', className)}>
@@ -64,7 +38,7 @@ export const Article = ({
         {afterText ? <div>{afterText}</div> : null}
       </Col>
       <Col lg={5}>
-        <ArticleGallery media={media} />
+        <ThumbGallery media={media} />
       </Col>
     </Row>
   </Container>

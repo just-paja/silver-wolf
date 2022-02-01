@@ -46,10 +46,14 @@
 
 .thumbGallery {
   display: flex;
+  flex-wrap: wrap;
   margin-left: calc($spacer / -4);
   margin-right: calc($spacer / -4);
 
   .thumb {
+    display: block;
+    min-width: 128px;
+    flex: 1;
     margin: calc($spacer / 4);
   }
 }
