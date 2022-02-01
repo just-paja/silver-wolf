@@ -125,6 +125,7 @@ class BatchAgeGroupInlineAdmin(NestedStackedInline):
 class BatchStaffAdmin(NestedStackedInline):
     model = models.BatchStaff
     autocomplete_fields = ('profile', )
+    extra = 0
 
 
 class ExpeditionBatchAdmin(BaseAdmin):
