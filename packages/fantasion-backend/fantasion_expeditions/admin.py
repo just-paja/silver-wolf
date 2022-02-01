@@ -29,6 +29,10 @@ class LeisureCentreAdmin(BaseAdmin, TranslationAdmin):
     model = models.LeisureCentre
     list_display = ('title', 'location', 'modified')
     inlines = (LeisureCentreMediaAdmin, )
+    search_fields = (
+        'title',
+        'location__title',
+    )
 
 
 class ExpeditionThemeMediaAdmin(MediaAdmin):
@@ -42,6 +46,7 @@ class ExpeditionThemeAdmin(BaseAdmin, TranslationAdmin):
         'modified',
     )
     inlines = (ExpeditionThemeMediaAdmin, )
+    search_fields = ('title', 'description')
 
 
 class ExpeditionMediaAdmin(MediaAdmin):
@@ -64,6 +69,8 @@ class ExpeditionAdmin(BaseAdmin, TranslationAdmin):
         'public',
     )
     inlines = (ExpeditionMediaAdmin, )
+    search_fields = ('title', 'description')
+    autocomplete_fields = ('theme', )
 
 
 class ExpeditionProgramMediaAdmin(MediaAdmin):
@@ -77,6 +84,7 @@ class ExpeditionProgramAdmin(BaseAdmin, TranslationAdmin):
         'modified',
     )
     inlines = (ExpeditionProgramMediaAdmin, )
+    search_fields = ('title', 'description')
 
 
 class ProductPriceAdmin(NestedStackedInline):
@@ -101,6 +109,7 @@ class BatchAgeGroupAdmin(BaseAdmin):
     )
     readonly_fields = ('description', )
     inlines = (ProductPriceAdmin, )
+    autocomplete_fields = ('batch', 'program')
 
     def expedition(self, instance):
         return instance.batch.expedition
@@ -115,6 +124,7 @@ class BatchAgeGroupInlineAdmin(NestedStackedInline):
 
 class BatchStaffAdmin(NestedStackedInline):
     model = models.BatchStaff
+    autocomplete_fields = ('profile', )
 
 
 class ExpeditionBatchAdmin(BaseAdmin):
@@ -133,4 +143,10 @@ class ExpeditionBatchAdmin(BaseAdmin):
         'expedition',
         'leisure_centre',
         'public',
+    )
+    autocomplete_fields = ('expedition', 'leisure_centre')
+    search_fields = (
+        'expedition__title',
+        'expedition__description',
+        'starts_at',
     )

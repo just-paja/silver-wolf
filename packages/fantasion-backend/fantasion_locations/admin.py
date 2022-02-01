@@ -7,6 +7,7 @@ from . import models
 class CountryAdmin(BaseAdmin, TranslationAdmin):
     model = models.Country
     list_display = ('name', )
+    search_fields = ('name', )
 
 
 class LocationAdmin(BaseAdmin, TranslationAdmin):
@@ -19,6 +20,7 @@ class LocationAdmin(BaseAdmin, TranslationAdmin):
         'coordinates',
     )
     list_filter = ('country', )
+    autocomplete_fields = ('country', )
 
     def street_and_number(self, inst):
         if not inst.street:

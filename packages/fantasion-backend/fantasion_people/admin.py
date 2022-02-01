@@ -12,17 +12,20 @@ class ProfileMediaAdmin(MediaAdmin):
 class ProfileAdmin(BaseAdmin, TranslationAdmin):
     model = models.Profile
     list_display = ('title', 'public', 'modified')
-    inlines = (ProfileMediaAdmin,)
+    inlines = (ProfileMediaAdmin, )
+    search_fields = ('title', )
 
 
 class AllergyAdmin(BaseAdmin, TranslationAdmin):
     model = models.Allergy
     list_display = ('title', )
+    search_fields = ('title', )
 
 
 class HobbyAdmin(BaseAdmin, TranslationAdmin):
     model = models.Hobby
     list_display = ('title', )
+    search_fields = ('title', )
 
 
 class FamilyMemberAdmin(NestedStackedInline):
@@ -33,4 +36,4 @@ class FamilyMemberAdmin(NestedStackedInline):
 class FamilyAdmin(BaseAdmin):
     model = models.Family
     list_display = ('title', )
-    inlines = (FamilyMemberAdmin,)
+    inlines = (FamilyMemberAdmin, )
