@@ -267,13 +267,14 @@ LOGGING = {
 VERSATILEIMAGEFIELD_SETTINGS = {
     'cache_length': math.inf,
     'create_images_on_demand': False,
-    'jpeg_resize_quality': 75,
+    'jpeg_resize_quality': 95,
 }
 
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
     'gallery': [
         ('thumb', 'crop__256x256'),
         ('preview', 'crop__512x512'),
+        ('decoration', 'crop__640x640'),
         ('detail', 'thumbnail__1920x800'),
     ],
     'profile': [
