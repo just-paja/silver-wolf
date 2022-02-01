@@ -4,8 +4,9 @@ import React from 'react'
 import Row from 'react-bootstrap/Row'
 
 import { useTranslation } from 'next-i18next'
-import { Article } from '../components/articles'
-import { LocationAddress } from '../components/locations'
+import { Article } from './articles'
+import { LocationAddress } from './locations'
+import { slug } from './slugs'
 
 const LeisureCentreLocationBlock = ({ location, mailingAddress }) => {
   const { t } = useTranslation()
@@ -47,6 +48,12 @@ export const LeisureCentre = ({ leisureCentre }) => (
         mailingAddress={leisureCentre.mailingAddress}
       />
     }
+    selfLink={{
+      route: 'leisureCentreDetail',
+      params: {
+        leisureCentreSlug: slug(leisureCentre.id, leisureCentre.title),
+      },
+    }}
     text={leisureCentre.detailedDescription}
     title={leisureCentre.title}
   />
