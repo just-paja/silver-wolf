@@ -35,6 +35,10 @@ const cs = {
     source: '/strediska/:leisureCentreSlug',
     destination: '/leisure-centres/:leisureCentreSlug',
   },
+  profileDetail: {
+    source: '/tym/:profileSlug',
+    destination: '/team/:profileSlug',
+  },
   privacyPolicy: {
     source: '/zasady-ochrany-osobnich-udaju',
     destination: '/privacy-policy',

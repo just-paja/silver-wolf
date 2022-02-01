@@ -35,6 +35,7 @@ export const Article = ({
   selfLink,
   text,
   title,
+  subTitle,
 }) => {
   const headingLevel = useHeadingLevel()
   return (
@@ -42,7 +43,10 @@ export const Article = ({
       <Container as="article">
         <Row>
           <Col lg={7}>
-            <ArticleHeading selfLink={selfLink}>{title}</ArticleHeading>
+            <header>
+              <ArticleHeading selfLink={selfLink}>{title}</ArticleHeading>
+              {subTitle ? <p>{subTitle}</p> : null}
+            </header>
             {description ? <ArticleLead text={description} /> : null}
             {beforeText ? <div>{beforeText}</div> : null}
             {text ? <ArticleBody text={text} /> : null}

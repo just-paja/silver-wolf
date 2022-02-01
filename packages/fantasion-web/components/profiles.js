@@ -4,18 +4,23 @@ import React from 'react'
 import Row from 'react-bootstrap/Row'
 
 import { Article } from './articles'
-import { ExpeditionLinks } from './expeditionLinks'
+import { Linker } from './links'
 import { slug } from './slugs'
 
 const ProfileListItem = ({ profile }) => {
   return (
-    <Card>
-      <Card.Img variant="top" src={profile.media[0].localPhoto.galleryThumb} />
-      <Card.Body>
-        <Card.Title>{profile.title}</Card.Title>
-        <Card.Text>{profile.jobTitle}</Card.Text>
-      </Card.Body>
-    </Card>
+    <Linker route="profileDetail" params={{ profileSlug: slug(profile) }}>
+      <Card as="a">
+        <Card.Img
+          variant="top"
+          src={profile.media[0].localPhoto.galleryThumb}
+        />
+        <Card.Body>
+          <Card.Title>{profile.title}</Card.Title>
+          <Card.Text>{profile.jobTitle}</Card.Text>
+        </Card.Body>
+      </Card>
+    </Linker>
   )
 }
 
@@ -27,4 +32,14 @@ export const ProfileList = ({ profiles }) => (
       </Col>
     ))}
   </Row>
+)
+
+export const ProfileDetail = ({ profile }) => (
+  <Article
+    description={profile.description}
+    media={profile.media}
+    subTitle={profile.jobTitle}
+    text={profile.text}
+    title={profile.title}
+  />
 )
