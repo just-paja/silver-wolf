@@ -51,7 +51,7 @@ export const LeisureCentre = ({ leisureCentre }) => (
     selfLink={{
       route: 'leisureCentreDetail',
       params: {
-        leisureCentreSlug: slug(leisureCentre.id, leisureCentre.title),
+        leisureCentreSlug: slug(leisureCentre),
       },
     }}
     text={leisureCentre.detailedDescription}

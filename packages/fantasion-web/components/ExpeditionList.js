@@ -21,7 +21,7 @@ const ExpeditionC2A = ({ expedition }) => {
       <Link
         as={Button}
         route="expeditionDetail"
-        params={{ expeditionSlug: slug(expedition.id, expedition.title) }}
+        params={{ expeditionSlug: slug(expedition) }}
         size="lg"
         variant="secondary"
         className={styles.bfb}
@@ -46,7 +46,7 @@ const Expedition = ({ expedition }) => {
           <Heading>
             <Link
               route="expeditionDetail"
-              params={{ expeditionSlug: slug(expedition.id, expedition.title) }}
+              params={{ expeditionSlug: slug(expedition) }}
             >
               {expedition.title}
             </Link>

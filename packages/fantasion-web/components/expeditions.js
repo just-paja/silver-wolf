@@ -90,7 +90,7 @@ export const ExpeditionBase = ({ base }) => {
           <Link
             route="leisureCentreDetail"
             params={{
-              leisureCentreSlug: slug(base.id, base.title),
+              leisureCentreSlug: slug(base),
             }}
           >
             {t('expedition-where-is-it')}
@@ -104,7 +104,7 @@ export const ExpeditionBase = ({ base }) => {
           as={Button}
           route="leisureCentreDetail"
           params={{
-            leisureCentreSlug: slug(base.id, base.title),
+            leisureCentreSlug: slug(base),
           }}
           variant="secondary"
         >
@@ -133,7 +133,7 @@ export const ExpeditionTheme = ({ theme }) => {
           <Link
             route="adventureDetail"
             params={{
-              expeditionThemeSlug: slug(theme.id, theme.title),
+              expeditionThemeSlug: slug(theme),
             }}
           >
             {t('expedition-what-is-it-about')}
@@ -146,7 +146,7 @@ export const ExpeditionTheme = ({ theme }) => {
           as={Button}
           route="adventureDetail"
           params={{
-            expeditionThemeSlug: slug(theme.id, theme.title),
+            expeditionThemeSlug: slug(theme),
           }}
           variant="secondary"
         >

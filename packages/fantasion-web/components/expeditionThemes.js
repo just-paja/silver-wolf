@@ -10,7 +10,7 @@ const ExpeditionLink = ({ expedition }) => (
   <li>
     <Link
       route="expeditionDetail"
-      params={{ expeditionSlug: slug(expedition.id, expedition.title) }}
+      params={{ expeditionSlug: slug(expedition) }}
     >
       {expedition.title}
     </Link>
@@ -39,7 +39,7 @@ const ExpeditionThemeArticle = ({ theme }) => {
       text={theme.detailedDescription}
       selfLink={{
         route: 'adventureDetail',
-        params: { expeditionThemeSlug: slug(theme.id, theme.title) },
+        params: { expeditionThemeSlug: slug(theme) },
       }}
       afterText={
         theme.expeditions.length === 0 ? null : (

@@ -337,5 +337,10 @@ export const slugify = (s, opt) => {
   return opt.lowercase ? s.toLowerCase() : s
 }
 
-export const slug = (id, title) => `${slugify(title)}-${id}`
+const isPublicObject = (obj) => Boolean(obj?.id && obj?.title)
+
+export const slugObject = (obj) => `${slugify(obj.title)}-${obj.id}`
+export const slug = (id, title) =>
+  isPublicObject(id) ? slugObject(id) : `${slugify(title)}-${id}`
+
 export const parseSlug = (slug) => parseInt(slug.split('-').reverse()[0], 10)
