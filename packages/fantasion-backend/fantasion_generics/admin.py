@@ -22,12 +22,12 @@ def get_module_admin_models(module):
 
 
 class BaseAdmin(NestedModelAdmin):
-    pass
+    class Media:
+        css = {'all': ('css/fantasion-admin.css', )}
 
 
 class TranslatedAdmin(BaseAdmin, TabbedDjangoJqueryTranslationAdmin):
-    class Media:
-        css = {'all': ('css/fantasion-admin.css', )}
+    pass
 
 
 class BaseAdminSite(AdminSite):

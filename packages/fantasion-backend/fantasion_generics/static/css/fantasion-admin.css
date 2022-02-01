@@ -1,3 +1,81 @@
+:root {
+  --color-buddha-gold: #d7a600;
+  --color-early-dawn: #fffaeb;
+  --color-minsk: #472a7e;
+  --color-valhalla: #321d59;
+  --color-tuatara: #282725;
+  --color-pirate-gold: #ae8702;
+  
+  --input-bg: #fff;
+  --primary: var(--color-minsk);
+  --secondary: var(--color-buddha-gold);
+  --body-bg: var(--color-early-dawn);
+  --header-branding-color: var(--color-buddha-gold);
+  --header-color: var(--color-buddha-gold);
+  --breadcrumbs-bg: var(--color-valhalla);
+  --darkened-bg: #f4eed9;
+  --selected-row: rgba(215, 166, 0, 0.33);
+  --accent: var(--color-buddha-gold);
+
+  --link-fg: var(--primary);
+  --link-hover-color: var(--color-valhalla);
+  --link-selected-fg: #5b80b2;
+
+  --hairline-color: #eae5d7;
+  --default-button-hover-bg: #a47e00;
+  --button-hover-bg: var(--color-valhalla);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --input-bg: #161616;
+    --primary: var(--color-minsk);
+    --secondary: var(--color-buddha-gold);
+    --body-bg: var(--color-tuatara);
+    --header-branding-color: var(--color-buddha-gold);
+    --header-color: var(--color-buddha-gold);
+    --breadcrumbs-bg: var(--color-valhalla);
+    --darkened-bg: #312f2b;
+    --selected-row: rgba(215, 166, 0, 0.33);
+    --accent: var(--color-buddha-gold);
+
+    --link-fg: var(--secondary);
+    --link-hover-color: var(--color-pirate-gold);
+    --link-selected-fg: #5b80b2;
+    --hairline-color: #44413c;
+  }
+}
+
+#header {
+  background: var(--primary);
+}
+
+#branding #site-name {
+  font-weight: bold;
+}
+
+@media (max-width: 1024px) {
+  #header {
+    align-items: flex-start;
+  }
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="url"],
+input[type="number"],
+input[type="tel"],
+select,
+textarea, 
+.vTextField {
+  background-color: var(--input-bg);
+}
+
+#user-tools a:focus, #user-tools a:hover {
+  color: var(--secondary);
+}
+
 fieldset > .ui-tabs > .ui-tabs-nav.ui-widget-header {
   display: none;
 }
