@@ -19,6 +19,7 @@ def warm_all_instances(model):
 def main():
     for model in django.apps.apps.get_models():
         if issubclass(model, LocalPhotoModel):
+            print('Prewarming {}'.format(model))
             warm_all_instances(model)
 
 
