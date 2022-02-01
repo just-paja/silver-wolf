@@ -11,6 +11,7 @@ import { Heading } from '../../components/media'
 import { GenericPage } from '../../components/layout'
 import { getPageProps } from '../../server/props'
 import { parseSlug } from '../../components/slugs'
+import { ThumbGallery } from '../../components/media'
 import {
   ExpeditionBase,
   ExpeditionBatches,
@@ -47,9 +48,9 @@ const ExpeditionDetail = ({ expedition }) => {
   return (
     <GenericPage>
       <MetaPage title={expedition.title} description={expedition.description} />
-      <Container as="article">
+      <Container as="article" className="mt-3">
         <Row>
-          <Col>
+          <Col lg={6}>
             <Heading>{expedition.title}</Heading>
             <ArticleLead text={expedition.description} />
             <ArticleBody text={expedition.detailed_description} />
@@ -58,6 +59,9 @@ const ExpeditionDetail = ({ expedition }) => {
               <ExpeditionTheme theme={expedition.theme} />
             ) : null}
             {defaultBase ? <ExpeditionBase base={defaultBase} /> : null}
+          </Col>
+          <Col lg={6}>
+            <ThumbGallery media={expedition.media} />
           </Col>
         </Row>
       </Container>
