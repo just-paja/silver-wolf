@@ -41,7 +41,7 @@ class ExpeditionThemeMediaSerializer(PublicMediaSerializer):
         fields = media_fields
 
 
-class ExpeditionThemeSerializer(HyperlinkedModelSerializer):
+class ExpeditionThemeBaseSerializer(HyperlinkedModelSerializer):
     media = ExpeditionThemeMediaSerializer(many=True)
 
     class Meta:
@@ -52,6 +52,33 @@ class ExpeditionThemeSerializer(HyperlinkedModelSerializer):
             'description',
             'detailed_description',
             'media',
+        )
+
+
+class PlainExpeditionSerializer(HyperlinkedModelSerializer):
+    class Meta:
+        model = models.Expedition
+        fields = (
+            'id',
+            'description',
+            'detailed_description',
+            'slug',
+            'title',
+        )
+
+
+class ExpeditionThemeSerializer(ExpeditionThemeBaseSerializer):
+    expeditions = PlainExpeditionSerializer(many=True)
+
+    class Meta:
+        model = models.ExpeditionTheme
+        fields = (
+            'id',
+            'title',
+            'description',
+            'detailed_description',
+            'media',
+            'expeditions',
         )
 
 
@@ -126,7 +153,7 @@ class ExpeditionBatchSerializer(HyperlinkedModelSerializer):
 class ExpeditionSerializer(HyperlinkedModelSerializer):
     batches = SerializerMethodField('get_batches')
     media = ExpeditionMediaSerializer(many=True)
-    theme = ExpeditionThemeSerializer()
+    theme = ExpeditionThemeBaseSerializer()
 
     class Meta:
         model = models.Expedition

@@ -94,6 +94,7 @@ class Expedition(PublicModel):
         blank=True,
         null=True,
         on_delete=RESTRICT,
+        related_name='expeditions',
         verbose_name=_('Expedition Theme'),
     )
 
