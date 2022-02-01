@@ -26,8 +26,10 @@ class Profile(PublicModel):
         verbose_name_plural = _('Profiles')
 
     text = TextField(
-        verbose_name=_('Profile text'),
+        blank=True,
         help_text=_('Full text of the profile formatted in Markdown'),
+        null=True,
+        verbose_name=_('Profile text'),
     )
     public = VisibilityField()
     owner = ForeignKey(
