@@ -1,6 +1,10 @@
-from django.core.validators import MinLengthValidator, MinValueValidator
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.models import TimeStampedModel
+from django.core.validators import (
+    MaxValueValidator,
+    MinLengthValidator,
+    MinValueValidator,
+)
 from django.db.models import (
     BooleanField,
     CharField,
@@ -214,6 +218,22 @@ class PromotionCode(TimeStampedModel):
         help_text=_(
             'Type an unique code with combination of letters, numbers and '
             'symbols that are not too difficult to type'),
+    )
+    discount = DecimalField(
+        decimal_places=2,
+        max_digits=5,
+        validators=[MaxValueValidator(100),
+                    MinValueValidator(0.01)],
+        verbose_name=_('Discount'),
+        help_text=_('This percentage will be cut of the total order price.'),
+    )
+    max_discount = PositiveIntegerField(
+        blank=True,
+        null=True,
+        verbose_name=_('Maximum discount'),
+        help_text=_(
+            'The system will cap the absolute discount. Use base currency '
+            '(CZK)'),
     )
     max_usages = PositiveIntegerField(
         default=10,
