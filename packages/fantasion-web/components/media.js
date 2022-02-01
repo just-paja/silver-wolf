@@ -2,6 +2,7 @@ import classnames from 'classnames'
 import Col from 'react-bootstrap/Col'
 
 import { useEffect, useState } from 'react'
+import { useHeadingLevel } from './context'
 
 import styles from './media.module.scss'
 
@@ -37,8 +38,9 @@ export const useRotatingIndex = (items, ttl = 16000) => {
   return [index, setIndex]
 }
 
-export const Heading = ({ level = 1, children }) => {
-  const Component = `h${level}`
+export const Heading = ({ level, children }) => {
+  const headingLevel = useHeadingLevel()
+  const Component = `h${level || headingLevel + 1}`
   return <Component>{children}</Component>
 }
 

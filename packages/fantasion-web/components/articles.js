@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container'
 import React from 'react'
 import Row from 'react-bootstrap/Row'
 
+import { HeadingLevelContext, useHeadingLevel } from './context'
 import { asPage, MetaPage } from './meta'
 import { asStatusCodePage } from './references'
 import { GenericPage } from './layout'
@@ -34,22 +35,27 @@ export const Article = ({
   selfLink,
   text,
   title,
-}) => (
-  <Container as="article">
-    <Row>
-      <Col lg={7}>
-        <ArticleHeading selfLink={selfLink}>{title}</ArticleHeading>
-        {description ? <ArticleLead text={description} /> : null}
-        {beforeText ? <div>{beforeText}</div> : null}
-        {text ? <ArticleBody text={text} /> : null}
-        {afterText ? <div>{afterText}</div> : null}
-      </Col>
-      <Col lg={5}>
-        <ThumbGallery media={media} />
-      </Col>
-    </Row>
-  </Container>
-)
+}) => {
+  const headingLevel = useHeadingLevel()
+  return (
+    <HeadingLevelContext.Provider value={headingLevel + 1}>
+      <Container as="article">
+        <Row>
+          <Col lg={7}>
+            <ArticleHeading selfLink={selfLink}>{title}</ArticleHeading>
+            {description ? <ArticleLead text={description} /> : null}
+            {beforeText ? <div>{beforeText}</div> : null}
+            {text ? <ArticleBody text={text} /> : null}
+            {afterText ? <div>{afterText}</div> : null}
+          </Col>
+          <Col lg={5}>
+            <ThumbGallery media={media} />
+          </Col>
+        </Row>
+      </Container>
+    </HeadingLevelContext.Provider>
+  )
+}
 
 export const StaticArticlePage = asPage(
   asStatusCodePage(({ article }) => (
