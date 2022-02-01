@@ -11,6 +11,8 @@ from django.db.models import (
     SET_DEFAULT,
 )
 
+from fantasion_generics.upload_path import kebab
+from fantasion_generics.photos import LocalPhotoField, WarmPhotoModel
 from fantasion_generics.media import MediaParentField
 from fantasion_generics.titles import TitleField
 from fantasion_generics.models import (
@@ -22,7 +24,7 @@ from fantasion_generics.models import (
 )
 
 
-class Profile(PublicModel):
+class Profile(PublicModel, WarmPhotoModel):
     class Meta:
         ordering = ['-importance']
         verbose_name = _('Profile')
@@ -37,6 +39,7 @@ class Profile(PublicModel):
             'Extremely short description of the relationship between this '
             'person and Fantasion, three or four words ideal'),
     )
+    avatar = LocalPhotoField()
     text = TextField(
         blank=True,
         help_text=_('Full text of the profile formatted in Markdown'),
@@ -54,6 +57,13 @@ class Profile(PublicModel):
         on_delete=SET_DEFAULT,
         related_name='profiles',
     )
+
+    @property
+    def upload_dir(self):
+        return '{0}/{1}'.format(
+            kebab(self.__class__.__name__),
+            self.id,
+        )
 
 
 class ProfileMedia(MediaObjectModel):
@@ -90,6 +100,12 @@ class Family(TimeStampedModel):
 
     def can_user_own_order(self, user):
         return bool(self.get_family_member_by_user(user))
+
+    @property
+    def upload_dir(self):
+        return '{0}/{1}'.format(
+            kebab(self.__class__.parent.field.remote_field.model.__name__),
+            self.parent_id)
 
 
 # Admin can assign family roles

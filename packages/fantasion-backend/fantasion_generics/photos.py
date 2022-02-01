@@ -10,22 +10,31 @@ from .upload_path import get_upload_path
 from .storages import private_storage
 
 
-class LocalPhotoModel(Model):
+class LocalPhotoField(VersatileImageField):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('blank', True)
+        kwargs.setdefault('max_length', 255)
+        kwargs.setdefault('null', True)
+        kwargs.setdefault('upload_to', get_upload_path)
+        kwargs.setdefault('verbose_name', _('Image file'))
+        super().__init__(*args, **kwargs)
+
+
+class WarmPhotoModel():
+    pass
+
+
+class LocalPhotoModel(Model, WarmPhotoModel):
     class Meta:
         abstract = True
 
-    local_photo = VersatileImageField(
-        blank=True,
+    local_photo = LocalPhotoField(
         height_field='height',
-        max_length=255,
-        null=True,
-        upload_to=get_upload_path,
-        verbose_name=_('Image file'),
         width_field='width',
     )
 
 
-class PrivatePhotoModel(Model):
+class PrivatePhotoModel(Model, WarmPhotoModel):
     class Meta:
         abstract = True
 
@@ -41,9 +50,6 @@ class PrivatePhotoModel(Model):
     )
 
 
-warm = (LocalPhotoModel, PrivatePhotoModel)
-
-
 def warm_model(model, inst):
     keyset = settings.VERSATILEIMAGEFIELD_RENDITION_KEY_SETS
     for field in model._meta.fields:
@@ -54,15 +60,14 @@ def warm_model(model, inst):
 
 def warm_attr(inst, attr, rendition_set):
     warmer = VersatileImageFieldWarmer(
+        image_attr=attr,
         instance_or_queryset=inst,
         rendition_key_set=rendition_set,
-        image_attr=attr
     )
     warmer.warm()
 
 
 @receiver(signals.post_save)
 def warm_images(sender, instance, **kwargs):
-    for model in warm:
-        if issubclass(sender, model):
-            warm_model(model, instance)
+    if issubclass(sender, WarmPhotoModel):
+        warm_model(instance.__class__, instance)

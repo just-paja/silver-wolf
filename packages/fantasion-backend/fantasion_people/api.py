@@ -1,7 +1,11 @@
 from rest_framework.serializers import HyperlinkedModelSerializer
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
-from fantasion_generics.api import PublicMediaSerializer, media_fields
+from fantasion_generics.api import (
+    LocalPhotoSerializer,
+    PublicMediaSerializer,
+    media_fields,
+)
 
 from . import models
 
@@ -13,11 +17,20 @@ class ProfileMediaSerializer(PublicMediaSerializer):
 
 
 class ProfileSerializer(HyperlinkedModelSerializer):
+    avatar = LocalPhotoSerializer()
     media = ProfileMediaSerializer(many=True)
 
     class Meta:
         model = models.Profile
-        fields = ('id', 'title', 'job_title', 'description', 'text', 'media')
+        fields = (
+            'description',
+            'id',
+            'job_title',
+            'avatar',
+            'media',
+            'text',
+            'title',
+        )
 
 
 class ProfileCollection(ReadOnlyModelViewSet):

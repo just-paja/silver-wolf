@@ -6,15 +6,23 @@ import Row from 'react-bootstrap/Row'
 import { Article } from './articles'
 import { Linker } from './links'
 import { slug } from './slugs'
+import { SiteLogo } from './SiteLogo'
+
+const NoAvatar = () => (
+  <div className="p-4 text-secondary bg-primary">
+    <SiteLogo />
+  </div>
+)
 
 const ProfileListItem = ({ profile }) => {
   return (
     <Linker route="profileDetail" params={{ profileSlug: slug(profile) }}>
       <Card as="a">
-        <Card.Img
-          variant="top"
-          src={profile.media[0].localPhoto.galleryThumb}
-        />
+        {profile.avatar ? (
+          <Card.Img variant="top" src={profile.avatar.galleryThumb} />
+        ) : (
+          <NoAvatar />
+        )}
         <Card.Body>
           <Card.Title>{profile.title}</Card.Title>
           <Card.Text>{profile.jobTitle}</Card.Text>

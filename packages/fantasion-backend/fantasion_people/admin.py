@@ -16,6 +16,7 @@ class ProfileAdmin(TranslatedAdmin):
         'title',
         'job_title',
         'owner',
+        'avatar',
         'description',
         'text',
         'importance',

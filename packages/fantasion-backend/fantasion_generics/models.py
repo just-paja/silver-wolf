@@ -1,10 +1,10 @@
 from django_extensions.db.models import AutoSlugField, TimeStampedModel
 from django.db.models import BooleanField, IntegerField, TextField
 from django.utils.translation import ugettext_lazy as _
-from re import sub
 
 from .media import MediaModelMixin
 from .photos import LocalPhotoModel
+from .upload_path import kebab
 from .videos import LocalVideoModel
 from .titles import (
     DescriptionField,
@@ -12,14 +12,6 @@ from .titles import (
     FacultativeTitleField,
     TitleField,
 )
-
-ksub = r"[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+"
-
-
-def kebab(s):
-    return '-'.join(
-        sub(r"(\s|_|-)+", " ",
-            sub(ksub, lambda mo: ' ' + mo.group(0).lower(), s)).split())
 
 
 class NamedModel(TimeStampedModel):
