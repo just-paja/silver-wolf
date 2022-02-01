@@ -2,12 +2,12 @@ import os
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'fantasion.settings')
 
-import django
-import django.apps
+import django  # noqa
+import django.apps  # noqa
 
 django.setup()
 
-from fantasion_generics.photos import LocalPhotoModel, warm_model
+from fantasion_generics.photos import LocalPhotoModel, warm_model  # noqa
 
 
 def warm_all_instances(model):
