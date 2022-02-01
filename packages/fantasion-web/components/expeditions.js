@@ -64,3 +64,27 @@ export const getDefaultBase = (batches) => {
   )
   return allEqual ? defaultBatch?.leisureCentre : null
 }
+
+export const ExpeditionTheme = ({ theme }) => {
+  const { t } = useTranslation()
+  return (
+    <section className="mt-3">
+      <header>
+        <Heading level={2}>{t('expedition-what-is-it-about')}</Heading>
+      </header>
+      <ArticleBody text={theme.description} />
+      <div className="mt-3">
+        <Link
+          as={Button}
+          route="expeditionThemeDetail"
+          params={{
+            expeditionThemeSlug: slug(theme.id, theme.title),
+          }}
+          variant="secondary"
+        >
+          {t('expedition-theme-more-info')}
+        </Link>
+      </div>
+    </section>
+  )
+}

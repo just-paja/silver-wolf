@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-31 23:29+0100\n"
+"POT-Creation-Date: 2022-02-01 00:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -233,22 +233,21 @@ msgstr "Maximum použití"
 msgid ""
 "This Promotion Code can be used only so many times, then it will be "
 "deactivated"
-msgstr ""
-"Kód bude možné použít pouze tolikrát. Potom bude deaktivován."
+msgstr "Kód bude možné použít pouze tolikrát. Potom bude deaktivován."
 
-#: fantasion_eshop/models.py:229
+#: fantasion_eshop/models.py:230
 msgid "Valid from"
 msgstr "Platné od"
 
-#: fantasion_eshop/models.py:231
+#: fantasion_eshop/models.py:232
 msgid "This Promotion Code will be invalid until this date and time"
 msgstr "Kód začne platit s uplynutím tohoto data a času"
 
-#: fantasion_eshop/models.py:236 fantasion_signups/models.py:189
+#: fantasion_eshop/models.py:237 fantasion_signups/models.py:189
 msgid "Valid until"
 msgstr "Platné do"
 
-#: fantasion_eshop/models.py:238
+#: fantasion_eshop/models.py:239
 msgid "This Promotion Code will be invalid after this date and time"
 msgstr "Kód přestane platit s uplynutím tohoto data a času"
 
@@ -256,7 +255,7 @@ msgstr "Kód přestane platit s uplynutím tohoto data a času"
 msgid "Fantasion Expeditions"
 msgstr "Tábory"
 
-#: fantasion_expeditions/models.py:26 fantasion_expeditions/models.py:101
+#: fantasion_expeditions/models.py:26 fantasion_expeditions/models.py:124
 msgid "Leisure Centre"
 msgstr "Rekreační středisko"
 
@@ -287,81 +286,89 @@ msgstr "Poštovní adresa"
 msgid "Website"
 msgstr "Webové stránky"
 
-#: fantasion_expeditions/models.py:72 fantasion_expeditions/models.py:95
+#: fantasion_expeditions/models.py:70 fantasion_expeditions/models.py:97
+msgid "Expedition Theme"
+msgstr "Táborové téma"
+
+#: fantasion_expeditions/models.py:71
+msgid "Expedition Themes"
+msgstr "Táborová témata"
+
+#: fantasion_expeditions/models.py:87 fantasion_expeditions/models.py:118
 msgid "Expedition"
 msgstr "Tábor"
 
-#: fantasion_expeditions/models.py:73
+#: fantasion_expeditions/models.py:88
 msgid "Expeditions"
 msgstr "Tábory"
 
-#: fantasion_expeditions/models.py:88 fantasion_expeditions/models.py:134
-#: fantasion_expeditions/models.py:201
+#: fantasion_expeditions/models.py:111 fantasion_expeditions/models.py:157
+#: fantasion_expeditions/models.py:226
 msgid "Expedition Batch"
 msgstr "Turnus"
 
-#: fantasion_expeditions/models.py:89
+#: fantasion_expeditions/models.py:112
 msgid "Expedition Batches"
 msgstr "Turnusy"
 
-#: fantasion_expeditions/models.py:103 fantasion_expeditions/models.py:215
+#: fantasion_expeditions/models.py:126 fantasion_expeditions/models.py:240
 msgid "Starts at"
 msgstr "Začátek"
 
-#: fantasion_expeditions/models.py:104 fantasion_expeditions/models.py:216
+#: fantasion_expeditions/models.py:127 fantasion_expeditions/models.py:241
 msgid "Ends at"
 msgstr "Konec"
 
-#: fantasion_expeditions/models.py:117
+#: fantasion_expeditions/models.py:140
 msgid "Staff Role"
 msgstr "Zaměstnanecká role"
 
-#: fantasion_expeditions/models.py:118
+#: fantasion_expeditions/models.py:141
 msgid "Staff Roles"
 msgstr "Zaměstnanecké role"
 
-#: fantasion_expeditions/models.py:127 fantasion_expeditions/models.py:128
+#: fantasion_expeditions/models.py:150 fantasion_expeditions/models.py:151
 msgid "Batch Staff"
 msgstr "Zaměstnanci"
 
-#: fantasion_expeditions/models.py:140 fantasion_people/models.py:25
+#: fantasion_expeditions/models.py:163 fantasion_people/models.py:25
 msgid "Profile"
 msgstr "Profil"
 
-#: fantasion_expeditions/models.py:146
+#: fantasion_expeditions/models.py:169
 msgid "Role"
 msgstr "Role"
 
-#: fantasion_expeditions/models.py:158 fantasion_expeditions/models.py:207
+#: fantasion_expeditions/models.py:181 fantasion_expeditions/models.py:232
 #: fantasion_signups/models.py:66
 msgid "Age Group"
 msgstr "Věková skupina"
 
-#: fantasion_expeditions/models.py:159
+#: fantasion_expeditions/models.py:182
 msgid "Age Groups"
 msgstr "Věkové skupiny"
 
-#: fantasion_expeditions/models.py:162
+#: fantasion_expeditions/models.py:185
 msgid "Minimal age"
 msgstr "Minimální věk"
 
-#: fantasion_expeditions/models.py:163
+#: fantasion_expeditions/models.py:186
 msgid "Maximal age"
 msgstr "Maximální věk"
 
-#: fantasion_expeditions/models.py:179 fantasion_expeditions/models.py:213
+#: fantasion_expeditions/models.py:202 fantasion_expeditions/models.py:238
 msgid "Expedition Program"
 msgstr "Táborový program"
 
-#: fantasion_expeditions/models.py:180
+#: fantasion_expeditions/models.py:203
 msgid "Expedition Programs"
 msgstr "Táborové programy"
 
-#: fantasion_expeditions/models.py:194
+#: fantasion_expeditions/models.py:219
 msgid "Batch Age Group"
 msgstr "Věková skupina na turnuse"
 
-#: fantasion_expeditions/models.py:195
+#: fantasion_expeditions/models.py:220
 msgid "Batch Age Groups"
 msgstr "Věkové skupiny na turnuse"
 

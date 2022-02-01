@@ -62,6 +62,21 @@ class LeisureCentreMedia(MediaObjectModel):
     parent = MediaParentField(LeisureCentre)
 
 
+class ExpeditionTheme(PublicModel):
+    """
+    ExpeditionTheme represents a theme for the entire expedition.
+    """
+    class Meta:
+        verbose_name = _('Expedition Theme')
+        verbose_name_plural = _('Expedition Themes')
+
+    detailed_description = DetailedDescriptionField()
+
+
+class ExpeditionThemeMedia(MediaObjectModel):
+    parent = MediaParentField(ExpeditionTheme)
+
+
 class Expedition(PublicModel):
     """
     Expedition represents an entire summer camp, it is composed of Expedition
@@ -74,6 +89,13 @@ class Expedition(PublicModel):
 
     detailed_description = DetailedDescriptionField()
     public = VisibilityField()
+    theme = ForeignKey(
+        ExpeditionTheme,
+        blank=True,
+        null=True,
+        on_delete=RESTRICT,
+        verbose_name=_('Expedition Theme'),
+    )
 
 
 class ExpeditionMedia(MediaObjectModel):

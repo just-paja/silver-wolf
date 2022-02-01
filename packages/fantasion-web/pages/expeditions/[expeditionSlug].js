@@ -14,6 +14,7 @@ import { parseSlug } from '../../components/slugs'
 import {
   ExpeditionBase,
   ExpeditionBatches,
+  ExpeditionTheme,
   getDefaultBase,
 } from '../../components/expeditions'
 
@@ -53,6 +54,9 @@ const ExpeditionDetail = ({ expedition }) => {
             <ArticleLead text={expedition.description} />
             <ArticleBody text={expedition.detailed_description} />
             <ExpeditionBatches batches={expedition.batches} />
+            {expedition.theme ? (
+              <ExpeditionTheme theme={expedition.theme} />
+            ) : null}
             {defaultBase ? <ExpeditionBase base={defaultBase} /> : null}
           </Col>
         </Row>

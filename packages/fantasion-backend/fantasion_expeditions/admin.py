@@ -18,7 +18,7 @@ class StaffRoleMediaAdmin(MediaAdmin):
 class StaffRole(BaseAdmin, TranslationAdmin):
     model = models.StaffRole
     list_display = ('title', 'modified')
-    inlines = (StaffRoleMediaAdmin,)
+    inlines = (StaffRoleMediaAdmin, )
 
 
 class LeisureCentreMediaAdmin(MediaAdmin):
@@ -28,7 +28,20 @@ class LeisureCentreMediaAdmin(MediaAdmin):
 class LeisureCentreAdmin(BaseAdmin, TranslationAdmin):
     model = models.LeisureCentre
     list_display = ('title', 'location', 'modified')
-    inlines = (LeisureCentreMediaAdmin,)
+    inlines = (LeisureCentreMediaAdmin, )
+
+
+class ExpeditionThemeMediaAdmin(MediaAdmin):
+    model = models.ExpeditionThemeMedia
+
+
+class ExpeditionThemeAdmin(BaseAdmin, TranslationAdmin):
+    model = models.ExpeditionTheme
+    list_display = (
+        'title',
+        'modified',
+    )
+    inlines = (ExpeditionThemeMediaAdmin, )
 
 
 class ExpeditionMediaAdmin(MediaAdmin):
@@ -42,8 +55,15 @@ class ExpeditionAdmin(BaseAdmin, TranslationAdmin):
         'modified',
         'public',
     )
-    list_filter = ('public',)
-    inlines = (ExpeditionMediaAdmin,)
+    list_filter = ('public', )
+    fields = (
+        'title',
+        'theme',
+        'description',
+        'detailed_description',
+        'public',
+    )
+    inlines = (ExpeditionMediaAdmin, )
 
 
 class ExpeditionProgramMediaAdmin(MediaAdmin):
@@ -56,7 +76,7 @@ class ExpeditionProgramAdmin(BaseAdmin, TranslationAdmin):
         'title',
         'modified',
     )
-    inlines = (ExpeditionProgramMediaAdmin,)
+    inlines = (ExpeditionProgramMediaAdmin, )
 
 
 class ProductPriceAdmin(NestedStackedInline):
@@ -79,8 +99,8 @@ class BatchAgeGroupAdmin(BaseAdmin):
         'age_group',
         'batch',
     )
-    readonly_fields = ('description',)
-    inlines = (ProductPriceAdmin,)
+    readonly_fields = ('description', )
+    inlines = (ProductPriceAdmin, )
 
     def expedition(self, instance):
         return instance.batch.expedition
@@ -89,8 +109,8 @@ class BatchAgeGroupAdmin(BaseAdmin):
 class BatchAgeGroupInlineAdmin(NestedStackedInline):
     model = models.BatchAgeGroup
     extra = 0
-    inlines = (ProductPriceAdmin,)
-    readonly_fields = ('description',)
+    inlines = (ProductPriceAdmin, )
+    readonly_fields = ('description', )
 
 
 class BatchStaffAdmin(NestedStackedInline):

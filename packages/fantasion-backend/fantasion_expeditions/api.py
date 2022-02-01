@@ -35,6 +35,26 @@ class LeisureCentreSerializer(HyperlinkedModelSerializer):
         )
 
 
+class ExpeditionThemeMediaSerializer(PublicMediaSerializer):
+    class Meta:
+        model = models.ExpeditionThemeMedia
+        fields = media_fields
+
+
+class ExpeditionThemeSerializer(HyperlinkedModelSerializer):
+    media = ExpeditionThemeMediaSerializer(many=True)
+
+    class Meta:
+        model = models.ExpeditionTheme
+        fields = (
+            'id',
+            'title',
+            'description',
+            'detailed_description',
+            'media',
+        )
+
+
 class ExpeditionMediaSerializer(PublicMediaSerializer):
     class Meta:
         model = models.ExpeditionMedia
@@ -106,6 +126,7 @@ class ExpeditionBatchSerializer(HyperlinkedModelSerializer):
 class ExpeditionSerializer(HyperlinkedModelSerializer):
     batches = SerializerMethodField('get_batches')
     media = ExpeditionMediaSerializer(many=True)
+    theme = ExpeditionThemeSerializer()
 
     class Meta:
         model = models.Expedition
@@ -116,6 +137,7 @@ class ExpeditionSerializer(HyperlinkedModelSerializer):
             'detailed_description',
             'media',
             'slug',
+            'theme',
             'title',
         )
 
@@ -131,6 +153,11 @@ class ExpeditionSerializer(HyperlinkedModelSerializer):
 class LeisureCentreCollection(ReadOnlyModelViewSet):
     queryset = models.LeisureCentre.objects.all()
     serializer_class = LeisureCentreSerializer
+
+
+class ExpeditionThemeCollection(ReadOnlyModelViewSet):
+    queryset = models.ExpeditionTheme.objects.all()
+    serializer_class = ExpeditionThemeSerializer
 
 
 class ExpeditionCollection(ReadOnlyModelViewSet):
