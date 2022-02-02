@@ -29,5 +29,9 @@
   },
   "engines": {
     "node": ">=16"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fantasion/fantasion.git"
   }
 }
