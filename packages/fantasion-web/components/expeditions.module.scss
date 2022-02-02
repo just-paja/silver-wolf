@@ -1,4 +1,7 @@
 @import '../styles/variables.scss';
+@import 'bootstrap/scss/vendor/_rfs.scss';
+@import 'bootstrap/scss/mixins/_border-radius.scss';
+@import 'bootstrap/scss/mixins/_buttons.scss';
 
 .baseStamp {
   font-size: $font-size-base;
@@ -14,22 +17,27 @@
 .batchButtons {
   align-items: center;
   display: flex;
-  flex-direction: row-reverse;
-  justify-content: start;
+  justify-content: flex-start;
   margin-top: calc($spacer / 2);
 
-  button {
+  .detailsButton {
     margin-left: auto;
   }
 }
 
-@media screen and (min-width: map-get($grid-breakpoints, 'xl')) {
+@media screen and (min-width: map-get($grid-breakpoints, 'lg')) {
   .batchButtons {
-    display: block;
+    align-items: end;
+    flex-direction: column;
     margin-top: 0;
 
-    button {
+    .signupButton {
+      @include button-size($btn-padding-y-lg, $btn-padding-x-lg, $btn-font-size-lg, $btn-border-radius-lg);
       margin-bottom: calc($spacer / 4);
+    }
+
+    .detailsButton {
+      margin-left: 0;
     }
   }
 }

@@ -111,9 +111,9 @@ export const SlideShowGallery = ({
   )
 }
 
-export const ThumbGallery = ({ media, ...props }) => {
+export const ThumbGallery = ({ className, media, ...props }) => {
   return (
-    <div className={styles.thumbGallery} {...props}>
+    <div className={classnames(styles.thumbGallery, className)} {...props}>
       {media.filter(isValid).map((mediaObject) => (
         <MediaObject
           className={styles.thumb}

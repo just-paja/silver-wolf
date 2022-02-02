@@ -69,7 +69,7 @@ const SignupButton = (props) => {
   const handleShow = () => setShow(true)
   return (
     <>
-      <Button {...props} onClick={handleShow}>
+      <Button className={styles.signupButton} {...props} onClick={handleShow}>
         Přihlásit na tábor
       </Button>
       <SignupPopup show={show} onHide={handleClose} />
@@ -82,7 +82,7 @@ const ExpeditionBatch = ({ batch, expedition }) => {
   return (
     <div className={classnames('mt-3', styles.batch)}>
       <Row>
-        <Col xl={6}>
+        <Col lg={6}>
           <Heading relativeLevel={3}>
             <Link
               route="expeditionBatchDetail"
@@ -106,10 +106,11 @@ const ExpeditionBatch = ({ batch, expedition }) => {
             ))}
           </div>
         </Col>
-        <Col className={styles.batchButtons} xl={6}>
+        <Col className={styles.batchButtons} lg={6}>
           {batch.troops.length === 0 ? null : <SignupButton />}
           <Link
             as={Button}
+            className={styles.detailsButton}
             size="md"
             variant="secondary"
             route="expeditionBatchDetail"

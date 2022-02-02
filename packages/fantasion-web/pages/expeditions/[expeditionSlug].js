@@ -54,17 +54,23 @@ const ExpeditionDetail = ({ expedition }) => {
             <Heading>{expedition.title}</Heading>
             <ArticleLead text={expedition.description} />
             <ArticleBody text={expedition.detailed_description} />
+          </Col>
+          <Col lg={6}>
             <ExpeditionBatches
               batches={expedition.batches}
               expedition={expedition}
             />
+          </Col>
+          <Col lg={6}>
+            <ThumbGallery className="mt-3" media={expedition.media} />
+          </Col>
+          <Col lg={6}>
             {expedition.theme ? (
               <ExpeditionTheme theme={expedition.theme} />
             ) : null}
-            {defaultBase ? <ExpeditionBase base={defaultBase} /> : null}
           </Col>
           <Col lg={6}>
-            <ThumbGallery media={expedition.media} />
+            {defaultBase ? <ExpeditionBase base={defaultBase} /> : null}
           </Col>
         </Row>
       </Container>
