@@ -105,6 +105,7 @@ class TroopAdmin(BaseAdmin):
         'batch__expedition',
         'age_group',
         'batch',
+        'program',
     )
     readonly_fields = ('description', )
     inlines = (ProductPriceAdmin, )

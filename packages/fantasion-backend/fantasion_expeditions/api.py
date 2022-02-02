@@ -188,14 +188,14 @@ class BatchStaffSerializer(HyperlinkedModelSerializer):
 
 
 class PlainExpeditionBatchSerializer(HyperlinkedModelSerializer):
-    age_groups = TroopSerializer(many=True)
+    troops = TroopSerializer(many=True)
     leisure_centre = LeisureCentreBaseSerializer()
     staff = BatchStaffSerializer(many=True)
 
     class Meta:
         model = models.ExpeditionBatch
         fields = (
-            'age_groups',
+            'troops',
             'ends_at',
             'expedition',
             'id',
