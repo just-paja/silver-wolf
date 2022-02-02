@@ -151,12 +151,12 @@ class ExpeditionProgramSerializer(HyperlinkedModelSerializer):
         )
 
 
-class BatchAgeGroupSerializer(HyperlinkedModelSerializer):
+class TroopSerializer(HyperlinkedModelSerializer):
     age_group = AgeGroupSerializer()
     program = ExpeditionProgramSerializer()
 
     class Meta:
-        model = models.BatchAgeGroup
+        model = models.Troop
         fields = (
             'age_group',
             'ends_at',
@@ -188,7 +188,7 @@ class BatchStaffSerializer(HyperlinkedModelSerializer):
 
 
 class PlainExpeditionBatchSerializer(HyperlinkedModelSerializer):
-    age_groups = BatchAgeGroupSerializer(many=True)
+    age_groups = TroopSerializer(many=True)
     leisure_centre = LeisureCentreBaseSerializer()
     staff = BatchStaffSerializer(many=True)
 
@@ -211,7 +211,7 @@ class ExpeditionBatchSerializer(PlainExpeditionBatchSerializer):
     class Meta:
         model = models.ExpeditionBatch
         fields = (
-            'age_groups',
+            'troops',
             'ends_at',
             'expedition',
             'id',

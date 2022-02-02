@@ -210,26 +210,26 @@ class ExpeditionProgramMedia(MediaObjectModel):
     parent = MediaParentField(ExpeditionProgram, )
 
 
-class BatchAgeGroup(EshopProduct):
+class Troop(EshopProduct):
     """
-    BatchAgeGroup represents a collective of simillar age expedition
+    Troop represents a collective of simillar age expedition
     participants, this is what people get signed up to.
     """
     class Meta:
         unique_together = ('batch', 'age_group', 'starts_at')
-        verbose_name = _('Batch Age Group')
-        verbose_name_plural = _('Batch Age Groups')
+        verbose_name = _('Troop')
+        verbose_name_plural = _('Troops')
 
     batch = ForeignKey(
         ExpeditionBatch,
         on_delete=CASCADE,
-        related_name='age_groups',
+        related_name='troops',
         verbose_name=_('Expedition Batch'),
     )
     age_group = ForeignKey(
         AgeGroup,
         on_delete=RESTRICT,
-        related_name='age_group_batches',
+        related_name='troops',
         verbose_name=_('Age Group'),
     )
     program = ForeignKey(
@@ -237,7 +237,7 @@ class BatchAgeGroup(EshopProduct):
         blank=True,
         null=True,
         on_delete=RESTRICT,
-        related_name='age_group_batches',
+        related_name='troops',
         verbose_name=_('Expedition Program'),
     )
     starts_at = DateField(verbose_name=_('Starts at'))

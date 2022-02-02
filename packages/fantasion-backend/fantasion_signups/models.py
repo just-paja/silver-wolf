@@ -60,7 +60,7 @@ class Signup(OrderItem):
         verbose_name=_('Family'),
     )
     batch_age_group = ForeignKey(
-        'fantasion_expeditions.BatchAgeGroup',
+        'fantasion_expeditions.Troop',
         on_delete=RESTRICT,
         related_name='signups',
         verbose_name=_('Age Group'),

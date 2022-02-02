@@ -90,8 +90,8 @@ class ProductPriceAdmin(NestedStackedInline):
     model = ProductPrice
 
 
-class BatchAgeGroupAdmin(BaseAdmin):
-    model = models.BatchAgeGroup
+class TroopAdmin(BaseAdmin):
+    model = models.Troop
     list_display = (
         'pk',
         'age_group',
@@ -114,8 +114,8 @@ class BatchAgeGroupAdmin(BaseAdmin):
         return instance.batch.expedition
 
 
-class BatchAgeGroupInlineAdmin(NestedStackedInline):
-    model = models.BatchAgeGroup
+class TroopInlineAdmin(NestedStackedInline):
+    model = models.Troop
     extra = 0
     inlines = (ProductPriceAdmin, )
     readonly_fields = ('description', )
@@ -129,7 +129,7 @@ class BatchStaffAdmin(NestedStackedInline):
 
 class ExpeditionBatchAdmin(BaseAdmin):
     model = models.ExpeditionBatch
-    inlines = (BatchAgeGroupInlineAdmin, BatchStaffAdmin)
+    inlines = (TroopInlineAdmin, BatchStaffAdmin)
     list_display = (
         'pk',
         'expedition',

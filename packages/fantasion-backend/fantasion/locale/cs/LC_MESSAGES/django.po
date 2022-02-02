@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-01 16:25+0100\n"
+"POT-Creation-Date: 2022-02-02 13:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -351,7 +351,7 @@ msgstr "Zaměstnanecké role"
 msgid "Batch Staff"
 msgstr "Zaměstnanci"
 
-#: fantasion_expeditions/models.py:164 fantasion_people/models.py:26
+#: fantasion_expeditions/models.py:164 fantasion_people/models.py:30
 msgid "Profile"
 msgstr "Profil"
 
@@ -385,12 +385,12 @@ msgid "Expedition Programs"
 msgstr "Táborové programy"
 
 #: fantasion_expeditions/models.py:220
-msgid "Batch Age Group"
-msgstr "Věková skupina na turnuse"
+msgid "Troop"
+msgstr "Oddíl"
 
 #: fantasion_expeditions/models.py:221
-msgid "Batch Age Groups"
-msgstr "Věkové skupiny na turnuse"
+msgid "Troops"
+msgstr "Oddíly"
 
 #: fantasion_generics/media.py:17
 msgid "Height"
@@ -404,40 +404,40 @@ msgstr "Šířka"
 msgid "Parent object"
 msgstr "Rodičovský objekt"
 
-#: fantasion_generics/models.py:40
+#: fantasion_generics/models.py:32
 msgid "Media Object"
 msgstr "Médium"
 
-#: fantasion_generics/models.py:41
+#: fantasion_generics/models.py:33
 msgid "Media Objects"
 msgstr "Média"
 
-#: fantasion_generics/models.py:67
+#: fantasion_generics/models.py:59
 msgid "Public"
 msgstr "Veřejné"
 
-#: fantasion_generics/models.py:70
+#: fantasion_generics/models.py:62
 msgid "Public objects will be visible on the website"
 msgstr "Veřejné objekty budou vidět na webu"
 
-#: fantasion_generics/models.py:78
+#: fantasion_generics/models.py:70
 msgid "Object Importance"
 msgstr "Důležitost"
 
-#: fantasion_generics/models.py:81
+#: fantasion_generics/models.py:73
 msgid "More important objects will appear on the top or sooner on the page"
 msgstr "Důležitější objekty budou vidět nahoře nebo dříve na stránce"
 
-#: fantasion_generics/models.py:89
+#: fantasion_generics/models.py:81
 msgid "Detailed Description"
 msgstr "Detailní popis"
 
-#: fantasion_generics/models.py:92
+#: fantasion_generics/models.py:84
 msgid ""
 "Detailed verbose description formatted in Markdown. Thereis no text limit."
 msgstr ""
 
-#: fantasion_generics/photos.py:23 fantasion_generics/photos.py:39
+#: fantasion_generics/photos.py:19 fantasion_generics/photos.py:48
 msgid "Image file"
 msgstr "Soubor s obrázkem"
 
@@ -533,88 +533,88 @@ msgstr "Zeměpisná délka"
 msgid "Fantasion People"
 msgstr "Lidé"
 
-#: fantasion_people/models.py:27
+#: fantasion_people/models.py:31
 msgid "Profiles"
 msgstr "Profily"
 
-#: fantasion_people/models.py:33
+#: fantasion_people/models.py:37
 msgid "Job Title"
 msgstr "Titul"
 
-#: fantasion_people/models.py:35
+#: fantasion_people/models.py:39
 msgid ""
 "Extremely short description of the relationship between this person and "
 "Fantasion, three or four words ideal"
 msgstr ""
 
-#: fantasion_people/models.py:40
+#: fantasion_people/models.py:45
 msgid "Full text of the profile formatted in Markdown"
 msgstr ""
 "Celý text profilu, kromě perexu, formátovaný pomocí jazyka Markdown psaný v "
 "třetí osobě (Fantasion vypráví o někom)"
 
-#: fantasion_people/models.py:42
+#: fantasion_people/models.py:47
 msgid "Profile text"
 msgstr "Text profilu"
 
-#: fantasion_people/models.py:49
+#: fantasion_people/models.py:55
 msgid "Owner of the profile will be able to edit the profile"
 msgstr "Majitel profilu může upravovat svůj popisek"
 
-#: fantasion_people/models.py:62
+#: fantasion_people/models.py:75
 msgid "Allergy"
 msgstr "Alergie"
 
-#: fantasion_people/models.py:63
+#: fantasion_people/models.py:76
 msgid "Allergies"
 msgstr "Alergie"
 
-#: fantasion_people/models.py:68
+#: fantasion_people/models.py:81
 msgid "Hobby"
 msgstr "Zájem"
 
-#: fantasion_people/models.py:69
+#: fantasion_people/models.py:82
 msgid "Hobbies"
 msgstr "Zájmy"
 
-#: fantasion_people/models.py:74 fantasion_people/models.py:115
+#: fantasion_people/models.py:87 fantasion_people/models.py:134
 #: fantasion_signups/models.py:60
 msgid "Family"
 msgstr "Rodina"
 
-#: fantasion_people/models.py:75
+#: fantasion_people/models.py:88
 msgid "Families"
 msgstr "Rodiny"
 
-#: fantasion_people/models.py:82
+#: fantasion_people/models.py:95
 msgid "Family owner acts as a superadmin."
 msgstr "Vůdce rodiny jedná jako její superuživatel"
 
-#: fantasion_people/models.py:100
+#: fantasion_people/models.py:119
 msgid "Administrator"
 msgstr "Administrátor"
 
-#: fantasion_people/models.py:101
+#: fantasion_people/models.py:120
 msgid "Legal representative"
 msgstr "Zákonný zástupce"
 
-#: fantasion_people/models.py:102
+#: fantasion_people/models.py:121
 msgid "Spectator"
 msgstr "Divák"
 
-#: fantasion_people/models.py:108
+#: fantasion_people/models.py:127
 msgid "Family member"
 msgstr "Rodinný člen"
 
-#: fantasion_people/models.py:109
+#: fantasion_people/models.py:128
 msgid "Family members"
 msgstr "Členové rodiny"
 
-#: fantasion_people/models.py:121
+#: fantasion_people/models.py:140
 msgid "User"
 msgstr "Uživatel"
 
-#: fantasion_people/models.py:126
+#: fantasion_people/models.py:145
 msgid "Family Role"
 msgstr "Rodinná role"
 
