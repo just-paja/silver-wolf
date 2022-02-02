@@ -40,6 +40,7 @@
   &.navbarInverse,
   &.navbarExpanded {
     background-color: $primary;
+    box-shadow: 0 0 $spacer rgba(darken($secondary, 33%), 0.5);
 
     .navbarBrand,
     .navbarToggle {
