@@ -7,11 +7,13 @@ import { ArticleBody, ArticleLead } from '../../components/articles'
 import { apiFetch, NotFound } from '../../api'
 import { asPage, MetaPage } from '../../components/meta'
 import { asStatusCodePage } from '../../components/references'
+import { Breadcrumbs } from '../../components/breadcrumbs'
 import { Heading } from '../../components/media'
 import { GenericPage } from '../../components/layout'
 import { getPageProps } from '../../server/props'
-import { parseSlug } from '../../components/slugs'
+import { parseSlug, slug } from '../../components/slugs'
 import { ThumbGallery } from '../../components/media'
+import { useTranslation } from 'next-i18next'
 import {
   ExpeditionBase,
   ExpeditionBatches,
@@ -44,11 +46,22 @@ export const getServerSideProps = async (props) => {
 }
 
 const ExpeditionDetail = ({ expedition }) => {
+  const { t } = useTranslation()
   const defaultBase = getDefaultBase(expedition.batches)
   return (
     <GenericPage>
       <MetaPage title={expedition.title} description={expedition.description} />
       <Container as="article" className="mt-3">
+        <Breadcrumbs
+          links={[
+            { route: 'adventureList', children: t('adventures-title') },
+            {
+              route: 'expeditionDetail',
+              params: { expeditionSlug: slug(expedition) },
+              children: expedition.title,
+            },
+          ]}
+        />
         <Row>
           <Col lg={6}>
             <Heading>{expedition.title}</Heading>

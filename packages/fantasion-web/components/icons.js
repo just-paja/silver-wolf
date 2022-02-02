@@ -3,11 +3,12 @@
  * icon for the same purpose. */
 
 import { BsPersonFill, BsPinMapFill } from 'react-icons/bs'
-import { HiMailOpen } from 'react-icons/hi'
+import { HiHome, HiMailOpen } from 'react-icons/hi'
 import { FaFacebook, FaInstagram, FaTiktok, FaTwitter } from 'react-icons/fa'
 
 export const EmailContactIcon = HiMailOpen
 export const FacebookIcon = FaFacebook
+export const HomeIcon = HiHome
 export const InstagramIcon = FaInstagram
 export const LocationPinIcon = BsPinMapFill
 export const PersonIcon = BsPersonFill
