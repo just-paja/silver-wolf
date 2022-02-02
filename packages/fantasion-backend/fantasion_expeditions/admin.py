@@ -88,6 +88,7 @@ class ExpeditionProgramAdmin(TranslatedAdmin):
 
 class ProductPriceAdmin(NestedStackedInline):
     model = ProductPrice
+    extra = 0
 
 
 class TroopAdmin(BaseAdmin):
