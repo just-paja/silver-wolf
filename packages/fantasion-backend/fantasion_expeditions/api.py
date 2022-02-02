@@ -5,7 +5,11 @@ from rest_framework.serializers import (
 )
 
 from fantasion_locations.api import LocationSerializer
-from fantasion_generics.api import PublicMediaSerializer, media_fields
+from fantasion_generics.api import (
+    PublicMediaSerializer,
+    media_fields,
+    LocalPhotoSerializer,
+)
 
 from . import models
 from fantasion_people import models as people
@@ -173,9 +177,11 @@ class StaffRoleSerializer(HyperlinkedModelSerializer):
 
 
 class StaffProfileSerializer(HyperlinkedModelSerializer):
+    avatar = LocalPhotoSerializer()
+
     class Meta:
         model = people.Profile
-        fields = ('id', 'title')
+        fields = ('id', 'title', 'job_title', 'avatar')
 
 
 class BatchStaffSerializer(HyperlinkedModelSerializer):
@@ -190,7 +196,6 @@ class BatchStaffSerializer(HyperlinkedModelSerializer):
 class PlainExpeditionBatchSerializer(HyperlinkedModelSerializer):
     troops = TroopSerializer(many=True)
     leisure_centre = LeisureCentreBaseSerializer()
-    staff = BatchStaffSerializer(many=True)
 
     class Meta:
         model = models.ExpeditionBatch
@@ -201,12 +206,12 @@ class PlainExpeditionBatchSerializer(HyperlinkedModelSerializer):
             'id',
             'leisure_centre',
             'starts_at',
-            'staff',
         )
 
 
 class ExpeditionBatchSerializer(PlainExpeditionBatchSerializer):
     expedition = PlainExpeditionSerializer()
+    staff = BatchStaffSerializer(many=True)
 
     class Meta:
         model = models.ExpeditionBatch

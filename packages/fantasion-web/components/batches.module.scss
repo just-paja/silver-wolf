@@ -1,0 +1,25 @@
+@import '../styles/variables.scss';
+
+
+.caretaker {
+  display: flex;
+  align-items: center;
+  margin-top: calc($spacer / 2);
+
+  .avatar {
+    $size: calc($spacer * 7);
+
+    display: block;
+    margin-right: $spacer;
+    width: $size;
+    min-width: $size;
+    max-width: $size;
+    height: $size;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .role {
+    font-size: $h5-font-size;
+  }
+}

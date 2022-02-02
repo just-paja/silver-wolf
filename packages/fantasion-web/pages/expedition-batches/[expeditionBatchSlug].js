@@ -6,13 +6,14 @@ import Row from 'react-bootstrap/Row'
 import { apiFetch, NotFound } from '../../api'
 import { asPage, MetaPage } from '../../components/meta'
 import { asStatusCodePage } from '../../components/references'
+import { BatchTroops, Team } from '../../components/batches'
 import { Breadcrumbs } from '../../components/breadcrumbs'
-import { Heading } from '../../components/media'
+import { DateRange, formatDateRange } from '../../components/dates'
 import { GenericPage } from '../../components/layout'
-import { DateRange } from '../../components/dates'
 import { getPageProps } from '../../server/props'
+import { Heading } from '../../components/media'
+import { LeisureCentreStub } from '../../components/leisureCentres'
 import { parseSlug } from '../../components/slugs'
-import { ThumbGallery } from '../../components/media'
 import { slug } from '../../components/slugs'
 import { useTranslation } from 'next-i18next'
 
@@ -42,8 +43,13 @@ export const getServerSideProps = async (props) => {
 
 const ExpeditionBatchDetailPage = ({ expeditionBatch }) => {
   const { expedition } = expeditionBatch
-  const { t } = useTranslation()
-  const title = `${expedition.title}: ${expeditionBatch.id}`
+  const batch = expeditionBatch
+  const { i18n, t } = useTranslation()
+  const title = `${expedition.title}: ${formatDateRange(
+    i18n.language,
+    batch.startsAt,
+    batch.endsAt
+  )}`
   return (
     <GenericPage>
       <MetaPage title={title} description={expedition.description} />
@@ -66,12 +72,21 @@ const ExpeditionBatchDetailPage = ({ expeditionBatch }) => {
             },
           ]}
         />
+        <header>
+          <Heading>{expedition.title}</Heading>
+          <p className="fs-3">
+            <DateRange start={batch.startsAt} end={batch.endsAt} />
+          </p>
+        </header>
         <Row>
           <Col lg={6}>
-            <Heading>{title}</Heading>
+            <BatchTroops troops={batch.troops} />
           </Col>
-          <Col lg={6}></Col>
+          <Col lg={6}>
+            <LeisureCentreStub leisureCentre={batch.leisureCentre} />
+          </Col>
         </Row>
+        <Team team={batch.staff} />
       </Container>
     </GenericPage>
   )

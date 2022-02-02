@@ -1,0 +1,43 @@
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.avatar {
+  display: flex;
+
+  .square {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+
+    &:after {
+      content: '';
+      display: block;
+      padding-bottom: 100%;
+    }
+  }
+
+  .noAvatar,
+  .realAvatar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .realAvatar {
+    opacity: 0;
+  }
+
+  .visibleAvatar {
+    animation: appear 0.4s 1 forwards;
+  }
+}

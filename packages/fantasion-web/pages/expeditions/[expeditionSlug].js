@@ -11,11 +11,11 @@ import { Breadcrumbs } from '../../components/breadcrumbs'
 import { Heading } from '../../components/media'
 import { GenericPage } from '../../components/layout'
 import { getPageProps } from '../../server/props'
+import { LeisureCentreStub } from '../../components/leisureCentres'
 import { parseSlug, slug } from '../../components/slugs'
 import { ThumbGallery } from '../../components/media'
 import { useTranslation } from 'next-i18next'
 import {
-  ExpeditionBase,
   ExpeditionBatches,
   ExpeditionTheme,
   getDefaultBase,
@@ -83,7 +83,9 @@ const ExpeditionDetail = ({ expedition }) => {
             ) : null}
           </Col>
           <Col lg={6}>
-            {defaultBase ? <ExpeditionBase base={defaultBase} /> : null}
+            {defaultBase ? (
+              <LeisureCentreStub leisureCentre={defaultBase} />
+            ) : null}
           </Col>
         </Row>
       </Container>

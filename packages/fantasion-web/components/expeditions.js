@@ -12,25 +12,10 @@ import { Heading } from './media'
 import { Link } from './links'
 import { LocationFuzzyName } from './locations'
 import { slug } from './slugs'
+import { TroopLabel } from './troops'
 import { useTranslation } from 'next-i18next'
-import { IconLabel, PersonIcon } from './icons'
 
 import styles from './expeditions.module.scss'
-
-const getExpeditionLength = (startsAt, endsAt) =>
-  Math.max((new Date(endsAt) - new Date(startsAt)) / 1000 / 60 / 60 / 24 - 1, 1)
-
-const TroopLabel = ({ ageMin, ageMax, startsAt, endsAt }) => {
-  const { t } = useTranslation()
-  return (
-    <IconLabel
-      icon={PersonIcon}
-      text={`${t('age-limit', { ageMin, ageMax })}, ${t('expedition-length', {
-        daysLength: getExpeditionLength(startsAt, endsAt),
-      })}`}
-    />
-  )
-}
 
 const Troop = ({ ageMin, ageMax, startsAt, endsAt }) => {
   return (
@@ -136,40 +121,6 @@ export const ExpeditionBatches = ({ expedition, batches }) => {
         <ExpeditionBatch batch={batch} expedition={expedition} key={batch.id} />
       ))}
     </div>
-  )
-}
-
-export const ExpeditionBase = ({ base }) => {
-  const { t } = useTranslation()
-  return (
-    <section className="mt-3">
-      <header>
-        <Heading level={2}>
-          <Link
-            route="leisureCentreDetail"
-            params={{
-              leisureCentreSlug: slug(base),
-            }}
-          >
-            {t('expedition-where-is-it')}
-          </Link>
-        </Heading>
-        <p>{base.title}</p>
-      </header>
-      <ArticleBody text={base.description} />
-      <div className="mt-3">
-        <Link
-          as={Button}
-          route="leisureCentreDetail"
-          params={{
-            leisureCentreSlug: slug(base),
-          }}
-          variant="secondary"
-        >
-          {t('expedition-base-more-info')}
-        </Link>
-      </div>
-    </section>
   )
 }
 
