@@ -1,3 +1,4 @@
+import classnames from 'classnames'
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import Modal from 'react-bootstrap/Modal'
@@ -5,24 +6,42 @@ import React, { useState } from 'react'
 import Row from 'react-bootstrap/Row'
 
 import { ArticleBody } from './articles'
-import { Heading } from './media'
 import { DateRange } from './dates'
 import { GeneralNewsletterForm } from './GeneralNewsletterForm'
+import { Heading } from './media'
 import { Link } from './links'
+import { LocationFuzzyName } from './locations'
 import { slug } from './slugs'
 import { useTranslation } from 'next-i18next'
+import { IconLabel, PersonIcon } from './icons'
 
 import styles from './expeditions.module.scss'
 
-const ExpeditionBatch = ({ batch }) => {
+const getExpeditionLength = (startsAt, endsAt) =>
+  Math.max((new Date(endsAt) - new Date(startsAt)) / 1000 / 60 / 60 / 24 - 1, 1)
+
+const TroopLabel = ({ ageMin, ageMax, startsAt, endsAt }) => {
+  const { t } = useTranslation()
   return (
-    <Row className="mt-1 d-flex align-items-center">
-      <Col>
-        <strong>
-          <DateRange start={batch.startsAt} end={batch.endsAt} />
-        </strong>
-      </Col>
-    </Row>
+    <IconLabel
+      icon={PersonIcon}
+      text={`${t('age-limit', { ageMin, ageMax })}, ${t('expedition-length', {
+        daysLength: getExpeditionLength(startsAt, endsAt),
+      })}`}
+    />
+  )
+}
+
+const Troop = ({ ageMin, ageMax, startsAt, endsAt }) => {
+  return (
+    <div>
+      <TroopLabel
+        ageMin={ageMin}
+        ageMax={ageMax}
+        startsAt={startsAt}
+        endsAt={endsAt}
+      />
+    </div>
   )
 }
 
@@ -44,14 +63,13 @@ const SignupPopup = ({ onHide, show }) => {
   )
 }
 
-const SignupButton = () => {
+const SignupButton = (props) => {
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
-
   return (
     <>
-      <Button size="lg" onClick={handleShow}>
+      <Button {...props} onClick={handleShow}>
         Přihlásit na tábor
       </Button>
       <SignupPopup show={show} onHide={handleClose} />
@@ -59,7 +77,53 @@ const SignupButton = () => {
   )
 }
 
-export const ExpeditionBatches = ({ batches }) => {
+const ExpeditionBatch = ({ batch, expedition }) => {
+  const { t } = useTranslation()
+  return (
+    <div className={classnames('mt-3', styles.batch)}>
+      <Row>
+        <Col xl={6}>
+          <Heading relativeLevel={3}>
+            <Link
+              route="expeditionBatchDetail"
+              params={{ expeditionBatchSlug: slug(batch.id, expedition.title) }}
+            >
+              <DateRange start={batch.startsAt} end={batch.endsAt} />
+            </Link>
+          </Heading>
+          <p>
+            <LocationFuzzyName location={batch.leisureCentre.location} />
+          </p>
+          <div>
+            {batch.troops.map((troop) => (
+              <Troop
+                key={troop.id}
+                ageMax={troop.ageGroup.ageMax}
+                ageMin={troop.ageGroup.ageMin}
+                endsAt={troop.endsAt}
+                startsAt={troop.startsAt}
+              />
+            ))}
+          </div>
+        </Col>
+        <Col className={styles.batchButtons} xl={6}>
+          {batch.troops.length === 0 ? null : <SignupButton />}
+          <Link
+            as={Button}
+            size="md"
+            variant="secondary"
+            route="expeditionBatchDetail"
+            params={{ expeditionBatchSlug: slug(batch.id, expedition.title) }}
+          >
+            {t('expedition-batch-more-info')}
+          </Link>
+        </Col>
+      </Row>
+    </div>
+  )
+}
+
+export const ExpeditionBatches = ({ expedition, batches }) => {
   const { t } = useTranslation()
   if (batches.length === 0) {
     return null
@@ -67,16 +131,9 @@ export const ExpeditionBatches = ({ batches }) => {
   return (
     <div className="mt-3">
       <Heading level={2}>{t('expedition-batches')}</Heading>
-      <Row>
-        <Col sm={6}>
-          {batches.map((batch) => (
-            <ExpeditionBatch batch={batch} key={batch.id} />
-          ))}
-        </Col>
-        <Col sm={6} className="mt-2 d-flex justify-content-end">
-          <SignupButton />
-        </Col>
-      </Row>
+      {batches.map((batch) => (
+        <ExpeditionBatch batch={batch} expedition={expedition} key={batch.id} />
+      ))}
     </div>
   )
 }

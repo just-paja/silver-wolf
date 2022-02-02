@@ -4,3 +4,32 @@
   font-size: $font-size-base;
   font-weight: normal;
 }
+
+.batch {
+  border-top: 1px solid $border-color;
+  margin-top: $spacer;
+  padding-top: $spacer;
+}
+
+.batchButtons {
+  align-items: center;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: start;
+  margin-top: calc($spacer / 2);
+
+  button {
+    margin-left: auto;
+  }
+}
+
+@media screen and (min-width: map-get($grid-breakpoints, 'xl')) {
+  .batchButtons {
+    display: block;
+    margin-top: 0;
+
+    button {
+      margin-bottom: calc($spacer / 4);
+    }
+  }
+}

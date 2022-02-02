@@ -54,7 +54,10 @@ const ExpeditionDetail = ({ expedition }) => {
             <Heading>{expedition.title}</Heading>
             <ArticleLead text={expedition.description} />
             <ArticleBody text={expedition.detailed_description} />
-            <ExpeditionBatches batches={expedition.batches} />
+            <ExpeditionBatches
+              batches={expedition.batches}
+              expedition={expedition}
+            />
             {expedition.theme ? (
               <ExpeditionTheme theme={expedition.theme} />
             ) : null}

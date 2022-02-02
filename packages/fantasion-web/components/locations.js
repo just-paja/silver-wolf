@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { AddressLine, joinAddressValue } from './addresses'
+import { IconLabel, LocationPinIcon } from './icons'
 
 export const LocationAddress = ({ location, title }) => (
   <address>
@@ -39,3 +40,10 @@ export const LocationMap = ({ location }) => {
   const src = `https://www.google.com/maps/embed/v1/place?key=${key}&q=${query}`
   return <iframe src={src} />
 }
+
+export const LocationFuzzyName = ({ location }) => (
+  <IconLabel
+    icon={LocationPinIcon}
+    text={location.fuzzyName || location.name}
+  />
+)

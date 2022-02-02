@@ -187,10 +187,26 @@ class BatchStaffSerializer(HyperlinkedModelSerializer):
         fields = ('id', 'profile', 'role')
 
 
-class ExpeditionBatchSerializer(HyperlinkedModelSerializer):
+class PlainExpeditionBatchSerializer(HyperlinkedModelSerializer):
     age_groups = BatchAgeGroupSerializer(many=True)
     leisure_centre = LeisureCentreBaseSerializer()
     staff = BatchStaffSerializer(many=True)
+
+    class Meta:
+        model = models.ExpeditionBatch
+        fields = (
+            'age_groups',
+            'ends_at',
+            'expedition',
+            'id',
+            'leisure_centre',
+            'starts_at',
+            'staff',
+        )
+
+
+class ExpeditionBatchSerializer(PlainExpeditionBatchSerializer):
+    expedition = PlainExpeditionSerializer()
 
     class Meta:
         model = models.ExpeditionBatch
@@ -224,7 +240,7 @@ class ExpeditionSerializer(HyperlinkedModelSerializer):
         )
 
     def get_batches(self, obj):
-        serializer = ExpeditionBatchSerializer(
+        serializer = PlainExpeditionBatchSerializer(
             obj.batches.filter(public=True),
             many=True,
             context=self.context,

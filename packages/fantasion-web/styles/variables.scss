@@ -9,6 +9,8 @@ $body-bg: $color-buddha-gold;
 @import 'bootstrap/scss/_functions.scss';
 @import 'bootstrap/scss/_variables.scss';
 
+$border-color: rgba($primary, 0.3);
 $input-bg: $white;
 $input-focus-bg: $white;
 $paragraph-max-width: $spacer * 40;
+$enable-button-pointers: false;

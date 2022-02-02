@@ -23,6 +23,10 @@ const cs = {
     source: '/tabory/:expeditionSlug',
     destination: '/expeditions/:expeditionSlug',
   },
+  expeditionBatchDetail: {
+    source: '/turnusy/:expeditionBatchSlug',
+    destination: '/expedition-batches/:expeditionBatchSlug',
+  },
   adventureDetail: {
     source: '/dobrodruzstvi/:expeditionThemeSlug',
     destination: '/adventures/:expeditionThemeSlug',

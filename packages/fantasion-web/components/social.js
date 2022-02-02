@@ -1,12 +1,17 @@
-import { FaFacebook, FaInstagram, FaTiktok, FaTwitter } from 'react-icons/fa'
-import { HiMailOpen } from 'react-icons/hi'
+import {
+  EmailContactIcon,
+  FacebookIcon,
+  InstagramIcon,
+  TiktokIcon,
+  TwitterIcon,
+} from './icons'
 
 const icons = {
-  email: HiMailOpen,
-  facebook: FaFacebook,
-  instagram: FaInstagram,
-  tiktok: FaTiktok,
-  twitter: FaTwitter,
+  email: EmailContactIcon,
+  facebook: FacebookIcon,
+  instagram: InstagramIcon,
+  tiktok: TiktokIcon,
+  twitter: TwitterIcon,
 }
 
 const linkToNewWindow = (e) => {
