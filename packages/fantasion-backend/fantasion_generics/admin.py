@@ -2,6 +2,8 @@ import czech_sort
 
 from django.conf import settings
 from django.contrib.admin import AdminSite
+from django.db import models
+from django.forms import Textarea
 from django.http import Http404
 from nested_admin import NestedModelAdmin, NestedStackedInline
 from modeltranslation.admin import (
@@ -75,3 +77,13 @@ class BaseAdminSite(AdminSite):
 class MediaAdmin(NestedStackedInline, TranslationStackedInline):
     extra = 0
     fields = ('local_photo', 'local_video', 'description')
+
+    formfield_overrides = {
+        models.TextField: {
+            'widget': Textarea(
+                attrs={
+                    'rows': 1,
+                }
+            )
+        },
+    }
