@@ -51,6 +51,10 @@ const cs = {
     source: '/zasady-ochrany-osobnich-udaju',
     destination: '/privacy-policy',
   },
+  register: {
+    source: '/registrace',
+    destination: '/register',
+  },
   team: {
     source: '/tym',
     destination: '/team',

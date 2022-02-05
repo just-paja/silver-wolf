@@ -1,9 +1,12 @@
+import classnames from 'classnames'
 import BsForm from 'react-bootstrap/Form'
 
 import { FormProvider, useForm } from 'react-hook-form'
 import { forwardRef, useCallback, useState } from 'react'
 import { InteractiveButton } from './buttons'
 import { useFormContext } from 'react-hook-form'
+
+import styles from './forms.module.scss'
 
 const ReflessControlledForm = ({ children, id, onSubmit, ...props }, ref) => (
   <BsForm id={id} onSubmit={onSubmit} ref={ref} {...props}>
@@ -109,6 +112,7 @@ const getChangeWrapper = (field, onChange) => (e) => {
 }
 
 export const Input = ({
+  className,
   error,
   label,
   name,
@@ -116,6 +120,7 @@ export const Input = ({
   options,
   helpText,
   required,
+  size = 'default',
   type,
   validate,
   ...props
@@ -145,6 +150,7 @@ export const Input = ({
         isInvalid={Boolean(fieldError)}
         {...props}
         {...field}
+        className={classnames(styles[size], className)}
         onChange={handleChange}
       >
         {htmlOptions}
