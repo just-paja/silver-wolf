@@ -6,6 +6,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown'
 import Nav from 'react-bootstrap/Nav'
 import Row from 'react-bootstrap/Row'
 
+import { breakpoints, useBreakpoint } from './breakpoints'
 import { HiMenu } from 'react-icons/hi'
 import { Link, Linker } from './links'
 import { PageTopGallery } from './media'
@@ -23,10 +24,20 @@ import rune3 from '../public/runes/03.webp'
 import rune4 from '../public/runes/04.webp'
 import rune5 from '../public/runes/05.webp'
 
+const expandOn = 'lg'
+
 export const SiteNavbar = ({ fixed, sticky }) => {
   const { t } = useTranslation()
   const [scrollTop] = useScroll()
   const [expanded, setExpanded] = useState(false)
+  const [, breakpointSize] = useBreakpoint()
+
+  // Collapse navbar when window changes over expansion
+  useEffect(() => {
+    if (expanded && breakpointSize >= breakpoints[expandOn]) {
+      setExpanded(false)
+    }
+  }, [breakpointSize, expanded])
 
   return (
     <Navbar
@@ -34,7 +45,7 @@ export const SiteNavbar = ({ fixed, sticky }) => {
         [styles.navbarInverse]: scrollTop > 30,
         [styles.navbarExpanded]: expanded,
       })}
-      expand="lg"
+      expand={expandOn}
       expanded={expanded}
       sticky={sticky ? 'top' : null}
       fixed={fixed ? 'top' : null}
