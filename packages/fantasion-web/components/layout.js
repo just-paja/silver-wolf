@@ -17,6 +17,12 @@ import { useTranslation } from 'next-i18next'
 
 import styles from './layout.module.scss'
 
+import rune1 from '../public/runes/01.webp'
+import rune2 from '../public/runes/02.webp'
+import rune3 from '../public/runes/03.webp'
+import rune4 from '../public/runes/04.webp'
+import rune5 from '../public/runes/05.webp'
+
 export const SiteNavbar = ({ fixed, sticky }) => {
   const { t } = useTranslation()
   const [scrollTop] = useScroll()
@@ -136,6 +142,7 @@ export const GenericPage = ({ children }) => (
     <PageContent>
       <SiteNavbar sticky />
       <main>{children}</main>
+      <Runes />
     </PageContent>
     <Footer />
   </>
@@ -169,5 +176,24 @@ export const GalleryPage = ({ children, media }) => {
         </Col>
       </Row>
     </Container>
+  )
+}
+
+export const Runes = () => {
+  const [scrollTop, scrollTopMax] = useScroll()
+  const distance = scrollTopMax === 0 ? 1 : scrollTop / scrollTopMax
+  console.log(distance)
+  const runes = [rune1, rune2, rune3, rune4, rune5]
+
+  return (
+    <div className={styles.runes}>
+      {runes.map((rune, index) => (
+        <div
+          key={index}
+          className={styles.rune}
+          style={{ backgroundImage: `url(${rune.src})`, opacity: distance }}
+        ></div>
+      ))}
+    </div>
   )
 }

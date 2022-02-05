@@ -111,14 +111,6 @@
   width: $spacer * 5;
 }
 
-@media (min-width: map-get($grid-breakpoints, 'md')) {
-  .footerLogo {
-    position: static;
-    top: 0;
-    width: $spacer * 7;
-  }
-}
-
 .quickLinks {
   list-style: none;
   margin: 0;
@@ -141,5 +133,43 @@
 .galleryPageRow {
   & > * {
     padding: 0;
+  }
+}
+
+.runes {
+  display: flex;
+  justify-content: center;
+  margin: $spacer 0;
+}
+
+.rune {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: block;
+  margin: calc($spacer / 4);
+  opacity: 0.1;
+  transition: 0.4s opacity;
+  height: calc($spacer * 2);
+  width: calc($spacer * 2);
+}
+
+@media (min-width: map-get($grid-breakpoints, 'sm')) {
+  .rune {
+    height: calc($spacer * 3);
+    width: calc($spacer * 3);
+  }
+}
+
+@media (min-width: map-get($grid-breakpoints, 'md')) {
+  .footerLogo {
+    position: static;
+    top: 0;
+    width: $spacer * 7;
+  }
+
+  .rune {
+    height: calc($spacer * 4);
+    width: calc($spacer * 4);
   }
 }
