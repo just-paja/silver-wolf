@@ -20,7 +20,7 @@ export const getServerSideProps = async (props) => {
   }
 }
 
-const Contacts = () => {
+const LoginPage = () => {
   const { t } = useTranslation()
   return (
     <GenericPage>
@@ -51,4 +51,4 @@ const Contacts = () => {
   )
 }
 
-export default asPage(Contacts)
+export default asPage(LoginPage)
