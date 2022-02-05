@@ -1,4 +1,4 @@
-from django_extensions.db.models import AutoSlugField, TimeStampedModel
+from django_extensions.db.models import TimeStampedModel
 from django.db.models import BooleanField, IntegerField, TextField
 from django.utils.translation import ugettext_lazy as _
 from django.forms import widgets
@@ -52,7 +52,6 @@ class PublicModel(NamedModel):
 
     title = TitleField()
     description = DescriptionField()
-    slug = AutoSlugField(populate_from=("title", ))
 
     def __str__(self):
         return self.title

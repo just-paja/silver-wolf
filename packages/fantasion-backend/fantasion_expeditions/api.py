@@ -29,37 +29,35 @@ class LeisureCentreBaseSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = models.LeisureCentre
         fields = (
-            'description',
-            'detailed_description',
-            'id',
-            'location',
-            'mailing_address',
-            'media',
-            'slug',
-            'title',
+            "description",
+            "detailed_description",
+            "id",
+            "location",
+            "mailing_address",
+            "media",
+            "title",
         )
 
 
 class LeisureCentreSerializer(LeisureCentreBaseSerializer):
-    expeditions = SerializerMethodField('get_expeditions')
+    expeditions = SerializerMethodField("get_expeditions")
 
     class Meta:
         model = models.LeisureCentre
         fields = (
-            'description',
-            'detailed_description',
-            'expeditions',
-            'id',
-            'location',
-            'mailing_address',
-            'media',
-            'slug',
-            'title',
+            "description",
+            "detailed_description",
+            "expeditions",
+            "id",
+            "location",
+            "mailing_address",
+            "media",
+            "title",
         )
 
     def get_expeditions(self, obj):
-        expedition_ids = obj.expedition_batches.filter(
-            public=True).values('id').distinct()
+        expedition_ids = (obj.expedition_batches.filter(
+            public=True).values("id").distinct())
         serializer = PlainExpeditionSerializer(
             models.Expedition.objects.filter(
                 pk__in=expedition_ids,
@@ -83,11 +81,11 @@ class ExpeditionThemeBaseSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = models.ExpeditionTheme
         fields = (
-            'id',
-            'title',
-            'description',
-            'detailed_description',
-            'media',
+            "id",
+            "title",
+            "description",
+            "detailed_description",
+            "media",
         )
 
 
@@ -95,11 +93,10 @@ class PlainExpeditionSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = models.Expedition
         fields = (
-            'id',
-            'description',
-            'detailed_description',
-            'slug',
-            'title',
+            "id",
+            "description",
+            "detailed_description",
+            "title",
         )
 
 
@@ -109,12 +106,12 @@ class ExpeditionThemeSerializer(ExpeditionThemeBaseSerializer):
     class Meta:
         model = models.ExpeditionTheme
         fields = (
-            'id',
-            'title',
-            'description',
-            'detailed_description',
-            'media',
-            'expeditions',
+            "id",
+            "title",
+            "description",
+            "detailed_description",
+            "media",
+            "expeditions",
         )
 
 
@@ -128,10 +125,10 @@ class AgeGroupSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = models.AgeGroup
         fields = (
-            'age_max',
-            'age_min',
-            'id',
-            'title',
+            "age_max",
+            "age_min",
+            "id",
+            "title",
         )
 
 
@@ -147,11 +144,11 @@ class ExpeditionProgramSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = models.ExpeditionProgram
         fields = (
-            'id',
-            'title',
-            'description',
-            'detailed_description',
-            'media',
+            "id",
+            "title",
+            "description",
+            "detailed_description",
+            "media",
         )
 
 
@@ -162,18 +159,18 @@ class TroopSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = models.Troop
         fields = (
-            'age_group',
-            'ends_at',
-            'id',
-            'program',
-            'starts_at',
+            "age_group",
+            "ends_at",
+            "id",
+            "program",
+            "starts_at",
         )
 
 
 class StaffRoleSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = models.StaffRole
-        fields = ('id', 'title', 'description')
+        fields = ("id", "title", "description")
 
 
 class StaffProfileSerializer(HyperlinkedModelSerializer):
@@ -181,7 +178,7 @@ class StaffProfileSerializer(HyperlinkedModelSerializer):
 
     class Meta:
         model = people.Profile
-        fields = ('id', 'title', 'job_title', 'avatar')
+        fields = ("id", "title", "job_title", "avatar")
 
 
 class BatchStaffSerializer(HyperlinkedModelSerializer):
@@ -190,7 +187,7 @@ class BatchStaffSerializer(HyperlinkedModelSerializer):
 
     class Meta:
         model = models.BatchStaff
-        fields = ('id', 'profile', 'role')
+        fields = ("id", "profile", "role")
 
 
 class PlainExpeditionBatchSerializer(HyperlinkedModelSerializer):
@@ -200,12 +197,12 @@ class PlainExpeditionBatchSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = models.ExpeditionBatch
         fields = (
-            'troops',
-            'ends_at',
-            'expedition',
-            'id',
-            'leisure_centre',
-            'starts_at',
+            "troops",
+            "ends_at",
+            "expedition",
+            "id",
+            "leisure_centre",
+            "starts_at",
         )
 
 
@@ -216,32 +213,31 @@ class ExpeditionBatchSerializer(PlainExpeditionBatchSerializer):
     class Meta:
         model = models.ExpeditionBatch
         fields = (
-            'troops',
-            'ends_at',
-            'expedition',
-            'id',
-            'leisure_centre',
-            'starts_at',
-            'staff',
+            "troops",
+            "ends_at",
+            "expedition",
+            "id",
+            "leisure_centre",
+            "starts_at",
+            "staff",
         )
 
 
 class ExpeditionSerializer(HyperlinkedModelSerializer):
-    batches = SerializerMethodField('get_batches')
+    batches = SerializerMethodField("get_batches")
     media = ExpeditionMediaSerializer(many=True)
     theme = ExpeditionThemeBaseSerializer()
 
     class Meta:
         model = models.Expedition
         fields = (
-            'id',
-            'batches',
-            'description',
-            'detailed_description',
-            'media',
-            'slug',
-            'theme',
-            'title',
+            "id",
+            "batches",
+            "description",
+            "detailed_description",
+            "media",
+            "theme",
+            "title",
         )
 
     def get_batches(self, obj):
