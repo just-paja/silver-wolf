@@ -14,16 +14,24 @@ export const Linker = ({ children, href, params, route }) => {
   )
 }
 
+const handleExternalClick = (e) => {
+  e.preventDefault()
+  window.open(e.target.href)
+}
+
 export const Link = ({
   as: As = 'a',
   children,
+  external,
   href,
   params,
   route,
   ...props
 }) => (
   <Linker href={href} params={params} route={route}>
-    <As {...props}>{children}</As>
+    <As {...props} onClick={external && handleExternalClick}>
+      {children}
+    </As>
   </Linker>
 )
 

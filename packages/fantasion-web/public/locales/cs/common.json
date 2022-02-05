@@ -14,6 +14,7 @@
   "contact-phone": "Telefon",
   "contacts-link": "Kontakty",
   "contacts-title": "Kontakty",
+  "consent-with": "Souhlasím se <0>{{subject}}</0>",
   "cookies": "Cookies",
   "expedition-base-location": "Středisko",
   "expedition-base-more-info": "Více o středisku",
@@ -54,6 +55,18 @@
   "our-team": "Náš tým",
   "our-team-general-description": "Tým našich instruktorů je plný různorodých talentů, tvoří ho budoucí učitelé i budoucí vědci a velmi zruční mistři.",
   "personal-information": "Osobní údaje",
+  "personal-information-processing": "zpracováním osobních údajů",
+  "register-with-email": "E-mailem",
+  "register-title": "Registrace",
+  "register-have-account": "Máte už účet?",
+  "register-login": "Přihlásit",
+  "register-submit": "Vytvořit účet",
   "terms-and-conditions": "Obchodní podmínky",
-  "usage-terms": "Podmínky užití"
+  "usage-terms": "Podmínky užití",
+  "user-name": "Celé jméno",
+  "user-name-help-text": "Vyplňte vaše celé jméno, ideálně tak, jak jej máte v občanském průkaze.",
+  "user-email": "E-mailová adresa",
+  "user-email-help-text": "Na e-mail vám budeme zasílat pouze informace o táboře a potvrzení přihlášky.",
+  "user-phone-number": "Telefonní číslo",
+  "user-phone-number-help-text": "Vaše telefonní číslo využijeme pouze pokud bude potřeba rychlé komunikace ohledně tábora."
 }

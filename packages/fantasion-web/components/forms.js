@@ -1,5 +1,6 @@
 import classnames from 'classnames'
 import BsForm from 'react-bootstrap/Form'
+import FormCheck from 'react-bootstrap/FormCheck'
 
 import { FormProvider, useForm } from 'react-hook-form'
 import { forwardRef, useCallback, useState } from 'react'
@@ -70,11 +71,18 @@ const resolveType = (type) => {
 }
 
 const resolveComponent = (type) => {
+  if (type === 'checkbox') {
+    return FormCheck
+  }
   if (type === 'select') {
     return BsForm.Select
   }
   return BsForm.Control
 }
+
+const passLabelMap = ['checkbox']
+
+const shouldPassLabel = (type) => passLabelMap.includes(type)
 
 const getOptions = (options, required) => {
   let opts = null
@@ -128,8 +136,8 @@ export const Input = ({
   const { formId, register, formState } = useFormContext()
   const controlId = `${formId}-${name}`
   const htmlOptions = getOptions(options, required)
-  const as = resolveType(type)
-  const Component = resolveComponent(as)
+  const Component = resolveComponent(type)
+  const passLabel = shouldPassLabel(type)
   const fieldError = error || formState.errors[name]
   const field = register(name, {
     required: required && 'Field is required',
@@ -141,13 +149,14 @@ export const Input = ({
     : field.onChange
   return (
     <BsForm.Group controlId={controlId} className="mt-2">
-      {label ? <BsForm.Label>{label}</BsForm.Label> : null}
+      {label && !passLabel ? <BsForm.Label>{label}</BsForm.Label> : null}
       <Component
         as={resolveType(type)}
         type={type}
         name={name}
         disabled={formState.isSubmitting}
         isInvalid={Boolean(fieldError)}
+        label={passLabel ? label : undefined}
         {...props}
         {...field}
         className={classnames(styles[size], className)}

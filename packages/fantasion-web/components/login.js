@@ -8,7 +8,7 @@ export const LoginForm = ({}) => {
   }
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form id="login" onSubmit={onSubmit}>
       <Input label={t('login-email')} name="email" type="email" required />
       <Input label={t('login-password')} name="password" required />
       <FormControls submitLabel={t('login-submit')} />

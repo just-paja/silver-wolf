@@ -1,7 +1,8 @@
 @import '../styles/variables.scss';
 
 input, select {
-  &.default {
+  &.default,
+  &.default + :global(.form-text) {
     max-width: calc($spacer * 18);
   }
 }
