@@ -105,3 +105,19 @@ fieldset.module {
 .inline-group fieldset:last-child {
   margin-bottom: 0;
 }
+
+/* Fix Markdown Editor fullscreen clash with sidebar */
+#toggle-nav-sidebar,
+#nav-sidebar {
+  z-index: 8;
+} 
+
+/* Fix Markdown Editor label position */
+.editor-toolbar {
+  clear: both;
+}
+
+/* Fix Markdown Editor responsive flow */
+.mde-container {
+  flex-direction: column;
+}
