@@ -189,7 +189,6 @@ export const GalleryPage = ({ children, media }) => {
 export const Runes = () => {
   const [scrollTop, scrollTopMax] = useScroll()
   const distance = scrollTopMax === 0 ? 1 : scrollTop / scrollTopMax
-  console.log(distance)
   const runes = [rune1, rune2, rune3, rune4, rune5]
 
   return (
