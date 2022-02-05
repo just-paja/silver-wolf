@@ -140,6 +140,13 @@
   }
 }
 
+.menuWidget {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .runes {
   display: flex;
   justify-content: center;

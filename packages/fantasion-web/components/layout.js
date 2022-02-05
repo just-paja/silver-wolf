@@ -51,7 +51,7 @@ export const SiteNavbar = ({ fixed, sticky }) => {
       fixed={fixed ? 'top' : null}
       onToggle={setExpanded}
     >
-      <Container>
+      <Container className="position-relative">
         <Linker route="home">
           <Navbar.Brand
             className={classnames(
@@ -63,19 +63,6 @@ export const SiteNavbar = ({ fixed, sticky }) => {
             <span>{t('fantasion-brand')}</span>
           </Navbar.Brand>
         </Linker>
-        <div className="d-flex flex-row">
-          <Nav>
-            <Linker route="login">
-              <Nav.Link>{t('login')}</Nav.Link>
-            </Linker>
-          </Nav>
-          <Navbar.Toggle
-            aria-controls="site-navbar"
-            className={styles.navbarToggle}
-          >
-            <HiMenu />
-          </Navbar.Toggle>
-        </div>
         <Navbar.Collapse id="site-navbar">
           <Nav>
             <Linker route="adventureList">
@@ -97,6 +84,19 @@ export const SiteNavbar = ({ fixed, sticky }) => {
             </Linker>
           </Nav>
         </Navbar.Collapse>
+        <div className={styles.menuWidget}>
+          <Nav>
+            <Linker route="login">
+              <Nav.Link>{t('login')}</Nav.Link>
+            </Linker>
+          </Nav>
+          <Navbar.Toggle
+            aria-controls="site-navbar"
+            className={styles.navbarToggle}
+          >
+            <HiMenu />
+          </Navbar.Toggle>
+        </div>
       </Container>
     </Navbar>
   )
