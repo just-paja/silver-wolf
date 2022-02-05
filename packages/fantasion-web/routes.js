@@ -39,6 +39,10 @@ const cs = {
     source: '/strediska/:leisureCentreSlug',
     destination: '/leisure-centres/:leisureCentreSlug',
   },
+  login: {
+    source: '/prihlaseni',
+    destination: '/login',
+  },
   profileDetail: {
     source: '/tym/:profileSlug',
     destination: '/team/:profileSlug',
