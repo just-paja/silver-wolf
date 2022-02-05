@@ -2,6 +2,7 @@ import BsForm from 'react-bootstrap/Form'
 
 import { FormProvider, useForm } from 'react-hook-form'
 import { forwardRef, useCallback, useState } from 'react'
+import { InteractiveButton } from './buttons'
 import { useFormContext } from 'react-hook-form'
 
 const ReflessControlledForm = ({ children, id, onSubmit, ...props }, ref) => (
@@ -155,5 +156,20 @@ export const Input = ({
       ) : null}
       {helpText ? <BsForm.Text as="div">{helpText}</BsForm.Text> : null}
     </BsForm.Group>
+  )
+}
+
+export const Submit = ({ children, ...props }) => (
+  <InteractiveButton {...props} type="submit">
+    {children}
+  </InteractiveButton>
+)
+
+export const FormControls = ({ submitLabel }) => {
+  const { formState } = useFormContext()
+  return (
+    <div className="mt-3">
+      <Submit inProgress={formState.isSubmitting}>{submitLabel}</Submit>
+    </div>
   )
 }
