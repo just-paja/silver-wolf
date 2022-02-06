@@ -1,5 +1,5 @@
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User
+from django.conf import settings
 from django_extensions.db.models import TimeStampedModel
 from django.db.models import (
     CharField,
@@ -49,7 +49,7 @@ class Profile(PublicModel, WarmPhotoModel):
     importance = ImportanceField()
     public = VisibilityField()
     owner = ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         blank=True,
         default=None,
         help_text=_("Owner of the profile will be able to edit the profile"),
@@ -89,7 +89,7 @@ class Family(TimeStampedModel):
 
     title = TitleField()
     owner = ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=RESTRICT,
         related_name="families",
         help_text=_("Family owner acts as a superadmin."),
@@ -135,7 +135,7 @@ class FamilyMember(TimeStampedModel):
         verbose_name=_("Family"),
     )
     user = ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=CASCADE,
         related_name="family_members",
         verbose_name=_("User"),

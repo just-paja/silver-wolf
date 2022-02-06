@@ -9,10 +9,12 @@ from fantasion_locations import admin as locations
 from fantasion_people import admin as people
 from fantasion_signups import admin as signups
 
+from . import models as base
+
 
 class ContentAdminSite(BaseAdminSite):
-    name = 'base'
-    site_title = _('Base')
+    name = "base"
+    site_title = _("Base")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -22,7 +24,7 @@ class ContentAdminSite(BaseAdminSite):
         self.hookup_module(locations)
         self.hookup_module(people)
         self.hookup_module(signups)
-        self.register(auth_admin.User, auth_admin.UserAdmin)
+        self.register(base.User, auth_admin.UserAdmin)
         self.register(auth_admin.Group, auth_admin.GroupAdmin)
 
 

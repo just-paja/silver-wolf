@@ -1,5 +1,6 @@
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.models import TimeStampedModel
+from django.conf import settings
 from django.core.validators import (
     MaxValueValidator,
     MinLengthValidator,
@@ -22,8 +23,8 @@ from fantasion_generics.titles import TitleField
 
 class EnabledField(BooleanField):
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault('default', True)
-        kwargs.setdefault('verbose_name', _('Enabled'))
+        kwargs.setdefault("default", True)
+        kwargs.setdefault("verbose_name", _("Enabled"))
         super().__init__(*args, **kwargs)
 
 
@@ -33,22 +34,22 @@ class Currency(TimeStampedModel):
     be converted between each other.
     """
     class Meta:
-        verbose_name = _('Currency')
-        verbose_name_plural = _('Currencies')
+        verbose_name = _("Currency")
+        verbose_name_plural = _("Currencies")
 
     # Three+ letter code based on ISO-4217
     code = CharField(
         max_length=15,
-        verbose_name=_('Code'),
-        help_text=_('Currency code respecting ISO 4217.'),
+        verbose_name=_("Code"),
+        help_text=_("Currency code respecting ISO 4217."),
     )
     # Local name
     title = TitleField()
     exchange_rate = DecimalField(
         decimal_places=6,
-        help_text=_('Exchange rate to base currency (CZK)'),
+        help_text=_("Exchange rate to base currency (CZK)"),
         max_digits=9,
-        verbose_name=_('Exchange rate'),
+        verbose_name=_("Exchange rate"),
     )
     enabled = EnabledField()
 
@@ -63,8 +64,8 @@ class PriceLevel(PublicModel):
     for 200.
     """
     class Meta:
-        verbose_name = _('Price Level')
-        verbose_name_plural = _('Price Levels')
+        verbose_name = _("Price Level")
+        verbose_name_plural = _("Price Levels")
 
     enabled = EnabledField()
 
@@ -74,13 +75,13 @@ class EshopProduct(TimeStampedModel):
     EshopProduct is a generic class to be used for everything you want to sell.
     """
     class Meta:
-        verbose_name = _('E-shop Product')
-        verbose_name_plural = _('E-shop Products')
+        verbose_name = _("E-shop Product")
+        verbose_name_plural = _("E-shop Products")
 
     description = CharField(
         max_length=255,
-        help_text=_(('Description is automatically generated'
-                     'summary of the product')),
+        help_text=_(("Description is automatically generated"
+                     "summary of the product")),
     )
 
     def save(self, *args, **kwargs):
@@ -103,46 +104,46 @@ class ProductPrice(TimeStampedModel):
     ProductPrice represents product price in a price level and a currency.
     """
     class Meta:
-        unique_together = ('product', 'price_level', 'currency')
-        verbose_name = _('E-shop Product Price')
-        verbose_name_plural = _('E-shop Product Prices')
+        unique_together = ("product", "price_level", "currency")
+        verbose_name = _("E-shop Product Price")
+        verbose_name_plural = _("E-shop Product Prices")
 
     product = ForeignKey(
         EshopProduct,
         on_delete=CASCADE,
-        related_name='prices',
-        verbose_name=_('Product'),
+        related_name="prices",
+        verbose_name=_("Product"),
     )
     price_level = ForeignKey(
         PriceLevel,
         on_delete=RESTRICT,
-        related_name='prices',
-        verbose_name=_('Price level'),
+        related_name="prices",
+        verbose_name=_("Price level"),
     )
     currency = ForeignKey(
         Currency,
         on_delete=RESTRICT,
-        related_name='prices',
-        verbose_name=_('Currency'),
+        related_name="prices",
+        verbose_name=_("Currency"),
     )
     amount = DecimalField(
         decimal_places=2,
         max_digits=15,
-        verbose_name=_('Amount'),
+        verbose_name=_("Amount"),
     )
     available_since = DateTimeField(
         null=True,
         blank=True,
-        verbose_name=_('Available since'),
+        verbose_name=_("Available since"),
     )
     available_until = DateTimeField(
         null=True,
         blank=True,
-        verbose_name=_('Available until'),
+        verbose_name=_("Available until"),
     )
 
     def __str__(self):
-        return '{product} {price_level} ({currency})'.format(
+        return "{product} {price_level} ({currency})".format(
             product=self.product,
             price_level=self.price_level,
             currency=self.currency,
@@ -151,45 +152,47 @@ class ProductPrice(TimeStampedModel):
 
 class Order(TimeStampedModel):
     class Meta:
-        verbose_name = _('E-shop Order')
-        verbose_name_plural = _('E-shop Orders')
+        verbose_name = _("E-shop Order")
+        verbose_name_plural = _("E-shop Orders")
 
     owner = ForeignKey(
-        'auth.User',
+        settings.AUTH_USER_MODEL,
         blank=True,
         null=True,
         on_delete=RESTRICT,
-        related_name='orders',
-        verbose_name=_('Order owner'),
+        related_name="orders",
+        verbose_name=_("Order owner"),
     )
 
 
 class OrderItem(TimeStampedModel):
     class Meta:
-        verbose_name = _('E-shop Order Item')
-        verbose_name_plural = _('E-shop Order Items')
+        verbose_name = _("E-shop Order Item")
+        verbose_name_plural = _("E-shop Order Items")
 
     order = ForeignKey(
         Order,
         on_delete=CASCADE,
-        related_name='order_items',
-        verbose_name=_('E-shop Order'),
+        related_name="order_items",
+        verbose_name=_("E-shop Order"),
     )
     product_price = ForeignKey(
-        'fantasion_eshop.ProductPrice',
+        "fantasion_eshop.ProductPrice",
         on_delete=RESTRICT,
-        related_name='order_items',
-        verbose_name=_('Product Price'),
+        related_name="order_items",
+        verbose_name=_("Product Price"),
     )
     price = DecimalField(
         decimal_places=2,
         max_digits=9,
-        verbose_name=_('Price'),
+        verbose_name=_("Price"),
     )
-    currency = ForeignKey(Currency,
-                          on_delete=RESTRICT,
-                          related_name='order_items',
-                          verbose_name=_('Currency'))
+    currency = ForeignKey(
+        Currency,
+        on_delete=RESTRICT,
+        related_name="order_items",
+        verbose_name=_("Currency"),
+    )
 
     def save(self, *args, **kwargs):
         """
@@ -211,54 +214,54 @@ class OrderItem(TimeStampedModel):
 
 class PromotionCode(TimeStampedModel):
     class Meta:
-        verbose_name = _('Promotion Code')
-        verbose_name_plural = _('Promotion Codes')
+        verbose_name = _("Promotion Code")
+        verbose_name_plural = _("Promotion Codes")
 
     code = CharField(
         max_length=63,
         unique=True,
         validators=[MinLengthValidator(8)],
-        verbose_name=_('Promotion Code'),
+        verbose_name=_("Promotion Code"),
         help_text=_(
-            'Type an unique code with combination of letters, numbers and '
-            'symbols that are not too difficult to type'),
+            "Type an unique code with combination of letters, numbers and "
+            "symbols that are not too difficult to type"),
     )
     discount = DecimalField(
         decimal_places=2,
         max_digits=5,
         validators=[MaxValueValidator(100),
                     MinValueValidator(0.01)],
-        verbose_name=_('Discount'),
-        help_text=_('This percentage will be cut of the total order price.'),
+        verbose_name=_("Discount"),
+        help_text=_("This percentage will be cut of the total order price."),
     )
     max_discount = PositiveIntegerField(
         blank=True,
         null=True,
-        verbose_name=_('Maximum discount'),
+        verbose_name=_("Maximum discount"),
         help_text=_(
-            'The system will cap the absolute discount. Use base currency '
-            '(CZK)'),
+            "The system will cap the absolute discount. Use base currency "
+            "(CZK)"),
     )
     max_usages = PositiveIntegerField(
         default=10,
         validators=[MinValueValidator(1)],
-        verbose_name=_('Maximum Usages'),
+        verbose_name=_("Maximum Usages"),
         help_text=_(
-            'This Promotion Code can be used only so many times, then it '
-            'will be deactivated'),
+            "This Promotion Code can be used only so many times, then it "
+            "will be deactivated"),
     )
     enabled = EnabledField()
     valid_from = DateTimeField(
         blank=True,
         null=True,
-        verbose_name=_('Valid from'),
+        verbose_name=_("Valid from"),
         help_text=_(
-            'This Promotion Code will be invalid until this date and time'),
+            "This Promotion Code will be invalid until this date and time"),
     )
     valid_until = DateTimeField(
         blank=True,
         null=True,
-        verbose_name=_('Valid until'),
+        verbose_name=_("Valid until"),
         help_text=_(
-            'This Promotion Code will be invalid after this date and time'),
+            "This Promotion Code will be invalid after this date and time"),
     )

@@ -25,15 +25,18 @@ ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost").split(",") + [
     gethostbyname(gethostname()),
 ]
 
+AUTH_USER_MODEL = "fantasion.User"
 APPEND_SLASH = False
 DEBUG = PROJECT_ENVIRONMENT != "production"
 SECRET_KEY = os.environ.get(
     "SECRET_KEY",
-    "django-insecure-dkr_br-ulm(j+9f%g39_!4ux%y@3zpi^_km0c%o0+(mogvceq=")
+    "django-insecure-dkr_br-ulm(j+9f%g39_!4ux%y@3zpi^_km0c%o0+(mogvceq=",
+)
 
 INSTALLED_APPS = [
     "modeltranslation",
     "simplemde",
+    "fantasion",
     "fantasion_generics",
     "fantasion_locations",
     "fantasion_eshop",
@@ -41,6 +44,7 @@ INSTALLED_APPS = [
     "fantasion_expeditions",
     "fantasion_signups",
     "fantasion_content",
+    "phonenumber_field",
     "corsheaders",
     "django.contrib.admin",
     "nested_admin",
@@ -104,20 +108,28 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": ("django.contrib.auth.password_validation."
-                 "UserAttributeSimilarityValidator"),
+        "NAME": (
+            "django.contrib.auth.password_validation."
+            "UserAttributeSimilarityValidator"
+        ),
     },
     {
-        "NAME": ("django.contrib.auth.password_validation."
-                 "MinimumLengthValidator"),
+        "NAME": (
+            "django.contrib.auth.password_validation."
+            "MinimumLengthValidator"
+        ),
     },
     {
-        "NAME": ("django.contrib.auth.password_validation."
-                 "CommonPasswordValidator"),
+        "NAME": (
+            "django.contrib.auth.password_validation."
+            "CommonPasswordValidator"
+        ),
     },
     {
-        "NAME": ("django.contrib.auth.password_validation."
-                 "NumericPasswordValidator"),
+        "NAME": (
+            "django.contrib.auth.password_validation."
+            "NumericPasswordValidator"
+        ),
     },
 ]
 
@@ -156,12 +168,13 @@ DJANGO_ADMIN_SSO = False
 APP_WEBSITE_URL = os.environ.get("APP_WEBSITE_URL", "http://localhost:3000")
 
 REST_FRAMEWORK = {
-    "DEFAULT_PAGINATION_CLASS":
-    ("rest_framework.pagination.PageNumberPagination"),
-    "DEFAULT_PERMISSION_CLASSES":
-    ["rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"],
-    "PAGE_SIZE":
-    20,
+    "DEFAULT_PAGINATION_CLASS": (
+        "rest_framework.pagination.PageNumberPagination"
+    ),
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+    ],
+    "PAGE_SIZE": 20,
     "DEFAULT_RENDERER_CLASSES": (
         "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
         "djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer",
@@ -216,7 +229,8 @@ if BUCKET_PUBLIC:
     GS_BUCKET_NAME = BUCKET_PUBLIC
     GS_PROJECT_ID = os.environ.get("GCP_PROJECT")
     GS_CREDENTIALS = service_account.Credentials.from_service_account_info(
-        json.loads(os.environ.get("GS_CREDENTIALS")))
+        json.loads(os.environ.get("GS_CREDENTIALS"))
+    )
 
 LOGGING = {
     "version": 1,
