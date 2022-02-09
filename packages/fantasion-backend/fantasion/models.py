@@ -8,8 +8,9 @@ class User(AbstractUser):
     class Meta:
         db_table = "auth_user"
 
+    username = None
     email = EmailField(
-        _("email address"),
+        verbose_name=_("email address"),
         unique=True,
     )
     email_verified = BooleanField(
