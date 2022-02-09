@@ -1,0 +1,16 @@
+{% extends 'mail/base.html' %}
+{% load i18n %}
+
+{% block intro %}
+  {% trans 'Thank you for registering!' %}
+{% endblock %}
+
+{% block content %}
+  <p>
+    {% trans 'We only need you to confirm your e-mail by following the link below' %}
+  </p>
+
+  <p>
+    <a class="long" href="{{ landing_url }}">{{ landing_url }}</a>
+  </p>
+{% endblock %}

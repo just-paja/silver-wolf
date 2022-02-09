@@ -6,6 +6,8 @@ from fantasion_locations import api as locations
 from fantasion_expeditions import api as expeditions
 from fantasion_people import api as people
 
+from .users import RegisterView
+
 
 class NoSlashRouter(routers.DefaultRouter):
     def __init__(self):
@@ -67,5 +69,6 @@ router.register(
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('users/register', RegisterView.as_view()),
     path('auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

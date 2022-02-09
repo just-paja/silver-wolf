@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "versatileimagefield",
     "rest_framework",
+    "rest_framework.authtoken",
 ]
 
 MIDDLEWARE = [
@@ -108,28 +109,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": (
-            "django.contrib.auth.password_validation."
-            "UserAttributeSimilarityValidator"
-        ),
+        "NAME": ("django.contrib.auth.password_validation."
+                 "UserAttributeSimilarityValidator"),
     },
     {
-        "NAME": (
-            "django.contrib.auth.password_validation."
-            "MinimumLengthValidator"
-        ),
+        "NAME": ("django.contrib.auth.password_validation."
+                 "MinimumLengthValidator"),
     },
     {
-        "NAME": (
-            "django.contrib.auth.password_validation."
-            "CommonPasswordValidator"
-        ),
+        "NAME": ("django.contrib.auth.password_validation."
+                 "CommonPasswordValidator"),
     },
     {
-        "NAME": (
-            "django.contrib.auth.password_validation."
-            "NumericPasswordValidator"
-        ),
+        "NAME": ("django.contrib.auth.password_validation."
+                 "NumericPasswordValidator"),
     },
 ]
 
@@ -168,13 +161,16 @@ DJANGO_ADMIN_SSO = False
 APP_WEBSITE_URL = os.environ.get("APP_WEBSITE_URL", "http://localhost:3000")
 
 REST_FRAMEWORK = {
-    "DEFAULT_PAGINATION_CLASS": (
-        "rest_framework.pagination.PageNumberPagination"
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'fantasion_api.auth.CsrfExemptAuth',
+        'rest_framework.authentication.TokenAuthentication',
     ),
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
-    ],
-    "PAGE_SIZE": 20,
+    "DEFAULT_PAGINATION_CLASS":
+    ("rest_framework.pagination.PageNumberPagination"),
+    "DEFAULT_PERMISSION_CLASSES":
+    ["rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"],
+    "PAGE_SIZE":
+    20,
     "DEFAULT_RENDERER_CLASSES": (
         "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
         "djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer",
@@ -229,8 +225,7 @@ if BUCKET_PUBLIC:
     GS_BUCKET_NAME = BUCKET_PUBLIC
     GS_PROJECT_ID = os.environ.get("GCP_PROJECT")
     GS_CREDENTIALS = service_account.Credentials.from_service_account_info(
-        json.loads(os.environ.get("GS_CREDENTIALS"))
-    )
+        json.loads(os.environ.get("GS_CREDENTIALS")))
 
 LOGGING = {
     "version": 1,

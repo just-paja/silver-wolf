@@ -1,0 +1,201 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{subject}}</title>
+    <style>
+      html, body {
+        background-color: #472a7e;
+        color: #d7a600;
+        font-family: lato, _sans;
+        font-size: 16px;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+      }
+      table {
+        border-collapse: collapse;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p {
+        display: block;
+        margin: 16px 0 0;
+        padding: 0;
+      }
+      img,
+      a img {
+        border: 0;
+        height: auto;
+        outline: none;
+        text-decoration: none;
+      }
+      a,
+      a:link {
+        color: #d7a600;
+      }
+      #outlook a {
+        padding: 0;
+      }
+      img {
+        -ms-interpolation-mode: bicubic;
+      }
+      p,
+      a,
+      li,
+      td,
+      blockquote {
+        mso-line-height-rule: exactly;
+      }
+      p,
+      a,
+      li,
+      td,
+      body,
+      table,
+      blockquote {
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+      }
+      a[x-apple-data-detectors] {
+        color: inherit !important;
+        text-decoration: none !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
+        font-weight: inherit !important;
+        line-height: inherit !important;
+      }
+      .container {
+        margin: 0 auto;
+        max-width: 600px !important;
+      }
+      h1 {
+        color: #222222;
+        font-family: Helvetica;
+        font-size: 40px;
+        font-style: normal;
+        font-weight: bold;
+        line-height: 150%;
+        letter-spacing: normal;
+        text-align: center;
+      }
+      h2 {
+        color: #222222;
+        font-family: Helvetica;
+        font-size: 34px;
+        font-style: normal;
+        font-weight: bold;
+        line-height: 150%;
+        letter-spacing: normal;
+        text-align: left;
+      }
+      h3 {
+        color: #444444;
+        font-family: Helvetica;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: bold;
+        line-height: 150%;
+        letter-spacing: normal;
+        text-align: left;
+      }
+      .main {
+        background: #fffaeb;
+        color: #333;
+        padding-bottom: 32px;
+      }
+      .main a:link,
+      .main a:visited {
+        color: #472a7e;
+      }
+      a.long {
+        word-break: break-all;
+      }
+      .center {
+        text-align: center;
+      }
+      .header {
+        color: #472a7e;
+        font-size: 24px;
+        padding: 8px 0;
+      }
+      .footer {
+        padding: 16px 0;
+      }
+      @media only screen and (min-width: 768px) {
+        .container {
+          width: 600px !important;
+        }
+      }
+      @media only screen and (max-width: 480px) {
+        body,
+        table,
+        td,
+        p,
+        a,
+        li,
+        blockquote {
+          -webkit-text-size-adjust: none !important;
+        }
+      }
+      @media only screen and (max-width: 480px) {
+        body {
+          width: 100% !important;
+          min-width: 100% !important;
+        }
+      }
+      @media only screen and (max-width: 480px) {
+        h1 {
+          font-size: 30px !important;
+          line-height: 125% !important;
+        }
+        h2 {
+          font-size: 26px !important;
+          line-height: 125% !important;
+        }
+        h3 {
+          font-size: 20px !important;
+          line-height: 150% !important;
+        }
+      }
+    </style>
+    <!--[if !mso]><!-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i"
+      rel="stylesheet"
+    />
+    <!--<![endif]-->
+  </head>
+  <body>
+    <div class="main">
+      <div class="header">
+        <div class="container">
+          {% block intro %}{% endblock %}
+        </div>
+      </div>
+
+      <div class="container">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="container">
+        <p class="center">
+          <a href="mailto:info@fantasion.cz">info@fantasion.cz</a> | <a href="{{ website_url }}">{{ website_url }}</a>
+        </p>
+        <p class="center">
+          Fantasion z. s.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
