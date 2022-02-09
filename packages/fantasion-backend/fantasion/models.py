@@ -1,12 +1,13 @@
 from django.contrib.auth.models import AbstractUser
+from django.db.models import BooleanField, EmailField
+from django.utils.translation import ugettext_lazy as _
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class User(AbstractUser):
     class Meta:
         db_table = "auth_user"
 
-
-"""
     email = EmailField(
         _("email address"),
         unique=True,
@@ -23,5 +24,3 @@ class User(AbstractUser):
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
-
-"""
