@@ -21,11 +21,11 @@
     "prettier": "^2.5.1"
   },
   "scripts": {
-    "backend": "lerna run dev --stream --scope fantasion-backend",
+    "backend": "lerna run dev --stream --no-prefix --scope fantasion-backend",
     "build": "lerna run build --stream --parallel",
     "poetry-install": "lerna run python-install --stream --parallel",
     "test": "jest",
-    "web": "lerna run dev --stream --scope fantasion-web"
+    "web": "lerna run dev --stream --no-prefix --scope fantasion-web"
   },
   "engines": {
     "node": ">=16"
