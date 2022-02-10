@@ -70,9 +70,13 @@ const resolveType = (type) => {
   return 'input'
 }
 
+const CheckboxWrapper = (props, ref) => (
+  <FormCheck {...props} ref={ref} value={true} />
+)
+
 const resolveComponent = (type) => {
   if (type === 'checkbox') {
-    return FormCheck
+    return forwardRef(CheckboxWrapper)
   }
   if (type === 'select') {
     return BsForm.Select
