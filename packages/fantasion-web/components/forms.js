@@ -5,21 +5,27 @@ import FormCheck from 'react-bootstrap/FormCheck'
 import { FormProvider, useForm } from 'react-hook-form'
 import { forwardRef, useCallback, useState } from 'react'
 import { InteractiveButton } from './buttons'
+import { object, setLocale } from 'yup'
 import { useFormContext } from 'react-hook-form'
+import { useTranslation } from 'next-i18next'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 import styles from './forms.module.scss'
 
 const ReflessControlledForm = ({ children, id, onSubmit, ...props }, ref) => (
-  <BsForm id={id} onSubmit={onSubmit} ref={ref} {...props}>
+  <BsForm noValidate id={id} onSubmit={onSubmit} ref={ref} {...props}>
     {children}
   </BsForm>
 )
 
 export const ControlledForm = forwardRef(ReflessControlledForm)
 
-const ReflessForm = ({ defaultValues, children, id, onSubmit }, ref) => {
+const ReflessForm = (
+  { defaultValues, children, id, onSubmit, resolver },
+  ref
+) => {
   const [processingError, setProcessingError] = useState(null)
-  const methods = useForm({ defaultValues })
+  const methods = useForm({ defaultValues, resolver })
   const { handleSubmit, setError } = methods
   const protectedSubmit = useCallback(
     async (values) => {
@@ -31,12 +37,9 @@ const ReflessForm = ({ defaultValues, children, id, onSubmit }, ref) => {
         // @FIXME This error should be reported to Sentry
         console.error(e)
         if (e.body) {
-          if (e.body.field) {
-            setError(e.body.field, e.body)
-          }
-          if (e.body.fieldErrors) {
-            for (const fieldError of e.body.fieldErrors) {
-              setError(fieldError.field, fieldError)
+          for (const [field, fieldErrors] of Object.entries(e.body)) {
+            for (const fieldError of fieldErrors) {
+              setError(field, { message: fieldError })
             }
           }
         }
@@ -61,6 +64,9 @@ const ReflessForm = ({ defaultValues, children, id, onSubmit }, ref) => {
 export const Form = forwardRef(ReflessForm)
 
 const resolveType = (type) => {
+  if (type === 'checkbox') {
+    return
+  }
   if (type === 'select') {
     return 'select'
   }
@@ -70,13 +76,9 @@ const resolveType = (type) => {
   return 'input'
 }
 
-const CheckboxWrapper = (props, ref) => (
-  <FormCheck {...props} ref={ref} value={true} />
-)
-
 const resolveComponent = (type) => {
   if (type === 'checkbox') {
-    return forwardRef(CheckboxWrapper)
+    return FormCheck.Input
   }
   if (type === 'select') {
     return BsForm.Select
@@ -84,9 +86,9 @@ const resolveComponent = (type) => {
   return BsForm.Control
 }
 
-const passLabelMap = ['checkbox']
+const rightLabelMap = ['checkbox']
 
-const shouldPassLabel = (type) => passLabelMap.includes(type)
+const isLabelRight = (type) => rightLabelMap.includes(type)
 
 const getOptions = (options, required) => {
   let opts = null
@@ -109,9 +111,6 @@ const getOptions = (options, required) => {
 }
 
 const describeError = (error) => {
-  if (error.code === 'field-is-required') {
-    return 'Field is required'
-  }
   if (error.message) {
     return error.message
   }
@@ -141,10 +140,10 @@ export const Input = ({
   const controlId = `${formId}-${name}`
   const htmlOptions = getOptions(options, required)
   const Component = resolveComponent(type)
-  const passLabel = shouldPassLabel(type)
+  const rightLabel = isLabelRight(type)
   const fieldError = error || formState.errors[name]
   const field = register(name, {
-    required: required && 'Field is required',
+    required: required,
     setValueAs: (v) => (['', undefined].includes(v) ? null : v),
     validate,
   })
@@ -152,15 +151,19 @@ export const Input = ({
     ? getChangeWrapper(field, onChange)
     : field.onChange
   return (
-    <BsForm.Group controlId={controlId} className="mt-2">
-      {label && !passLabel ? <BsForm.Label>{label}</BsForm.Label> : null}
+    <BsForm.Group
+      controlId={controlId}
+      className={classnames('mt-2', {
+        'form-check': rightLabel,
+      })}
+    >
+      {label && !rightLabel ? <BsForm.Label>{label}</BsForm.Label> : null}
       <Component
         as={resolveType(type)}
         type={type}
         name={name}
         disabled={formState.isSubmitting}
         isInvalid={Boolean(fieldError)}
-        label={passLabel ? label : undefined}
         {...props}
         {...field}
         className={classnames(styles[size], className)}
@@ -168,6 +171,9 @@ export const Input = ({
       >
         {htmlOptions}
       </Component>
+      {label && rightLabel ? (
+        <BsForm.Label className="form-check-label">{label}</BsForm.Label>
+      ) : null}
       {fieldError ? (
         <BsForm.Control.Feedback type="invalid">
           {describeError(fieldError)}
@@ -191,4 +197,29 @@ export const FormControls = ({ submitLabel }) => {
       <Submit inProgress={formState.isSubmitting}>{submitLabel}</Submit>
     </div>
   )
+}
+
+export const useValidator = (shape) => {
+  const { t } = useTranslation()
+  setLocale({
+    boolean: {
+      required: t('form-input-required'),
+    },
+    mixed: {
+      required: t('form-input-required'),
+    },
+    number: {
+      required: t('form-input-required'),
+    },
+    object: {
+      required: t('form-input-required'),
+    },
+    string: {
+      email: t('form-input-email'),
+      min: t('form-input-min-length'),
+      max: t('form-input-max-length'),
+      required: t('form-input-required'),
+    },
+  })
+  return yupResolver(object().shape(shape))
 }

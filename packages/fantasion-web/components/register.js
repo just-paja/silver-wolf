@@ -1,35 +1,46 @@
-import { Form, FormControls, Input, Submit } from './forms'
-import { Trans, useTranslation } from 'next-i18next'
-import { Link } from './links'
+import Alert from 'react-bootstrap/Alert'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
 
-export const RegisterForm = ({}) => {
+import { bool, string } from 'yup'
+import { Form, FormControls, Input, useValidator } from './forms'
+import { Link } from './links'
+import { Trans, useTranslation } from 'next-i18next'
+
+export const RegisterForm = ({ onSubmit }) => {
   const { t } = useTranslation()
-  const onSubmit = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 3000))
-  }
+  const validator = useValidator({
+    firstName: string()
+      .nullable()
+      .min(1)
+      .max(127)
+      .required(t('form-input-required')),
+    lastName: string()
+      .nullable()
+      .min(1)
+      .max(127)
+      .required(t('form-input-required')),
+    email: string().nullable().email().required(),
+    phone: string().nullable().required(),
+    privacy: bool().oneOf([true], t('form-input-required')),
+  })
 
   return (
-    <Form id="register" onSubmit={onSubmit}>
-      <Input
-        helpText={t('user-name-help-text')}
-        label={t('user-name')}
-        name="name"
-        type="text"
-        required
-      />
+    <Form id="register" onSubmit={onSubmit} resolver={validator}>
+      <Input label={t('user-first-name')} name="firstName" type="text" />
+      <Input label={t('user-last-name')} name="lastName" type="text" required />
       <Input
         helpText={t('user-email-help-text')}
         label={t('user-email')}
         name="email"
         type="email"
-        required
       />
       <Input
         helpText={t('user-phone-number-help-text')}
         label={t('user-phone-number')}
         name="phone"
         type="tel"
-        required
       />
       <Input
         label={
@@ -45,9 +56,22 @@ export const RegisterForm = ({}) => {
         }
         name="privacy"
         type="checkbox"
-        required
       />
       <FormControls submitLabel={t('register-submit')} />
     </Form>
+  )
+}
+
+export const RegisterFormSuccess = () => {
+  const { t } = useTranslation()
+  return (
+    <Container>
+      <Row>
+        <Col lg={{ span: 6, offset: 3 }}>
+          <Alert variant="success">{t('register-success')}</Alert>
+          <p>{t('register-success-info')}</p>
+        </Col>
+      </Row>
+    </Container>
   )
 }

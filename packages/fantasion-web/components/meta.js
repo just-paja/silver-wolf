@@ -1,3 +1,4 @@
+import Error from 'next/error'
 import Head from 'next/head'
 import React from 'react'
 
@@ -36,8 +37,12 @@ export const MetaUrl = ({ url }) => (
 )
 
 export const asPage = (PageComp) =>
-  function MetaPageWrapper(props) {
+  function MetaPageWrapper({ statusCode, ...props }) {
+    console.log(statusCode)
     const router = useRouter()
+    if (statusCode >= 400) {
+      return <Error statusCode={statusCode} />
+    }
     return (
       <>
         <MetaUrl url={`${props.baseUrl}${router.pathname}`} />
