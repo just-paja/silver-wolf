@@ -63,7 +63,13 @@ const cs = {
     source: '/obchodni-podminky',
     destination: '/terms-and-conditons',
   },
+  verifyEmail: {
+    source: '/overit-email',
+    destination: '/ec',
+  },
 }
+
+const defaultLang = 'cs'
 
 const routes = {
   cs,
@@ -90,6 +96,6 @@ const translateRoute = (path, params) =>
   })
 
 const reverse = (lang, name, params) =>
-  `/${lang}${translateRoute(routes[lang][name].source, params)}`
+  `/${lang}${translateRoute(routes[lang || defaultLang][name].source, params)}`
 
-module.exports = { getRewrites, reverse }
+module.exports = { defaultLang, getRewrites, reverse }

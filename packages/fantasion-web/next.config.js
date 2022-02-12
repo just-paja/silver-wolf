@@ -1,4 +1,4 @@
-const { getRewrites } = require('./routes')
+const { defaultLang, getRewrites } = require('./routes')
 const { i18n } = require('./next-i18next.config.js')
 const { resolve } = require('path')
 const { version } = require('./package.json')
@@ -18,6 +18,7 @@ module.exports = {
   },
   publicRuntimeConfig: {
     baseDomain,
+    defaultLang,
   },
   images: {
     domains: [

@@ -7,16 +7,10 @@ import { asPage, MetaPage } from '../components/meta'
 import { ContactCard } from '../components/ContactCard'
 import { GenericPage } from '../components/layout'
 import { GeneralNewsletterForm } from '../components/GeneralNewsletterForm'
-import { getPageProps } from '../server/props'
 import { useTranslation } from 'next-i18next'
+import { withPageProps } from '../server/props'
 
-export const getServerSideProps = async (props) => {
-  return {
-    props: {
-      ...(await getPageProps(props)).props,
-    },
-  }
-}
+export const getServerSideProps = withPageProps()
 
 const Contacts = () => {
   const { t } = useTranslation()

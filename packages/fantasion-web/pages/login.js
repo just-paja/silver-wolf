@@ -6,19 +6,13 @@ import Row from 'react-bootstrap/Row'
 
 import { asPage, MetaPage } from '../components/meta'
 import { GenericPage } from '../components/layout'
-import { getPageProps } from '../server/props'
 import { Heading } from '../components/media'
 import { Link } from '../components/links'
 import { LoginForm } from '../components/login'
 import { useTranslation } from 'next-i18next'
+import { withPageProps } from '../server/props'
 
-export const getServerSideProps = async (props) => {
-  return {
-    props: {
-      ...(await getPageProps(props)).props,
-    },
-  }
-}
+export const getServerSideProps = withPageProps()
 
 const LoginPage = () => {
   const { t } = useTranslation()

@@ -7,19 +7,13 @@ import Row from 'react-bootstrap/Row'
 import { apiFetch } from '../api'
 import { asPage, MetaPage } from '../components/meta'
 import { GenericPage } from '../components/layout'
-import { getPageProps } from '../server/props'
 import { Heading } from '../components/media'
 import { Link } from '../components/links'
 import { RegisterForm, RegisterFormSuccess } from '../components/register'
 import { useTranslation } from 'next-i18next'
+import { withPageProps } from '../server/props'
 
-export const getServerSideProps = async (props) => {
-  return {
-    props: {
-      ...(await getPageProps(props)).props,
-    },
-  }
-}
+export const getServerSideProps = withPageProps()
 
 const RegisterPageContent = ({ onSubmit }) => {
   const { t } = useTranslation()

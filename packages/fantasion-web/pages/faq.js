@@ -5,19 +5,16 @@ import { apiFetch } from '../api'
 import { asPage, MetaPage } from '../components/meta'
 import { Faqs } from '../components/faq'
 import { GenericPage } from '../components/layout'
-import { getPageProps } from '../server/props'
+import { withPageProps } from '../server/props'
 import { useTranslation } from 'next-i18next'
 
 const getFrequentlyAskedQuestions = async () => apiFetch('/faqs')
 
-export const getServerSideProps = async (props) => {
-  return {
-    props: {
-      faqs: await getFrequentlyAskedQuestions(),
-      ...(await getPageProps(props)).props,
-    },
-  }
-}
+export const getServerSideProps = withPageProps(async () => ({
+  props: {
+    faqs: await getFrequentlyAskedQuestions(),
+  },
+}))
 
 const Faq = ({ faqs }) => {
   const { t } = useTranslation()
