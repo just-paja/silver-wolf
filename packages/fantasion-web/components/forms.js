@@ -76,7 +76,10 @@ const resolveType = (type) => {
   return 'input'
 }
 
-const resolveComponent = (type) => {
+const resolveComponent = (type, as) => {
+  if (as) {
+    return as
+  }
   if (type === 'checkbox') {
     return FormCheck.Input
   }
@@ -123,6 +126,7 @@ const getChangeWrapper = (field, onChange) => (e) => {
 }
 
 export const Input = ({
+  as,
   className,
   error,
   label,
@@ -139,7 +143,7 @@ export const Input = ({
   const { formId, register, formState } = useFormContext()
   const controlId = `${formId}-${name}`
   const htmlOptions = getOptions(options, required)
-  const Component = resolveComponent(type)
+  const Component = resolveComponent(type, as)
   const rightLabel = isLabelRight(type)
   const fieldError = error || formState.errors[name]
   const field = register(name, {
