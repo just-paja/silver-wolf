@@ -16,14 +16,44 @@ const resolveApiErrorClass = (res) => {
   return ApiError
 }
 
-export const apiFetch = async (path, { authToken, ...options } = {}) => {
+const memoCache = []
+
+const memo = (fn) => (firstArg) => {
+  if (memoCache[0] === firstArg) {
+    return memoCache[1]
+  }
+  const result = fn(firstArg)
+  memoCache[0] = firstArg
+  memoCache[1] = result
+  return result
+}
+
+const parseCookies = memo((cookies) =>
+  cookies
+    .split(';')
+    .map((item) => item.split('='))
+    .reduce((aggr, [key, value]) => Object.assign(aggr, { [key]: value }), {})
+)
+
+const getAuthToken = () =>
+  parseCookies(global?.document?.cookie || '').authToken
+
+const resolveHeaders = (options) => {
+  const headers = options.headers || {}
+  const authToken = getAuthToken()
+  if (options.body) {
+    headers['Content-Type'] = 'application/json'
+  }
+  if (authToken) {
+    headers['X-Auth-Token'] = authToken
+  }
+  return headers
+}
+
+export const apiFetch = async (path, options = {}) => {
   const res = await fetch(`${apiUrl}${path}`, {
     ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Auth-Token': authToken,
-      ...options.headers,
-    },
+    headers: resolveHeaders(options),
   })
   const text = await res.text()
 
