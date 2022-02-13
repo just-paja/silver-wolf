@@ -11,7 +11,7 @@ import { withPageProps } from '../server/props'
 import { setCookies } from 'cookies-next'
 
 export const getVerification = async (secret) =>
-  await apiFetch(`/users/verify-email/${secret}`, { method: 'POST' })
+  await apiFetch(`/users/create-password/${secret}`)
 
 const TOKEN_COOKIE = 'authToken'
 

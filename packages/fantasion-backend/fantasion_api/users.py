@@ -74,21 +74,24 @@ def get_token(user):
     return token_tuple[0]
 
 
-class VerifyEmailView(APIView):
+class CreatePasswordView(APIView):
     permission_classes = ()
 
     @classmethod
     def get_extra_actions(cls):
         return []
 
-    def post(self, request, secret, format=None):
+    def get_verification(self, secret):
+        return models.EmailVerification.objects.filter(
+            expires_on__gt=timezone.now(),
+            next_step=models.NEXT_STEP_CREATE_PASSWORD,
+            secret=secret,
+            used=False,
+        ).get()
+
+    def get(self, request, secret, format=None):
         try:
-            verification = models.EmailVerification.objects.filter(
-                expires_on__gt=timezone.now(),
-                secret=secret,
-            ).get()
-            verification.used = True
-            verification.save()
+            verification = get_verification()
             token = get_token(verification.user)
             return Response(
                 {
@@ -100,18 +103,16 @@ class VerifyEmailView(APIView):
         except models.EmailVerification.DoesNotExist as exc:
             raise Http404 from exc
 
-
-class CreatePasswordView(APIView):
-    permission_classes = ("rest_framework.permissions.IsAuthenticated", )
-
-    @classmethod
-    def get_extra_actions(cls):
-        return []
-
-    def post(self, request, format=None):
-        request.user.set_password(request.data)
-        request.user.save()
-        return Response(
-            None,
-            status=status.HTTP_204_NO_CONTENT,
-        )
+    def post(self, request, secret, format=None):
+        try:
+            verification = self.get_verification()
+            verification.used = True
+            verification.save()
+            request.user.set_password(request.data)
+            request.user.save()
+            return Response(
+                None,
+                status=status.HTTP_204_NO_CONTENT,
+            )
+        except models.EmailVerification.DoesNotExist as exc:
+            raise Http404 from exc
