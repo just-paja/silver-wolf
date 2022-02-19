@@ -2,7 +2,6 @@ import Error from 'next/error'
 import Head from 'next/head'
 import React from 'react'
 
-import { UserContext } from './context'
 import { useRouter } from 'next/router'
 
 export const MetaBase = () => {
@@ -31,9 +30,10 @@ export const MetaPage = ({ description, title }) => {
   )
 }
 
-export const MetaUrl = ({ url }) => (
+export const MetaUrl = ({ noRobots, url }) => (
   <Head>
     <meta key="og:url" property="og:url" content={url} />
+    {noRobots && <meta key="robots" name="robots" content="noindex" />}
   </Head>
 )
 
@@ -44,9 +44,9 @@ export const asPage = (PageComp) =>
       return <Error statusCode={statusCode} />
     }
     return (
-      <UserContext.Provider value={props.user}>
-        <MetaUrl url={`${props.baseUrl}${router.pathname}`} />
+      <>
+        <MetaUrl noRobots url={`${props.baseUrl}${router.pathname}`} />
         <PageComp {...props} />
-      </UserContext.Provider>
+      </>
     )
   }
