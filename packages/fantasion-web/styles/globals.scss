@@ -24,7 +24,8 @@ address, p {
   box-sizing: border-box;
 }
 
-p {
+p,
+.alert {
   max-width: $paragraph-max-width;
 }
 
