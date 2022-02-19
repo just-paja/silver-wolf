@@ -32,6 +32,7 @@ SECRET_KEY = os.environ.get(
     "SECRET_KEY",
     "django-insecure-dkr_br-ulm(j+9f%g39_!4ux%y@3zpi^_km0c%o0+(mogvceq=",
 )
+SESSION_COOKIE_SECURE = True
 
 INSTALLED_APPS = [
     "modeltranslation",
