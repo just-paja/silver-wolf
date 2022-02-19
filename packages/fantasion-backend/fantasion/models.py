@@ -42,6 +42,10 @@ class User(AbstractUser):
         blank=True,
         null=True,
     )
+    password_created = BooleanField(
+        default=False,
+        verbose_name=_('Has password'),
+    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
