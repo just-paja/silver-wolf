@@ -1,6 +1,7 @@
 import getConfig from 'next/config'
 
-import { NotFound } from '../api'
+import { curryAuth, NotFound } from '../api'
+import { getCookie } from 'cookies-next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const { publicRuntimeConfig } = getConfig()
@@ -22,6 +23,14 @@ export const getPageProps = async (props) => {
   }
 }
 
+const createFetch = (props) =>
+  curryAuth(
+    getCookie('X-Auth-Token', {
+      req: props.req,
+      res: props.res,
+    })
+  )
+
 const resolveInnerProps = async (resolver, props) => {
   try {
     return await resolver(props)
@@ -41,16 +50,24 @@ const resolveInnerProps = async (resolver, props) => {
   }
 }
 
-export const withPageProps = (fn) => async (props) => {
-  const result = {
-    props: {
-      statusCode: 200,
-      ...(fn ? (await resolveInnerProps(fn, props)).props : {}),
-      ...(await getPageProps(props)).props,
-    },
-  }
-  if (props.res) {
-    props.res.statusCode = result.props.statusCode
-  }
-  return result
-}
+const withFetch = (fn) => async (props) =>
+  await fn({
+    ...props,
+    fetch: createFetch(props),
+  })
+
+export const withPageProps = (fn) =>
+  withFetch(async (props) => {
+    console.log(props)
+    const result = {
+      props: {
+        statusCode: 200,
+        ...(fn ? (await resolveInnerProps(fn, props)).props : {}),
+        ...(await getPageProps(props)).props,
+      },
+    }
+    if (props.res) {
+      props.res.statusCode = result.props.statusCode
+    }
+    return result
+  })

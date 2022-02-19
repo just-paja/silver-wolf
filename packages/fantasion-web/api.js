@@ -2,6 +2,9 @@ import fetch from 'cross-fetch'
 
 const apiUrl = process.env.API_URL || 'http://localhost:8000/api/v1'
 
+export const TOKEN_COOKIE = 'authToken'
+export const TOKEN_HEADER = 'X-Auth-Token'
+
 export class ApiError extends Error {}
 export class BadRequest extends ApiError {}
 export class NotFound extends ApiError {}
@@ -16,36 +19,10 @@ const resolveApiErrorClass = (res) => {
   return ApiError
 }
 
-const memoCache = []
-
-const memo = (fn) => (firstArg) => {
-  if (memoCache[0] === firstArg) {
-    return memoCache[1]
-  }
-  const result = fn(firstArg)
-  memoCache[0] = firstArg
-  memoCache[1] = result
-  return result
-}
-
-const parseCookies = memo((cookies) =>
-  cookies
-    .split(';')
-    .map((item) => item.split('='))
-    .reduce((aggr, [key, value]) => Object.assign(aggr, { [key]: value }), {})
-)
-
-const getAuthToken = () =>
-  parseCookies(global?.document?.cookie || '').authToken
-
 const resolveHeaders = (options) => {
   const headers = options.headers || {}
-  const authToken = getAuthToken()
   if (options.body) {
     headers['Content-Type'] = 'application/json'
-  }
-  if (authToken) {
-    headers['X-Auth-Token'] = authToken
   }
   return headers
 }
@@ -70,3 +47,19 @@ export const apiFetch = async (path, options = {}) => {
 
   return JSON.parse(text)
 }
+
+export const curryAuth =
+  (token) =>
+  async (url, options = {}) => {
+    let { headers } = options
+    if (token) {
+      headers = {
+        ...headers,
+        [TOKEN_HEADER]: token,
+      }
+    }
+    return await apiFetch(url, {
+      ...options,
+      headers,
+    })
+  }
