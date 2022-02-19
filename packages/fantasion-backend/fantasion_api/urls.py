@@ -69,7 +69,7 @@ router.register(
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('users/create-password', users.CreatePasswordView.as_view()),
+    path('users/create-password/<secret>', users.CreatePasswordView.as_view()),
     path('users/register', users.RegisterView.as_view()),
     path('auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
