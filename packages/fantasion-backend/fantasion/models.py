@@ -115,7 +115,7 @@ class EmailVerification(TimeStampedModel):
         )
 
     def get_context(self, **context):
-        landing_url = '{}/confirmation?{}'.format(
+        landing_url = '{}/ec?{}'.format(
             settings.APP_WEBSITE_URL,
             self.secret,
         )

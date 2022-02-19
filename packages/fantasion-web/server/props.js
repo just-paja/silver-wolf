@@ -44,7 +44,7 @@ const resolveInnerProps = async (resolver, props) => {
 export const withPageProps = (fn) => async (props) => ({
   props: {
     statusCode: 200,
-    ...(await resolveInnerProps(fn, props)).props,
+    ...(fn ? (await resolveInnerProps(fn, props)).props : {}),
     ...(await getPageProps(props)).props,
   },
 })

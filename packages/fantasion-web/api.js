@@ -16,11 +16,12 @@ const resolveApiErrorClass = (res) => {
   return ApiError
 }
 
-export const apiFetch = async (path, options = {}) => {
+export const apiFetch = async (path, { authToken, ...options } = {}) => {
   const res = await fetch(`${apiUrl}${path}`, {
     ...options,
     headers: {
       'Content-Type': 'application/json',
+      'X-Auth-Token': authToken,
       ...options.headers,
     },
   })

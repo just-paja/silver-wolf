@@ -1,6 +1,7 @@
 import classnames from 'classnames'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import Dropdown from 'react-bootstrap/Dropdown'
 import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import Nav from 'react-bootstrap/Nav'
@@ -15,6 +16,7 @@ import { SocialNetworks } from '../components/social'
 import { useCallback, useEffect, useState } from 'react'
 import { useScroll } from './scroll'
 import { useTranslation } from 'next-i18next'
+import { useUser } from './context'
 
 import styles from './layout.module.scss'
 
@@ -25,6 +27,31 @@ import rune4 from '../public/runes/04.webp'
 import rune5 from '../public/runes/05.webp'
 
 const expandOn = 'lg'
+
+const LoginWidget = () => {
+  const { t } = useTranslation()
+  const user = useUser()
+
+  if (user) {
+    return (
+      <>
+        <NavDropdown title={`${user.firstName} ${user.lastName}`}>
+          <Linker route="logout">
+            <NavDropdown.Item>{t('logout')}</NavDropdown.Item>
+          </Linker>
+        </NavDropdown>
+      </>
+    )
+  }
+
+  return (
+    <Nav>
+      <Linker route="login">
+        <Nav.Link>{t('login')}</Nav.Link>
+      </Linker>
+    </Nav>
+  )
+}
 
 export const SiteNavbar = ({ fixed, sticky }) => {
   const { t } = useTranslation()
@@ -85,11 +112,7 @@ export const SiteNavbar = ({ fixed, sticky }) => {
           </Nav>
         </Navbar.Collapse>
         <div className={styles.menuWidget}>
-          <Nav>
-            <Linker route="login">
-              <Nav.Link>{t('login')}</Nav.Link>
-            </Linker>
-          </Nav>
+          <LoginWidget />
           <Navbar.Toggle
             aria-controls="site-navbar"
             className={styles.navbarToggle}

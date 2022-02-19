@@ -6,7 +6,7 @@ from fantasion_locations import api as locations
 from fantasion_expeditions import api as expeditions
 from fantasion_people import api as people
 
-from .users import RegisterView
+from . import users
 
 
 class NoSlashRouter(routers.DefaultRouter):
@@ -69,6 +69,8 @@ router.register(
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('users/register', RegisterView.as_view()),
+    path('users/create-password', users.CreatePasswordView.as_view()),
+    path('users/register', users.RegisterView.as_view()),
+    path('users/verify-email/<secret>', users.VerifyEmailView.as_view()),
     path('auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

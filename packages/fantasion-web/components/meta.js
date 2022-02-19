@@ -2,6 +2,7 @@ import Error from 'next/error'
 import Head from 'next/head'
 import React from 'react'
 
+import { UserContext } from './context'
 import { useRouter } from 'next/router'
 
 export const MetaBase = () => {
@@ -38,15 +39,14 @@ export const MetaUrl = ({ url }) => (
 
 export const asPage = (PageComp) =>
   function MetaPageWrapper({ statusCode, ...props }) {
-    console.log(statusCode)
     const router = useRouter()
     if (statusCode >= 400) {
       return <Error statusCode={statusCode} />
     }
     return (
-      <>
+      <UserContext.Provider value={props.user}>
         <MetaUrl url={`${props.baseUrl}${router.pathname}`} />
         <PageComp {...props} />
-      </>
+      </UserContext.Provider>
     )
   }

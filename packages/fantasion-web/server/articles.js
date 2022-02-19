@@ -1,25 +1,12 @@
-import { apiFetch, NotFound } from '../api'
-import { getPageProps } from './props'
+import { apiFetch } from '../api'
+import { withPageProps } from './props'
 
-export const getArticleByKey = async (articleKey) => {
-  try {
-    return await apiFetch(`/static-articles/${articleKey}`)
-  } catch (e) {
-    if (e instanceof NotFound) {
-      return null
-    }
-    throw e
-  }
-}
+export const getArticleByKey = async (articleKey) =>
+  await apiFetch(`/static-articles/${articleKey}`)
 
-export const createStaticArticlePageGetter = (articleKey) => async (props) => {
-  const defaults = await getPageProps(props)
-  const article = await getArticleByKey(articleKey)
-  return {
+export const createStaticArticlePageGetter = (articleKey) =>
+  withPageProps(async () => ({
     props: {
-      statusCode: article ? 200 : 404,
-      ...defaults.props,
-      article,
+      article: await getArticleByKey(articleKey),
     },
-  }
-}
+  }))

@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row'
 import { bool, string } from 'yup'
 import { Form, FormControls, Input, useValidator } from './forms'
 import { Link } from './links'
+import { PasswordStrengthInput } from './passwords'
 import { Trans, useTranslation } from 'next-i18next'
 
 export const RegisterForm = ({ onSubmit }) => {
@@ -73,5 +74,39 @@ export const RegisterFormSuccess = () => {
         </Col>
       </Row>
     </Container>
+  )
+}
+
+export const CreatePasswordForm = ({ onSubmit }) => {
+  const { t } = useTranslation()
+  const validator = useValidator({
+    password: string()
+      .nullable()
+      .min(6)
+      .max(255)
+      .required(t('form-input-required')),
+    passwordConfirm: string()
+      .nullable()
+      .min(6)
+      .max(255)
+      .required(t('form-input-required')),
+  })
+  return (
+    <Form id="register" onSubmit={onSubmit} resolver={validator}>
+      <Input
+        as={PasswordStrengthInput}
+        helpText={t('user-password-help-text')}
+        label={t('user-password')}
+        name="password"
+        type="password"
+      />
+      <Input
+        helpText={t('user-password-confirm-help-text')}
+        label={t('user-password-confirm')}
+        name="passwordConfirm"
+        type="password"
+      />
+      <FormControls submitLabel={t('verification-finish')} />
+    </Form>
   )
 }
