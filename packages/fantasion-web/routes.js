@@ -19,6 +19,10 @@ const cs = {
     source: '/dobrodruzstvi',
     destination: '/adventures',
   },
+  confirmRegistration: {
+    source: '/potvrzeni-registrace',
+    destination: '/confirm-registration',
+  },
   expeditionDetail: {
     source: '/tabory/:expeditionSlug',
     destination: '/expeditions/:expeditionSlug',
@@ -66,10 +70,6 @@ const cs = {
   termsAndConditions: {
     source: '/obchodni-podminky',
     destination: '/terms-and-conditons',
-  },
-  verifyEmail: {
-    source: '/overit-email',
-    destination: '/ec',
   },
 }
 

@@ -7,6 +7,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown'
 import Nav from 'react-bootstrap/Nav'
 import Row from 'react-bootstrap/Row'
 
+import { Alerts } from './alerts'
 import { breakpoints, useBreakpoint } from './breakpoints'
 import { HiMenu } from 'react-icons/hi'
 import { Link, Linker } from './links'
@@ -32,16 +33,24 @@ const LoginWidget = () => {
   const { t } = useTranslation()
   const user = useUser()
 
+  const items = [
+    user?.passwordConfirmed && (
+      <Linker key="logout" route="logout">
+        <NavDropdown.Item>{t('logout')}</NavDropdown.Item>
+      </Linker>
+    ),
+  ].filter(Boolean)
+
   if (user) {
-    return (
-      <>
-        <NavDropdown title={`${user.firstName} ${user.lastName}`}>
-          <Linker route="logout">
-            <NavDropdown.Item>{t('logout')}</NavDropdown.Item>
-          </Linker>
-        </NavDropdown>
-      </>
-    )
+    const title = `${user.firstName} ${user.lastName}`
+    if (items) {
+      return (
+        <div className="nav-item dropdown">
+          <a className="nav-link">{title}</a>
+        </div>
+      )
+    }
+    return <NavDropdown title={title}>{items}</NavDropdown>
   }
 
   return (
@@ -182,7 +191,11 @@ export const GenericPage = ({ children }) => (
   <>
     <PageContent>
       <SiteNavbar sticky />
-      <main>{children}</main>
+
+      <main>
+        <Alerts />
+        {children}
+      </main>
       <Runes />
     </PageContent>
     <Footer />
