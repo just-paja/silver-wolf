@@ -42,7 +42,7 @@ django-phonenumber-field = {extras = ["phonenumberslite"], version = "^6.0.0"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
-yapf = "^0.31.0"
+yapf = "^0.32.0"
 flake8 = "^4.0.1"
 
 [build-system]
