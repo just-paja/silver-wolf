@@ -119,10 +119,9 @@ class EmailVerification(TimeStampedModel):
         )
 
     def get_context(self, **context):
-        landing_url = '{}/ec?{}'.format(
-            settings.APP_WEBSITE_URL,
-            self.secret,
-        )
+        register_path = 'cs/potvrzeni-registrace'
+        base_url = settings.APP_WEBSITE_URL
+        landing_url = f'{base_url}/{register_path}?{self.secret}'
         return {
             **context,
             'landing_url': landing_url,
@@ -136,8 +135,9 @@ class EmailVerification(TimeStampedModel):
         return re.sub(r'(\n[ ]+)', r'\n', plain)
 
     def send_mail(self, subject, body):
+        site_name = _('Fantasion')
         mail.send_mail(
-            '{}: {}'.format(_('Fantasion'), subject),
+            f'{site_name}: {subject}',
             self.get_text_body(body),
             self.get_sender(),
             [self.email],

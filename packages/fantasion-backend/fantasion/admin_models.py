@@ -1,7 +1,7 @@
 from django.contrib.auth import admin as auth_admin
 from django.utils.translation import ugettext_lazy as _
 
-from fantasion_generics.admin import BaseAdmin, MediaAdmin, TranslatedAdmin
+from fantasion_generics.admin import BaseAdmin
 
 from . import models
 

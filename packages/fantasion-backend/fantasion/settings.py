@@ -12,7 +12,7 @@ from urllib.parse import urlparse
 
 def get_schemed_netloc(url):
     parsed = urlparse(url)
-    return "%s://%s" % (parsed.scheme, parsed.netloc)
+    return f"{parsed.scheme}://{parsed.netloc}"
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -133,8 +133,8 @@ PRIVATE_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 
-def gettext(s):
-    return s
+def gettext(string):
+    return string
 
 
 LANGUAGE_CODE = "cs-cz"

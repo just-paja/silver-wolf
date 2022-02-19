@@ -20,6 +20,7 @@ class VideoFile(File):
     A mixin for use alongside django.core.files.base.File, which provides
     additional features for dealing with images.
     """
+
     @property
     def width(self):
         return self.get_video_meta()['width']
@@ -51,6 +52,7 @@ class VideoFileDescriptor(FileDescriptor):
 
 
 class VideoFieldFile(VideoFile, FieldFile):
+
     def delete(self, save=True):
         if hasattr(self, 'dimensions_cache'):
             del self.dimensions_cache
@@ -62,14 +64,12 @@ class VideoField(FileField):
     descriptor_class = VideoFileDescriptor
     description = _('Video')
 
-    def __init__(
-        self,
-        duration_field=None,
-        height_field=None,
-        width_field=None,
-        *args,
-        **kwargs
-    ):
+    def __init__(self,
+                 duration_field=None,
+                 height_field=None,
+                 width_field=None,
+                 *args,
+                 **kwargs):
         self.duration_field = duration_field
         self.height_field = height_field
         self.width_field = width_field
@@ -83,7 +83,7 @@ class VideoField(FileField):
 
     def check_library_installed(self):
         try:
-            import ffmpeg # noqa
+            import ffmpeg  # noqa
         except ImportError:
             return [
                 checks.Error(
@@ -109,11 +109,13 @@ class VideoField(FileField):
         return self.duration_field or self.height_field or self.width_field
 
     def has_meta_values(self, inst):
-        return not(
-            (self.duration_field and not getattr(inst, self.duration_field)) or
-            (self.height_field and not getattr(inst, self.height_field)) or
-            (self.width_field and not getattr(inst, self.width_field))
+        has_duration = self.duration_field and not getattr(
+            inst,
+            self.duration_field,
         )
+        has_height = self.height_field and not getattr(inst, self.height_field)
+        has_width = self.width_field and not getattr(inst, self.width_field)
+        return not (has_duration or has_height or has_width)
 
     def update_dimension_fields(self, instance, force=False, *args, **kwargs):
         # Nothing to update if the field doesn't have dimension fields or if
@@ -164,6 +166,7 @@ class VideoField(FileField):
 
 
 class LocalVideoModel(Model):
+
     class Meta:
         abstract = True
 

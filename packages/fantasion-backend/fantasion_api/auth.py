@@ -1,4 +1,4 @@
-from rest_framework import authentication, exceptions
+from rest_framework import authentication
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import SessionAuthentication
 

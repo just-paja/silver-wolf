@@ -17,29 +17,32 @@ class SignupDocumentTypeAdmin(BaseAdmin):
         'required',
         'modified',
     )
-    list_filter = ('required',)
+    list_filter = ('required', )
 
 
 class SignupDocumentMediaAdmin(NestedStackedInline):
     model = models.SignupDocumentMedia
     extra = 0
-    readonly_fields = ('width', 'height',)
+    readonly_fields = (
+        'width',
+        'height',
+    )
 
 
 class SignupDocumentAdmin(BaseAdmin):
     model = models.SignupDocument
-    inlines = (SignupDocumentMediaAdmin,)
+    inlines = (SignupDocumentMediaAdmin, )
 
 
 class SignupDocumentInlineAdmin(NestedStackedInline):
     model = models.SignupDocument
-    inlines = (SignupDocumentMediaAdmin,)
+    inlines = (SignupDocumentMediaAdmin, )
     extra = 0
 
 
 class SignupAdmin(BaseAdmin):
     model = models.Signup
-    inlines = (SignupDocumentInlineAdmin,)
+    inlines = (SignupDocumentInlineAdmin, )
     list_display = (
         'participant_name',
         'status',
@@ -84,10 +87,9 @@ class SignupAdmin(BaseAdmin):
     def participant_age(self, inst):
         today = date.today()
         born = inst.participant.birthdate
-        return (
-            today.year -
-            born.year -
-            ((today.month, today.day) < (born.month, born.day))
-        )
+        over = 0
+        if (today.month, today.day) < (born.month, born.day):
+            over = 1
+        return today.year - born.year - over
 
     participant_age.admin_order_field = 'participant__birthdate'
