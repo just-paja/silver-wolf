@@ -188,6 +188,18 @@ CORS_ORIGIN_WHITELIST = (
     get_schemed_netloc(APP_WEBSITE_URL),
 )
 
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+    "x-auth-token",
+]
+
 LOG_LEVEL = "INFO"
 EMAIL_ROBOT_NAME = "Ciri"
 EMAIL_ROBOT_ADDR = "ciri@fantasion.cz"
