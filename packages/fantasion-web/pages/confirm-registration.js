@@ -16,7 +16,7 @@ import { useTranslation } from 'next-i18next'
 import { withPageProps } from '../server/props'
 
 const getVerification = async (fetch, secret) =>
-  await fetch(`/users/create-password/${secret}`)
+  await fetch(`/users/verifications/${secret}`)
 
 const createPassword = (fetch, secret) => async (values) =>
   await fetch(`/users/create-password/${secret}`, {

@@ -44,8 +44,7 @@ export const apiFetch = async (path, options = {}) => {
     }
     throw error
   }
-
-  return JSON.parse(text)
+  return text ? JSON.parse(text) : null
 }
 
 export const curryAuth =

@@ -3,6 +3,6 @@
 input, select {
   &.default,
   &.default + :global(.form-text) {
-    max-width: calc($spacer * 18);
+    max-width: $input-medium;
   }
 }

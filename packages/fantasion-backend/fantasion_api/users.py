@@ -1,5 +1,6 @@
 from datetime import timedelta
 from django.http import Http404
+from django.urls import path
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
@@ -16,6 +17,9 @@ from rest_framework.serializers import (
 )
 
 from fantasion import models
+
+from .auth import CsrfExemptAuth
+from .decorators import public_endpoint, with_serializer
 
 
 class CreatePasswordSerializer(Serializer):
@@ -35,8 +39,8 @@ class RestorePasswordSerializer(Serializer):
     def validate_email(self, value):
         try:
             models.User.objects.filter(email=value).get()
-        except models.User.DoesNotExist as err:
-            raise ValidationError from err
+        except models.User.DoesNotExist:
+            raise ValidationError(_('User does not exist'))
         return value
 
 
@@ -80,26 +84,27 @@ class RegistrationSerializer(ModelSerializer):
         return user
 
 
-class RegisterView(APIView):
+class PublicView(APIView):
+    authentication_classes = (CsrfExemptAuth, )
     permission_classes = ()
 
     @classmethod
     def get_extra_actions(cls):
         return []
 
-    def post(self, request, format=None):
-        serializer = RegistrationSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            token = get_token(user_id=serializer.data['id'])
-            return Response(
-                {
-                    'user': serializer.data,
-                    'token': token.key,
-                },
-                status=status.HTTP_201_CREATED,
-            )
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@public_endpoint(['POST'])
+@with_serializer(RegistrationSerializer)
+def register(request, serializer, format=None):
+    erializer.save()
+    token = get_token(user_id=serializer.data['id'])
+    return Response(
+        {
+            'user': serializer.data,
+            'token': token.key,
+        },
+        status=status.HTTP_201_CREATED,
+    )
 
 
 def get_token(**kwargs):
@@ -107,85 +112,79 @@ def get_token(**kwargs):
     return token_tuple[0]
 
 
-class CreatePasswordView(APIView):
-    permission_classes = ()
+def find_verification(**kwargs):
+    return models.EmailVerification.objects.filter(
+        **kwargs,
+        expires_on__gt=timezone.now(),
+        used=False,
+    ).get()
 
-    @classmethod
-    def get_extra_actions(cls):
-        return []
 
-    def get_verification(self, secret):
-        return models.EmailVerification.objects.filter(
-            expires_on__gt=timezone.now(),
-            next_step=models.NEXT_STEP_CREATE_PASSWORD,
+@public_endpoint(['GET'])
+def get_verification(request, secret, format=None):
+    try:
+        verification = find_verification(secret=secret)
+        token = get_token(user=verification.user)
+        return Response(
+            {
+                'user': RegistrationSerializer(verification.user).data,
+                'token': token.key,
+            },
+            status=status.HTTP_200_OK,
+        )
+    except models.EmailVerification.DoesNotExist as exc:
+        raise Http404 from exc
+
+
+@public_endpoint(['POST'])
+@with_serializer(CreatePasswordSerializer)
+def create_password(request, serializer, secret, format=None):
+    try:
+        verification = find_verification(
             secret=secret,
-            used=False,
-        ).get()
-
-    def get(self, request, secret, format=None):
-        try:
-            verification = self.get_verification(secret)
-            token = get_token(user=verification.user)
-            return Response(
-                {
-                    'user': RegistrationSerializer(verification.user).data,
-                    'token': token.key,
-                },
-                status=status.HTTP_200_OK,
-            )
-        except models.EmailVerification.DoesNotExist as exc:
-            raise Http404 from exc
-
-    def post(self, request, secret, format=None):
-        serializer = CreatePasswordSerializer(data=request.data)
-        if serializer.is_valid():
-            try:
-                verification = self.get_verification(secret)
-                user = verification.user
-                user.set_password(serializer.data['password'])
-                user.password_created = True
-                user.save()
-                verification.used = True
-                verification.save()
-                token = get_token(user=user)
-                return Response(
-                    {
-                        'user': RegistrationSerializer(user).data,
-                        'token': token.key,
-                    },
-                    status=status.HTTP_200_OK,
-                )
-            except models.EmailVerification.DoesNotExist as exc:
-                raise Http404 from exc
-        return Response(
-            serializer.errors,
-            status=status.HTTP_400_BAD_REQUEST,
+            next_step__in=(
+                models.NEXT_STEP_CREATE_PASSWORD,
+                models.NEXT_STEP_RESTORE_PASSWORD,
+            ),
         )
-
-
-class RestorePasswordView(APIView):
-    permission_classes = ()
-
-    @classmethod
-    def get_extra_actions(cls):
-        return []
-
-    def post(self, request, format=None):
-        serializer = RestorePasswordSerializer(data=request.data)
-        if serializer.is_valid():
-            data = serializer.data
-            user = models.User.objects.get(email=data['email'])
-            expires_on = timezone.now() + timedelta(days=5)
-            verification = models.EmailVerification(
-                email=user.email,
-                expires_on=expires_on,
-                next_step=models.NEXT_STEP_RESTORE_PASSWORD,
-                secret=models.EmailVerification.generate_key(),
-                user=user,
-            )
-            verification.save()
-            return Response(None, status=status.HTTP_204_NO_CONTENT)
+        user = verification.user
+        user.set_password(serializer.data['password'])
+        user.password_created = True
+        user.save()
+        verification.used = True
+        verification.save()
+        token = get_token(user=user)
         return Response(
-            serializer.errors,
-            status=status.HTTP_400_BAD_REQUEST,
+            {
+                'user': RegistrationSerializer(user).data,
+                'token': token.key,
+            },
+            status=status.HTTP_200_OK,
         )
+    except models.EmailVerification.DoesNotExist as exc:
+        raise Http404 from exc
+
+
+@public_endpoint(['POST'])
+@with_serializer(RestorePasswordSerializer)
+def request_password_restore(request, serializer, format=None):
+    data = serializer.data
+    user = models.User.objects.get(email=data['email'])
+    expires_on = timezone.now() + timedelta(days=5)
+    verification = models.EmailVerification(
+        email=user.email,
+        expires_on=expires_on,
+        next_step=models.NEXT_STEP_RESTORE_PASSWORD,
+        secret=models.EmailVerification.generate_key(),
+        user=user,
+    )
+    verification.save()
+    return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+
+urlpatterns = [
+    path('create-password/<secret>', create_password),
+    path('register', register),
+    path('restore-password', request_password_restore),
+    path('verifications/<secret>', get_verification),
+]

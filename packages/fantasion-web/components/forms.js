@@ -21,7 +21,7 @@ const ReflessControlledForm = ({ children, id, onSubmit, ...props }, ref) => (
 export const ControlledForm = forwardRef(ReflessControlledForm)
 
 const ReflessForm = (
-  { defaultValues, children, id, onSubmit, resolver },
+  { defaultValues, children, id, onSubmit, resolver, ...props },
   ref
 ) => {
   const [processingError, setProcessingError] = useState(null)
@@ -51,6 +51,7 @@ const ReflessForm = (
   return (
     <FormProvider formId={id} processingError={processingError} {...methods}>
       <ControlledForm
+        {...props}
         id={id}
         onSubmit={handleSubmit(protectedSubmit)}
         ref={ref}

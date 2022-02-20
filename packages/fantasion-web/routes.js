@@ -31,6 +31,10 @@ const cs = {
     source: '/turnusy/:expeditionBatchSlug',
     destination: '/expedition-batches/:expeditionBatchSlug',
   },
+  forgottenPassword: {
+    source: '/zapomenute-heslo',
+    destination: '/forgotten-password',
+  },
   adventureDetail: {
     source: '/dobrodruzstvi/:expeditionThemeSlug',
     destination: '/adventures/:expeditionThemeSlug',
