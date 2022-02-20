@@ -23,6 +23,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class User(AbstractUser):
+
     class Meta:
         db_table = "auth_user"
         verbose_name = _('User'),
@@ -52,14 +53,19 @@ class User(AbstractUser):
 
 
 NEXT_STEP_CREATE_PASSWORD = 1
+NEXT_STEP_RESTORE_PASSWORD = 2
 
-VERIFICATION_NEXT_STEP_OPTIONS = ((
-    NEXT_STEP_CREATE_PASSWORD,
-    _('Create password'),
-), )
+VERIFICATION_NEXT_STEP_OPTIONS = (
+    (
+        NEXT_STEP_CREATE_PASSWORD,
+        _('Create password'),
+    ),
+    (NEXT_STEP_RESTORE_PASSWORD, _('Restore password')),
+)
 
 
 class EmailVerification(TimeStampedModel):
+
     class Meta:
         verbose_name = _('Email Verification')
         verbose_name_plural = _('Email Verifications')
@@ -109,6 +115,8 @@ class EmailVerification(TimeStampedModel):
     def notify_user(self):
         if self.next_step == NEXT_STEP_CREATE_PASSWORD:
             self.send_registration_confirmation()
+        elif self.next_step == NEXT_STEP_RESTORE_PASSWORD:
+            self.send_password_refresh()
         self.sent += 1
         self.save()
 
@@ -118,13 +126,23 @@ class EmailVerification(TimeStampedModel):
             settings.EMAIL_ROBOT_ADDR,
         )
 
+    def get_lang(self):
+        return 'cs'
+
+    def get_landing_path(self):
+        if self.next_step == NEXT_STEP_CREATE_PASSWORD:
+            return 'potvrzeni-registrace'
+        if self.next_step == NEXT_STEP_RESTORE_PASSWORD:
+            return 'zapomenute-heslo'
+
     def get_context(self, **context):
-        register_path = 'cs/potvrzeni-registrace'
+        lang = self.get_lang()
+        path = self.get_landing_path()
+        landing_path = f'{lang}/{path}'
         base_url = settings.APP_WEBSITE_URL
-        landing_url = f'{base_url}/{register_path}?{self.secret}'
         return {
             **context,
-            'landing_url': landing_url,
+            'landing_url': f'{base_url}/{landing_path}?{self.secret}',
             'website_url': settings.APP_WEBSITE_URL,
         }
 
@@ -154,3 +172,12 @@ class EmailVerification(TimeStampedModel):
                 context=self.get_context(subject=subject),
             ),
         )
+
+    def send_password_refresh(self):
+        subject = _('Forgotten password')
+        self.send_mail(
+            subject,
+            render_to_string(
+                'mail/password_refresh.html',
+                context=self.get_context(subject=subject),
+            ))
