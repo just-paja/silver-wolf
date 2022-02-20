@@ -10,6 +10,7 @@ from . import users
 
 
 class NoSlashRouter(routers.DefaultRouter):
+
     def __init__(self):
         super().__init__()
         self.trailing_slash = ''
@@ -70,6 +71,7 @@ router.register(
 urlpatterns = [
     path('', include(router.urls)),
     path('users/create-password/<secret>', users.CreatePasswordView.as_view()),
+    path('users/restore-password', users.RestorePasswordView.as_view()),
     path('users/register', users.RegisterView.as_view()),
     path('auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.serializers import (
     CharField,
+    EmailField,
     ModelSerializer,
     Serializer,
     ValidationError,
@@ -28,7 +29,19 @@ class CreatePasswordSerializer(Serializer):
         return data
 
 
+class RestorePasswordSerializer(Serializer):
+    email = EmailField()
+
+    def validate_email(self, value):
+        try:
+            models.User.objects.filter(email=value).get()
+        except models.User.DoesNotExist as err:
+            raise ValidationError from err
+        return value
+
+
 class RegistrationSerializer(ModelSerializer):
+
     class Meta:
         model = models.User
         fields = (
@@ -144,8 +157,35 @@ class CreatePasswordView(APIView):
                 )
             except models.EmailVerification.DoesNotExist as exc:
                 raise Http404 from exc
-        else:
-            return Response(
-                serializer.errors,
-                status=status.HTTP_400_BAD_REQUEST,
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+
+class RestorePasswordView(APIView):
+    permission_classes = ()
+
+    @classmethod
+    def get_extra_actions(cls):
+        return []
+
+    def post(self, request, format=None):
+        serializer = RestorePasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            data = serializer.data
+            user = models.User.objects.get(email=data['email'])
+            expires_on = timezone.now() + timedelta(days=5)
+            verification = models.EmailVerification(
+                email=user.email,
+                expires_on=expires_on,
+                next_step=models.NEXT_STEP_RESTORE_PASSWORD,
+                secret=models.EmailVerification.generate_key(),
+                user=user,
             )
+            verification.save()
+            return Response(None, status=status.HTTP_204_NO_CONTENT)
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST,
+        )
