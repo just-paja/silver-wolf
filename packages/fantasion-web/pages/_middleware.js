@@ -14,8 +14,15 @@ const shouldAssignLocale = (req) =>
 const getBestLocale = (req) =>
   new Locales(req.headers.get('accept-language')).best(supported)
 
+const getProto = (req) =>
+  req.headers['x-forwarded-proto'] || req.proto === 'https' ? 'https' : 'http'
+
+const getOrigin = (req) => `${getProto(req)}://${request.headers.host}`
+
 const redirectToLocalizedUrl = (req) =>
-  NextResponse.redirect(`/${getBestLocale(req)}${req.nextUrl.pathname}`)
+  NextResponse.redirect(
+    `${getOrigin(req)}/${getBestLocale(req)}${req.nextUrl.pathname}`
+  )
 
 export const middleware = (req) => {
   if (shouldAssignLocale(req)) {
