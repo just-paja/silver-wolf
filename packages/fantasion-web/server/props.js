@@ -58,7 +58,6 @@ const withFetch = (fn) => async (props) =>
 
 export const withPageProps = (fn) =>
   withFetch(async (props) => {
-    console.log(props)
     const result = {
       props: {
         statusCode: 200,
