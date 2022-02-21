@@ -51,10 +51,6 @@ const cs = {
     source: '/prihlaseni',
     destination: '/login',
   },
-  logout: {
-    source: '/odhlaseni',
-    destination: '/logout',
-  },
   profileDetail: {
     source: '/tym/:profileSlug',
     destination: '/team/:profileSlug',

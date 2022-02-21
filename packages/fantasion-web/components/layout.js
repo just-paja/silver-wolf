@@ -16,8 +16,8 @@ import { SiteLogo } from './SiteLogo'
 import { SocialNetworks } from '../components/social'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useOutsideClick, useScroll } from './window'
+import { useSite, useUser } from './context'
 import { useTranslation } from 'next-i18next'
-import { useUser } from './context'
 
 import styles from './layout.module.scss'
 
@@ -65,7 +65,7 @@ const SiteMenu = () => {
 
 const UserMenu = () => {
   const { t } = useTranslation()
-  const user = useUser()
+  const { logout, user } = useSite()
   const items = [
     !user && (
       <Linker route="login">
@@ -73,9 +73,7 @@ const UserMenu = () => {
       </Linker>
     ),
     user?.passwordCreated && (
-      <Linker route="logout">
-        <Nav.Link>{t('logout')}</Nav.Link>
-      </Linker>
+      <Nav.Link onClick={logout}>{t('logout')}</Nav.Link>
     ),
   ].filter(Boolean)
 
