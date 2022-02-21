@@ -15,9 +15,16 @@ const getBestLocale = (req) =>
   new Locales(req.headers.get('accept-language')).best(supported)
 
 const getProto = (req) =>
-  req.headers['x-forwarded-proto'] || req.proto === 'https' ? 'https' : 'http'
+  req.headers.get('x-forwarded-proto') || req.proto === 'https'
+    ? 'https'
+    : 'http'
 
-const getOrigin = (req) => `${getProto(req)}://${req.headers.host}`
+const getHost = (req) =>
+  req.headers.get('x-forwarded-host') ||
+  req.headers.get('host') ||
+  process.env.FRONTEND_HOST
+
+const getOrigin = (req) => `${getProto(req)}://${getHost(req)}`
 
 const redirectToLocalizedUrl = (req) =>
   NextResponse.redirect(
