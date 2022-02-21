@@ -15,7 +15,14 @@ fieldset_personal = (
     _('Personal information'),
     {
         'fields':
-        ('first_name', 'last_name', 'email', 'email_verified', 'phone'),
+        (
+            'first_name',
+            'last_name',
+            'email',
+            'email_verified',
+            'phone',
+            'password_created',
+        ),
     },
 )
 fieldset_permissions = (

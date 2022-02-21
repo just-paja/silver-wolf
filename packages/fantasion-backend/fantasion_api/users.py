@@ -1,4 +1,6 @@
 from datetime import timedelta
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import AnonymousUser
 from django.http import Http404
 from django.urls import path
 from django.utils import timezone
@@ -6,8 +8,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework.serializers import (
     CharField,
     EmailField,
@@ -18,7 +21,6 @@ from rest_framework.serializers import (
 
 from fantasion import models
 
-from .auth import CsrfExemptAuth
 from .decorators import public_endpoint, with_serializer
 
 
@@ -42,6 +44,24 @@ class RestorePasswordSerializer(Serializer):
         except models.User.DoesNotExist:
             raise ValidationError(_('User does not exist'))
         return value
+
+
+class LoginSerializer(Serializer):
+    email = EmailField()
+    password = CharField()
+    user = None
+
+    def validate(self, values):
+        user = authenticate(
+            email=values['email'],
+            password=values['password'],
+        )
+        if user:
+            self.user = user
+            return values
+        raise ValidationError(
+            _('Invalid combination of e-mail and password')
+        )
 
 
 class RegistrationSerializer(ModelSerializer):
@@ -84,19 +104,23 @@ class RegistrationSerializer(ModelSerializer):
         return user
 
 
-class PublicView(APIView):
-    authentication_classes = (CsrfExemptAuth, )
-    permission_classes = ()
-
-    @classmethod
-    def get_extra_actions(cls):
-        return []
+@public_endpoint(['POST'])
+@with_serializer(LoginSerializer)
+def login(request, serializer, format=None):
+    token = get_token(user=serializer.user)
+    return Response(
+        {
+            'user': RegistrationSerializer(serializer.user).data,
+            'token': token.key,
+        },
+        status=status.HTTP_200_OK,
+    )
 
 
 @public_endpoint(['POST'])
 @with_serializer(RegistrationSerializer)
 def register(request, serializer, format=None):
-    erializer.save()
+    serializer.save()
     token = get_token(user_id=serializer.data['id'])
     return Response(
         {
@@ -182,8 +206,19 @@ def request_password_restore(request, serializer, format=None):
     return Response(None, status=status.HTTP_204_NO_CONTENT)
 
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_me(request, format=None):
+    user = request.user
+    if isinstance(user, AnonymousUser):
+        user = None
+    return Response(RegistrationSerializer(user).data)
+
+
 urlpatterns = [
     path('create-password/<secret>', create_password),
+    path('get-token', login),
+    path('me', get_me),
     path('register', register),
     path('restore-password', request_password_restore),
     path('verifications/<secret>', get_verification),

@@ -1,3 +1,4 @@
+import Alert from 'react-bootstrap/Alert'
 import classnames from 'classnames'
 import BsForm from 'react-bootstrap/Form'
 import FormCheck from 'react-bootstrap/FormCheck'
@@ -31,13 +32,16 @@ const ReflessForm = (
     async (values) => {
       try {
         setProcessingError(null)
-        await onSubmit(values)
+        return await onSubmit(values)
       } catch (e) {
         setProcessingError(e)
         // @FIXME This error should be reported to Sentry
         console.error(e)
         if (e.body) {
-          for (const [field, fieldErrors] of Object.entries(e.body)) {
+          const formErrors = Object.entries(e.body).filter(
+            ([key]) => key !== 'nonFieldErrors'
+          )
+          for (const [field, fieldErrors] of formErrors) {
             for (const fieldError of fieldErrors) {
               setError(field, { message: fieldError })
             }
@@ -45,9 +49,8 @@ const ReflessForm = (
         }
       }
     },
-    [onSubmit, setError]
+    [onSubmit, setError, setProcessingError]
   )
-
   return (
     <FormProvider formId={id} processingError={processingError} {...methods}>
       <ControlledForm
@@ -195,12 +198,39 @@ export const Submit = ({ children, ...props }) => (
   </InteractiveButton>
 )
 
+const desecribeProcessingError = (t, err) => {
+  if (err?.body?.nonFieldErrors) {
+    return err.body.nonFieldErrors.join(',')
+  }
+  if (err?.body?.message) {
+    return err.body.message
+  }
+  return t('form-failed-to-submit')
+}
+
+export const FormError = () => {
+  const { processingError } = useFormContext()
+  const { t } = useTranslation()
+  if (processingError) {
+    return (
+      <div className="mt-3">
+        <Alert variant="danger">
+          {desecribeProcessingError(t, processingError)}
+        </Alert>
+      </div>
+    )
+  }
+  return null
+}
+
 export const FormControls = ({ submitLabel }) => {
   const { formState } = useFormContext()
   return (
-    <div className="mt-3">
-      <Submit inProgress={formState.isSubmitting}>{submitLabel}</Submit>
-    </div>
+    <>
+      <div className="mt-3">
+        <Submit inProgress={formState.isSubmitting}>{submitLabel}</Submit>
+      </div>
+    </>
   )
 }
 

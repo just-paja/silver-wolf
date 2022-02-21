@@ -14,8 +14,8 @@ import { Link, Linker } from './links'
 import { PageTopGallery } from './media'
 import { SiteLogo } from './SiteLogo'
 import { SocialNetworks } from '../components/social'
-import { useCallback, useEffect, useState } from 'react'
-import { useScroll } from './scroll'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { useOutsideClick, useScroll } from './window'
 import { useTranslation } from 'next-i18next'
 import { useUser } from './context'
 
@@ -29,51 +29,71 @@ import rune5 from '../public/runes/05.webp'
 
 const expandOn = 'lg'
 
-const LoginWidget = () => {
-  const { t } = useTranslation()
+const getFullName = (user) => `${user.firstName} ${user.lastName}`
+
+const UserName = () => {
   const user = useUser()
+  return user ? (
+    <span className={styles.menuUserName}>{getFullName(user)}</span>
+  ) : null
+}
 
-  const items = [
-    user?.passwordConfirmed && (
-      <Linker key="logout" route="logout">
-        <NavDropdown.Item>{t('logout')}</NavDropdown.Item>
-      </Linker>
-    ),
-  ].filter(Boolean)
-
-  if (user) {
-    const title = `${user.firstName} ${user.lastName}`
-    if (items) {
-      return (
-        <div className="nav-item dropdown">
-          <a className="nav-link">{title}</a>
-        </div>
-      )
-    }
-    return <NavDropdown title={title}>{items}</NavDropdown>
-  }
-
+const SiteMenu = () => {
+  const { t } = useTranslation()
   return (
     <Nav>
-      <Linker route="login">
-        <Nav.Link>{t('login')}</Nav.Link>
+      <Linker route="adventureList">
+        <Nav.Link>{t('adventures-title')}</Nav.Link>
+      </Linker>
+      <Linker route="leisureCentreList">
+        <Nav.Link>{t('leisure-centre-title')}</Nav.Link>
+      </Linker>
+      <NavDropdown title={t('about-fantasion')} id="about-nav">
+        <Linker route="about">
+          <NavDropdown.Item>{t('about-us')}</NavDropdown.Item>
+        </Linker>
+        <Linker route="team">
+          <NavDropdown.Item>{t('our-team')}</NavDropdown.Item>
+        </Linker>
+      </NavDropdown>
+      <Linker route="contacts">
+        <Nav.Link>{t('contacts-link')}</Nav.Link>
       </Linker>
     </Nav>
   )
 }
 
+const UserMenu = () => {
+  const { t } = useTranslation()
+  const user = useUser()
+  const items = [
+    !user && (
+      <Linker route="login">
+        <Nav.Link>{t('login')}</Nav.Link>
+      </Linker>
+    ),
+    user?.passwordCreated && (
+      <Linker route="logout">
+        <Nav.Link>{t('logout')}</Nav.Link>
+      </Linker>
+    ),
+  ].filter(Boolean)
+
+  return <Nav className={styles.userMenu}>{items}</Nav>
+}
+
 export const SiteNavbar = ({ fixed, sticky }) => {
   const { t } = useTranslation()
+  const ref = useRef(null)
   const [scrollTop] = useScroll()
   const [expanded, setExpanded] = useState(false)
   const [, breakpointSize] = useBreakpoint()
 
-  // Collapse navbar when window changes over expansion
-  useEffect(() => {
-    if (expanded && breakpointSize >= breakpoints[expandOn]) {
-      setExpanded(false)
-    }
-  }, [breakpointSize, expanded])
+  const handleClickOutside = () => {
+    setExpanded(false)
+  }
+
+  useOutsideClick(ref, handleClickOutside)
 
   return (
     <Navbar
@@ -86,6 +106,7 @@ export const SiteNavbar = ({ fixed, sticky }) => {
       sticky={sticky ? 'top' : null}
       fixed={fixed ? 'top' : null}
       onToggle={setExpanded}
+      ref={ref}
     >
       <Container className="position-relative">
         <Linker route="home">
@@ -99,36 +120,19 @@ export const SiteNavbar = ({ fixed, sticky }) => {
             <span>{t('fantasion-brand')}</span>
           </Navbar.Brand>
         </Linker>
-        <Navbar.Collapse id="site-navbar">
-          <Nav>
-            <Linker route="adventureList">
-              <Nav.Link>{t('adventures-title')}</Nav.Link>
-            </Linker>
-            <Linker route="leisureCentreList">
-              <Nav.Link>{t('leisure-centre-title')}</Nav.Link>
-            </Linker>
-            <NavDropdown title={t('about-fantasion')} id="about-nav">
-              <Linker route="about">
-                <NavDropdown.Item>{t('about-us')}</NavDropdown.Item>
-              </Linker>
-              <Linker route="team">
-                <NavDropdown.Item>{t('our-team')}</NavDropdown.Item>
-              </Linker>
-            </NavDropdown>
-            <Linker route="contacts">
-              <Nav.Link>{t('contacts-link')}</Nav.Link>
-            </Linker>
-          </Nav>
-        </Navbar.Collapse>
         <div className={styles.menuWidget}>
-          <LoginWidget />
           <Navbar.Toggle
             aria-controls="site-navbar"
             className={styles.navbarToggle}
           >
+            <UserName />
             <HiMenu />
           </Navbar.Toggle>
         </div>
+        <Navbar.Collapse id="site-navbar">
+          <SiteMenu />
+          <UserMenu />
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   )

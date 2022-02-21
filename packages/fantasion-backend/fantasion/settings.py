@@ -164,7 +164,7 @@ APP_WEBSITE_URL = os.environ.get("APP_WEBSITE_URL", "http://localhost:3000")
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'fantasion_api.auth.CsrfExemptAuth',
-        'fantasion_api.auth.TokenAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ),
     "DEFAULT_PAGINATION_CLASS":
     ("rest_framework.pagination.PageNumberPagination"),

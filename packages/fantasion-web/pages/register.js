@@ -4,12 +4,12 @@ import Container from 'react-bootstrap/Container'
 import React, { useState } from 'react'
 import Row from 'react-bootstrap/Row'
 
-import { apiFetch } from '../api'
 import { asPage, MetaPage } from '../components/meta'
 import { GenericPage } from '../components/layout'
 import { Heading } from '../components/media'
 import { Link } from '../components/links'
 import { RegisterForm, RegisterFormSuccess } from '../components/register'
+import { useFetch } from '../components/context'
 import { useTranslation } from 'next-i18next'
 import { withPageProps } from '../server/props'
 
@@ -26,7 +26,7 @@ const RegisterPageContent = ({ onSubmit }) => {
       <Col md={6} lg={5} xl={4}>
         <Heading relativeLevel={2}>{t('register-have-account')}</Heading>
         <div className="mt-2">
-          <Link as={Button} route="register">
+          <Link as={Button} route="login">
             {t('register-login')}
           </Link>
         </div>
@@ -37,14 +37,10 @@ const RegisterPageContent = ({ onSubmit }) => {
 
 const RegisterPage = () => {
   const { t } = useTranslation()
+  const fetch = useFetch()
   const [user, setUser] = useState(null)
   const onSubmit = async (values) => {
-    setUser(
-      await apiFetch('/users/register', {
-        body: JSON.stringify(values),
-        method: 'POST',
-      })
-    )
+    setUser(await fetch.post('/users/register', { body: values }))
   }
   return (
     <GenericPage>

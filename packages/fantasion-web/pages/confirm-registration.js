@@ -15,21 +15,12 @@ import { useSite } from '../components/context'
 import { useTranslation } from 'next-i18next'
 import { withPageProps } from '../server/props'
 
-const getVerification = async (fetch, secret) =>
-  await fetch(`/users/verifications/${secret}`)
-
-const createPassword = (fetch, secret) => async (values) =>
-  await fetch(`/users/create-password/${secret}`, {
-    body: JSON.stringify(values),
-    method: 'POST',
-  })
-
 const parseSecret = (query) => Object.keys(query)[0]
 
 export const getServerSideProps = withPageProps(
   async ({ fetch, query, req, res }) => {
     const secret = parseSecret(query)
-    const { user, token } = await getVerification(fetch, secret)
+    const { user, token } = await fetch(`/users/verifications/${secret}`)
     setCookies(TOKEN_COOKIE, token, {
       sameSite: 'strict',
       req,
@@ -50,9 +41,10 @@ const VerifyEmailPage = ({ secret }) => {
   const { addAlert } = useAlerts()
   const { t } = useTranslation()
   const [verified, setVerified] = useState(user.passwordCreated)
-  const handleCreatePassword = createPassword(fetch, secret)
   const onSubmit = async (values) => {
-    const res = await handleCreatePassword(values)
+    const res = await fetch.post(`/users/create-password/${secret}`, {
+      body: values,
+    })
     setCookies(TOKEN_COOKIE, res.token, {
       sameSite: 'strict',
     })

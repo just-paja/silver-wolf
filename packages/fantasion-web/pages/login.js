@@ -9,6 +9,11 @@ import { GenericPage } from '../components/layout'
 import { Heading } from '../components/media'
 import { Link } from '../components/links'
 import { LoginForm } from '../components/login'
+import { setCookies } from 'cookies-next'
+import { TOKEN_COOKIE } from '../api'
+import { reverse } from '../routes'
+import { useRouter } from 'next/router'
+import { useSite } from '../components/context'
 import { useTranslation } from 'next-i18next'
 import { withPageProps } from '../server/props'
 
@@ -16,6 +21,17 @@ export const getServerSideProps = withPageProps()
 
 const LoginPage = () => {
   const { t } = useTranslation()
+  const { lang, fetch } = useSite()
+  const router = useRouter()
+  const handleLogin = async (values) => {
+    const { token } = await fetch.post('/users/get-token', {
+      body: values,
+    })
+    setCookies(TOKEN_COOKIE, token, {
+      sameSite: 'strict',
+    })
+    router.push(reverse(lang, 'home'))
+  }
   return (
     <GenericPage>
       <MetaPage
@@ -28,7 +44,7 @@ const LoginPage = () => {
         <Row>
           <Col md={6} lg={5} xl={4}>
             <Heading relativeLevel={2}>{t('login-with-email')}</Heading>
-            <LoginForm />
+            <LoginForm onSubmit={handleLogin} />
           </Col>
           <Col md={6} lg={5} xl={4}>
             <Heading relativeLevel={2}>{t('login-register')}</Heading>

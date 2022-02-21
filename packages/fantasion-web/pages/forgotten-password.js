@@ -15,15 +15,14 @@ import { useTranslation } from 'next-i18next'
 import { withPageProps } from '../server/props'
 
 const restorePassword = async (fetch, values) =>
-  await fetch('/users/restore-password', {
-    body: JSON.stringify(values),
-    method: 'POST',
+  await fetch.post('/users/restore-password', {
+    body: values,
   })
 
 const getVerification = async (fetch, secret) =>
   await fetch(`/users/verifications/${secret}`)
 
-const parseSecret = (query) => Object.keys(query)[0]
+const parseSecret = (query) => Object.keys(query)[0] || null
 
 export const getServerSideProps = withPageProps(async ({ fetch, query }) => {
   const secret = parseSecret(query)
@@ -67,9 +66,8 @@ const ForgottenPasswordPage = ({ secret, token }) => {
   )
   if (token) {
     const createPassword = async (values) => {
-      await fetch(`/users/create-password/${secret}`, {
-        body: JSON.stringify(values),
-        method: 'POST',
+      await fetch.post(`/users/create-password/${secret}`, {
+        body: values,
       })
       setSubmitted(true)
       addAlert({

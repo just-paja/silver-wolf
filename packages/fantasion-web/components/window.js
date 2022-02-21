@@ -1,5 +1,19 @@
 import { useCallback, useEffect, useState } from 'react'
 
+export const useOutsideClick = (ref, onClick) => {
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        onClick(event)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [ref, onClick])
+}
+
 export const useScroll = () => {
   const [scrollTop, setScrollTop] = useState(0)
   const [scrollTopMax, setScrollTopMax] = useState(0)

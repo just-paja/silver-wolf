@@ -1,22 +1,24 @@
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 
-import { Form, FormControls, Input } from './forms'
+import { Form, FormControls, FormError, Input } from './forms'
 import { Link } from './links'
 import { useTranslation } from 'next-i18next'
 
 import styles from './login.module.scss'
 
-export const LoginForm = () => {
+export const LoginForm = ({ onSubmit }) => {
   const { t } = useTranslation()
-  const onSubmit = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 3000))
-  }
-
   return (
     <Form className={styles.form} id="login" onSubmit={onSubmit}>
       <Input label={t('login-email')} name="email" type="email" required />
-      <Input label={t('login-password')} name="password" required />
+      <Input
+        label={t('login-password')}
+        name="password"
+        type="password"
+        required
+      />
+      <FormError />
       <Row>
         <Col className="flex-grow-0 flex-shrink-1">
           <FormControls submitLabel={t('login-submit')} />
