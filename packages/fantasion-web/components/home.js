@@ -38,7 +38,7 @@ const FlavourText = ({ quoteOwner, text, ...props }) => {
 }
 
 const FlavourTextCarousel = ({ flavourTexts, ...props }) => {
-  const [flavourIndex] = useRotatingIndex(flavourTexts)
+  const [flavourIndex] = useRotatingIndex(flavourTexts, 9000)
   const flavour = flavourTexts[flavourIndex]
   if (!flavour) {
     return null

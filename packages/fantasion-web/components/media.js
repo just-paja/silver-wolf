@@ -88,7 +88,7 @@ export const SlideShowGallery = ({
   ...props
 }) => {
   const validMedia = media.filter(isValid)
-  const [activeIndex] = useRotatingIndex(validMedia, 24000)
+  const [activeIndex] = useRotatingIndex(validMedia, 6000)
   return (
     <div
       className={classnames(className, styles.slideShow, {
