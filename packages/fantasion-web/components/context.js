@@ -21,7 +21,7 @@ export const SiteContextProvider = ({ children, user }) => {
   const logout = useCallback(() => {
     setCookies(TOKEN_COOKIE, null, { sameSite: 'strict' })
     router.push(reverse(lang, 'home'))
-  }, [user])
+  }, [lang, router])
   const context = useMemo(
     () => ({
       fetch: curryAuth(authCookie),

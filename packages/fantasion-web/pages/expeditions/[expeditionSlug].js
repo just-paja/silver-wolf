@@ -4,46 +4,31 @@ import React from 'react'
 import Row from 'react-bootstrap/Row'
 
 import { ArticleBody, ArticleLead } from '../../components/articles'
-import { apiFetch, NotFound } from '../../api'
 import { asPage, MetaPage } from '../../components/meta'
-import { asStatusCodePage } from '../../components/references'
 import { Breadcrumbs } from '../../components/breadcrumbs'
-import { Heading } from '../../components/media'
 import { GenericPage } from '../../components/layout'
-import { getPageProps } from '../../server/props'
+import { Heading } from '../../components/media'
 import { LeisureCentreStub } from '../../components/leisureCentres'
 import { parseSlug, slug } from '../../components/slugs'
 import { ThumbGallery } from '../../components/media'
 import { useTranslation } from 'next-i18next'
+import { withPageProps } from '../../server/props'
 import {
   ExpeditionBatches,
   ExpeditionTheme,
   getDefaultBase,
 } from '../../components/expeditions'
 
-export const getExpedition = async (expeditionId) => {
-  try {
-    return await apiFetch(`/expeditions/${expeditionId}`)
-  } catch (e) {
-    if (e instanceof NotFound) {
-      return null
-    }
-    throw e
-  }
-}
-
-export const getServerSideProps = async (props) => {
-  const expeditionId = parseSlug(props.params.expeditionSlug)
-  const expedition = await getExpedition(expeditionId)
+export const getServerSideProps = withPageProps(async ({ fetch, params }) => {
+  const expeditionId = parseSlug(params.expeditionSlug)
+  const expedition = await fetch(`/expeditions/${expeditionId}`)
   return {
     props: {
       expeditionId,
       expedition,
-      statusCode: expedition ? 200 : 404,
-      ...(await getPageProps(props)).props,
     },
   }
-}
+})
 
 const ExpeditionDetail = ({ expedition }) => {
   const { t } = useTranslation()
@@ -93,4 +78,4 @@ const ExpeditionDetail = ({ expedition }) => {
   )
 }
 
-export default asPage(asStatusCodePage(ExpeditionDetail))
+export default asPage(ExpeditionDetail)

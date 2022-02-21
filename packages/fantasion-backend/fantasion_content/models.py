@@ -2,7 +2,9 @@ from django_extensions.db.models import TimeStampedModel
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import CharField, TextField
 
+
 from fantasion_generics.media import MediaParentField
+from fantasion_generics.titles import DescriptionField
 
 from fantasion_generics.models import (
     ImportanceField,
@@ -87,3 +89,28 @@ class StaticArticle(PublicModel):
 
 class StaticArticleMedia(MediaObjectModel):
     parent = MediaParentField(StaticArticle)
+
+
+class Monster(TimeStampedModel):
+    class Meta:
+        ordering = ["-importance"]
+        verbose_name = _("Monster")
+        verbose_name_plural = _("Monsters")
+
+    species = CharField(
+        help_text=_("Name of the monsters species."),
+        max_length=255,
+        verbose_name=_("Species"),
+    )
+    description = DescriptionField()
+    text = MarkdownField(
+        blank=True,
+        null=True,
+        verbose_name=_("Text"),
+    )
+    importance = ImportanceField()
+    public = VisibilityField()
+
+
+class MonsterMedia(MediaObjectModel):
+    parent = MediaParentField(Monster)

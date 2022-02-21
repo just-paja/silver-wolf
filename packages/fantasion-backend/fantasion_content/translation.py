@@ -18,6 +18,16 @@ class FrequentlyAskedQuestionMediaOptions(TranslationOptions):
     fields = ('description', )
 
 
+@register(models.Monster)
+class MonsterOptions(TranslationOptions):
+    fields = ('species', 'description', 'text')
+
+
+@register(models.MonsterMedia)
+class MonsterMediaOptions(TranslationOptions):
+    fields = ('description', )
+
+
 @register(models.StaticArticle)
 class StaticArticleTranslationOptions(TranslationOptions):
     fields = ('title', 'description', 'text')

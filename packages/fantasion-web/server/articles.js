@@ -1,12 +1,11 @@
-import { apiFetch } from '../api'
 import { withPageProps } from './props'
 
-export const getArticleByKey = async (articleKey) =>
-  await apiFetch(`/static-articles/${articleKey}`)
+export const getArticleByKey = async (fetch, articleKey) =>
+  await fetch(`/static-articles/${articleKey}`)
 
 export const createStaticArticlePageGetter = (articleKey) =>
-  withPageProps(async () => ({
+  withPageProps(async ({ fetch }) => ({
     props: {
-      article: await getArticleByKey(articleKey),
+      article: await getArticleByKey(fetch, articleKey),
     },
   }))

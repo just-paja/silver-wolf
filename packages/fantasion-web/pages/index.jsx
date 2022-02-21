@@ -1,7 +1,6 @@
 import Container from 'react-bootstrap/Container'
 import React from 'react'
 
-import { apiFetch } from '../api'
 import { asPage, MetaPage } from '../components/meta'
 import { ExpeditionList } from '../components/ExpeditionList'
 import { GenericPage } from '../components/layout'
@@ -12,15 +11,11 @@ import { useTranslation } from 'next-i18next'
 
 import styles from './index.module.scss'
 
-const getExpeditions = async () => apiFetch('/expeditions')
-
-const getFlavourTexts = async () => apiFetch('/flavour-texts')
-
-export const getServerSideProps = withPageProps(async () => ({
+export const getServerSideProps = withPageProps(async ({ fetch }) => ({
   props: {
-    aboutUs: await getArticleByKey('about-us'),
-    expeditions: await getExpeditions(),
-    flavourTexts: await getFlavourTexts(),
+    aboutUs: await getArticleByKey(fetch, 'about-us'),
+    expeditions: await fetch('/expeditions'),
+    flavourTexts: await fetch('/flavour-texts'),
   },
 }))
 

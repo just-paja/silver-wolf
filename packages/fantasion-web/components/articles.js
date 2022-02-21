@@ -6,7 +6,6 @@ import Row from 'react-bootstrap/Row'
 
 import { HeadingLevelContext, useHeadingLevel } from './context'
 import { asPage, MetaPage } from './meta'
-import { asStatusCodePage } from './references'
 import { GenericPage } from './layout'
 import { Link } from './links'
 import { MarkdownContent } from './content'
@@ -61,16 +60,14 @@ export const Article = ({
   )
 }
 
-export const StaticArticlePage = asPage(
-  asStatusCodePage(({ article }) => (
-    <GenericPage>
-      <MetaPage title={article.title} description={article.description} />
-      <Article
-        title={article.title}
-        description={article.description}
-        media={article.media}
-        text={article.text}
-      />
-    </GenericPage>
-  ))
-)
+export const StaticArticlePage = asPage(({ article }) => (
+  <GenericPage>
+    <MetaPage title={article.title} description={article.description} />
+    <Article
+      title={article.title}
+      description={article.description}
+      media={article.media}
+      text={article.text}
+    />
+  </GenericPage>
+))

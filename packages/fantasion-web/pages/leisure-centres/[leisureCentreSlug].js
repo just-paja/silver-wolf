@@ -1,36 +1,21 @@
 import React from 'react'
 
-import { apiFetch, NotFound } from '../../api'
 import { asPage, MetaPage } from '../../components/meta'
-import { asStatusCodePage } from '../../components/references'
 import { GenericPage } from '../../components/layout'
-import { getPageProps } from '../../server/props'
-import { parseSlug } from '../../components/slugs'
 import { LeisureCentre } from '../../components/leisureCentres'
+import { parseSlug } from '../../components/slugs'
+import { withPageProps } from '../../server/props'
 
-export const getLeisureCentre = async (leisureCentreId) => {
-  try {
-    return await apiFetch(`/leisure-centres/${leisureCentreId}`)
-  } catch (e) {
-    if (e instanceof NotFound) {
-      return null
-    }
-    throw e
-  }
-}
-
-export const getServerSideProps = async (props) => {
-  const leisureCentreId = parseSlug(props.params.leisureCentreSlug)
-  const leisureCentre = await getLeisureCentre(leisureCentreId)
+export const getServerSideProps = withPageProps(async ({ fetch, params }) => {
+  const leisureCentreId = parseSlug(params.leisureCentreSlug)
+  const leisureCentre = await fetch(`/leisure-centres/${leisureCentreId}`)
   return {
     props: {
       leisureCentreId,
       leisureCentre,
-      statusCode: leisureCentre ? 200 : 404,
-      ...(await getPageProps(props)).props,
     },
   }
-}
+})
 
 const ExpeditionDetail = ({ leisureCentre }) => (
   <GenericPage>
@@ -42,4 +27,4 @@ const ExpeditionDetail = ({ leisureCentre }) => (
   </GenericPage>
 )
 
-export default asPage(asStatusCodePage(ExpeditionDetail))
+export default asPage(ExpeditionDetail)

@@ -1,14 +1,12 @@
 import classnames from 'classnames'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-import Dropdown from 'react-bootstrap/Dropdown'
 import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import Nav from 'react-bootstrap/Nav'
 import Row from 'react-bootstrap/Row'
 
 import { Alerts } from './alerts'
-import { breakpoints, useBreakpoint } from './breakpoints'
 import { HiMenu } from 'react-icons/hi'
 import { Link, Linker } from './links'
 import { PageTopGallery } from './media'
@@ -85,7 +83,6 @@ export const SiteNavbar = ({ fixed, sticky }) => {
   const ref = useRef(null)
   const [scrollTop] = useScroll()
   const [expanded, setExpanded] = useState(false)
-  const [, breakpointSize] = useBreakpoint()
 
   const handleClickOutside = () => {
     setExpanded(false)

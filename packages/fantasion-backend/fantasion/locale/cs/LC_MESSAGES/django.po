@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-20 12:58+0100\n"
+"POT-Creation-Date: 2022-02-21 01:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgstr "Bezpečnostní informace"
 msgid "Personal information"
 msgstr "Osobní informace"
 
-#: fantasion/admin_models.py:22
+#: fantasion/admin_models.py:29
 msgid "Permissions"
 msgstr "Oprávnění"
 
@@ -142,14 +142,16 @@ msgstr "Dostali jsme od Vás požadavek na obnovení hesla"
 #: fantasion/templates/mail/password_refresh.html:10
 msgid ""
 "Please follow the link below to restore your Fantasion account password."
-msgstr "Následujte odkaz uvedený níže a obnovíte si heslo k vašemu Fantasion účtu."
+msgstr ""
+"Následujte odkaz uvedený níže a obnovíte si heslo k vašemu Fantasion účtu."
 
 #: fantasion/templates/mail/password_refresh.html:18
 msgid ""
 "If you did not request this, you can ignore this e-mail. If this happens "
 "repeatedly, let us know."
-msgstr "Pokud jste o obnovu hesla nepožádali, můžete tento e-mail ignorovat. "
-"Přijde-li vám podobný e-mail vícekrát, dejte nám vědět."
+msgstr ""
+"Pokud jste o obnovu hesla nepožádali, můžete tento e-mail ignorovat. Přijde-"
+"li vám podobný e-mail vícekrát, dejte nám vědět."
 
 #: fantasion/templates/mail/signup_confirmation.html:5
 msgid "Thank you for registering!"
@@ -159,88 +161,116 @@ msgstr "Děkujeme za registraci!"
 msgid "We only need you to confirm your e-mail by following the link below"
 msgstr "Potřebujeme ověřit váš e-mail. Stačí kliknout na odkaz uvedený níže."
 
-#: fantasion_api/users.py:28
+#: fantasion_api/users.py:34
 msgid "Password does not match the confirmation value"
 msgstr "Hesla nesouhlasí"
+
+#: fantasion_api/users.py:45
+msgid "User does not exist"
+msgstr "Uživatel neexistuje"
+
+#: fantasion_api/users.py:63
+msgid "Invalid combination of e-mail and password"
+msgstr "Neplatná kombinace e-mailu a hesla"
 
 #: fantasion_content/apps.py:7
 msgid "Fantasion Content"
 msgstr "Obsah"
 
-#: fantasion_content/models.py:19 fantasion_content/models.py:23
+#: fantasion_content/models.py:21 fantasion_content/models.py:25
 msgid "Flavour Text"
 msgstr "Chuťový text"
 
-#: fantasion_content/models.py:20
+#: fantasion_content/models.py:22
 msgid "Flavour Texts"
 msgstr "Chuťové texty"
 
-#: fantasion_content/models.py:25
+#: fantasion_content/models.py:27
 msgid ""
 "Write down a short quote displayed on the web for fun and topromote the "
 "atmosphere on the summer camp"
 msgstr "Napiš krátký text, který propaguje atmosféru na táboře"
 
-#: fantasion_content/models.py:30
+#: fantasion_content/models.py:32
 msgid "Quote Owner"
 msgstr "Autor hlášky"
 
-#: fantasion_content/models.py:32
+#: fantasion_content/models.py:34
 msgid "A name that will be displayed as the original author of the quote"
 msgstr "Jméno, které se zobrazí jako původní autor textu"
 
-#: fantasion_content/models.py:41
+#: fantasion_content/models.py:43
 msgid "Frequently Asked Question"
 msgstr "Často kladená otázka"
 
-#: fantasion_content/models.py:42
+#: fantasion_content/models.py:44
 msgid "Frequently Asked Questions"
 msgstr "Často kladené otázky"
 
-#: fantasion_content/models.py:45
+#: fantasion_content/models.py:47
 msgid "Question"
 msgstr "Otázka"
 
-#: fantasion_content/models.py:47
+#: fantasion_content/models.py:49
 msgid "Write the question from perspective of the person asking it."
 msgstr "Napište otázku z perspektivy člověka, který se na ní ptá"
 
-#: fantasion_content/models.py:50
+#: fantasion_content/models.py:52
 msgid "Answer"
 msgstr "Odpověď"
 
-#: fantasion_content/models.py:52
+#: fantasion_content/models.py:54
 msgid "Write a quick summarizing positive answer that resolves the question"
 msgstr "Napiš krátkou shrnující pozitivní odpověď, která řeší tuto otázku"
 
-#: fantasion_content/models.py:56
+#: fantasion_content/models.py:58
 msgid "Detailed Answer"
 msgstr "Detailní odpověď"
 
-#: fantasion_content/models.py:57
+#: fantasion_content/models.py:59
 msgid "Write all the details, do not spare the letters"
 msgstr "Napiš všechny detaily a nešetři písmenka"
 
-#: fantasion_content/models.py:71 fantasion_content/models.py:72
+#: fantasion_content/models.py:73 fantasion_content/models.py:74
 msgid "Static Articles"
 msgstr "Statické články"
 
-#: fantasion_content/models.py:77
+#: fantasion_content/models.py:79
 msgid "Article key"
 msgstr "Identifikátor článku"
 
-#: fantasion_content/models.py:79
+#: fantasion_content/models.py:81
 msgid "Unique key used to reference the article directly on the API"
 msgstr ""
 "Jedinečný identifikátor, pomocí kterého bude článek referencován na webu"
 
-#: fantasion_content/models.py:82
+#: fantasion_content/models.py:84
 msgid "Article text"
 msgstr "Text článku"
 
-#: fantasion_content/models.py:83
+#: fantasion_content/models.py:85
 msgid "Your article content formatted in Markdown"
 msgstr "Kompletní text článku bez perexu formátovaný pomocí jazyka Markdown"
+
+#: fantasion_content/models.py:97
+msgid "Monster"
+msgstr "Monstrum"
+
+#: fantasion_content/models.py:98
+msgid "Monsters"
+msgstr "Monstra"
+
+#: fantasion_content/models.py:101
+msgid "Name of the monsters species."
+msgstr "Název rasy stvoření"
+
+#: fantasion_content/models.py:103
+msgid "Species"
+msgstr "Rasa"
+
+#: fantasion_content/models.py:109
+msgid "Text"
+msgstr "Text"
 
 #: fantasion_eshop/apps.py:7
 msgid "Fantasion Eshop"

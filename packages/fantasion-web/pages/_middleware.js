@@ -17,7 +17,7 @@ const getBestLocale = (req) =>
 const getProto = (req) =>
   req.headers['x-forwarded-proto'] || req.proto === 'https' ? 'https' : 'http'
 
-const getOrigin = (req) => `${getProto(req)}://${request.headers.host}`
+const getOrigin = (req) => `${getProto(req)}://${req.headers.host}`
 
 const redirectToLocalizedUrl = (req) =>
   NextResponse.redirect(

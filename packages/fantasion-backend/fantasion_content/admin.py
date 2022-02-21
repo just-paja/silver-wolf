@@ -25,6 +25,24 @@ class FrequentlyAskedQuestion(TranslatedAdmin):
     inlines = (FrequentlyAskedQuestionMediaAdmin, )
 
 
+class MonsterMediaAdmin(MediaAdmin):
+    model = models.MonsterMedia
+
+
+class Monster(TranslatedAdmin):
+    model = models.Monster
+    list_display = (
+        'id',
+        'species',
+        'description',
+        'text',
+        'importance',
+        'public',
+    )
+    list_filter = ('public', )
+    inlines = (MonsterMediaAdmin, )
+
+
 class StaticArticleMediaAdmin(MediaAdmin):
     model = models.StaticArticleMedia
 
