@@ -5,6 +5,14 @@ const { version } = require('./package.json')
 
 const baseDomain = process.env.FRONTEND_HOST || 'fantasion.cz'
 const typoDomains = ['fantazion.cz', 'www.fantazion.cz', 'www.fantasion.cz']
+const oneYear = 31536000
+const securityHeaders = [
+  { key: 'X-DNS-Prefetch-Control', value: 'on' },
+  {
+    key: 'Strict-Transport-Security',
+    value: `max-age=${oneYear}; includeSubdomains; preload`,
+  },
+]
 
 module.exports = {
   assetPrefix: process.env.STATIC_ROOT
@@ -27,6 +35,14 @@ module.exports = {
         ? new URL(process.env.STATIC_ROOT).hostname
         : null,
     ].filter(Boolean),
+  },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: securityHeaders,
+      },
+    ]
   },
   async redirects() {
     return [
