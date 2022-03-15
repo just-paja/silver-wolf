@@ -66,12 +66,14 @@ const UserMenu = () => {
   const { logout, user } = useSite()
   const items = [
     !user && (
-      <Linker route="login">
+      <Linker key="login" route="login">
         <Nav.Link>{t('login')}</Nav.Link>
       </Linker>
     ),
     user?.passwordCreated && (
-      <Nav.Link onClick={logout}>{t('logout')}</Nav.Link>
+      <Nav.Link key="logout" onClick={logout}>
+        {t('logout')}
+      </Nav.Link>
     ),
   ].filter(Boolean)
 
