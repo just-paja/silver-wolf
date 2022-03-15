@@ -5,6 +5,11 @@ import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import Nav from 'react-bootstrap/Nav'
 import Row from 'react-bootstrap/Row'
+import Rune01 from './runes/rune-01.svg'
+import Rune02 from './runes/rune-02.svg'
+import Rune03 from './runes/rune-03.svg'
+import Rune04 from './runes/rune-04.svg'
+import Rune05 from './runes/rune-05.svg'
 
 import { Alerts } from './alerts'
 import { HiMenu } from 'react-icons/hi'
@@ -18,12 +23,6 @@ import { useSite, useUser } from './context'
 import { useTranslation } from 'next-i18next'
 
 import styles from './layout.module.scss'
-
-import rune1 from '../public/runes/01.webp'
-import rune2 from '../public/runes/02.webp'
-import rune3 from '../public/runes/03.webp'
-import rune4 from '../public/runes/04.webp'
-import rune5 from '../public/runes/05.webp'
 
 const expandOn = 'lg'
 
@@ -234,19 +233,21 @@ export const GalleryPage = ({ children, media }) => {
   )
 }
 
+const runes = [Rune01, Rune02, Rune03, Rune04, Rune05]
+
 export const Runes = () => {
   const [scrollTop, scrollTopMax] = useScroll()
   const distance = scrollTopMax === 0 ? 1 : scrollTop / scrollTopMax
-  const runes = [rune1, rune2, rune3, rune4, rune5]
 
   return (
     <div className={styles.runes}>
-      {runes.map((rune, index) => (
-        <div
-          key={index}
+      {runes.map((Rune, index) => (
+        <Rune
           className={styles.rune}
-          style={{ backgroundImage: `url(${rune.src})`, opacity: distance }}
-        ></div>
+          fill="currentColor"
+          key={index}
+          style={{ opacity: distance }}
+        />
       ))}
     </div>
   )

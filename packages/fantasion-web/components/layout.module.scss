@@ -151,9 +151,11 @@
   background-repeat: no-repeat;
   background-size: contain;
   display: block;
+  filter: drop-shadow(0 0 calc($spacer / 4) rgba($primary, 0.66));
   margin: calc($spacer / 4);
   opacity: 0.1;
   transition: 0.4s opacity;
+  color: $primary;
   height: calc($spacer * 2);
   width: calc($spacer * 2);
 }
@@ -165,8 +167,8 @@
 
 @media (min-width: map-get($grid-breakpoints, 'sm')) {
   .rune {
-    height: calc($spacer * 3);
-    width: calc($spacer * 3);
+    height: calc($spacer * 2.5);
+    width: calc($spacer * 2.5);
   }
 }
 
@@ -178,8 +180,8 @@
   }
 
   .rune {
-    height: calc($spacer * 4);
-    width: calc($spacer * 4);
+    height: calc($spacer * 2.5);
+    width: calc($spacer * 2.5);
   }
 }
 
