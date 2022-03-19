@@ -1,6 +1,8 @@
 import fetch from 'cross-fetch'
+import getConfig from 'next/config'
 
-const apiUrl = process.env.API_URL || 'http://localhost:8000/api/v1'
+const { publicRuntimeConfig } = getConfig()
+const { apiUrl } = publicRuntimeConfig
 
 export const TOKEN_COOKIE = 'authToken'
 export const TOKEN_HEADER = 'Authorization'

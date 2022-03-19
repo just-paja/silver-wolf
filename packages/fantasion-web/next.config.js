@@ -4,6 +4,7 @@ const { resolve } = require('path')
 const { version } = require('./package.json')
 
 const baseDomain = process.env.FRONTEND_HOST || 'fantasion.cz'
+const apiUrl = process.env.API_URL || 'http://localhost:8000/api/v1'
 const typoDomains = ['fantazion.cz', 'www.fantazion.cz', 'www.fantasion.cz']
 const oneYear = 31536000
 const securityHeaders = [
@@ -25,6 +26,7 @@ module.exports = {
     includePaths: [resolve(__dirname, '..', '..')],
   },
   publicRuntimeConfig: {
+    apiUrl,
     baseDomain,
     defaultLang,
   },
