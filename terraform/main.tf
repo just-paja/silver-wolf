@@ -128,6 +128,18 @@ module "backend_cloudrun" {
       value = var.DB_PASS,
     },
     {
+      name = "EMAIL_ROBOT_HOST",
+      value = var.EMAIL_ROBOT_HOST,
+    },
+    {
+      name = "EMAIL_ROBOT_HOST_PASS",
+      value = var.EMAIL_ROBOT_HOST_PASS,
+    },
+    {
+      name = "EMAIL_ROBOT_HOST_USER",
+      value = var.EMAIL_ROBOT_HOST_USER,
+    },
+    {
       name = "DB_USER",
       value = var.DB_USER,
     },

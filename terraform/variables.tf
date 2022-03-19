@@ -74,3 +74,8 @@ variable "BUCKET_PUBLIC" {
 variable "GS_CREDENTIALS" {
   type = string
 }
+
+variable "EMAIL_ROBOT_HOST" { type = string }
+variable "EMAIL_ROBOT_HOST_USER" { type = string }
+variable "EMAIL_ROBOT_HOST_PASS" { type = string }
+

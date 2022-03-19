@@ -169,6 +169,9 @@ jobs:
           TF_VAR_BUCKET_PUBLIC: ${{ secrets.BUCKET_PUBLIC }}
           TF_VAR_DB_PASS: ${{ secrets.DB_PASS }}
           TF_VAR_DB_USER: ${{ secrets.DB_USER }}
+          TF_VAR_EMAIL_ROBOT_HOST: ${{ secrets.EMAIL_ROBOT_HOST }}
+          TF_VAR_EMAIL_ROBOT_HOST_PASS: ${{ secrets.EMAIL_ROBOT_HOST_PASS }}
+          TF_VAR_EMAIL_ROBOT_HOST_USER: ${{ secrets.EMAIL_ROBOT_HOST_USER }}
           TF_VAR_FRONTEND_HOST: ${{ secrets.FRONTEND_HOST }}
           TF_VAR_GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
           TF_VAR_GCP_USER: ${{ secrets.GCP_USER }}
