@@ -33,6 +33,7 @@ resource "google_cloud_run_service" "service" {
 
     metadata {
       annotations = {
+        "autoscaling.knative.dev/minScale" = terraform.workspace == "production" ? "1" : "0"
         "autoscaling.knative.dev/maxScale" = "1"
         "run.googleapis.com/cloudsql-instances" = var.connection_name
       }
