@@ -117,11 +117,17 @@ const getOptions = (options, required) => {
   return opts
 }
 
-const describeError = (error) => {
+const describeError = (t, error) => {
   if (error.message) {
     return error.message
   }
-  return error
+  if (typeof error === 'string') {
+    return error
+  }
+  if (error.type) {
+    return t(`error-input-${error.type}`)
+  }
+  return t('error-unknown')
 }
 
 const getChangeWrapper = (field, onChange) => (e) => {
@@ -145,6 +151,7 @@ export const Input = ({
   ...props
 }) => {
   const { formId, register, formState } = useFormContext()
+  const { t } = useTranslation()
   const controlId = `${formId}-${name}`
   const htmlOptions = getOptions(options, required)
   const Component = resolveComponent(type, as)
@@ -184,7 +191,7 @@ export const Input = ({
       ) : null}
       {fieldError ? (
         <BsForm.Control.Feedback type="invalid">
-          {describeError(fieldError)}
+          {describeError(t, fieldError)}
         </BsForm.Control.Feedback>
       ) : null}
       {helpText ? <BsForm.Text as="div">{helpText}</BsForm.Text> : null}
