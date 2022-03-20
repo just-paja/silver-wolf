@@ -75,6 +75,21 @@ variable "GS_CREDENTIALS" {
   type = string
 }
 
+variable "ADMIN_SSO_CLIENT_ID" {
+  type = string
+  default = ""
+}
+
+variable "ADMIN_SSO_SECRET" {
+  type = string
+  default = ""
+}
+
+variable "ADMIN_SSO_SUPERUSER" {
+  type = string
+  default = ""
+}
+
 variable "EMAIL_ROBOT_HOST" { type = string }
 variable "EMAIL_ROBOT_HOST_USER" { type = string }
 variable "EMAIL_ROBOT_HOST_PASS" { type = string }

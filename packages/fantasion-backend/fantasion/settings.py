@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "admin_sso",
     "versatileimagefield",
     "rest_framework",
     "rest_framework.authtoken",
@@ -158,13 +159,17 @@ STATIC_URL = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 DJANGO_ADMIN_SSO = False
+DJANGO_ADMIN_SSO_DOMAIN = "fantasion.cz"
+DJANGO_ADMIN_SSO_OAUTH_CLIENT_ID = os.environ.get("ADMIN_SSO_CLIENT_ID", None)
+DJANGO_ADMIN_SSO_OAUTH_CLIENT_SECRET = os.environ.get("ADMIN_SSO_SECRET", None)
+DJANGO_ADMIN_SSO_SUPERUSER = os.environ.get("ADMIN_SSO_SUPERUSER", None)
 
 APP_WEBSITE_URL = os.environ.get("APP_WEBSITE_URL", "http://localhost:3000")
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'fantasion_api.auth.CsrfExemptAuth',
-        'rest_framework.authentication.TokenAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "fantasion_api.auth.CsrfExemptAuth",
+        "rest_framework.authentication.TokenAuthentication",
     ),
     "DEFAULT_PAGINATION_CLASS":
     ("rest_framework.pagination.PageNumberPagination"),
@@ -315,3 +320,10 @@ VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
         ("avatar", "crop__128x128"),
     ],
 }
+
+if DJANGO_ADMIN_SSO_OAUTH_CLIENT_ID and DJANGO_ADMIN_SSO_OAUTH_CLIENT_SECRET:
+    DJANGO_ADMIN_SSO = True
+    AUTHENTICATION_BACKENDS = (
+        "fantasion_domain.auth.SSOAuthBackend",
+        "django.contrib.auth.backends.ModelBackend",
+    )

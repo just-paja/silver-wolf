@@ -165,6 +165,9 @@ jobs:
         env:
           GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
           GS_CREDENTIALS: ${{ secrets.GS_CREDENTIALS }}
+          TF_VAR_ADMIN_SSO_CLIENT_ID: ${{ secrets.ADMIN_SSO_CLIENT_ID }}
+          TF_VAR_ADMIN_SSO_SECRET: ${{ secrets.ADMIN_SSO_SECRET }}
+          TF_VAR_ADMIN_SSO_SUPERUSER: ${{ secrets.ADMIN_SSO_SUPERUSER }}
           TF_VAR_BACKEND_HOST: ${{ secrets.BACKEND_HOST }}
           TF_VAR_BUCKET_PUBLIC: ${{ secrets.BUCKET_PUBLIC }}
           TF_VAR_DB_PASS: ${{ secrets.DB_PASS }}

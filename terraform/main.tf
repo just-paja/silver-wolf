@@ -104,6 +104,18 @@ module "backend_cloudrun" {
   connection_name = module.db.db_instance.connection_name
   envs = [
     {
+      name = "ADMIN_SSO_CLIENT_ID",
+      value = var.ADMIN_SSO_CLIENT_ID,
+    },
+    {
+      name = "ADMIN_SSO_SECRET",
+      value = var.ADMIN_SSO_SECRET,
+    },
+    {
+      name = "ADMIN_SSO_SUPERUSER",
+      value = var.ADMIN_SSO_SUPERUSER,
+    },
+    {
       name = "ALLOWED_HOSTS",
       value = var.BACKEND_HOST,
     },
