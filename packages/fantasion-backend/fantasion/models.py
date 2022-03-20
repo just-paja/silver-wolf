@@ -142,7 +142,7 @@ class EmailVerification(TimeStampedModel):
         base_url = settings.APP_WEBSITE_URL
         return {
             **context,
-            'landing_url': f'{base_url}/{landing_path}?{self.secret}',
+            'landing_url': f'{base_url}/{landing_path}?s={self.secret}',
             'website_url': settings.APP_WEBSITE_URL,
         }
 

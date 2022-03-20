@@ -15,7 +15,7 @@ import { useSite } from '../components/context'
 import { useTranslation } from 'next-i18next'
 import { withPageProps } from '../server/props'
 
-const parseSecret = (query) => Object.keys(query)[0]
+const parseSecret = (query) => query.s
 
 export const getServerSideProps = withPageProps(
   async ({ fetch, query, req, res }) => {
