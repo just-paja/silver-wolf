@@ -93,6 +93,12 @@
   }
 }
 
+.witcher, .witcherEyes {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: top center;
+}
+
 .witcher {
   background-image: url('../public/witcher-xs.webp');
   background-position: top center;
@@ -109,6 +115,22 @@
     display: block;
     padding-bottom: 100%;
   }
+
+  &:hover .witcherEyes {
+    opacity: 1;
+  }
+}
+
+.witcherEyes {
+  background-image: url('../public/witcher-eyes-xs.webp');
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: opacity 1s;
 }
 
 @media screen and (min-width: map-get($grid-breakpoints, 'sm')) {
@@ -136,5 +158,9 @@
 @media screen and (min-width: map-get($grid-breakpoints, 'xl')) {
   .witcher {
     background-image: url('../public/witcher-xl.webp');
+  }
+
+  .witcherEyes {
+    background-image: url('../public/witcher-eyes-xl.webp');
   }
 }

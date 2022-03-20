@@ -53,7 +53,11 @@ const FlavourTextCarousel = ({ flavourTexts, ...props }) => {
 }
 
 const Witcher = () => {
-  return <div className={styles.witcher} />
+  return (
+    <div className={styles.witcher}>
+      <div className={styles.witcherEyes} />
+    </div>
+  )
 }
 
 export const HomeFlavour = ({ flavourTexts }) => {
