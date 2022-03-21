@@ -1,13 +1,11 @@
 import classnames from 'classnames'
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
-import Modal from 'react-bootstrap/Modal'
-import React, { useState } from 'react'
+import React from 'react'
 import Row from 'react-bootstrap/Row'
 
 import { ArticleBody } from './articles'
 import { DateRange } from './dates'
-import { GeneralNewsletterForm } from './GeneralNewsletterForm'
 import { Heading } from './media'
 import { Link } from './links'
 import { LocationFuzzyName } from './locations'
@@ -16,6 +14,9 @@ import { TroopLabel } from './troops'
 import { useTranslation } from 'next-i18next'
 
 import styles from './expeditions.module.scss'
+
+export const ExpeditionContext = React.createContext(null)
+export const useExpedition = () => React.useContext(ExpeditionContext)
 
 const Troop = ({ ageMin, ageMax, startsAt, endsAt }) => {
   return (
@@ -30,35 +31,18 @@ const Troop = ({ ageMin, ageMax, startsAt, endsAt }) => {
   )
 }
 
-const SignupPopup = ({ onHide, show }) => {
+export const SignupButton = ({ expedition, batch }) => {
+  const { t } = useTranslation()
   return (
-    <Modal show={show} onHide={onHide}>
-      <Modal.Header closeButton>
-        <Modal.Title>Přihlášky ještě nejsou otevřené</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <p>
-          Na tábor se zatím přihlásit nedá, ale když nám zanecháte váš e-mail,
-          pošleme vám na něj promo kód s 5% slevou jakmile se otevřou.
-        </p>
-        <hr />
-        <GeneralNewsletterForm hideTitle />
-      </Modal.Body>
-    </Modal>
-  )
-}
-
-const SignupButton = (props) => {
-  const [show, setShow] = useState(false)
-  const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
-  return (
-    <>
-      <Button className={styles.signupButton} {...props} onClick={handleShow}>
-        Přihlásit na tábor
-      </Button>
-      <SignupPopup show={show} onHide={handleClose} />
-    </>
+    <Link
+      as={Button}
+      className={styles.signupButton}
+      route="expeditionSignup"
+      params={{ expeditionSlug: slug(expedition.id, expedition.title) }}
+      query={{ batchId: batch?.id }}
+    >
+      {t('signup-to-expedition')}
+    </Link>
   )
 }
 
@@ -92,7 +76,9 @@ const ExpeditionBatch = ({ batch, expedition }) => {
           </div>
         </Col>
         <Col className={styles.batchButtons} lg={6}>
-          {batch.troops.length === 0 ? null : <SignupButton />}
+          {batch.troops.length === 0 ? null : (
+            <SignupButton expedition={expedition} />
+          )}
           <Link
             as={Button}
             className={styles.detailsButton}

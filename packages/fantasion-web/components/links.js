@@ -1,11 +1,14 @@
 import NextLink from 'next/link'
 
+import { qsm } from 'query-string-manipulator'
 import { useTranslation } from 'next-i18next'
 import { reverse } from '../routes'
 
-export const Linker = ({ children, href, params, route }) => {
+export const Linker = ({ children, href, query, params, route }) => {
   const { i18n } = useTranslation()
-  const target = route ? reverse(i18n.resolvedLanguage, route, params) : href
+  const target = route
+    ? qsm(reverse(i18n.resolvedLanguage, route, params), { set: query })
+    : href
 
   return (
     <NextLink href={target} passHref>
@@ -25,10 +28,11 @@ export const Link = ({
   external,
   href,
   params,
+  query,
   route,
   ...props
 }) => (
-  <Linker href={href} params={params} route={route}>
+  <Linker href={href} params={params} query={query} route={route}>
     <As {...props} onClick={external && handleExternalClick}>
       {children}
     </As>

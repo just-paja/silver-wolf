@@ -11,6 +11,7 @@ import { GenericPage } from '../../components/layout'
 import { Heading } from '../../components/media'
 import { LeisureCentreStub } from '../../components/leisureCentres'
 import { parseSlug } from '../../components/slugs'
+import { SignupButton } from '../../components/expeditions'
 import { slug } from '../../components/slugs'
 import { useTranslation } from 'next-i18next'
 import { withPageProps } from '../../server/props'
@@ -68,6 +69,9 @@ const ExpeditionBatchDetailPage = ({ expeditionBatch }) => {
         <Row>
           <Col lg={6}>
             <BatchTroops troops={batch.troops} />
+            <div className="mt-3">
+              <SignupButton expedition={expedition} batch={batch} />
+            </div>
           </Col>
           <Col lg={6}>
             <LeisureCentreStub leisureCentre={batch.leisureCentre} />
