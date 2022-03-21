@@ -2,7 +2,7 @@ import re
 import secrets
 
 from django.conf import settings
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.core import mail
 from django_extensions.db.models import TimeStampedModel
 from django.template.loader import render_to_string
@@ -22,7 +22,36 @@ from django.db.models import (
 from phonenumber_field.modelfields import PhoneNumberField
 
 
+class FantasionUserManager(BaseUserManager):
+
+    def create_user(self, email, first_name, last_name, password=None):
+        if not email:
+            raise ValueError('Users must have an email')
+
+        user = self.model(
+            email=email,
+            first_name=first_name,
+            last_name=last_name,
+        )
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, first_name, last_name, password=None):
+        user = self.model(
+            email=email,
+            first_name=first_name,
+            last_name=last_name,
+        )
+        user.is_admin = True
+        user.is_staff = True
+        user.is_superuser = True
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+
 class User(AbstractUser):
+    manager = FantasionUserManager()
 
     class Meta:
         db_table = "auth_user"
