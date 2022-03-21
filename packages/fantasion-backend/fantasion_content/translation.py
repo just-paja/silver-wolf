@@ -20,7 +20,7 @@ class FrequentlyAskedQuestionMediaOptions(TranslationOptions):
 
 @register(models.Monster)
 class MonsterOptions(TranslationOptions):
-    fields = ('species', 'description', 'text')
+    fields = ('species', 'title', 'description', 'text')
 
 
 @register(models.MonsterMedia)

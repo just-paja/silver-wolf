@@ -6,7 +6,6 @@ import Row from 'react-bootstrap/Row'
 import { asPage, MetaPage } from '../components/meta'
 import { ContactCard } from '../components/ContactCard'
 import { GenericPage } from '../components/layout'
-import { GeneralNewsletterForm } from '../components/GeneralNewsletterForm'
 import { withPageProps } from '../server/props'
 import { useTranslation } from 'next-i18next'
 
@@ -26,9 +25,7 @@ const Contacts = () => {
             <h1>{t('contacts-title')}</h1>
             <ContactCard />
           </Col>
-          <Col md={6}>
-            <GeneralNewsletterForm className="mt-3" />
-          </Col>
+          <Col md={6}></Col>
         </Row>
       </Container>
     </GenericPage>

@@ -2,3 +2,4 @@
 /dist
 requirements.txt
 *.mo
+/.env

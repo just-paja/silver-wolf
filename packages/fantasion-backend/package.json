@@ -17,12 +17,12 @@
   "scripts": {
     "build": "npm run build:messages && npm run build:py && npm run build:requirements",
     "build:py": "poetry build -f sdist",
-    "build:messages": "poetry run ./manage.py compilemessages",
+    "build:messages": "poetry run python ./manage.py compilemessages",
     "build:requirements": "poetry export -f requirements.txt --output requirements.txt",
-    "collectstatic": "poetry run ./manage.py collectstatic --no-input",
-    "dev": "poetry run ./manage.py runserver",
+    "collectstatic": "poetry run python ./manage.py collectstatic --no-input",
+    "dev": "poetry run python ./manage.py runserver",
     "lint": "poetry run flake8",
-    "migrate": "poetry run ./manage.py migrate",
+    "migrate": "poetry run python ./manage.py migrate",
     "python-install": "poetry install"
   },
   "repository": {

@@ -1,7 +1,8 @@
 from rest_framework.serializers import HyperlinkedModelSerializer
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
-from fantasion_generics.api import PublicMediaSerializer, media_fields
+from fantasion_generics.api import PublicMediaSerializer
+from fantasion_generics.api import LocalPhotoSerializer, media_fields
 
 from . import models
 
@@ -54,3 +55,31 @@ class StaticArticleView(ReadOnlyModelViewSet):
     queryset = models.StaticArticle.objects.all()
     serializer_class = StaticArticleSerializer
     lookup_field = 'key'
+
+
+class ProfileMediaSerializer(PublicMediaSerializer):
+    class Meta:
+        model = models.MonsterMedia
+        fields = media_fields
+
+
+class MonsterSerializer(HyperlinkedModelSerializer):
+    avatar = LocalPhotoSerializer()
+    media = ProfileMediaSerializer(many=True)
+
+    class Meta:
+        model = models.Monster
+        fields = (
+            'description',
+            'id',
+            'species',
+            'avatar',
+            'media',
+            'text',
+            'title',
+        )
+
+
+class MonsterCollection(ReadOnlyModelViewSet):
+    queryset = models.Monster.objects.filter(public=True)
+    serializer_class = MonsterSerializer
