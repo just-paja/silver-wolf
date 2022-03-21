@@ -19,6 +19,14 @@ const cs = {
     source: '/dobrodruzstvi',
     destination: '/adventures',
   },
+  bestiary: {
+    source: '/bestiar',
+    destination: '/bestiary',
+  },
+  monsterDetail: {
+    source: '/monsters/:monsterSlug',
+    destination: '/monsters/:monsterSlug',
+  },
   confirmRegistration: {
     source: '/potvrzeni-registrace',
     destination: '/confirm-registration',

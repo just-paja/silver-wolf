@@ -3,8 +3,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models import CharField, TextField
 
 
+from fantasion_generics.upload_path import kebab
 from fantasion_generics.media import MediaParentField
-from fantasion_generics.titles import DescriptionField
+from fantasion_generics.photos import LocalPhotoField, WarmPhotoModel
 
 from fantasion_generics.models import (
     ImportanceField,
@@ -91,18 +92,22 @@ class StaticArticleMedia(MediaObjectModel):
     parent = MediaParentField(StaticArticle)
 
 
-class Monster(TimeStampedModel):
+class Monster(PublicModel, WarmPhotoModel):
     class Meta:
         ordering = ["-importance"]
         verbose_name = _("Monster")
         verbose_name_plural = _("Monsters")
-
     species = CharField(
-        help_text=_("Name of the monsters species."),
-        max_length=255,
+        help_text=_("Name of the monster species."),
+        max_length=30,
         verbose_name=_("Species"),
     )
-    description = DescriptionField()
+    description = CharField(
+        help_text=_("Short (max 5 words) description of monster."),
+        max_length=30,
+        verbose_name=_("Description"),
+    )
+    avatar = LocalPhotoField()
     text = MarkdownField(
         blank=True,
         null=True,
@@ -110,6 +115,13 @@ class Monster(TimeStampedModel):
     )
     importance = ImportanceField()
     public = VisibilityField()
+
+    @property
+    def upload_dir(self):
+        return "{0}/{1}".format(
+            kebab(self.__class__.__name__),
+            self.id,
+        )
 
 
 class MonsterMedia(MediaObjectModel):

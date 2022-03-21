@@ -67,6 +67,11 @@ router.register(
     people.ProfileCollection,
     basename='profiles',
 )
+router.register(
+    r'monsters',
+    content.MonsterCollection,
+    basename='monsters',
+)
 
 urlpatterns = [
     path('', include(router.urls)),

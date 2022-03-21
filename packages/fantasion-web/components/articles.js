@@ -18,7 +18,9 @@ export const ArticleBody = ({ className, text }) => (
 )
 
 export const ArticleLead = ({ text }) => (
-  <ArticleBody className="lead" text={text} />
+  <i>
+    <ArticleBody className="lead" text={text} />
+  </i>
 )
 
 export const ArticleHeading = ({ selfLink, children }) => {

@@ -32,10 +32,9 @@ class MonsterMediaAdmin(MediaAdmin):
 class Monster(TranslatedAdmin):
     model = models.Monster
     list_display = (
-        'id',
+        'title',
         'species',
         'description',
-        'text',
         'importance',
         'public',
     )
