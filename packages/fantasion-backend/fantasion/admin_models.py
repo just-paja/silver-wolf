@@ -42,6 +42,10 @@ class UserAdmin(BaseAdmin, auth_admin.UserAdmin):
         fieldset_permissions,
         fieldset_security,
     )
+    add_fieldsets = ((None, {
+        'classes': ('wide', ),
+        'fields': ('email', 'password1', 'password2'),
+    }), )
     list_display = (
         'email',
         'first_name',
