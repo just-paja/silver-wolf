@@ -88,4 +88,4 @@ def callback(request):
 def gauth(req):
     if settings.DJANGO_ADMIN_SSO:
         return redirect(reverse("sso_login"))
-    return redirect(reverse("content:login"))
+    return redirect(reverse("admin:login"))
