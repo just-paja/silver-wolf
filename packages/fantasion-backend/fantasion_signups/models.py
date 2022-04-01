@@ -33,6 +33,9 @@ class Participant(TimeStampedModel):
     )
     birthdate = DateField(verbose_name=_("Birth date"))
 
+    def __str__(self):
+        return f"{self.name} ({self.birthdate})"
+
 
 SIGNUP_STATUS_NEW = 1
 SIGNUP_STATUS_CONFIRMED = 2
