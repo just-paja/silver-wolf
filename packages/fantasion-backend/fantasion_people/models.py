@@ -101,6 +101,9 @@ class Family(TimeStampedModel):
     def can_user_own_order(self, user):
         return bool(self.get_family_member_by_user(user))
 
+    def __str__(self):
+        return self.title
+
     @property
     def upload_dir(self):
         return "{0}/{1}".format(
