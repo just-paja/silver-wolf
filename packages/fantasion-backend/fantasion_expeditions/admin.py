@@ -89,6 +89,7 @@ class ExpeditionProgramAdmin(TranslatedAdmin):
 class ProductPriceAdmin(NestedStackedInline):
     model = ProductPrice
     extra = 0
+    search_fields = ('product__title', 'price_level__title')
 
 
 class TroopAdmin(BaseAdmin):
@@ -111,6 +112,13 @@ class TroopAdmin(BaseAdmin):
     readonly_fields = ('description', )
     inlines = (ProductPriceAdmin, )
     autocomplete_fields = ('batch', 'program')
+    search_fields = (
+        'expedition__title',
+        'program__title',
+        'age_group__title',
+        'starts_at',
+        'ends_at',
+    )
 
     def expedition(self, instance):
         return instance.batch.expedition

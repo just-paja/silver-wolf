@@ -1,6 +1,7 @@
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.models import TimeStampedModel
 from django.conf import settings
+from django.db.models import Sum
 from django.core.validators import (
     MaxValueValidator,
     MinLengthValidator,
@@ -163,6 +164,12 @@ class Order(TimeStampedModel):
         related_name="orders",
         verbose_name=_("Order owner"),
     )
+
+    def calculate_price(self):
+        data = self.order_items.aggregate(Sum('price'))
+        return data['price__sum']
+
+    calculate_price.short_description = _('Price')
 
 
 class OrderItem(TimeStampedModel):

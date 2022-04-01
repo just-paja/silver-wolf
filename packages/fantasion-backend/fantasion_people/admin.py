@@ -46,3 +46,9 @@ class FamilyAdmin(BaseAdmin):
     model = models.Family
     list_display = ('title', )
     inlines = (FamilyMemberAdmin, )
+    search_fields = (
+        'title',
+        'owner__first_name',
+        'owner__last_name',
+        'owner__email',
+    )
