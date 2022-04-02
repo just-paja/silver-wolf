@@ -89,7 +89,7 @@ class SignupAdmin(BaseAdmin):
         return inst.batch_age_group.batch.expedition
 
     def participant_name(self, inst):
-        return inst.participant.name
+        return str(inst.participant)
 
     def participant_age(self, inst):
         today = date.today()
