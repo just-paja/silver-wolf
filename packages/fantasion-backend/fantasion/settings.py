@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "djmoney",
     "admin_sso",
     "versatileimagefield",
     "rest_framework",
@@ -320,6 +321,8 @@ VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
         ("avatar", "crop__128x128"),
     ],
 }
+
+CURRENCIES = ('CZK',)
 
 if DJANGO_ADMIN_SSO_OAUTH_CLIENT_ID and DJANGO_ADMIN_SSO_OAUTH_CLIENT_SECRET:
     DJANGO_ADMIN_SSO = True

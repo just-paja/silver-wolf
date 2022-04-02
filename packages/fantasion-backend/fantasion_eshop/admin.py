@@ -5,16 +5,6 @@ from nested_admin import NestedStackedInline
 from . import models
 
 
-class CurrencyAdmin(TranslatedAdmin):
-    model = models.Currency
-    list_display = (
-        'code',
-        'title',
-        'exchange_rate',
-        'enabled',
-    )
-
-
 class SignupAdmin(NestedStackedInline):
     model = Signup
     extra = 0
@@ -24,7 +14,6 @@ class SignupAdmin(NestedStackedInline):
         'batch_age_group',
         'product_price',
         'price',
-        'currency',
         'status',
         'legal_guardian',
         'cancelled_for',

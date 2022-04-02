@@ -19,7 +19,7 @@ from django.db.models import (
 )
 
 from fantasion_generics.models import PublicModel
-from fantasion_generics.titles import TitleField
+from fantasion_generics.money import MoneyField
 
 
 class EnabledField(BooleanField):
@@ -27,35 +27,6 @@ class EnabledField(BooleanField):
         kwargs.setdefault("default", True)
         kwargs.setdefault("verbose_name", _("Enabled"))
         super().__init__(*args, **kwargs)
-
-
-class Currency(TimeStampedModel):
-    """
-    Currency represents a a currency to be used in eshop orders. Currencies can
-    be converted between each other.
-    """
-    class Meta:
-        verbose_name = _("Currency")
-        verbose_name_plural = _("Currencies")
-
-    # Three+ letter code based on ISO-4217
-    code = CharField(
-        max_length=15,
-        verbose_name=_("Code"),
-        help_text=_("Currency code respecting ISO 4217."),
-    )
-    # Local name
-    title = TitleField()
-    exchange_rate = DecimalField(
-        decimal_places=6,
-        help_text=_("Exchange rate to base currency (CZK)"),
-        max_digits=9,
-        verbose_name=_("Exchange rate"),
-    )
-    enabled = EnabledField()
-
-    def __str__(self):
-        return self.code
 
 
 class PriceLevel(PublicModel):
@@ -105,7 +76,7 @@ class ProductPrice(TimeStampedModel):
     ProductPrice represents product price in a price level and a currency.
     """
     class Meta:
-        unique_together = ("product", "price_level", "currency")
+        unique_together = ("product", "price_level")
         verbose_name = _("E-shop Product Price")
         verbose_name_plural = _("E-shop Product Prices")
 
@@ -121,17 +92,7 @@ class ProductPrice(TimeStampedModel):
         related_name="prices",
         verbose_name=_("Price level"),
     )
-    currency = ForeignKey(
-        Currency,
-        on_delete=RESTRICT,
-        related_name="prices",
-        verbose_name=_("Currency"),
-    )
-    amount = DecimalField(
-        decimal_places=2,
-        max_digits=15,
-        verbose_name=_("Amount"),
-    )
+    price = MoneyField(verbose_name=_("Price"))
     available_since = DateTimeField(
         null=True,
         blank=True,
@@ -144,10 +105,9 @@ class ProductPrice(TimeStampedModel):
     )
 
     def __str__(self):
-        return "{product} {price_level} ({currency})".format(
+        return "{product} {price_level}".format(
             product=self.product,
             price_level=self.price_level,
-            currency=self.currency,
         )
 
 
@@ -189,17 +149,7 @@ class OrderItem(TimeStampedModel):
         related_name="order_items",
         verbose_name=_("Product Price"),
     )
-    price = DecimalField(
-        decimal_places=2,
-        max_digits=9,
-        verbose_name=_("Price"),
-    )
-    currency = ForeignKey(
-        Currency,
-        on_delete=RESTRICT,
-        related_name="order_items",
-        verbose_name=_("Currency"),
-    )
+    price = MoneyField(verbose_name=_("Price"))
 
     def save(self, *args, **kwargs):
         """
