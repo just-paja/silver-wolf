@@ -8,7 +8,13 @@ from . import models
 
 class ParticipantAdmin(BaseAdmin):
     model = models.Participant
-    search_fields = ('name', 'birthdate')
+    search_fields = ('first_name', 'last_name', 'birthdate')
+    list_display = (
+        'pk',
+        'first_name',
+        'last_name',
+        'created',
+    )
 
 
 class SignupDocumentTypeAdmin(BaseAdmin):

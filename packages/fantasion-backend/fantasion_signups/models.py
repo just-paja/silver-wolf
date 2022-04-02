@@ -27,14 +27,18 @@ class Participant(TimeStampedModel):
         verbose_name = _("Participant")
         verbose_name_plural = _("Participants")
 
-    name = CharField(
+    first_name = CharField(
         max_length=255,
-        verbose_name=_("Name"),
+        verbose_name=_("Given Name"),
+    )
+    last_name = CharField(
+        max_length=255,
+        verbose_name=_("Family Name"),
     )
     birthdate = DateField(verbose_name=_("Birth date"))
 
     def __str__(self):
-        return f"{self.name} ({self.birthdate})"
+        return f"{self.first_name} {self.last_name} ({self.birthdate})"
 
 
 SIGNUP_STATUS_NEW = 1
