@@ -1,4 +1,3 @@
-from django.apps import apps
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.models import TimeStampedModel
 from django.conf import settings
@@ -106,9 +105,10 @@ class ProductPrice(TimeStampedModel):
     )
 
     def __str__(self):
-        return "{product} {price_level}".format(
-            product=self.product,
+        return "{price_level} ({price}): {product}".format(
+            price=self.price,
             price_level=self.price_level,
+            product=self.product,
         )
 
 
@@ -123,22 +123,33 @@ class Order(TimeStampedModel):
         related_name="orders",
         verbose_name=_("Order owner"),
     )
-
-    price = MoneyField(verbose_name=_("Price"))
+    price = MoneyField(verbose_name=_("Total Price"))
+    deposit = MoneyField(
+        default=0,
+        verbose_name=_("Deposit"),
+    )
+    use_deposit_payment = BooleanField(
+        default=False,
+        help_text=_(
+            "System will split the payment into deposit and surcharge based "
+            "on Order Items configuration"
+        ),
+        verbose_name=_("Use Deposit Payment"),
+    )
 
     def calculate_price(self):
         data = self.order_items.aggregate(Sum('price'))
         return data['price__sum'] or 0
 
+    def get_surcharge(self):
+        return self.price - self.deposit
+
     def save(self, *args, **kwargs):
-       # for item in self.order_items.all():
-       #     Model = apps.get_model(item.product_type)
-       #     product = Model.objects.get(pk=item.pk)
-       #     product.save()
         self.price = self.calculate_price()
         return super().save(*args, **kwargs)
 
     calculate_price.short_description = _('Price')
+    get_surcharge.short_description = _('Surcharge')
 
 
 class OrderItem(TimeStampedModel):

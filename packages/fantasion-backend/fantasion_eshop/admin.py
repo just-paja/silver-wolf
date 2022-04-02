@@ -47,6 +47,8 @@ class OrderAdmin(BaseAdmin):
         'owner',
     )
     readonly_fields = (
+        'deposit',
+        'get_surcharge',
         'price',
     )
 
