@@ -117,8 +117,8 @@ class Signup(OrderItem):
         if self.family.can_user_own_order(self.order.owner):
             raise ValidationError(
                 _((
-                    "User {user_name} is not allowed to make signups on",
-                    "behalf of Family#{family_id}.",
+                    "User {user_name} is not allowed to make signups on"
+                    "behalf of Family#{family_id}."
                 )).format(
                     user_name=self.order.owner.get_full_name(),
                     family_id=self.family.id,
