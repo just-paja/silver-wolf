@@ -79,6 +79,10 @@ const cs = {
     source: '/obchodni-podminky',
     destination: '/terms-and-conditions',
   },
+  cookiesPolicy: {
+    source: '/cookies-podminky',
+    destination: '/cookies-policy',
+  },
 }
 
 const defaultLang = 'cs'

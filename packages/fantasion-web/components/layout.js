@@ -147,7 +147,7 @@ const FooterLinks = () => {
           <Link route="faq">{t('faq-title-short')}</Link>
         </li>
         <li>
-          <Link route="privacyPolicy">{t('cookies')}</Link>
+          <Link route="cookiesPolicy">{t('cookies')}</Link>
         </li>
         <li>
           <Link route="privacyPolicy">{t('personal-information')}</Link>
