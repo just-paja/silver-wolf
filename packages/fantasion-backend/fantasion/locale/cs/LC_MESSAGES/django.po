@@ -770,11 +770,11 @@ msgstr "Účastníci"
 
 #: fantasion_signups/models.py:32
 msgid "Given Name"
-msgstr ""
+msgstr "Křestní jméno"
 
 #: fantasion_signups/models.py:36
 msgid "Family Name"
-msgstr "Jméno rodiny"
+msgstr "Příjmení"
 
 #: fantasion_signups/models.py:38
 msgid "Birth date"

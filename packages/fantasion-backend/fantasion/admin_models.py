@@ -1,4 +1,7 @@
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import admin as auth_admin
+from django.contrib.auth import password_validation
 from django.utils.translation import ugettext_lazy as _
 
 from fantasion_generics.admin import BaseAdmin
@@ -34,9 +37,27 @@ fieldset_permissions = (
 )
 
 
+class FantasionUserCreationForm(UserCreationForm):
+    password1 = forms.CharField(
+        label=_("Password"),
+        strip=False,
+        required=False,
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    password2 = forms.CharField(
+        label=_("Password confirmation"),
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+        strip=False,
+        required=False,
+        help_text=_("Enter the same password as before, for verification."),
+    )
+
+
 class UserAdmin(BaseAdmin, auth_admin.UserAdmin):
     model = models.User
     ordering = ('last_name', )
+    add_form = FantasionUserCreationForm
     fieldsets = (
         fieldset_personal,
         fieldset_permissions,
@@ -44,7 +65,14 @@ class UserAdmin(BaseAdmin, auth_admin.UserAdmin):
     )
     add_fieldsets = ((None, {
         'classes': ('wide', ),
-        'fields': ('email', 'password1', 'password2'),
+        'fields': (
+            'first_name',
+            'last_name',
+            'email',
+            'phone',
+            'password1',
+            'password2',
+        ),
     }), )
     list_display = (
         'email',

@@ -59,6 +59,8 @@ class User(AbstractUser):
         verbose_name_plural = _('Users')
 
     username = None
+    first_name = CharField(_('Given Name'), max_length=150)
+    last_name = CharField(_('Family Name'), max_length=150)
     email = EmailField(
         verbose_name=_("email address"),
         unique=True,
@@ -71,6 +73,11 @@ class User(AbstractUser):
         verbose_name=_("Phone Number"),
         blank=True,
         null=True,
+    )
+    password = CharField(
+        _('password'),
+        max_length=128,
+        blank=True,
     )
     password_created = BooleanField(
         default=False,
