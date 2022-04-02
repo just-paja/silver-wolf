@@ -58,6 +58,7 @@ class UserAdmin(BaseAdmin, auth_admin.UserAdmin):
     model = models.User
     ordering = ('last_name', )
     add_form = FantasionUserCreationForm
+    search_fields = ('first_name', 'last_name', 'email')
     fieldsets = (
         fieldset_personal,
         fieldset_permissions,
