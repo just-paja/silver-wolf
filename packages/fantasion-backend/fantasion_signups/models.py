@@ -54,6 +54,19 @@ class ParticipantAllergy(TimeStampedModel):
     )
 
 
+class ParticipantHobby(TimeStampedModel):
+    participant = ForeignKey(
+        Participant,
+        on_delete=CASCADE,
+        related_name="participant_hobbies"
+    )
+    hobby = ForeignKey(
+        "fantasion_people.Hobby",
+        on_delete=RESTRICT,
+        related_name="participant_hobbies",
+    )
+
+
 SIGNUP_STATUS_NEW = 1
 SIGNUP_STATUS_CONFIRMED = 2
 SIGNUP_STATUS_DOWN_PAYMENT_PAID = 3
