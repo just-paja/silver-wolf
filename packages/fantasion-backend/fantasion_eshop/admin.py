@@ -18,12 +18,25 @@ class OrderSignupAdmin(NestedStackedInline):
         'legal_guardian',
         'cancelled_for',
     )
+    add_fields = (
+        'family',
+        'participant',
+        'troop',
+        'product_price',
+        'price',
+        'legal_guardian',
+    )
     autocomplete_fields = (
         'troop',
         'family',
         'participant',
         'product_price',
     )
+
+    def get_fields(self, request, obj=None):
+        if not obj:
+            return self.add_fields
+        return super().get_fields(request, obj)
 
 
 class OrderPromotionCodeAdmin(NestedStackedInline):
