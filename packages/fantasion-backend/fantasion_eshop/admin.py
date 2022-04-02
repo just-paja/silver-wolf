@@ -42,9 +42,12 @@ class OrderSignupAdmin(NestedStackedInline):
 class OrderPromotionCodeAdmin(NestedStackedInline):
     model = models.OrderPromotionCode
     extra = 0
-    autocomplete_fields = ('promotion_code',)
-    readonly_fields = ('price',)
-    fields = ('promotion_code', 'price',)
+    autocomplete_fields = ('promotion_code', )
+    readonly_fields = ('price', )
+    fields = (
+        'promotion_code',
+        'price',
+    )
     add_fields = ('promotion_code', )
 
     def get_fields(self, request, obj=None):
@@ -62,9 +65,7 @@ class OrderAdmin(BaseAdmin):
         'owner',
         'created',
     )
-    autocomplete_fields = (
-        'owner',
-    )
+    autocomplete_fields = ('owner', )
     readonly_fields = (
         'deposit',
         'get_surcharge',
@@ -76,7 +77,7 @@ class OrderAdmin(BaseAdmin):
     )
     deposit_fields = (
         'deposit',
-        'surcharge',
+        'get_surcharge',
         'price',
     )
 
