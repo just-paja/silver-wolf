@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-02 13:15+0200\n"
+"POT-Creation-Date: 2022-04-02 13:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -383,33 +383,33 @@ msgstr "Procentuální sleva z celé objednávky"
 msgid "Maximum discount"
 msgstr "Maximální sleva"
 
-#: fantasion_eshop/models.py:199
-msgid "The system will cap the absolute discount. Use base currency (CZK)"
-msgstr "System zeshora omezí absolutní slevu. Použijte základní měnu (CZK)"
+#: fantasion_eshop/models.py:198
+msgid "The system will cap the absolute discount."
+msgstr "System zeshora omezí absolutní slevu."
 
-#: fantasion_eshop/models.py:205
+#: fantasion_eshop/models.py:203
 msgid "Maximum Usages"
 msgstr "Maximum použití"
 
-#: fantasion_eshop/models.py:207
+#: fantasion_eshop/models.py:205
 msgid ""
 "This Promotion Code can be used only so many times, then it will be "
 "deactivated"
 msgstr "Kód bude možné použít pouze tolikrát. Potom bude deaktivován."
 
-#: fantasion_eshop/models.py:214
+#: fantasion_eshop/models.py:212
 msgid "Valid from"
 msgstr "Platné od"
 
-#: fantasion_eshop/models.py:216
+#: fantasion_eshop/models.py:214
 msgid "This Promotion Code will be invalid until this date and time"
 msgstr "Kód začne platit s uplynutím tohoto data a času"
 
-#: fantasion_eshop/models.py:221 fantasion_signups/models.py:201
+#: fantasion_eshop/models.py:219 fantasion_signups/models.py:201
 msgid "Valid until"
 msgstr "Platné do"
 
-#: fantasion_eshop/models.py:223
+#: fantasion_eshop/models.py:221
 msgid "This Promotion Code will be invalid after this date and time"
 msgstr "Kód přestane platit s uplynutím tohoto data a času"
 
@@ -773,10 +773,8 @@ msgid "Given Name"
 msgstr ""
 
 #: fantasion_signups/models.py:36
-#, fuzzy
-#| msgid "Family member"
 msgid "Family Name"
-msgstr "Rodinný člen"
+msgstr "Jméno rodiny"
 
 #: fantasion_signups/models.py:38
 msgid "Birth date"

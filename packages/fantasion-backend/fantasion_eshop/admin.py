@@ -64,3 +64,10 @@ class ProductPriceAdmin(BaseAdmin):
     model = models.ProductPrice
     extra = 0
     search_fields = ('product__title', 'price_level__title')
+    list_display = (
+        'product',
+        'price_level',
+        'price',
+        'available_since',
+        'available_until',
+    )

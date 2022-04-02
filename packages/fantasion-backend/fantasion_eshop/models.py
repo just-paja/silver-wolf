@@ -191,13 +191,11 @@ class PromotionCode(TimeStampedModel):
         verbose_name=_("Discount"),
         help_text=_("This percentage will be cut of the total order price."),
     )
-    max_discount = PositiveIntegerField(
+    max_discount = MoneyField(
         blank=True,
         null=True,
         verbose_name=_("Maximum discount"),
-        help_text=_(
-            "The system will cap the absolute discount. Use base currency "
-            "(CZK)"),
+        help_text=_("The system will cap the absolute discount."),
     )
     max_usages = PositiveIntegerField(
         default=10,
