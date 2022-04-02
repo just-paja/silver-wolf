@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from admin_sso.admin import AssignmentAdmin
 from admin_sso.models import Assignment
 
+from fantasion_banking import admin as banking
 from fantasion_content import admin as content
 from fantasion_domain.views import gauth
 from fantasion_eshop import admin as eshop
@@ -23,6 +24,7 @@ class ContentAdminSite(BaseAdminSite):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.hookup_module(banking)
         self.hookup_module(base)
         self.hookup_module(content)
         self.hookup_module(eshop)

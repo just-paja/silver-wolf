@@ -6,6 +6,7 @@ authors = ["Pavel Žák <pavel@zak.global>"]
 packages = [
   { include = "fantasion" },
   { include = "fantasion_api" },
+  { include = "fantasion_banking" },
   { include = "fantasion_content" },
   { include = "fantasion_domain" },
   { include = "fantasion_eshop" },
@@ -43,6 +44,8 @@ django-phonenumber-field = {extras = ["phonenumberslite"], version = "^6.0.0"}
 django-admin-sso = "^5.0.0"
 python-magic-bin = {version = "^0.4.14", platform = "win32"}
 django-money = "^2.1.1"
+python-dateutil = "^2.8.2"
+django-encrypted-model-fields = "^0.6.5"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

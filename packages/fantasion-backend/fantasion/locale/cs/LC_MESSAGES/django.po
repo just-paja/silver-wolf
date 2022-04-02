@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-02 19:44+0200\n"
+"POT-Creation-Date: 2022-04-03 00:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
 "<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
-#: fantasion/admin.py:22
+#: fantasion/admin.py:23
 msgid "Base"
 msgstr "Fantasion"
 
@@ -152,11 +152,11 @@ msgstr "Potvrzení registrace"
 msgid "Forgotten password"
 msgstr "Zapomenuté heslo"
 
-#: fantasion/settings.py:144
+#: fantasion/settings.py:147
 msgid "Czech"
 msgstr "Čeština"
 
-#: fantasion/settings.py:145
+#: fantasion/settings.py:148
 msgid "English"
 msgstr "Angličtina"
 
@@ -197,6 +197,316 @@ msgstr "Uživatel neexistuje"
 #: fantasion_api/users.py:63
 msgid "Invalid combination of e-mail and password"
 msgstr "Neplatná kombinace e-mailu a hesla"
+
+#: fantasion_banking/accounts.py:30 fantasion_banking/accounts.py:71
+msgid "Account"
+msgstr "Účet"
+
+#: fantasion_banking/accounts.py:31
+msgid "Accounts"
+msgstr "Účty"
+
+#: fantasion_banking/accounts.py:37 fantasion_banking/accounts.py:58
+msgid "Ballance"
+msgstr "Zůstatek"
+
+#: fantasion_banking/accounts.py:42
+msgid "Driver"
+msgstr "Ovladač"
+
+#: fantasion_banking/accounts.py:64
+msgid "Bank Scrape"
+msgstr "Bankovní škrábanec"
+
+#: fantasion_banking/accounts.py:65
+msgid "Bank scrapes"
+msgstr "Bankovní škrábance"
+
+#: fantasion_banking/admin.py:24 fantasion_banking/admin.py:354
+msgid "Yes"
+msgstr "Ano"
+
+#: fantasion_banking/admin.py:25 fantasion_banking/admin.py:355
+msgid "No"
+msgstr "Ne"
+
+#: fantasion_banking/admin.py:51 fantasion_banking/time_limited.py:27
+msgid "Active"
+msgstr "Aktivní"
+
+#: fantasion_banking/admin.py:96
+msgid "Repeat until"
+msgstr "Opakovat do"
+
+#: fantasion_banking/admin.py:98
+msgid "Payable since"
+msgstr "Splatnost od"
+
+#: fantasion_banking/admin.py:158 fantasion_banking/admin.py:172
+#: fantasion_banking/admin.py:238 fantasion_banking/admin.py:252
+msgid "Pairing was finished"
+msgstr "Párování dokončeno"
+
+#: fantasion_banking/admin.py:268 fantasion_banking/contacts.py:22
+msgid "Known accounts"
+msgstr "Známé účty"
+
+#: fantasion_banking/admin.py:270 fantasion_banking/statements.py:68
+msgid "Statements"
+msgstr "Platby"
+
+#: fantasion_banking/admin.py:330
+msgid "Payment direction"
+msgstr "Směr platby"
+
+#: fantasion_banking/admin.py:335
+msgid "Inbound"
+msgstr "Příchozí"
+
+#: fantasion_banking/admin.py:336
+msgid "Outbound"
+msgstr "Odchozí"
+
+#: fantasion_banking/admin.py:349
+msgid "Has pair"
+msgstr "Spárováno"
+
+#: fantasion_banking/admin.py:441
+msgid "Promise regeneration was finished"
+msgstr ""
+
+#: fantasion_banking/admin.py:526 fantasion_banking/contacts.py:14
+msgid "Counterparty"
+msgstr "Protistrana"
+
+#: fantasion_banking/apps.py:7
+msgid "Fantasion Banking"
+msgstr "Bankovnictví"
+
+#: fantasion_banking/constants.py:7
+msgid "Offline"
+msgstr "Offline"
+
+#: fantasion_banking/constants.py:8
+msgid "ČSOB"
+msgstr "ČSOB"
+
+#: fantasion_banking/constants.py:16
+msgid "Manually created"
+msgstr "Vytvořeno ručně"
+
+#: fantasion_banking/constants.py:17
+msgid "Initial debt"
+msgstr "Vstupní dluh"
+
+#: fantasion_banking/constants.py:18
+msgid "Recurring generated"
+msgstr "Vytvořeno opakováním"
+
+#: fantasion_banking/constants.py:27
+msgid "Expected"
+msgstr "Očekáváno"
+
+#: fantasion_banking/constants.py:28 fantasion_signups/models.py:108
+msgid "Paid"
+msgstr "Zaplaceno"
+
+#: fantasion_banking/constants.py:29
+msgid "Underpaid"
+msgstr "Nedoplatek"
+
+#: fantasion_banking/constants.py:30
+msgid "Overpaid"
+msgstr "Přeplatek"
+
+#: fantasion_banking/constants.py:38
+msgid "Never"
+msgstr "Nikdy"
+
+#: fantasion_banking/constants.py:39
+msgid "Monthly"
+msgstr "Měsíčně"
+
+#: fantasion_banking/constants.py:40
+msgid "Yearly"
+msgstr "Ročně"
+
+#: fantasion_banking/constants.py:47
+msgid "Manual"
+msgstr "Manuální"
+
+#: fantasion_banking/constants.py:48
+msgid "Cron"
+msgstr "Časovač"
+
+#: fantasion_banking/constants.py:56
+msgid "Requested"
+msgstr "Vyžadováno"
+
+#: fantasion_banking/constants.py:57
+msgid "Succeeded"
+msgstr "Úspěch"
+
+#: fantasion_banking/constants.py:58
+msgid "Failed"
+msgstr "Selhání"
+
+#: fantasion_banking/contacts.py:15
+msgid "Counterparties"
+msgstr "Protistrany"
+
+#: fantasion_banking/contacts.py:21
+msgid "Known account"
+msgstr "Známý účet"
+
+#: fantasion_banking/contacts.py:43
+msgid "Fill in bank number and account number or IBAN and BIC"
+msgstr "Vyplňte číslo účtu a banky nebo IBAN a BIC"
+
+#: fantasion_banking/debts.py:23
+msgid "Debt"
+msgstr "Dluh"
+
+#: fantasion_banking/debts.py:24
+msgid "Debts"
+msgstr "Dluhy"
+
+#: fantasion_banking/debts.py:27 fantasion_banking/statements.py:27
+msgid "Amount"
+msgstr "Částka"
+
+#: fantasion_banking/debts.py:33
+msgid "Maturity"
+msgstr "Splatnost"
+
+#: fantasion_banking/fields.py:11
+msgid "Account number"
+msgstr "Číslo účtu"
+
+#: fantasion_banking/fields.py:15
+msgid "Account number of person sending this payment"
+msgstr "Číslo účtu nebo osoba, která poslala tuto platbu"
+
+#: fantasion_banking/fields.py:24
+msgid "Bank"
+msgstr "Banka"
+
+#: fantasion_banking/fields.py:26
+msgid "Bank sending this payment"
+msgstr "Banka, která odeslala tuto platbu"
+
+#: fantasion_banking/fields.py:34
+msgid "IBAN"
+msgstr "IBAN"
+
+#: fantasion_banking/fields.py:36
+msgid "International bank account number"
+msgstr "Mezinárodní číslo bankovního účtu"
+
+#: fantasion_banking/fields.py:44
+msgid "BIC"
+msgstr "BIC"
+
+#: fantasion_banking/fields.py:46
+msgid "Business identification code, specified by SWIFT"
+msgstr "Identifikační číslo obchodní entity podle SWIFTu"
+
+#: fantasion_banking/promises.py:40
+msgid "Promise"
+msgstr "Pohledávka"
+
+#: fantasion_banking/promises.py:41
+msgid "Promises"
+msgstr "Pohledávky"
+
+#: fantasion_banking/promises.py:45
+msgid "Initial amount"
+msgstr "Vstupní částka"
+
+#: fantasion_banking/promises.py:49
+msgid "Status"
+msgstr "Stav"
+
+#: fantasion_banking/promises.py:57
+msgid "Repeat"
+msgstr "Opakovat"
+
+#: fantasion_banking/promises.py:151
+msgid "Received"
+msgstr "Přijato"
+
+#: fantasion_banking/statements.py:31
+msgid "Variable Symbol"
+msgstr "Variabilní symbol"
+
+#: fantasion_banking/statements.py:32
+msgid "Optional payment identifier"
+msgstr "Identifikátor platby"
+
+#: fantasion_banking/statements.py:37
+msgid "Constant Symbol"
+msgstr "Konstantní symbol"
+
+#: fantasion_banking/statements.py:39
+msgid "Purpose code of the payment specified by Czech banking system."
+msgstr "Účelový kód platby specifikovaný českým bankovním systémem"
+
+#: fantasion_banking/statements.py:44
+msgid "Specific symbol"
+msgstr "Specifický symbol"
+
+#: fantasion_banking/statements.py:45
+msgid "This number focuses variable symbol."
+msgstr "Zaostření variabilního symbolu"
+
+#: fantasion_banking/statements.py:67
+msgid "Statement"
+msgstr "Platba"
+
+#: fantasion_banking/statements.py:95
+msgid "Payment identificator"
+msgstr "Identifikátor platby"
+
+#: fantasion_banking/statements.py:96
+msgid "Payment identificator, usually generated by the bank"
+msgstr "Obvykle generováno bankou jako identifikace platby"
+
+#: fantasion_banking/statements.py:101
+msgid "Date Time received"
+msgstr "Čas přijetí"
+
+#: fantasion_banking/statements.py:102
+msgid "When was the payment received by our bank"
+msgstr "Čas, kdy platba přišla do naší banky"
+
+#: fantasion_banking/statements.py:105
+msgid "User identification"
+msgstr "Identifikace uživatele"
+
+#: fantasion_banking/statements.py:106
+msgid "User identification given by the bank"
+msgstr "Identifikace rozluštěná z banky"
+
+#: fantasion_banking/statements.py:115
+msgid "Message"
+msgstr "Zpráva"
+
+#: fantasion_banking/time_limited.py:17
+msgid "Start"
+msgstr "Začátek"
+
+#: fantasion_banking/time_limited.py:20
+msgid "End"
+msgstr "Konec"
+
+#: fantasion_banking/time_limited.py:43
+msgid "End must be blank of greater than start"
+msgstr "Konec musí být prázdný a nebo větší než začátek"
+
+#: fantasion_banking/time_limited.py:64
+#, python-format
+msgid "Selected interval clashes with %s"
+msgstr "Vybraný interval je v konfliktu s %s"
 
 #: fantasion_content/apps.py:7
 msgid "Fantasion Content"
@@ -883,10 +1193,6 @@ msgstr "Potvrzená"
 #: fantasion_signups/models.py:107
 msgid "Down payment paid"
 msgstr "Zaplacená záloha"
-
-#: fantasion_signups/models.py:108
-msgid "Paid"
-msgstr "Zaplacená"
 
 #: fantasion_signups/models.py:109
 msgid "Cancelled"
