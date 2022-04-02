@@ -76,6 +76,12 @@ class Allergy(NamedModel):
         verbose_name_plural = _("Allergies")
 
 
+class Diet(NamedModel):
+    class Meta:
+        verbose_name = _("Diet")
+        verbose_name_plural = _("Diets")
+
+
 class Hobby(NamedModel):
     class Meta:
         verbose_name = _("Hobby")

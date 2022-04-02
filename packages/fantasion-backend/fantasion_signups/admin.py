@@ -12,6 +12,12 @@ class ParticipantAllergy(NestedStackedInline):
     autocomplete_fields = ('allergy',)
 
 
+class ParticipantDiet(NestedStackedInline):
+    model = models.ParticipantDiet
+    extra = 0
+    autocomplete_fields = ('diet',)
+
+
 class ParticipantHobby(NestedStackedInline):
     model = models.ParticipantHobby
     extra = 0
@@ -20,7 +26,7 @@ class ParticipantHobby(NestedStackedInline):
 
 class ParticipantAdmin(BaseAdmin):
     model = models.Participant
-    inlines = (ParticipantAllergy, ParticipantHobby)
+    inlines = (ParticipantAllergy, ParticipantDiet, ParticipantHobby)
     search_fields = ('first_name', 'last_name', 'birthdate')
     list_display = (
         'pk',

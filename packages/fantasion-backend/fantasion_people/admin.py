@@ -31,6 +31,12 @@ class AllergyAdmin(TranslatedAdmin):
     search_fields = ('title', )
 
 
+class DietAdmin(TranslatedAdmin):
+    model = models.Diet
+    list_display = ('title', )
+    search_fields = ('title', )
+
+
 class HobbyAdmin(TranslatedAdmin):
     model = models.Hobby
     list_display = ('title', )

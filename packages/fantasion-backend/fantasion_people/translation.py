@@ -18,6 +18,11 @@ class AllergyTranslationOptions(TranslationOptions):
     fields = ('title', 'description')
 
 
+@register(models.Diet)
+class DietTranslationOptions(TranslationOptions):
+    fields = ('title', 'description')
+
+
 @register(models.Hobby)
 class HobbyTranslationOptions(TranslationOptions):
     fields = ('title', 'description')

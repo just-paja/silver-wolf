@@ -42,6 +42,10 @@ class Participant(TimeStampedModel):
 
 
 class ParticipantAllergy(TimeStampedModel):
+    class Meta:
+        verbose_name = _("Participant Allergy")
+        verbose_name_plural = _("Participant Allergies")
+
     participant = ForeignKey(
         Participant,
         on_delete=CASCADE,
@@ -51,10 +55,33 @@ class ParticipantAllergy(TimeStampedModel):
         "fantasion_people.Allergy",
         on_delete=RESTRICT,
         related_name="participant_allergies",
+        verbose_name=_('Allergy'),
+    )
+
+
+class ParticipantDiet(TimeStampedModel):
+    class Meta:
+        verbose_name = _("Participant Diet")
+        verbose_name_plural = _("Participant Diets")
+
+    participant = ForeignKey(
+        Participant,
+        on_delete=CASCADE,
+        related_name="participant_diets"
+    )
+    diet = ForeignKey(
+        "fantasion_people.Diet",
+        on_delete=RESTRICT,
+        related_name="participant_diets",
+        verbose_name=_('Diet'),
     )
 
 
 class ParticipantHobby(TimeStampedModel):
+    class Meta:
+        verbose_name = _("Participant Hobby")
+        verbose_name_plural = _("Participant Hobbies")
+
     participant = ForeignKey(
         Participant,
         on_delete=CASCADE,
@@ -64,6 +91,7 @@ class ParticipantHobby(TimeStampedModel):
         "fantasion_people.Hobby",
         on_delete=RESTRICT,
         related_name="participant_hobbies",
+        verbose_name=_('Hobby'),
     )
 
 
