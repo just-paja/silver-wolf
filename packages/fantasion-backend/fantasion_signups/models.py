@@ -71,7 +71,7 @@ class Signup(OrderItem):
         "fantasion_expeditions.Troop",
         on_delete=RESTRICT,
         related_name="signups",
-        verbose_name=_("Age Group"),
+        verbose_name=_("Troop"),
     )
     participant = ForeignKey(
         Participant,
