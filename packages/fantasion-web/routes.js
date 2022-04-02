@@ -77,7 +77,7 @@ const cs = {
   },
   termsAndConditions: {
     source: '/obchodni-podminky',
-    destination: '/terms-and-conditons',
+    destination: '/terms-and-conditions',
   },
 }
 
