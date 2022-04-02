@@ -1,11 +1,8 @@
-import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import React from 'react'
-import Row from 'react-bootstrap/Row'
 
 import { asPage, MetaPage } from '../../../components/meta'
 import { Breadcrumbs } from '../../../components/breadcrumbs'
-import { DateRange, formatDateRange } from '../../../components/dates'
 import { GenericPage } from '../../../components/layout'
 import { Heading } from '../../../components/media'
 import { parseSlug } from '../../../components/slugs'
