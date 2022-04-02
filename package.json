@@ -3,7 +3,9 @@
   "private": true,
   "dependencies": {
     "fantasion-backend": "file:packages/fantasion-backend",
-    "fantasion-web": "file:packages/fantasion-web"
+    "fantasion-web": "file:packages/fantasion-web",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@google-cloud/storage": "^5.18.1",
