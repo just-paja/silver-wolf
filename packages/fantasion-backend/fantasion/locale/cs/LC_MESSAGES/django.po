@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-02 13:11+0200\n"
+"POT-Creation-Date: 2022-04-02 13:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -303,11 +303,11 @@ msgstr "Objednávky"
 
 #: fantasion_eshop/models.py:80
 msgid "E-shop Product Price"
-msgstr "Cena produktu"
+msgstr "Produktová cena"
 
 #: fantasion_eshop/models.py:81
 msgid "E-shop Product Prices"
-msgstr "Cena produktu"
+msgstr "Produktové ceny"
 
 #: fantasion_eshop/models.py:87
 msgid "Product"
@@ -318,7 +318,6 @@ msgid "Price level"
 msgstr "Cenová hladina"
 
 #: fantasion_eshop/models.py:95 fantasion_eshop/models.py:132
-#: fantasion_eshop/models.py:152
 msgid "Price"
 msgstr "Cena"
 
@@ -352,7 +351,11 @@ msgstr "Položky objednávky"
 
 #: fantasion_eshop/models.py:150
 msgid "Product Price"
-msgstr "Cena produktu"
+msgstr "Produktová cena"
+
+#: fantasion_eshop/models.py:152
+msgid "Real Price"
+msgstr "Skutečná cena"
 
 #: fantasion_eshop/models.py:174 fantasion_eshop/models.py:181
 msgid "Promotion Code"
@@ -735,7 +738,7 @@ msgstr "Administrátor"
 
 #: fantasion_people/models.py:124
 msgid "Legal representative"
-msgstr "Zákonný zástupce"
+msgstr "Objednavatel je zákonný zástupce"
 
 #: fantasion_people/models.py:125
 msgid "Spectator"

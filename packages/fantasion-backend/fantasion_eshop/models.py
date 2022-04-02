@@ -149,7 +149,7 @@ class OrderItem(TimeStampedModel):
         related_name="order_items",
         verbose_name=_("Product Price"),
     )
-    price = MoneyField(verbose_name=_("Price"))
+    price = MoneyField(verbose_name=_("Real Price"))
 
     def save(self, *args, **kwargs):
         """
