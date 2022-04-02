@@ -11,7 +11,7 @@ class SignupAdmin(NestedStackedInline):
     fields = (
         'family',
         'participant',
-        'batch_age_group',
+        'troop',
         'product_price',
         'price',
         'status',
@@ -19,7 +19,7 @@ class SignupAdmin(NestedStackedInline):
         'cancelled_for',
     )
     autocomplete_fields = (
-        'batch_age_group',
+        'troop',
         'family',
         'participant',
         'product_price',

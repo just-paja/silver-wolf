@@ -60,9 +60,9 @@ class SignupAdmin(BaseAdmin):
         'submitted_at',
     )
     list_filter = (
-        'batch_age_group__batch__expedition',
-        'batch_age_group__batch',
-        'batch_age_group__age_group',
+        'troop__batch__expedition',
+        'troop__batch',
+        'troop__age_group',
         'status',
     )
     search_fields = (
@@ -77,16 +77,16 @@ class SignupAdmin(BaseAdmin):
     )
 
     def age_group(self, inst):
-        return inst.batch_age_group.age_group
+        return inst.troop.age_group
 
     def date_range(self, inst):
         return '{starts_at} - {ends_at}'.format(
-            starts_at=inst.batch_age_group.batch.starts_at,
-            ends_at=inst.batch_age_group.batch.ends_at,
+            starts_at=inst.troop.batch.starts_at,
+            ends_at=inst.troop.batch.ends_at,
         )
 
     def expedition(self, inst):
-        return inst.batch_age_group.batch.expedition
+        return inst.troop.batch.expedition
 
     def participant_name(self, inst):
         return str(inst.participant)
