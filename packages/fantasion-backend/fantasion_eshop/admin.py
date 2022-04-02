@@ -45,6 +45,12 @@ class OrderPromotionCodeAdmin(NestedStackedInline):
     autocomplete_fields = ('promotion_code',)
     readonly_fields = ('price',)
     fields = ('promotion_code', 'price',)
+    add_fields = ('promotion_code', )
+
+    def get_fields(self, request, obj=None):
+        if not obj:
+            return self.add_fields
+        return super().get_fields(request, obj)
 
 
 class OrderAdmin(BaseAdmin):
@@ -64,6 +70,20 @@ class OrderAdmin(BaseAdmin):
         'get_surcharge',
         'price',
     )
+    fields = (
+        'owner',
+        'use_deposit_payment',
+    )
+    deposit_fields = (
+        'deposit',
+        'surcharge',
+        'price',
+    )
+
+    def get_fields(self, request, obj=None):
+        if not obj:
+            return self.fields
+        return self.fields + self.deposit_fields
 
 
 class PriceLevelAdmin(TranslatedAdmin):
