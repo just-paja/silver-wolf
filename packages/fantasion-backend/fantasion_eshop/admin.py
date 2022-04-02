@@ -46,6 +46,9 @@ class OrderAdmin(BaseAdmin):
         'owner',
         'created',
     )
+    autocomplete_fields = (
+        'owner',
+    )
 
 
 class PriceLevelAdmin(TranslatedAdmin):
