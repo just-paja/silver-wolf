@@ -118,8 +118,6 @@ class Order(TimeStampedModel):
 
     owner = ForeignKey(
         settings.AUTH_USER_MODEL,
-        blank=True,
-        null=True,
         on_delete=RESTRICT,
         related_name="orders",
         verbose_name=_("Order owner"),
