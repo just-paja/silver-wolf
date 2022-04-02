@@ -41,6 +41,19 @@ class Participant(TimeStampedModel):
         return f"{self.first_name} {self.last_name} ({self.birthdate})"
 
 
+class ParticipantAllergy(TimeStampedModel):
+    participant = ForeignKey(
+        Participant,
+        on_delete=CASCADE,
+        related_name="participant_allergies"
+    )
+    allergy = ForeignKey(
+        "fantasion_people.Allergy",
+        on_delete=RESTRICT,
+        related_name="participant_allergies",
+    )
+
+
 SIGNUP_STATUS_NEW = 1
 SIGNUP_STATUS_CONFIRMED = 2
 SIGNUP_STATUS_DOWN_PAYMENT_PAID = 3

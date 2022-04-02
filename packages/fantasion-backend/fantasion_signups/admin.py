@@ -6,8 +6,15 @@ from nested_admin import NestedStackedInline
 from . import models
 
 
+class ParticipantAllergy(NestedStackedInline):
+    model = models.ParticipantAllergy
+    extra = 0
+    autocomplete_fields = ('allergy',)
+
+
 class ParticipantAdmin(BaseAdmin):
     model = models.Participant
+    inlines = (ParticipantAllergy,)
     search_fields = ('first_name', 'last_name', 'birthdate')
     list_display = (
         'pk',
