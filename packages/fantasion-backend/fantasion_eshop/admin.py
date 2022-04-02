@@ -5,7 +5,7 @@ from nested_admin import NestedStackedInline
 from . import models
 
 
-class SignupAdmin(NestedStackedInline):
+class OrderSignupAdmin(NestedStackedInline):
     model = Signup
     extra = 0
     fields = (
@@ -26,17 +26,28 @@ class SignupAdmin(NestedStackedInline):
     )
 
 
+class OrderPromotionCodeAdmin(NestedStackedInline):
+    model = models.OrderPromotionCode
+    extra = 0
+    autocomplete_fields = ('promotion_code',)
+    readonly_fields = ('price',)
+    fields = ('promotion_code', 'price',)
+
+
 class OrderAdmin(BaseAdmin):
     model = models.Order
-    inlines = (SignupAdmin,)
+    inlines = (OrderSignupAdmin, OrderPromotionCodeAdmin)
     list_display = (
         'id',
-        'calculate_price',
+        'price',
         'owner',
         'created',
     )
     autocomplete_fields = (
         'owner',
+    )
+    readonly_fields = (
+        'price',
     )
 
 
@@ -58,6 +69,7 @@ class PromotionCodeAdmin(BaseAdmin):
         'valid_until',
     )
     list_filter = ('enabled', )
+    search_fields = ('code', )
 
 
 class ProductPriceAdmin(BaseAdmin):

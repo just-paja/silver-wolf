@@ -1,3 +1,4 @@
+from django.apps import apps
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.models import TimeStampedModel
 from django.conf import settings
@@ -123,9 +124,19 @@ class Order(TimeStampedModel):
         verbose_name=_("Order owner"),
     )
 
+    price = MoneyField(verbose_name=_("Price"))
+
     def calculate_price(self):
         data = self.order_items.aggregate(Sum('price'))
-        return data['price__sum']
+        return data['price__sum'] or 0
+
+    def save(self, *args, **kwargs):
+       # for item in self.order_items.all():
+       #     Model = apps.get_model(item.product_type)
+       #     product = Model.objects.get(pk=item.pk)
+       #     product.save()
+        self.price = self.calculate_price()
+        return super().save(*args, **kwargs)
 
     calculate_price.short_description = _('Price')
 
@@ -143,28 +154,50 @@ class OrderItem(TimeStampedModel):
     )
     product_price = ForeignKey(
         "fantasion_eshop.ProductPrice",
+        blank=True,
+        null=True,
         on_delete=RESTRICT,
         related_name="order_items",
         verbose_name=_("Product Price"),
     )
     price = MoneyField(verbose_name=_("Real Price"))
+    product_type = CharField(
+        max_length=63,
+        verbose_name=_("Product Type"),
+    )
 
     def save(self, *args, **kwargs):
+        if not self.product_type:
+            self.product_type = self.get_product_type()
         """
         Backup price and currency in case the parent objects change. The price
         of existing order item must not change.
         """
-        self.price = self.product_price.amount
-        self.currenct = self.product_price.currency
+        self.recalculate()
+        if self.price is None and self.product_price:
+            self.price = self.product_price.price
         """
         Store the item description to make it easy to describe this order item
         on the invoice
         """
         self.description = self.get_description()
         super().save(*args, **kwargs)
+        self.order.save()
+
+    def delete(self, *args, **kwargs):
+        order = self.order
+        super().delete(*args, **kwargs)
+        order.save()
 
     def get_description(self):
         raise NotImplementedError()
+
+    def get_product_type(self):
+        Model = type(self)
+        return f"{Model._meta.app_label}.{Model._meta.object_name}"
+
+    def recalculate(self):
+        pass
 
 
 class PromotionCode(TimeStampedModel):
@@ -218,3 +251,40 @@ class PromotionCode(TimeStampedModel):
         help_text=_(
             "This Promotion Code will be invalid after this date and time"),
     )
+
+    @property
+    def discount_formatted(self):
+        return f"{self.discount * 100} %"
+
+    def __str__(self):
+        return f"{self.code} ({self.discount_formatted})"
+
+
+class OrderPromotionCode(OrderItem):
+    class Meta:
+        verbose_name = _("Order Promotion Code")
+        verbose_name_plural = _("Order Promotion Codes")
+
+    promotion_code = ForeignKey(
+        'PromotionCode',
+        on_delete=RESTRICT,
+        verbose_name=_('Promotion Code'),
+    )
+
+    def get_abs_discount(self):
+        base_price_data = self.order.order_items.exclude(
+            product_type=self.get_product_type()
+        ).aggregate(Sum('price'))
+        base_price = base_price_data['price__sum'] or 0
+
+        promotion_code = self.promotion_code
+        relative_discount = base_price * promotion_code.discount
+        if promotion_code.max_discount:
+            return min(relative_discount, promotion_code.max_discount)
+        return relative_discount
+
+    def recalculate(self):
+        self.price = -1 * self.get_abs_discount()
+
+    def get_description(self):
+        return f"Sleva: {self.promotion_code.code}"
