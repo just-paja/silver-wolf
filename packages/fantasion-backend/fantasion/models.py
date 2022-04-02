@@ -80,6 +80,9 @@ class User(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
 
+    def __str__(self):
+        return f"{self.get_full_name()} <{self.email}>"
+
 
 NEXT_STEP_CREATE_PASSWORD = 1
 NEXT_STEP_RESTORE_PASSWORD = 2
