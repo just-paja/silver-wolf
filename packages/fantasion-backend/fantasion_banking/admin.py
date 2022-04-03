@@ -363,7 +363,7 @@ class PaymentPairingStatusFilter(IntValueFilter):
 
 class DebtAdmin(NestedStackedInline):
     model = models.Debt
-    fields = ('amount', 'maturity')
+    fields = ('amount', 'maturity', 'debt_type')
     extra = 0
 
 

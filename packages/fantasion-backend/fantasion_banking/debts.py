@@ -14,6 +14,7 @@ from django.db.models import (
 from .constants import (
     DEBT_SOURCE_CHOICES,
     DEBT_SOURCE_MANUAL,
+    DEBT_TYPE_CHOICES,
 )
 
 
@@ -29,11 +30,17 @@ class Debt(TimeStampedModel):
         default=DEBT_SOURCE_MANUAL,
         choices=DEBT_SOURCE_CHOICES,
     )
+    debt_type = PositiveIntegerField(
+        blank=True,
+        default=None,
+        choices=DEBT_TYPE_CHOICES,
+        null=True,
+    )
     description = FacultativeDescriptionField(blank=True, null=True)
     maturity = DateField(verbose_name=_('Maturity'), )
 
     def __str__(self):
-        return '#%s: %s %s' % (self.pk, self.amount, self.currency)
+        return '#%s: %s' % (self.pk, self.amount)
 
     def save(self, *args, **kwargs):
         super().save()
