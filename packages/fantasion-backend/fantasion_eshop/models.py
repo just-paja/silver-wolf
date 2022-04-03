@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.core.exceptions import ValidationError
 from django.db.models import Sum
 from django_extensions.db.models import TimeStampedModel
 from django.utils.translation import ugettext_lazy as _
@@ -151,13 +150,6 @@ class Order(TimeStampedModel):
 
     def get_surcharge(self):
         return self.price - self.deposit
-
-    def clean(self):
-        any_product = self.order_items.exclude(
-            product_type='fantasion_eshop.OrderPromotionCode',
-        ).first()
-        if not any_product:
-            raise ValidationError(_("Cannot create empty order"))
 
     def save(self, *args, **kwargs):
         self.price = self.calculate_price()
