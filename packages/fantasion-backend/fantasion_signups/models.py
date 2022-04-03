@@ -147,6 +147,7 @@ class Signup(OrderItem):
     status = PositiveIntegerField(
         choices=SIGNUP_STATES,
         verbose_name=_("Signup Status"),
+        default=SIGNUP_STATUS_NEW,
     )
     submitted_at = DateTimeField(
         null=True,
