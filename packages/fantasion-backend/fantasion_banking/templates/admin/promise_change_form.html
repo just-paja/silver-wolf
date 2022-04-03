@@ -3,12 +3,12 @@
 
 {% block object-tools-items %}
   <li>
-    <a href="{% url 'admin:banking_statement_add' %}?promise={{original.id}}">
+    <a href="{% url 'admin:fantasion_banking_statement_add' %}?promise={{original.id}}">
       {% trans "Pay" %}
     </a>
   </li>
   <li>
-    <a href="{% url 'admin:banking_statement_changelist' %}?promise__pk__exact={{original.id}}">
+    <a href="{% url 'admin:fantasion_banking_statement_changelist' %}?promise__pk__exact={{original.id}}">
       {% trans "Statements" %}
     </a>
   </li>

@@ -1,3 +1,5 @@
+from datetime import date, timedelta
+
 from django.apps import apps
 from django.conf import settings
 from django.db.models import Sum
@@ -21,6 +23,12 @@ from django.db.models import (
 
 from fantasion_generics.models import PublicModel
 from fantasion_generics.money import MoneyField
+from fantasion_banking.constants import (
+    DEBT_SOURCE_GENERATED_ORDER,
+    DEBT_TYPE_DEPOSIT,
+    DEBT_TYPE_FULL_PAYMENT,
+    DEBT_TYPE_SURCHARGE,
+)
 
 
 ORDER_STATUS_NEW = 1
@@ -165,19 +173,101 @@ class Order(TimeStampedModel):
         verbose_name=_("Use Deposit Payment"),
     )
 
+    @property
+    def variable_symbol(self):
+        ident = str(self.id)
+        padding = "0" * (8 - len(ident))
+        year = date.today().strftime("%y")
+        return f"{year}{padding}{ident}"
+
     def calculate_price(self):
         data = self.order_items.aggregate(Sum('price'))
         return data['price__sum'] or 0
 
+    def calculate_deposit(self):
+        if self.use_deposit_payment:
+            base = self.calculate_price()
+            return base / 2
+        return 0
+
     def get_surcharge(self):
         return self.price - self.deposit
 
+    def get_earliest_troop_start(self):
+        Signup = apps.get_model('fantasion_signups', 'Signup')
+        signup = Signup.objects.filter(
+            order=self,
+        ).order_by('troop__starts_at').first()
+        if signup:
+            return signup.troop.starts_at - timedelta(days=5)
+        return date.today() + timedelta(days=14)
+
+    def get_deposit_maturity(self):
+        return min(
+            self.created.date() + timedelta(days=14),
+            self.get_earliest_troop_start(),
+        )
+
+    def get_surcharge_maturity(self):
+        return min(
+            self.created.date() + timedelta(days=60),
+            self.get_earliest_troop_start(),
+        )
+
+    def create_debt(self, **kwargs):
+        Debt = apps.get_model("fantasion_banking", "Debt")
+        debt = Debt(
+            promise=self.promise,
+            source=DEBT_SOURCE_GENERATED_ORDER,
+            **kwargs,
+        )
+        debt.save()
+        return debt
+
+    def create_deposit_debts(self):
+        self.create_debt(
+            amount=self.deposit,
+            debt_type=DEBT_TYPE_DEPOSIT,
+            maturity=self.get_deposit_maturity(),
+        )
+        self.create_debt(
+            amount=self.get_surcharge(),
+            debt_type=DEBT_TYPE_SURCHARGE,
+            maturity=self.get_surcharge_maturity(),
+        )
+
+    def create_promise(self):
+        Promise = apps.get_model("fantasion_banking", "Promise")
+        self.promise = Promise(
+            title=str(self),
+            amount=0,  # Prevents creating initial debt
+            initial_amount=self.price,
+            variable_symbol=self.variable_symbol
+        )
+        self.promise.save()
+        if self.use_deposit_payment:
+            self.create_deposit_debts()
+        else:
+            self.create_debt(
+                amount=self.price,
+                debt_type=DEBT_TYPE_FULL_PAYMENT,
+                maturity=self.get_deposit_maturity(),
+            )
+        self.save()
+
     def save(self, *args, **kwargs):
         self.price = self.calculate_price()
+        self.deposit = self.calculate_deposit()
         super().save(*args, **kwargs)
         for item in self.order_items.all():
             Model = apps.get_model(item.product_type)
             Model.objects.get(pk=item.pk).save(avoid_order_save=True)
+        if self.status == ORDER_STATUS_CONFIRMED and not self.promise:
+            self.create_promise()
+
+    def __str__(self):
+        model_name = _("E-shop Order")
+        return f"{model_name}#{self.id}"
 
     calculate_price.short_description = _('Price')
     get_surcharge.short_description = _('Surcharge')

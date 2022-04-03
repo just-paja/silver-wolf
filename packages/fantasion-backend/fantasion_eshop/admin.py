@@ -70,6 +70,7 @@ class OrderAdmin(BaseAdmin):
         'deposit',
         'get_surcharge',
         'price',
+        'promise',
     )
     fields_add = (
         'owner',

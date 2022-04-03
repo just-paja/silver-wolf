@@ -58,7 +58,9 @@ class Promise(StatementSpecification, TimeLimitedModel):
     )
 
     def __str__(self):
-        return str(self.name) if self.name else 'Promise#%s' % self.id
+        model_name = _("Promise")
+        title = str(f": {self.title}") if self.title else '#%s' % self.id
+        return f"{model_name}{title}"
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -108,7 +110,6 @@ class Promise(StatementSpecification, TimeLimitedModel):
             Debt = apps.get_model("fantasion_banking", "Debt")
             debt = Debt(
                 amount=self.initial_amount,
-                currency=self.currency,
                 maturity=date,
                 promise=self,
                 source=DEBT_SOURCE_GENERATED_RECURRING,
@@ -119,10 +120,9 @@ class Promise(StatementSpecification, TimeLimitedModel):
 
     def create_initial_debt(self):
         Debt = apps.get_model("fantasion_banking", "Debt")
-        if self.debts.count() == 0 and self.amount != 0:
+        if self.debts.count() == 0 and self.amount.amount > 0:
             debt = Debt(
                 amount=self.amount,
-                currency=self.currency,
                 maturity=self.start,
                 promise=self,
                 source=DEBT_SOURCE_GENERATED_INITIAL,

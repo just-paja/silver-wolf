@@ -3,7 +3,7 @@
 
 {% block object-tools-items %}
   {% if original.promise %}
-    <li><a href="{% url 'admin:banking_promise_change' original.promise.pk %}">{% trans "View promise" %}</a></li>
+    <li><a href="{% url 'admin:fantasion_banking_promise_change' original.promise.pk %}">{% trans "View promise" %}</a></li>
   {% endif %}
   {% change_form_object_tools %}
 {% endblock %}

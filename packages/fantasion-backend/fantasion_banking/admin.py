@@ -417,12 +417,12 @@ class PromiseAdmin(BaseAdmin, TimeLimitedAdmin):
 
     def get_fieldsets(self, request, obj=None):
         if obj:
-            return self.fieldsets + (None, {
+            return self.fieldsets + ((None, {
                 'fields': (
                     'created',
                     'modified',
                 ),
-            })
+            }),)
         return self.fieldsets
 
     def get_urls(self):
