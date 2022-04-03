@@ -19,7 +19,14 @@ from django.db.models import (
 from fantasion_generics.models import PublicModel
 from fantasion_generics.media import MediaParentField, MediaModelMixin
 from fantasion_generics.photos import PrivatePhotoModel
-from fantasion_eshop.models import OrderItem
+from fantasion_eshop.models import (
+    OrderItem,
+    ORDER_STATUS_CANCELLED,
+    ORDER_STATUS_CONFIRMED,
+    ORDER_STATUS_DISPATCHED,
+    ORDER_STATUS_NEW,
+    ORDER_STATUS_RESOLVED,
+)
 
 
 class Participant(TimeStampedModel):
@@ -97,15 +104,13 @@ class ParticipantHobby(TimeStampedModel):
 
 SIGNUP_STATUS_NEW = 1
 SIGNUP_STATUS_CONFIRMED = 2
-SIGNUP_STATUS_DOWN_PAYMENT_PAID = 3
-SIGNUP_STATUS_PAID = 4
+SIGNUP_STATUS_ACTIVE = 3
 SIGNUP_STATUS_CANCELLED = 5
 
 SIGNUP_STATES = (
     (SIGNUP_STATUS_NEW, _("New")),
     (SIGNUP_STATUS_CONFIRMED, _("Confirmed")),
-    (SIGNUP_STATUS_DOWN_PAYMENT_PAID, _("Down payment paid")),
-    (SIGNUP_STATUS_PAID, _("Paid")),
+    (SIGNUP_STATUS_ACTIVE, _("Active")),
     (SIGNUP_STATUS_CANCELLED, _("Cancelled")),
 )
 
@@ -199,6 +204,22 @@ class Signup(OrderItem):
         if not self.submitted_at and self.was_submitted():
             self.submitted_at = datetime.now()
         super().save(*args, **kwargs)
+
+    def recalculate(self):
+        if self.status == SIGNUP_STATUS_CANCELLED:
+            return
+        status = self.order.status
+        if status == ORDER_STATUS_NEW:
+            self.status = SIGNUP_STATUS_NEW
+        elif (
+            status == ORDER_STATUS_CONFIRMED
+            or status == ORDER_STATUS_DISPATCHED
+        ):
+            self.status = SIGNUP_STATUS_CONFIRMED
+        elif status == ORDER_STATUS_RESOLVED:
+            self.status = SIGNUP_STATUS_ACTIVE
+        elif status == ORDER_STATUS_CANCELLED:
+            self.status = SIGNUP_STATUS_CANCELLED
 
 
 class SignupDocumentType(PublicModel):

@@ -77,6 +77,7 @@ class OrderAdmin(BaseAdmin):
     )
     fields_edit = (
         'owner',
+        'status',
         'promise',
         'use_deposit_payment',
         'deposit',

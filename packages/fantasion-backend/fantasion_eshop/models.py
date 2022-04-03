@@ -1,3 +1,4 @@
+from django.apps import apps
 from django.conf import settings
 from django.db.models import Sum
 from django_extensions.db.models import TimeStampedModel
@@ -20,6 +21,21 @@ from django.db.models import (
 
 from fantasion_generics.models import PublicModel
 from fantasion_generics.money import MoneyField
+
+
+ORDER_STATUS_NEW = 1
+ORDER_STATUS_CONFIRMED = 2
+ORDER_STATUS_DISPATCHED = 3
+ORDER_STATUS_RESOLVED = 4
+ORDER_STATUS_CANCELLED = 5
+
+ORDER_STATES = (
+    (ORDER_STATUS_NEW, _("New")),
+    (ORDER_STATUS_CONFIRMED, _("Confirmed")),
+    (ORDER_STATUS_DISPATCHED, _("Dispatched")),
+    (ORDER_STATUS_RESOLVED, _("Resolved")),
+    (ORDER_STATUS_CANCELLED, _("Cancelled")),
+)
 
 
 class EnabledField(BooleanField):
@@ -123,6 +139,11 @@ class Order(TimeStampedModel):
         related_name="orders",
         verbose_name=_("Order owner"),
     )
+    status = PositiveIntegerField(
+        choices=ORDER_STATES,
+        verbose_name=_("Order Status"),
+        default=ORDER_STATUS_NEW,
+    )
     promise = ForeignKey(
         "fantasion_banking.Promise",
         null=True,
@@ -153,7 +174,10 @@ class Order(TimeStampedModel):
 
     def save(self, *args, **kwargs):
         self.price = self.calculate_price()
-        return super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
+        for item in self.order_items.all():
+            Model = apps.get_model(item.product_type)
+            Model.objects.get(pk=item.pk).save(avoid_order_save=True)
 
     calculate_price.short_description = _('Price')
     get_surcharge.short_description = _('Surcharge')
@@ -184,7 +208,7 @@ class OrderItem(TimeStampedModel):
         verbose_name=_("Product Type"),
     )
 
-    def save(self, *args, **kwargs):
+    def save(self, avoid_order_save=False, *args, **kwargs):
         if not self.product_type:
             self.product_type = self.get_product_type()
         """
@@ -200,7 +224,8 @@ class OrderItem(TimeStampedModel):
         """
         self.description = self.get_description()
         super().save(*args, **kwargs)
-        self.order.save()
+        if not avoid_order_save:
+            self.order.save()
 
     def delete(self, *args, **kwargs):
         order = self.order
