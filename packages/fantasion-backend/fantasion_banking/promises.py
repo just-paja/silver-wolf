@@ -2,8 +2,10 @@ import datetime
 
 from dateutil.relativedelta import relativedelta
 from django.apps import apps
+from django.conf import settings
 from django.db.models import CharField, PositiveIntegerField, Sum
 from django.utils.translation import ugettext_lazy as _
+from djmoney.money import Money
 
 from fantasion_generics.money import MoneyField
 from fantasion_generics.titles import FacultativeTitleField
@@ -14,6 +16,8 @@ from .time_limited import TimeLimitedManager, TimeLimitedModel
 from .constants import (
     DEBT_SOURCE_GENERATED_INITIAL,
     DEBT_SOURCE_GENERATED_RECURRING,
+    DEBT_TYPE_DEPOSIT,
+    PROMISE_STATUS_DEPOSIT_PAID,
     PROMISE_STATUS_EXPECTED,
     PROMISE_STATUS_CHOICES,
     PROMISE_STATUS_OVERPAID,
@@ -72,15 +76,19 @@ class Promise(StatementSpecification, TimeLimitedModel):
         super().save(*args, **kwargs)
 
     def get_volume_price_tag(self):
-        return '%s' % (self.sum_statements())
+        return self.sum_statements()
 
     def calculate_status(self):
         received = self.sum_statements()
-        if received == 0:
+        deposit = self.sum_deposit()
+        zero = Money(0, settings.BASE_CURRENCY)
+        if received == zero:
             return PROMISE_STATUS_EXPECTED
         if received > self.amount:
             return PROMISE_STATUS_OVERPAID
         if received < self.amount:
+            if deposit > zero and received >= deposit:
+                return PROMISE_STATUS_DEPOSIT_PAID
             return PROMISE_STATUS_UNDERPAID
         return PROMISE_STATUS_PAID
 
@@ -143,7 +151,14 @@ class Promise(StatementSpecification, TimeLimitedModel):
     def sum_statements(self):
         result = self.statements.aggregate(ballance=Sum('amount'))
         ballance = result['ballance']
-        return ballance if ballance else 0
+        return Money(ballance if ballance else 0, settings.BASE_CURRENCY)
+
+    def sum_deposit(self):
+        result = self.debts.filter(
+            debt_type=DEBT_TYPE_DEPOSIT,
+        ).aggregate(ballance=Sum('amount'))
+        ballance = result['ballance']
+        return Money(ballance if ballance else 0, settings.BASE_CURRENCY)
 
     def get_amount_diff(self):
         return self.sum_statements() - self.calculate_amount()

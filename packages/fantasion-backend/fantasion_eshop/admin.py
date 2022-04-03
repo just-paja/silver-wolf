@@ -62,9 +62,11 @@ class OrderAdmin(BaseAdmin):
     list_display = (
         'id',
         'price',
+        'status',
         'owner',
         'created',
     )
+    list_filter = ('status',)
     autocomplete_fields = ('owner', )
     readonly_fields = (
         'deposit',

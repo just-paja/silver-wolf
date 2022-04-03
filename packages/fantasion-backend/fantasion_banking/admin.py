@@ -376,12 +376,12 @@ class PromiseAdmin(BaseAdmin, TimeLimitedAdmin):
     inlines = [DebtAdmin]
     fieldsets = (
         (None, {
-            'fields': ('title', ),
+            'fields': ('title', 'status', 'get_progress'),
         }),
-        (None, {
+        (_("Maturity and repetition"), {
             'fields': ('start', 'repeat', 'end'),
         }),
-        (None, {
+        (_("Identification"), {
             'fields': (
                 'variable_symbol',
                 'specific_symbol',
@@ -413,11 +413,16 @@ class PromiseAdmin(BaseAdmin, TimeLimitedAdmin):
         'constant_symbol',
         'title',
     )
-    readonly_fields = ('created', 'modified')
+    readonly_fields = ('get_progress', 'status', 'created', 'modified')
+
+    def get_progress(self, inst):
+        return f"{inst.sum_statements()} / {inst.amount}"
+
+    get_progress.short_description = _("Payment Progress")
 
     def get_fieldsets(self, request, obj=None):
         if obj:
-            return self.fieldsets + ((None, {
+            return self.fieldsets + ((_("System information"), {
                 'fields': (
                     'created',
                     'modified',

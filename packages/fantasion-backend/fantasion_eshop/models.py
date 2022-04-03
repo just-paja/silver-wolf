@@ -3,6 +3,8 @@ from datetime import date, timedelta
 from django.apps import apps
 from django.conf import settings
 from django.db.models import Sum
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django_extensions.db.models import TimeStampedModel
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import (
@@ -28,21 +30,33 @@ from fantasion_banking.constants import (
     DEBT_TYPE_DEPOSIT,
     DEBT_TYPE_FULL_PAYMENT,
     DEBT_TYPE_SURCHARGE,
+    PROMISE_STATUS_DEPOSIT_PAID,
+    PROMISE_WAS_PAID,
 )
 
 
 ORDER_STATUS_NEW = 1
 ORDER_STATUS_CONFIRMED = 2
-ORDER_STATUS_DISPATCHED = 3
-ORDER_STATUS_RESOLVED = 4
-ORDER_STATUS_CANCELLED = 5
+ORDER_STATUS_DEPOSIT_PAID = 3
+ORDER_STATUS_PAID = 4
+ORDER_STATUS_DISPATCHED = 5
+ORDER_STATUS_RESOLVED = 6
+ORDER_STATUS_CANCELLED = 7
 
 ORDER_STATES = (
     (ORDER_STATUS_NEW, _("New")),
     (ORDER_STATUS_CONFIRMED, _("Confirmed")),
+    (ORDER_STATUS_DEPOSIT_PAID, _("Deposit Paid")),
+    (ORDER_STATUS_PAID, _("Paid")),
     (ORDER_STATUS_DISPATCHED, _("Dispatched")),
     (ORDER_STATUS_RESOLVED, _("Resolved")),
     (ORDER_STATUS_CANCELLED, _("Cancelled")),
+)
+
+ORDER_REACTS_TO_PAYMENTS = (
+    ORDER_STATUS_NEW,
+    ORDER_STATUS_CONFIRMED,
+    ORDER_STATUS_DEPOSIT_PAID,
 )
 
 
@@ -265,6 +279,14 @@ class Order(TimeStampedModel):
         if self.status == ORDER_STATUS_CONFIRMED and not self.promise:
             self.create_promise()
 
+    def sync_with_promise(self, promise=None):
+        p = promise or self.promise
+        if p.status in PROMISE_WAS_PAID:
+            self.status = ORDER_STATUS_PAID
+        elif p.status == PROMISE_STATUS_DEPOSIT_PAID:
+            self.status = ORDER_STATUS_DEPOSIT_PAID
+        self.save()
+
     def __str__(self):
         model_name = _("E-shop Order")
         return f"{model_name}#{self.id}"
@@ -421,3 +443,13 @@ class OrderPromotionCode(OrderItem):
 
     def get_description(self):
         return f"Sleva: {self.promotion_code.code}"
+
+
+@receiver(post_save, sender="fantasion_banking.Promise")
+def set_order_state(sender, instance, **kwargs):
+    orders = Order.objects.filter(
+        promise=instance,
+        status__in=ORDER_REACTS_TO_PAYMENTS
+    )
+    for order in orders:
+        order.sync_with_promise(instance)
