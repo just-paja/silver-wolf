@@ -183,7 +183,6 @@
   display: block;
   filter: drop-shadow(0 0 calc($spacer / 4) rgba($primary, 0.66));
   margin: calc($spacer / 4);
-  opacity: 0.1;
   transition: 0.4s opacity;
   color: $primary;
   height: calc($spacer * 2);

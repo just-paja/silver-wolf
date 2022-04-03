@@ -235,20 +235,10 @@ export const GalleryPage = ({ children, media }) => {
 
 const runes = [Rune01, Rune02, Rune03, Rune04, Rune05]
 
-export const Runes = () => {
-  const [scrollTop, scrollTopMax] = useScroll()
-  const distance = scrollTopMax === 0 ? 1 : scrollTop / scrollTopMax
-
-  return (
-    <div className={styles.runes}>
-      {runes.map((Rune, index) => (
-        <Rune
-          className={styles.rune}
-          fill="currentColor"
-          key={index}
-          style={{ opacity: distance }}
-        />
-      ))}
-    </div>
-  )
-}
+export const Runes = () => (
+  <div className={styles.runes}>
+    {runes.map((Rune, index) => (
+      <Rune className={styles.rune} fill="currentColor" key={index} />
+    ))}
+  </div>
+)
