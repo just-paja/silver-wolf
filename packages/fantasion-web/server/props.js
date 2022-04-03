@@ -27,6 +27,7 @@ const getPageProps = async (props) => {
     props: {
       origin,
       baseUrl: `${origin}/${locale}`,
+      lang: locale,
       user: await getUser(props),
       ...(await serverSideTranslations(locale)),
     },
