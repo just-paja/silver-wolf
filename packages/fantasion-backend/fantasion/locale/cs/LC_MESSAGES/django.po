@@ -146,7 +146,7 @@ msgstr "Fantasion"
 
 #: fantasion/models.py:207
 msgid "Signup confirmation"
-msgstr "Potvrzení registrace"
+msgstr "Založení táborového účtu na fantasion.cz"
 
 #: fantasion/models.py:217
 msgid "Forgotten password"
@@ -205,11 +205,15 @@ msgstr ""
 
 #: fantasion/templates/mail/signup_confirmation.html:5
 msgid "Thank you for registering!"
-msgstr "Děkujeme za registraci!"
+msgstr "K dokončení registrace už chybí jen kousek!"
 
 #: fantasion/templates/mail/signup_confirmation.html:10
 msgid "We only need you to confirm your e-mail by following the link below"
-msgstr "Potřebujeme ověřit váš e-mail. Stačí kliknout na odkaz uvedený níže."
+msgstr ""
+"Právě jste si založili účet pro přihlášení na dobrodružný tábor s "
+"Fantasionem, děkujeme! Pro dokončení registrace zbývá už jen kliknout "
+"na tento odkaz a vytvořit si nové heslo. Díky tomu se na našich stránkách "
+"už nikdy neztratíte."
 
 #: fantasion_api/users.py:34
 msgid "Password does not match the confirmation value"
