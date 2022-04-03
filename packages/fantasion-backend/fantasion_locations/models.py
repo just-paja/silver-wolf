@@ -24,29 +24,10 @@ class Country(Model):
         return self.name
 
 
-class Location(TimeStampedModel):
+class Address(Model):
     class Meta:
-        verbose_name = _('Location')
-        verbose_name_plural = _('Locations')
+        abstract = True
 
-    name = CharField(
-        max_length=63,
-        verbose_name=_('Name'),
-    )
-    fuzzy_name = CharField(
-        blank=True,
-        max_length=63,
-        null=True,
-        verbose_name=_('Fuzzy name'),
-    )
-    country = ForeignKey(
-        Country,
-        blank=True,
-        null=True,
-        on_delete=CASCADE,
-        related_name='addresses',
-        verbose_name=_('Country'),
-    )
     city = CharField(
         blank=True,
         max_length=127,
@@ -70,6 +51,31 @@ class Location(TimeStampedModel):
         max_length=63,
         null=True,
         verbose_name=_('Postal code'),
+    )
+
+
+class Location(TimeStampedModel, Address):
+    class Meta:
+        verbose_name = _('Location')
+        verbose_name_plural = _('Locations')
+
+    name = CharField(
+        max_length=63,
+        verbose_name=_('Name'),
+    )
+    country = ForeignKey(
+        Country,
+        blank=True,
+        null=True,
+        on_delete=CASCADE,
+        related_name='addresses',
+        verbose_name=_('Country'),
+    )
+    fuzzy_name = CharField(
+        blank=True,
+        max_length=63,
+        null=True,
+        verbose_name=_('Fuzzy name'),
     )
     lat = DecimalField(
         blank=True,

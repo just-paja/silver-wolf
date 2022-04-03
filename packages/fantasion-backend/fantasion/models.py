@@ -20,6 +20,7 @@ from django.db.models import (
 )
 
 from phonenumber_field.modelfields import PhoneNumberField
+from fantasion_locations.models import Address
 
 
 class FantasionUserManager(BaseUserManager):
@@ -220,3 +221,29 @@ class EmailVerification(TimeStampedModel):
                 'mail/password_refresh.html',
                 context=self.get_context(subject=subject),
             ))
+
+
+class UserAddress(Address, TimeStampedModel):
+    class Meta:
+        unique_together = (('user', 'title'),)
+        verbose_name = _("User Address")
+        verbose_name_plural = _("User Addresses")
+
+    user = ForeignKey(
+        User,
+        on_delete=CASCADE,
+    )
+    title = CharField(
+        max_length=32,
+        verbose_name=_("Title"),
+        help_text=_(
+            "Human readable identifier that will help user select this "
+            "address, like \"Home\""
+        ),
+    )
+    country = ForeignKey(
+        "fantasion_locations.Country",
+        on_delete=CASCADE,
+        related_name='user_addresses',
+        verbose_name=_('Country'),
+    )

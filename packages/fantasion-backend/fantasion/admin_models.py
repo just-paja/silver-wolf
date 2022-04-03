@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import admin as auth_admin
 from django.contrib.auth import password_validation
 from django.utils.translation import ugettext_lazy as _
+from nested_admin import NestedStackedInline
 
 from fantasion_generics.admin import BaseAdmin
 
@@ -54,8 +55,22 @@ class FantasionUserCreationForm(UserCreationForm):
     )
 
 
+class UserAddressAdmin(NestedStackedInline):
+    model = models.UserAddress
+    extra = 0
+    fields = (
+        'title',
+        'country',
+        'city',
+        'street',
+        'street_number',
+        'postal_code',
+    )
+
+
 class UserAdmin(BaseAdmin, auth_admin.UserAdmin):
     model = models.User
+    inlines = (UserAddressAdmin, )
     ordering = ('last_name', )
     add_form = FantasionUserCreationForm
     search_fields = ('first_name', 'last_name', 'email')
