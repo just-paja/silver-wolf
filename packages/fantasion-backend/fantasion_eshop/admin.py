@@ -71,11 +71,14 @@ class OrderAdmin(BaseAdmin):
         'get_surcharge',
         'price',
     )
-    fields = (
+    fields_add = (
         'owner',
         'use_deposit_payment',
     )
-    deposit_fields = (
+    fields_edit = (
+        'owner',
+        'promise',
+        'use_deposit_payment',
         'deposit',
         'get_surcharge',
         'price',
@@ -83,8 +86,8 @@ class OrderAdmin(BaseAdmin):
 
     def get_fields(self, request, obj=None):
         if not obj:
-            return self.fields
-        return self.fields + self.deposit_fields
+            return self.fields_add
+        return self.fields_edit
 
 
 class PriceLevelAdmin(TranslatedAdmin):

@@ -1,7 +1,8 @@
-from django.utils.translation import ugettext_lazy as _
-from django_extensions.db.models import TimeStampedModel
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db.models import Sum
+from django_extensions.db.models import TimeStampedModel
+from django.utils.translation import ugettext_lazy as _
 from django.core.validators import (
     MaxValueValidator,
     MinLengthValidator,
@@ -122,6 +123,13 @@ class Order(TimeStampedModel):
         on_delete=RESTRICT,
         related_name="orders",
         verbose_name=_("Order owner"),
+    )
+    promise = ForeignKey(
+        "fantasion_banking.Promise",
+        null=True,
+        blank=True,
+        on_delete=CASCADE,
+        verbose_name=_("Payment Promise"),
     )
     price = MoneyField(verbose_name=_("Total Price"))
     deposit = MoneyField(
