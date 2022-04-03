@@ -36,7 +36,7 @@ const getPageProps = async (props) => {
 
 const createFetch = (props) => curryAuth(getAuthCookie(props))
 
-const resolvePropGetters = (...getters) => Promise.all(getters.filter(Boolean))
+const resolvePropGetter = (fn, props) => fn && fn(props)
 
 const withFetch = (fn) => (props) =>
   fn({
@@ -51,12 +51,19 @@ const defaultProps = {
 export const withPageProps = (fn) =>
   withFetch(async (props) => {
     try {
-      const data = await resolvePropGetters(
-        getPageProps(props),
-        fn && fn(props)
-      )
+      const pageProps = await getPageProps(props)
+      const resolvedProps = await resolvePropGetter(fn, {
+        ...props,
+        ...pageProps.props,
+      })
       const result = {
-        props: Object.assign({}, defaultProps, ...data.map((d) => d.props)),
+        ...pageProps,
+        ...resolvedProps,
+        props: {
+          ...defaultProps,
+          ...pageProps?.props,
+          ...resolvedProps?.props,
+        },
       }
       if (props.res) {
         props.res.statusCode = result.props.statusCode
@@ -71,5 +78,6 @@ export const withPageProps = (fn) =>
           },
         }
       }
+      throw error
     }
   })
