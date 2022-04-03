@@ -14,11 +14,14 @@ from fantasion_generics.models import PublicModel
 
 from .fields import AccountNumberField, BankNumberField, BicField, IBanField
 from .constants import (
+    ACCOUNT_DRIVER_CSOB,
     ACCOUNT_DRIVER_CHOICES,
     SCRAPE_SOURCE_CHOICES,
     SCRAPE_SOURCE_MANUAL,
+    SCRAPE_STATUS_FAILURE,
     SCRAPE_STATUS_CHOICES,
     SCRAPE_STATUS_REQUEST,
+    SCRAPE_STATUS_SUCCESS,
 )
 
 statement_registered = Signal(providing_args=['instance'])
@@ -34,7 +37,7 @@ class Account(PublicModel):
     bank = BankNumberField(blank=True, null=True)
     iban = IBanField(blank=True, null=True)
     bic = BicField(blank=True, null=True)
-    ballance = MoneyField(verbose_name=_("Ballance"))
+    ballance = MoneyField(verbose_name=_("Ballance"), default=0)
     driver = PositiveIntegerField(
         blank=True,
         choices=ACCOUNT_DRIVER_CHOICES,
@@ -52,10 +55,29 @@ class Account(PublicModel):
         ballance = result['ballance']
         return ballance if ballance else 0
 
-    def get_ballance(self):
-        return '%.2f %s' % (self.calculate_ballance(), self.currency)
+    def resolve_driver(self):
+        if self.driver == ACCOUNT_DRIVER_CSOB:
+            from . import csob
+            return csob
+        return None
 
-    get_ballance.short_description = _('Ballance')
+    def sync(self, days_back=1, source=SCRAPE_SOURCE_MANUAL):
+        driver = self.resolve_driver()
+        if driver:
+            scrape = BankScrape(
+                account=self,
+                days_back=days_back,
+                source=source,
+            )
+            scrape.save()
+            try:
+                driver.sync(self)
+                scrape.status = SCRAPE_STATUS_SUCCESS
+                scrape.save()
+            except Exception as exc:
+                scrape.status = SCRAPE_STATUS_FAILURE
+                scrape.save()
+                raise exc
 
 
 class BankScrape(TimeStampedModel):

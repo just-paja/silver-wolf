@@ -113,7 +113,7 @@ class AccountAdmin(TranslatedAdmin):
     list_display = (
         'title',
         'driver',
-        'get_ballance',
+        'ballance',
         'iban',
         'modified',
     )
@@ -143,35 +143,31 @@ class AccountAdmin(TranslatedAdmin):
             ),
         ]
 
-    def sync_account(self, account):
-        # TODO: Sync account logic
-        pass
-
     def bank_sync(self, request):
-        accounts = models.Account.objects.filter(
-            fio_readonly_key__isnull=False).all()
+        accounts = models.Account.objects.filter(driver__isnull=False).all()
         for account in accounts:
-            self.sync_account(account)
+            account.sync()
         messages.add_message(
             request,
             messages.SUCCESS,
             _('Pairing was finished'),
         )
-        return redirect(reverse('banking:banking_account_changelist'))
+        return redirect(reverse('admin:fantasion_banking_account_changelist'))
 
     def bank_sync_account(self, request, account_id):
         account = get_object_or_404(
             models.Account,
             pk=account_id,
-            fio_readonly_key__isnull=False,
+            driver__isnull=False,
         )
-        self.sync_account(account)
+        account.sync()
         messages.add_message(
             request,
             messages.SUCCESS,
             _('Pairing was finished'),
         )
-        return redirect(reverse('banking:banking_statement_changelist'))
+        return redirect(
+            reverse('admin:fantasion_banking_statement_changelist'))
 
 
 def pair_known_account_to_statements(account):
@@ -239,7 +235,7 @@ class CounterPartyAdmin(TranslatedAdmin):
         )
         return redirect(
             reverse(
-                'banking:banking_counterparty_change',
+                'admin:fantasion_banking_counterparty_change',
                 args=[counterparty.pk],
             ))
 
@@ -251,7 +247,8 @@ class CounterPartyAdmin(TranslatedAdmin):
             messages.SUCCESS,
             _('Pairing was finished'),
         )
-        return redirect(reverse('banking:banking_counterparty_changelist'))
+        return redirect(
+            reverse('admin:fantasion_banking_counterparty_changelist'))
 
     def get_queryset(self, request):
         querystring = super().get_queryset(request)
@@ -314,7 +311,7 @@ class KnownAccountAdmin(BaseAdmin):
             ))
         return redirect(
             reverse(
-                'banking:banking_knownaccount_change',
+                'admin:fantasion_banking_knownaccount_change',
                 args=[known_account_id],
             ))
 
@@ -440,7 +437,8 @@ class PromiseAdmin(BaseAdmin, TimeLimitedAdmin):
             messages.SUCCESS,
             _('Promise regeneration was finished'),
         )
-        return redirect(reverse('banking:banking_promise_changelist'), )
+        return redirect(
+            reverse('admin:fantasion_banking_promise_changelist'), )
 
 
 class StatementAdmin(BaseAdmin):
@@ -518,7 +516,7 @@ class StatementAdmin(BaseAdmin):
         if statement.counterparty:
             owner = statement.counterparty
             name = owner.name
-            link = reverse('banking:banking_counterparty_change',
+            link = reverse('admin:fantasion_banking_counterparty_change',
                            args=[owner.pk])
             return format_html('<a href="%s">%s</a>' % (link, name))
         return None

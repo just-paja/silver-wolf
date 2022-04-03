@@ -2,7 +2,7 @@
 {% load i18n admin_modify %}
 
 {% block object-tools-items %}
-  {% if original.fio_readonly_key %}
+  {% if original.driver %}
     <li><a href="{% url 'admin:account_bank_sync' account_id=original.id %}">{% trans "Sync with bank" %}</a></li>
   {% endif %}
   {% change_form_object_tools %}
