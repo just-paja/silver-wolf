@@ -388,12 +388,6 @@ class PromiseAdmin(BaseAdmin, TimeLimitedAdmin):
                 'constant_symbol',
             ),
         }),
-        (None, {
-            'fields': (
-                'created',
-                'modified',
-            ),
-        }),
     )
     change_form_template = 'admin/promise_change_form.html'
     change_list_template = 'admin/promise_change_list.html'
@@ -420,6 +414,16 @@ class PromiseAdmin(BaseAdmin, TimeLimitedAdmin):
         'title',
     )
     readonly_fields = ('created', 'modified')
+
+    def get_fieldsets(self, request, obj=None):
+        if obj:
+            return self.fieldsets + (None, {
+                'fields': (
+                    'created',
+                    'modified',
+                ),
+            })
+        return self.fieldsets
 
     def get_urls(self):
         return super().get_urls() + [
