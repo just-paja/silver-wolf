@@ -35,24 +35,7 @@ const getPageProps = async (props) => {
 
 const createFetch = (props) => curryAuth(getAuthCookie(props))
 
-const resolveInnerProps = async (resolver, props) => {
-  try {
-    return await resolver(props)
-  } catch (error) {
-    if (error instanceof NotFound) {
-      return {
-        props: {
-          statusCode: 404,
-        },
-      }
-    }
-    return {
-      props: {
-        statusCode: 500,
-      },
-    }
-  }
-}
+const resolvePropGetters = (...getters) => Promise.all(getters.filter(Boolean))
 
 const withFetch = (fn) => (props) =>
   fn({
@@ -60,19 +43,32 @@ const withFetch = (fn) => (props) =>
     fetch: createFetch(props),
   })
 
+const defaultProps = {
+  statusCode: 200,
+}
+
 export const withPageProps = (fn) =>
   withFetch(async (props) => {
-    const data = await Promise.all(
-      [getPageProps(props), fn && resolveInnerProps(fn, props)].filter(Boolean)
-    )
-    const defaultProps = {
-      statusCode: 200,
+    try {
+      const data = await resolvePropGetters(
+        getPageProps(props),
+        fn && fn(props)
+      )
+      const result = {
+        props: Object.assign({}, defaultProps, ...data.map((d) => d.props)),
+      }
+      if (props.res) {
+        props.res.statusCode = result.props.statusCode
+      }
+      return result
+    } catch (error) {
+      if (error instanceof NotFound) {
+        return {
+          notFound: true,
+          props: {
+            statusCode: 404,
+          },
+        }
+      }
     }
-    const result = {
-      props: Object.assign(defaultProps, ...data.map((d) => d.props)),
-    }
-    if (props.res) {
-      props.res.statusCode = result.props.statusCode
-    }
-    return result
   })
