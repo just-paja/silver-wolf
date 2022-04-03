@@ -110,6 +110,13 @@ SIGNUP_STATES = (
 )
 
 
+def validate_legal_guardian(value):
+    if not value:
+        raise ValidationError(_(
+            "Cannot create a signup unless you are a legal guardian"
+        ))
+
+
 class Signup(OrderItem):
     class Meta:
         verbose_name = _("Signup")
@@ -133,7 +140,10 @@ class Signup(OrderItem):
         related_name="signups",
         verbose_name=_("Participant"),
     )
-    legal_guardian = BooleanField(verbose_name=_("Legal Guardian"), )
+    legal_guardian = BooleanField(
+        validators=[validate_legal_guardian],
+        verbose_name=_("Legal Guardian"),
+    )
     status = PositiveIntegerField(
         choices=SIGNUP_STATES,
         verbose_name=_("Signup Status"),

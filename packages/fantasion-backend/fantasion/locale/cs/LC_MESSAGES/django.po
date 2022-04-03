@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-03 14:05+0200\n"
+"POT-Creation-Date: 2022-04-03 14:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -808,7 +808,7 @@ msgstr "Platné od"
 msgid "This Promotion Code will be invalid until this date and time"
 msgstr "Kód začne platit s uplynutím tohoto data a času"
 
-#: fantasion_eshop/models.py:276 fantasion_signups/models.py:255
+#: fantasion_eshop/models.py:276 fantasion_signups/models.py:265
 msgid "Valid until"
 msgstr "Platné do"
 
@@ -936,7 +936,7 @@ msgstr "Táborový program"
 msgid "Expedition Programs"
 msgstr "Táborové programy"
 
-#: fantasion_expeditions/models.py:220 fantasion_signups/models.py:128
+#: fantasion_expeditions/models.py:220 fantasion_signups/models.py:135
 msgid "Troop"
 msgstr "Oddíl"
 
@@ -1138,7 +1138,7 @@ msgid "Hobbies"
 msgstr "Zájmy"
 
 #: fantasion_people/models.py:93 fantasion_people/models.py:144
-#: fantasion_signups/models.py:122
+#: fantasion_signups/models.py:129
 msgid "Family"
 msgstr "Rodina"
 
@@ -1178,7 +1178,7 @@ msgstr "Rodinná role"
 msgid "Fantasion Signups"
 msgstr "Přihlášky"
 
-#: fantasion_signups/models.py:27 fantasion_signups/models.py:134
+#: fantasion_signups/models.py:27 fantasion_signups/models.py:141
 msgid "Participant"
 msgstr "Účastník"
 
@@ -1230,81 +1230,85 @@ msgstr "Zaplacená záloha"
 msgid "Cancelled"
 msgstr "Zrušená"
 
-#: fantasion_signups/models.py:115 fantasion_signups/models.py:215
+#: fantasion_signups/models.py:116
+msgid "Cannot create a signup unless you are a legal guardian"
+msgstr "Pro vytvoření přihlášky musíte být zákonným zástupcem"
+
+#: fantasion_signups/models.py:122 fantasion_signups/models.py:225
 msgid "Signup"
 msgstr "Přihláška"
 
-#: fantasion_signups/models.py:116
+#: fantasion_signups/models.py:123
 msgid "Signups"
 msgstr "Přihlášky"
 
-#: fantasion_signups/models.py:136
+#: fantasion_signups/models.py:145
 msgid "Legal Guardian"
 msgstr "Zákonný zástupce"
 
-#: fantasion_signups/models.py:139
+#: fantasion_signups/models.py:149
 msgid "Signup Status"
 msgstr "Stav přihlášky"
 
-#: fantasion_signups/models.py:144
+#: fantasion_signups/models.py:154
 msgid "Submitted at"
 msgstr "Čas odeslání"
 
-#: fantasion_signups/models.py:145
+#: fantasion_signups/models.py:155
 msgid ""
 "The exact date and time signup was submitted.Date is generated automatically"
 msgstr "Přesné datum a čas odeslání přihlášky. Datum je generováno automagicky"
 
-#: fantasion_signups/models.py:151
+#: fantasion_signups/models.py:161
 msgid "Cancelled for"
 msgstr "Zrušeno z důvodu"
 
-#: fantasion_signups/models.py:153
+#: fantasion_signups/models.py:163
 msgid "Write down a short explanation why was this signup cancelled"
 msgstr "Napište jednou větou proč byla přihláška zrušena."
 
-#: fantasion_signups/models.py:195 fantasion_signups/models.py:196
+#: fantasion_signups/models.py:205 fantasion_signups/models.py:206
 msgid "Signup Document Type"
 msgstr "Typ přihláškového dokumentu"
 
-#: fantasion_signups/models.py:200
+#: fantasion_signups/models.py:210
 msgid "Required"
 msgstr "Vyžadováno"
 
-#: fantasion_signups/models.py:201
+#: fantasion_signups/models.py:211
 msgid "Signup will be marked as incomplete until parent uploadsthis document"
 msgstr ""
 "Přihláška bude označena jako nehotová, dokud rodič nenahraje tento dokument"
 
-#: fantasion_signups/models.py:208 fantasion_signups/models.py:209
-#: fantasion_signups/models.py:242
+#: fantasion_signups/models.py:218 fantasion_signups/models.py:219
+#: fantasion_signups/models.py:252
 msgid "Signup Document"
 msgstr "Přihláškový dokument"
 
-#: fantasion_signups/models.py:221
+#: fantasion_signups/models.py:231
 msgid "Document type"
 msgstr "Typ dokumentu"
 
-#: fantasion_signups/models.py:235
+#: fantasion_signups/models.py:245
 msgid "Document Verification"
 msgstr "Ověření dokumentu"
 
-#: fantasion_signups/models.py:236
+#: fantasion_signups/models.py:246
 msgid "Document Verifications"
 msgstr "Ověření dokumentu"
 
-#: fantasion_signups/models.py:248
+#: fantasion_signups/models.py:258
 msgid "Verified by"
 msgstr "Zkontroloval"
 
-#: fantasion_signups/models.py:251
+#: fantasion_signups/models.py:261
 msgid "Verified on"
 msgstr "Zkontrolováno v"
 
-#: fantasion_signups/models.py:252
+#: fantasion_signups/models.py:262
 msgid "Date this document was verified"
 msgstr "Datum, kdy byl tento dokument zkontrolován"
 
-#: fantasion_signups/models.py:256
+#: fantasion_signups/models.py:266
 msgid "This document will stay valid until it expires"
 msgstr "Dokument bude považován za platný, dokud neexpiruje"
