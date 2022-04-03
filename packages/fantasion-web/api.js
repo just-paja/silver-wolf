@@ -9,9 +9,17 @@ export const TOKEN_HEADER = 'Authorization'
 
 export class ApiError extends Error {}
 export class BadRequest extends ApiError {}
+export class Forbidden extends ApiError {}
 export class NotFound extends ApiError {}
+export class Unauthorized extends ApiError {}
 
 const resolveApiErrorClass = (res) => {
+  if (res.status === 401) {
+    return Unauthorized
+  }
+  if (res.status === 403) {
+    return Forbidden
+  }
   if (res.status === 404) {
     return NotFound
   }
@@ -61,17 +69,21 @@ const withMethod =
       method,
     })
 
-const getFetch = (token) =>
-  token
-    ? async (url, options = {}) =>
-        await apiFetch(url, {
-          ...options,
-          headers: {
-            ...options.headers,
-            [TOKEN_HEADER]: `Token ${token}`,
-          },
-        })
-    : apiFetch
+const getFetch = (token) => {
+  if (!token) {
+    return apiFetch
+  }
+  const authorizedFetch = (url, options = {}) =>
+    apiFetch(url, {
+      ...options,
+      headers: {
+        ...options.headers,
+        [TOKEN_HEADER]: `Token ${token}`,
+      },
+    })
+  authorizedFetch.authorized = true
+  return authorizedFetch
+}
 
 export const curryAuth = (token) => {
   const fetch = getFetch(token)

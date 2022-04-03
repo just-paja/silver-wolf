@@ -12,10 +12,16 @@ const defaultLang = publicRuntimeConfig.defaultLang
 const determineLocale = (locale) =>
   !locale || locale === 'default' ? defaultLang : locale
 
-const getUser = async (props) =>
-  getAuthCookie(props) ? props.fetch('/users/me') : null
+const getAuthCookie = (props) =>
+  getCookie(TOKEN_COOKIE, {
+    req: props.req,
+    res: props.res,
+  })
 
-export const getPageProps = async (props) => {
+const getUser = async (props) =>
+  props.fetch.authorized ? props.fetch('/users/me') : null
+
+const getPageProps = async (props) => {
   const locale = determineLocale(props.locale)
   return {
     props: {
@@ -26,12 +32,6 @@ export const getPageProps = async (props) => {
     },
   }
 }
-
-const getAuthCookie = (props) =>
-  getCookie(TOKEN_COOKIE, {
-    req: props.req,
-    res: props.res,
-  })
 
 const createFetch = (props) => curryAuth(getAuthCookie(props))
 
@@ -54,20 +54,22 @@ const resolveInnerProps = async (resolver, props) => {
   }
 }
 
-const withFetch = (fn) => async (props) =>
-  await fn({
+const withFetch = (fn) => (props) =>
+  fn({
     ...props,
     fetch: createFetch(props),
   })
 
 export const withPageProps = (fn) =>
   withFetch(async (props) => {
+    const data = await Promise.all(
+      [getPageProps(props), fn && resolveInnerProps(fn, props)].filter(Boolean)
+    )
+    const defaultProps = {
+      statusCode: 200,
+    }
     const result = {
-      props: {
-        statusCode: 200,
-        ...(fn ? (await resolveInnerProps(fn, props)).props : {}),
-        ...(await getPageProps(props)).props,
-      },
+      props: Object.assign(defaultProps, ...data.map((d) => d.props)),
     }
     if (props.res) {
       props.res.statusCode = result.props.statusCode
