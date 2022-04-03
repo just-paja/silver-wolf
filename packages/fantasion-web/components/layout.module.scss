@@ -146,6 +146,36 @@
   margin: $spacer 0;
 }
 
+@keyframes rune-01 {
+  0% { color: $primary; }
+  50% { color: lighten($primary, 50%); filter: drop-shadow(0 0 calc($spacer / 4) darken($primary, 33%)); }
+  100% { color: $primary; }
+}
+
+@keyframes rune-02 {
+  0% { color: $primary; }
+  50% { color: $secondary; filter: drop-shadow(0 0 calc($spacer / 4) $secondary); }
+  100% { color: $primary; }
+}
+
+@keyframes rune-03 {
+  0% { color: $primary; }
+  50% { color: #e12; filter: drop-shadow(0 0 calc($spacer / 4) #e12); }
+  100% { color: $primary; }
+}
+
+@keyframes rune-04 {
+  0% { color: $primary; }
+  50% { color: #1e2; filter: drop-shadow(0 0 calc($spacer / 4) #1e2); }
+  100% { color: $primary; }
+}
+
+@keyframes rune-05 {
+  0% { color: $primary; }
+  50% { color: #39e; filter: drop-shadow(0 0 calc($spacer / 4) #39e); }
+  100% { color: $primary; }
+}
+
 .rune {
   background-position: center center;
   background-repeat: no-repeat;
@@ -158,6 +188,12 @@
   color: $primary;
   height: calc($spacer * 2);
   width: calc($spacer * 2);
+  animation: 10s rune-01 infinite;
+
+  &:nth-child(2) { animation-name: rune-02; animation-delay: 1.5s; }
+  &:nth-child(3) { animation-name: rune-03; animation-delay: 6.3s; }
+  &:nth-child(4) { animation-name: rune-04; animation-delay: 2.7s; }
+  &:nth-child(5) { animation-name: rune-05; animation-delay: -3.1s; }
 }
 
 .menuUserName {
