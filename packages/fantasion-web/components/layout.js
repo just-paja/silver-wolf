@@ -69,6 +69,13 @@ const UserMenu = () => {
         <Nav.Link>{t('login')}</Nav.Link>
       </Linker>
     ),
+    ...(user
+      ? [
+          <Linker key="status" route="status">
+            <Nav.Link>{t('my-status')}</Nav.Link>
+          </Linker>,
+        ]
+      : []),
     user?.passwordCreated && (
       <Nav.Link key="logout" onClick={logout}>
         {t('logout')}
