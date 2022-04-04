@@ -215,6 +215,22 @@ msgstr "Abyste nepřišli o žádné novinky a akce, sledujte nás na Facebooku,
 msgid "email-fill-in-documents"
 msgstr "Nezapomeňte také prosím vyplnit a nahrát nezbytné dokumenty k vaší přihlášce."
 
+#: fantasion/templates/mail/overpaid.html:5
+msgid "email-overpaid-thanks"
+msgstr "Děkujeme za ty dary"
+
+#: fantasion/templates/mail/overpaid.html:10
+msgid "email-overpaid-info"
+msgstr "Nedopatřením se stalo, že jste nám poslali o něco víc peněz, než byla potřebná částka."
+
+#: fantasion/templates/mail/overpaid.html:14
+msgid "email-overaid-overpayment"
+msgstr "Váš přeplatek je"
+
+#: fantasion/templates/mail/overpaid.html:18
+msgid "email-overaid-refund"
+msgstr "Nemusíte se bát, v nejbližší době vám jej samozřejmě zašleme zpět na účet."
+
 #: fantasion/templates/mail/password_refresh.html:5
 msgid "You asked us to restore your password"
 msgstr "Dostali jsme od Vás požadavek na obnovení hesla"

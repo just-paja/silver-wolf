@@ -6,6 +6,8 @@ from django.conf import settings
 from django.db.models import CharField, PositiveIntegerField, Sum
 from django.utils.translation import ugettext_lazy as _
 from djmoney.money import Money
+from django.template.loader import render_to_string
+from fantasion_generics.emails import send_mail
 
 from fantasion_generics.money import MoneyField
 from fantasion_generics.titles import FacultativeTitleField
@@ -66,6 +68,19 @@ class Promise(StatementSpecification, TimeLimitedModel):
         title = str(f": {self.title}") if self.title else '#%s' % self.id
         return f"{model_name}{title}"
 
+    def notify_overpaid(self):
+        subject = (_("Order {number}")).format(number=self.variable_symbol)
+        received = self.sum_statements()
+        amount = self.amount
+        overpayment = received - amount
+        body = render_to_string(
+            'mail/order_confirmation.html',
+            context={
+                'overpayment': overpayment,
+            },
+        )
+        send_mail([self.owner.email], subject, body)
+
     def save(self, *args, **kwargs):
         if not self.pk:
             self.initial_amount = self.amount
@@ -73,6 +88,8 @@ class Promise(StatementSpecification, TimeLimitedModel):
         self.create_debts()
         self.amount = self.calculate_amount()
         self.status = self.calculate_status()
+        if self.status == PROMISE_STATUS_OVERPAID:
+            self.notify_overpaid()
         super().save(*args, **kwargs)
 
     def get_volume_price_tag(self):
