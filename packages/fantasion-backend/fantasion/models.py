@@ -1,12 +1,9 @@
-import re
 import secrets
 
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.core import mail
 from django_extensions.db.models import TimeStampedModel
 from django.template.loader import render_to_string
-from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import (
     BooleanField,
@@ -20,6 +17,7 @@ from django.db.models import (
 )
 
 from phonenumber_field.modelfields import PhoneNumberField
+from fantasion_generics.emails import get_lang, send_mail
 from fantasion_locations.models import Address
 
 
@@ -160,15 +158,6 @@ class EmailVerification(TimeStampedModel):
         self.sent += 1
         self.save()
 
-    def get_sender(self):
-        return '{} <{}>'.format(
-            settings.EMAIL_ROBOT_NAME,
-            settings.EMAIL_ROBOT_ADDR,
-        )
-
-    def get_lang(self):
-        return 'cs'
-
     def get_landing_path(self):
         if self.next_step == NEXT_STEP_CREATE_PASSWORD:
             return 'potvrzeni-registrace'
@@ -176,7 +165,7 @@ class EmailVerification(TimeStampedModel):
             return 'zapomenute-heslo'
 
     def get_context(self, **context):
-        lang = self.get_lang()
+        lang = get_lang()
         path = self.get_landing_path()
         landing_path = f'{lang}/{path}'
         base_url = settings.APP_WEBSITE_URL
@@ -186,22 +175,8 @@ class EmailVerification(TimeStampedModel):
             'website_url': settings.APP_WEBSITE_URL,
         }
 
-    def get_text_body(self, body):
-        body_index = body.find('<body>')
-        plain = strip_tags(body[body_index:]).strip()
-        plain = re.sub(r'([ ]+\n)', r'\n', plain)
-        return re.sub(r'(\n[ ]+)', r'\n', plain)
-
     def send_mail(self, subject, body):
-        site_name = _('Fantasion')
-        mail.send_mail(
-            f'{site_name}: {subject}',
-            self.get_text_body(body),
-            self.get_sender(),
-            [self.email],
-            html_message=body,
-            fail_silently=False,
-        )
+        send_mail([self.email], subject, body)
 
     def send_registration_confirmation(self):
         subject = _('Signup confirmation')
@@ -224,8 +199,9 @@ class EmailVerification(TimeStampedModel):
 
 
 class UserAddress(Address, TimeStampedModel):
+
     class Meta:
-        unique_together = (('user', 'title'),)
+        unique_together = (('user', 'title'), )
         verbose_name = _("User Address")
         verbose_name_plural = _("User Addresses")
 
@@ -238,8 +214,7 @@ class UserAddress(Address, TimeStampedModel):
         verbose_name=_("Title"),
         help_text=_(
             "Human readable identifier that will help user select this "
-            "address, like \"Home\""
-        ),
+            "address, like \"Home\""),
     )
     country = ForeignKey(
         "fantasion_locations.Country",

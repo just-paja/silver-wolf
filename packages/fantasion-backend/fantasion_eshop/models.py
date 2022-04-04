@@ -6,6 +6,7 @@ from django.db.models import Sum
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django_extensions.db.models import TimeStampedModel
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import (
     MaxValueValidator,
@@ -23,6 +24,7 @@ from django.db.models import (
     RESTRICT,
 )
 
+from fantasion_generics.emails import get_lang, send_mail
 from fantasion_generics.models import PublicModel
 from fantasion_generics.money import MoneyField
 from fantasion_banking.constants import (
@@ -33,7 +35,6 @@ from fantasion_banking.constants import (
     PROMISE_STATUS_DEPOSIT_PAID,
     PROMISE_WAS_PAID,
 )
-
 
 ORDER_STATUS_NEW = 1
 ORDER_STATUS_CONFIRMED = 2
@@ -61,6 +62,7 @@ ORDER_REACTS_TO_PAYMENTS = (
 
 
 class EnabledField(BooleanField):
+
     def __init__(self, *args, **kwargs):
         kwargs.setdefault("default", True)
         kwargs.setdefault("verbose_name", _("Enabled"))
@@ -73,6 +75,7 @@ class PriceLevel(PublicModel):
     example, a product can have base price 250, but early birds can get it
     for 200.
     """
+
     class Meta:
         verbose_name = _("Price Level")
         verbose_name_plural = _("Price Levels")
@@ -84,6 +87,7 @@ class EshopProduct(TimeStampedModel):
     """
     EshopProduct is a generic class to be used for everything you want to sell.
     """
+
     class Meta:
         verbose_name = _("E-shop Product")
         verbose_name_plural = _("E-shop Products")
@@ -113,6 +117,7 @@ class ProductPrice(TimeStampedModel):
     """
     ProductPrice represents product price in a price level and a currency.
     """
+
     class Meta:
         unique_together = ("product", "price_level")
         verbose_name = _("E-shop Product Price")
@@ -151,6 +156,7 @@ class ProductPrice(TimeStampedModel):
 
 
 class Order(TimeStampedModel):
+
     class Meta:
         verbose_name = _("E-shop Order")
         verbose_name_plural = _("E-shop Orders")
@@ -182,8 +188,7 @@ class Order(TimeStampedModel):
         default=False,
         help_text=_(
             "System will split the payment into deposit and surcharge based "
-            "on Order Items configuration"
-        ),
+            "on Order Items configuration"),
         verbose_name=_("Use Deposit Payment"),
     )
 
@@ -210,8 +215,7 @@ class Order(TimeStampedModel):
     def get_earliest_troop_start(self):
         Signup = apps.get_model('fantasion_signups', 'Signup')
         signup = Signup.objects.filter(
-            order=self,
-        ).order_by('troop__starts_at').first()
+            order=self, ).order_by('troop__starts_at').first()
         if signup:
             return signup.troop.starts_at - timedelta(days=5)
         return date.today() + timedelta(days=14)
@@ -256,8 +260,7 @@ class Order(TimeStampedModel):
             title=str(self),
             amount=0,  # Prevents creating initial debt
             initial_amount=self.price,
-            variable_symbol=self.variable_symbol
-        )
+            variable_symbol=self.variable_symbol)
         self.promise.save()
         if self.use_deposit_payment:
             self.create_deposit_debts()
@@ -269,6 +272,23 @@ class Order(TimeStampedModel):
             )
         self.save()
 
+    def notify_order_confirmed(self):
+        subject = (_("Order {number}")).format(number=self.variable_symbol)
+        total = self.deposit if self.use_deposit_payment else self.price
+        status_url = f"{settings.APP_WEBSITE_URL}/{get_lang()}/prehled"
+        body = render_to_string(
+            'mail/order_confirmation.html',
+            context={
+                'account_number': settings.BANK_ACCOUNT_NUMBER,
+                'items': self.order_items.all(),
+                'total': total,
+                'variable_symbol': self.variable_symbol,
+                'status_url': status_url,
+                'website_url': settings.APP_WEBSITE_URL,
+            },
+        )
+        send_mail([self.owner.email], subject, body)
+
     def save(self, *args, **kwargs):
         self.price = self.calculate_price()
         self.deposit = self.calculate_deposit()
@@ -278,6 +298,7 @@ class Order(TimeStampedModel):
             Model.objects.get(pk=item.pk).save(avoid_order_save=True)
         if self.status == ORDER_STATUS_CONFIRMED and not self.promise:
             self.create_promise()
+            self.notify_order_confirmed()
 
     def sync_with_promise(self, promise=None):
         p = promise or self.promise
@@ -296,6 +317,7 @@ class Order(TimeStampedModel):
 
 
 class OrderItem(TimeStampedModel):
+
     class Meta:
         verbose_name = _("E-shop Order Item")
         verbose_name_plural = _("E-shop Order Items")
@@ -354,8 +376,17 @@ class OrderItem(TimeStampedModel):
     def recalculate(self):
         pass
 
+    @property
+    def static_description(self):
+        pp = self.product_price
+        if pp:
+            return self.product_price.product.description
+        Model = apps.get_model(self.product_type)
+        return Model._meta.verbose_name
+
 
 class PromotionCode(TimeStampedModel):
+
     class Meta:
         verbose_name = _("Promotion Code")
         verbose_name_plural = _("Promotion Codes")
@@ -416,6 +447,7 @@ class PromotionCode(TimeStampedModel):
 
 
 class OrderPromotionCode(OrderItem):
+
     class Meta:
         verbose_name = _("Order Promotion Code")
         verbose_name_plural = _("Order Promotion Codes")
@@ -428,8 +460,7 @@ class OrderPromotionCode(OrderItem):
 
     def get_abs_discount(self):
         base_price_data = self.order.order_items.exclude(
-            product_type=self.get_product_type()
-        ).aggregate(Sum('price'))
+            product_type=self.get_product_type()).aggregate(Sum('price'))
         base_price = base_price_data['price__sum'] or 0
 
         promotion_code = self.promotion_code
@@ -442,14 +473,13 @@ class OrderPromotionCode(OrderItem):
         self.price = -1 * self.get_abs_discount()
 
     def get_description(self):
-        return f"Sleva: {self.promotion_code.code}"
+        label = _("Discount")
+        return f"{label} ({self.promotion_code.discount_formatted})"
 
 
 @receiver(post_save, sender="fantasion_banking.Promise")
 def set_order_state(sender, instance, **kwargs):
-    orders = Order.objects.filter(
-        promise=instance,
-        status__in=ORDER_REACTS_TO_PAYMENTS
-    )
+    orders = Order.objects.filter(promise=instance,
+                                  status__in=ORDER_REACTS_TO_PAYMENTS)
     for order in orders:
         order.sync_with_promise(instance)

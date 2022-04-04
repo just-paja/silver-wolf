@@ -1,0 +1,54 @@
+{% extends "mail/base.html" %}
+{% load i18n %}
+
+{% block intro %}
+  {% trans "email-signup-confirmed" %}
+{% endblock %}
+
+{% block content %}
+  <p>
+    {% trans "email-payment-info-below" %}
+  </p>
+
+  <ul>
+    <li>{% trans "Account Number" %}: <strong>{{account_number}}</strong></li>
+    <li>{% trans "Variable Symbol" %}: <strong>{{variable_symbol}}</strong></li>
+    <li>{% trans "Amount" %}: <strong>{{total}}</strong></li>
+  </ul>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="text-align: left">{% trans "Order Item" %}</th>
+        <th style="text-align: right">{% trans "Price" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+        <tr>
+          <td>{{item.static_description}}</td>
+          <td style="text-align: right">{{item.price}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td style="text-align: right">{% trans "Total" %}</td>
+        <td style="text-align: right">{{total}}</td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <p>
+    <strong>{% trans "email-whats-next" %}</strong>
+  </p>
+  <p>
+    {% trans "email-watch-on-media" %}
+  </p>
+  <p>
+    {% trans "email-fill-in-documents" %}
+  </p>
+  <p>
+    <a class="long" href="{{ status_url }}">{{ status_url }}</a>
+  </p>
+{% endblock %}
