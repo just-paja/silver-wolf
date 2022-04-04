@@ -64,23 +64,26 @@ const UserMenu = () => {
   const { t } = useTranslation()
   const { logout, user } = useSite()
   const items = [
-    !user && (
-      <Linker key="login" route="login">
-        <Nav.Link>{t('login')}</Nav.Link>
-      </Linker>
-    ),
     ...(user
+      ? []
+      : [
+          <Linker key="login" route="login">
+            <Nav.Link>{t('login')}</Nav.Link>
+          </Linker>,
+          <Linker key="register" route="register">
+            <Nav.Link>{t('register-title')}</Nav.Link>
+          </Linker>,
+        ]),
+    ...(user?.passwordCreated
       ? [
           <Linker key="status" route="status">
             <Nav.Link>{t('my-status')}</Nav.Link>
           </Linker>,
+          <Nav.Link key="logout" onClick={logout}>
+            {t('logout')}
+          </Nav.Link>,
         ]
       : []),
-    user?.passwordCreated && (
-      <Nav.Link key="logout" onClick={logout}>
-        {t('logout')}
-      </Nav.Link>
-    ),
   ].filter(Boolean)
 
   return <Nav className={styles.userMenu}>{items}</Nav>
