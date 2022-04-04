@@ -2,11 +2,13 @@ from datetime import date, timedelta
 
 from django.apps import apps
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db.models import Sum
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django_extensions.db.models import TimeStampedModel
 from django.template.loader import render_to_string
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import (
     MaxValueValidator,
@@ -153,6 +155,10 @@ class ProductPrice(TimeStampedModel):
             price_level=self.price_level,
             product=self.product,
         )
+
+    def is_available(self):
+        now = timezone.now()
+        return self.available_since <= now <= self.available_until
 
 
 class Order(TimeStampedModel):
@@ -316,6 +322,12 @@ class Order(TimeStampedModel):
     get_surcharge.short_description = _('Surcharge')
 
 
+def product_price_available(product_price_id):
+    value = ProductPrice.objects.get(pk=product_price_id)
+    if not value.is_available():
+        raise ValidationError(_("This product price is not available."))
+
+
 class OrderItem(TimeStampedModel):
 
     class Meta:
@@ -335,6 +347,7 @@ class OrderItem(TimeStampedModel):
         on_delete=RESTRICT,
         related_name="order_items",
         verbose_name=_("Product Price"),
+        validators=[product_price_available],
     )
     price = MoneyField(verbose_name=_("Real Price"))
     product_type = CharField(
