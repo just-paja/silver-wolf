@@ -1,3 +1,5 @@
+const { InternalServerError } = require('./errors')
+
 const cs = {
   about: {
     source: '/o-nas',
@@ -115,7 +117,13 @@ const translateRoute = (path, params) =>
     return value
   })
 
-const reverse = (lang, name, params) =>
-  `/${lang}${translateRoute(routes[lang || defaultLang][name].source, params)}`
+const reverse = (lang, name, params) => {
+  const src = routes[lang || defaultLang]
+  const route = src[name]
+  if (!route) {
+    throw new InternalServerError(`Failed to find route "${lang}:${name}"`)
+  }
+  return `/${lang}${translateRoute(route.source, params)}`
+}
 
 module.exports = { defaultLang, getRewrites, reverse }

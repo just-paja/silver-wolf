@@ -1,7 +1,8 @@
 import getConfig from 'next/config'
 
-import { curryAuth, NotFound, TOKEN_COOKIE } from '../api'
+import { curryAuth, TOKEN_COOKIE } from '../api'
 import { getCookie } from 'cookies-next'
+import { NotFound } from '../errors'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const { publicRuntimeConfig } = getConfig()

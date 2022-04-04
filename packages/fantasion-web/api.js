@@ -1,33 +1,13 @@
 import fetch from 'cross-fetch'
 import getConfig from 'next/config'
 
+import { resolveApiErrorClass } from './errors'
+
 const { publicRuntimeConfig } = getConfig()
 const { apiUrl } = publicRuntimeConfig
 
 export const TOKEN_COOKIE = 'authToken'
 export const TOKEN_HEADER = 'Authorization'
-
-export class ApiError extends Error {}
-export class BadRequest extends ApiError {}
-export class Forbidden extends ApiError {}
-export class NotFound extends ApiError {}
-export class Unauthorized extends ApiError {}
-
-const resolveApiErrorClass = (res) => {
-  if (res.status === 401) {
-    return Unauthorized
-  }
-  if (res.status === 403) {
-    return Forbidden
-  }
-  if (res.status === 404) {
-    return NotFound
-  }
-  if (res.status === 400) {
-    return BadRequest
-  }
-  return ApiError
-}
 
 const resolveHeaders = (options) => {
   const headers = options.headers || {}
