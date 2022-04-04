@@ -29,11 +29,11 @@ const RegisterPageContent = ({ onSubmit }) => {
   const { t } = useTranslation()
   return (
     <Row>
-      <Col md={6} lg={5} xl={4} className="mt-3">
+      <Col md={6} lg={5} xl={4} className="mt-4">
         <Heading relativeLevel={2}>{t('register-with-email')}</Heading>
         <RegisterForm onSubmit={onSubmit} />
       </Col>
-      <Col md={6} lg={5} xl={4} className="mt-3">
+      <Col md={6} lg={5} xl={4} className="mt-4">
         <Heading relativeLevel={2}>{t('register-have-account')}</Heading>
         <div className="mt-2">
           <Link as={Button} route="login">
@@ -60,7 +60,7 @@ const RegisterPage = () => {
       />
       <Container>
         <Heading>{t('register-title')}</Heading>
-        <hr />
+        <hr className="mb-0" />
         {user ? (
           <RegisterFormSuccess />
         ) : (

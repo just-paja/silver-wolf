@@ -68,7 +68,7 @@ export const RegisterFormSuccess = () => {
   return (
     <Container>
       <Row>
-        <Col lg={{ span: 6, offset: 3 }}>
+        <Col lg={{ span: 6, offset: 3 }} className="mt-4">
           <Alert variant="success">{t('register-success')}</Alert>
           <p>{t('register-success-info')}</p>
         </Col>

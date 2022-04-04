@@ -40,13 +40,13 @@ const LoginPage = () => {
       />
       <Container>
         <Heading>{t('login-title')}</Heading>
-        <hr />
+        <hr className="mb-0" />
         <Row>
-          <Col md={6} lg={5} xl={4}>
+          <Col md={6} lg={5} xl={4} className="mt-4">
             <Heading relativeLevel={2}>{t('login-with-email')}</Heading>
             <LoginForm onSubmit={handleLogin} />
           </Col>
-          <Col md={6} lg={5} xl={4}>
+          <Col md={6} lg={5} xl={4} className="mt-4">
             <Heading relativeLevel={2}>{t('login-register')}</Heading>
             <p>{t('login-register-general-info')}</p>
             <div className="mt-2">
