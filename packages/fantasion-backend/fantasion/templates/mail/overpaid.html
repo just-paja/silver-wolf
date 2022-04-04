@@ -1,0 +1,21 @@
+{% extends "mail/base.html" %}
+{% load i18n %}
+
+{% block intro %}
+  {% trans "email-overpaid-thanks" %}
+{% endblock %}
+
+{% block content %}
+  <p>
+    {% trans "email-overpaid-info" %}
+  </p>
+
+  <ul>
+    <li>{% trans "email-overpaid-overpayment" %}: <strong>{{overpayment}}</strong></li>
+  </ul>
+    
+  <p>
+    {% trans "email-overpaid-refund" %}
+  </p>
+
+{% endblock %}
