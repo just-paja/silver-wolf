@@ -1,5 +1,11 @@
+import Card from 'react-bootstrap/Card'
+import ListGroup from 'react-bootstrap/ListGroup'
+
+import { DurationIcon, IconLabel, PersonIcon, StoryIcon } from './icons'
 import { getDaysDuration } from './dates'
-import { IconLabel, PersonIcon } from './icons'
+import { Heading, Section } from './media'
+import { PriceTag } from './money'
+import { SignupButton } from './expeditions'
 import { useTranslation } from 'next-i18next'
 
 export const TroopLabel = ({ ageMin, ageMax, startsAt, endsAt }) => {
@@ -11,5 +17,50 @@ export const TroopLabel = ({ ageMin, ageMax, startsAt, endsAt }) => {
         daysLength: getDaysDuration(startsAt, endsAt),
       })}`}
     />
+  )
+}
+
+export const TroopCard = ({ expedition, batch, troop }) => {
+  const { t } = useTranslation()
+  return (
+    <Section component={Card}>
+      <Card.Header>
+        <Heading className="mt-2">{troop.ageGroup.title}</Heading>
+      </Card.Header>
+      <ListGroup variant="flush">
+        <ListGroup.Item>
+          <IconLabel
+            icon={PersonIcon}
+            text={t('age-limit', {
+              ageMin: troop.ageGroup.ageMin,
+              ageMax: troop.ageGroup.ageMax,
+            })}
+          />
+        </ListGroup.Item>
+        <ListGroup.Item>
+          <IconLabel
+            icon={DurationIcon}
+            text={t('expedition-length', {
+              daysLength: getDaysDuration(troop.startsAt, troop.endsAt),
+            })}
+          />
+        </ListGroup.Item>
+        <ListGroup.Item>
+          <IconLabel icon={StoryIcon} text={troop.program.title} />
+        </ListGroup.Item>
+        <ListGroup.Item>
+          <ul className="mb-0">
+            {troop.prices.map((price) => (
+              <li key={price.id}>
+                <PriceTag {...price} />
+              </li>
+            ))}
+          </ul>
+        </ListGroup.Item>
+      </ListGroup>
+      <Card.Body>
+        <SignupButton expedition={expedition} batch={batch} />
+      </Card.Body>
+    </Section>
   )
 }

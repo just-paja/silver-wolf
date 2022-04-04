@@ -1,8 +1,8 @@
 import classnames from 'classnames'
 import Col from 'react-bootstrap/Col'
 
+import { HeadingLevelContext, useHeadingLevel } from './context'
 import { useEffect, useState } from 'react'
-import { useHeadingLevel } from './context'
 
 import styles from './media.module.scss'
 
@@ -38,11 +38,29 @@ export const useRotatingIndex = (items, ttl = 16000) => {
   return [index, setIndex]
 }
 
-export const Heading = ({ level, relativeLevel = 0, children }) => {
+export const HeadingContext = ({ children, baseLevel }) => (
+  <HeadingLevelContext.Provider value={baseLevel || 0}>
+    {children}
+  </HeadingLevelContext.Provider>
+)
+
+export const Heading = ({ level, relativeLevel = 0, children, ...props }) => {
   const headingLevel = useHeadingLevel()
   const Component = `h${level || headingLevel + (relativeLevel || 1)}`
-  return <Component>{children}</Component>
+  return <Component {...props}>{children}</Component>
 }
+
+export const Section = ({
+  children,
+  component: Component = 'section',
+  ...props
+}) => (
+  <Component {...props}>
+    <HeadingContext baseLevel={useHeadingLevel() + 1}>
+      {children}
+    </HeadingContext>
+  </Component>
+)
 
 const PreviewImage = ({ localPhoto, size, ...props }) => {
   return (

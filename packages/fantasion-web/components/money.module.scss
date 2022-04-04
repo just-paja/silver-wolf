@@ -1,0 +1,9 @@
+@import '../styles/variables.scss';
+
+.active {
+  font-weight: bold;
+}
+
+.expired {
+  text-decoration: line-through;
+}

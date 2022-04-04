@@ -122,6 +122,7 @@ class ProductPrice(TimeStampedModel):
 
     class Meta:
         unique_together = ("product", "price_level")
+        ordering = ('available_since', 'available_until')
         verbose_name = _("E-shop Product Price")
         verbose_name_plural = _("E-shop Product Prices")
 

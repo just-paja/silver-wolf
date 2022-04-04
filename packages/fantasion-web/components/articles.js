@@ -4,12 +4,12 @@ import Container from 'react-bootstrap/Container'
 import React from 'react'
 import Row from 'react-bootstrap/Row'
 
-import { HeadingLevelContext, useHeadingLevel } from './context'
+import { useHeadingLevel } from './context'
 import { asPage, MetaPage } from './meta'
 import { GenericPage } from './layout'
 import { Link } from './links'
 import { MarkdownContent } from './content'
-import { Heading, ThumbGallery } from './media'
+import { Heading, HeadingContext, ThumbGallery } from './media'
 
 export const ArticleBody = ({ className, text }) => (
   <MarkdownContent className={classnames('mt-3', className)}>
@@ -40,7 +40,7 @@ export const Article = ({
 }) => {
   const headingLevel = useHeadingLevel()
   return (
-    <HeadingLevelContext.Provider value={headingLevel + 1}>
+    <HeadingContext baseLevel={headingLevel + 1}>
       <Container as="article">
         <Row>
           <Col lg={7}>
@@ -58,7 +58,7 @@ export const Article = ({
           </Col>
         </Row>
       </Container>
-    </HeadingLevelContext.Provider>
+    </HeadingContext>
   )
 }
 

@@ -5,26 +5,25 @@ import { Heading } from './media'
 import { Link } from './links'
 import { ProfileAvatar } from './profiles'
 import { slug } from './slugs'
-import { TroopLabel } from './troops'
+import { TroopCard } from './troops'
 import { useTranslation } from 'next-i18next'
 
 import styles from './batches.module.scss'
 
-export const BatchTroops = ({ troops }) => {
-  const { t } = useTranslation()
+export const BatchTroops = ({ expedition, batch, troops }) => {
   return (
-    <section className="mt-3">
-      <Heading relativeLevel={2}>{t('batch-troops')}</Heading>
+    <Row>
       {troops.map((troop) => (
-        <TroopLabel
-          ageMax={troop.ageGroup.ageMax}
-          ageMin={troop.ageGroup.ageMin}
-          endsAt={troop.endsAt}
-          key={troop.id}
-          startsAt={troop.startsAt}
-        />
+        <Col md={6} key={troop.id}>
+          <TroopCard
+            expedition={expedition}
+            batch={batch}
+            key={troop.id}
+            troop={troop}
+          />
+        </Col>
       ))}
-    </section>
+    </Row>
   )
 }
 

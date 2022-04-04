@@ -3,11 +3,19 @@
  * icon for the same purpose. */
 
 import { BsPersonFill, BsPinMapFill } from 'react-icons/bs'
-import { FaFacebook, FaInstagram, FaTiktok, FaTwitter } from 'react-icons/fa'
 import { HiHome, HiMailOpen } from 'react-icons/hi'
 import { MdGppGood, MdGppBad, MdGppMaybe } from 'react-icons/md'
+import { GiJourney } from 'react-icons/gi'
+import {
+  FaCalendarWeek,
+  FaFacebook,
+  FaInstagram,
+  FaTiktok,
+  FaTwitter,
+} from 'react-icons/fa'
 
 export const EmailContactIcon = HiMailOpen
+export const DurationIcon = FaCalendarWeek
 export const FacebookIcon = FaFacebook
 export const HomeIcon = HiHome
 export const InsecureIcon = MdGppBad
@@ -16,6 +24,7 @@ export const LocationPinIcon = BsPinMapFill
 export const PersonIcon = BsPersonFill
 export const SecureIcon = MdGppGood
 export const SecurityWarningIcon = MdGppMaybe
+export const StoryIcon = GiJourney
 export const TiktokIcon = FaTiktok
 export const TwitterIcon = FaTwitter
 

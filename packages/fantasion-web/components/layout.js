@@ -14,7 +14,7 @@ import Rune05 from './runes/rune-05.svg'
 import { Alerts } from './alerts'
 import { HiMenu } from 'react-icons/hi'
 import { Link, Linker } from './links'
-import { PageTopGallery } from './media'
+import { HeadingContext, PageTopGallery } from './media'
 import { SiteLogo } from './SiteLogo'
 import { SocialNetworks } from '../components/social'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -145,7 +145,9 @@ export const SiteNavbar = ({ fixed, sticky }) => {
 }
 
 export const PageContent = ({ children }) => (
-  <div className={styles.content}>{children}</div>
+  <div className={styles.content}>
+    <HeadingContext>{children}</HeadingContext>
+  </div>
 )
 
 const FooterLinks = () => {
