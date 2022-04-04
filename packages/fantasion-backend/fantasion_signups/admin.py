@@ -9,19 +9,19 @@ from . import models
 class ParticipantAllergy(NestedStackedInline):
     model = models.ParticipantAllergy
     extra = 0
-    autocomplete_fields = ('allergy',)
+    autocomplete_fields = ('allergy', )
 
 
 class ParticipantDiet(NestedStackedInline):
     model = models.ParticipantDiet
     extra = 0
-    autocomplete_fields = ('diet',)
+    autocomplete_fields = ('diet', )
 
 
 class ParticipantHobby(NestedStackedInline):
     model = models.ParticipantHobby
     extra = 0
-    autocomplete_fields = ('hobby',)
+    autocomplete_fields = ('hobby', )
 
 
 class ParticipantAdmin(BaseAdmin):
@@ -85,7 +85,9 @@ class SignupAdmin(BaseAdmin):
         'status',
     )
     search_fields = (
-        'participant__name',
+        'participant__first_name',
+        'participant__last_name',
+        'order__promise__variable_symbol',
         'family__title',
         'family__owner__email',
         'family__owner__first_name',

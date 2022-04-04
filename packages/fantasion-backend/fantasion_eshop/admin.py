@@ -66,7 +66,13 @@ class OrderAdmin(BaseAdmin):
         'owner',
         'created',
     )
-    list_filter = ('status',)
+    list_filter = ('status', )
+    search_fields = (
+        'pk',
+        'promise__variable_symbol',
+        'owner__first_name',
+        'owner__last_name',
+    )
     autocomplete_fields = ('owner', )
     readonly_fields = (
         'deposit',
