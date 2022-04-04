@@ -11,6 +11,7 @@ import { Heading } from '../components/media'
 import { setCookies } from 'cookies-next'
 import { TOKEN_COOKIE } from '../api'
 import { useAlerts } from '../components/alerts'
+import { useRouter } from 'next/router'
 import { useSite } from '../components/context'
 import { useTranslation } from 'next-i18next'
 import { withPageProps } from '../server/props'
@@ -41,6 +42,7 @@ const VerifyEmailPage = ({ secret }) => {
   const { addAlert } = useAlerts()
   const { t } = useTranslation()
   const [verified, setVerified] = useState(user.passwordCreated)
+  const router = useRouter()
   const onSubmit = async (values) => {
     const res = await fetch.post(`/users/create-password/${secret}`, {
       body: values,
@@ -54,6 +56,12 @@ const VerifyEmailPage = ({ secret }) => {
       severity: 'success',
       text: t('verification-finished'),
     })
+
+    const redirectTo = localStorage.getItem('redirectTo')
+    if (redirectTo) {
+      router.push(redirectTo)
+      localStorage.removeItem('redirectTo')
+    }
   }
   return (
     <GenericPage>

@@ -30,7 +30,10 @@ const LoginPage = () => {
     setCookies(TOKEN_COOKIE, token, {
       sameSite: 'strict',
     })
-    router.push(reverse(lang, 'home'))
+    const redirectTo =
+      localStorage.getItem('redirectTo') || reverse(lang, 'home')
+    router.push(redirectTo)
+    localStorage.removeItem('redirectTo')
   }
   return (
     <GenericPage>

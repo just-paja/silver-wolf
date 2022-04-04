@@ -1,4 +1,10 @@
-import { createContext, useCallback, useContext, useMemo } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+} from 'react'
 import { curryAuth, TOKEN_COOKIE } from '../api'
 import { getCookie, setCookies } from 'cookies-next'
 import { reverse } from '../routes'
@@ -22,6 +28,19 @@ export const SiteContextProvider = ({ children, user }) => {
     setCookies(TOKEN_COOKIE, null, { sameSite: 'strict' })
     router.push(reverse(lang, 'home'))
   }, [lang, router])
+
+  useEffect(() => {
+    const query = Object.fromEntries(
+      document.location.search
+        .substr(1)
+        .split('&')
+        .map((str) => str.split('=').map(decodeURIComponent))
+    )
+    if (query.redirectTo) {
+      localStorage.setItem('redirectTo', query.redirectTo)
+    }
+  }, [])
+
   const context = useMemo(
     () => ({
       fetch: curryAuth(authCookie),
