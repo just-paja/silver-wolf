@@ -12,6 +12,7 @@ from fantasion_generics.api import (
 )
 
 from . import models
+from fantasion_eshop.serializers import ProductPriceSerializer
 from fantasion_people import models as people
 
 
@@ -154,6 +155,7 @@ class ExpeditionProgramSerializer(HyperlinkedModelSerializer):
 
 class TroopSerializer(HyperlinkedModelSerializer):
     age_group = AgeGroupSerializer()
+    prices = ProductPriceSerializer(many=True)
     program = ExpeditionProgramSerializer()
 
     class Meta:
@@ -162,6 +164,7 @@ class TroopSerializer(HyperlinkedModelSerializer):
             "age_group",
             "ends_at",
             "id",
+            "prices",
             "program",
             "starts_at",
         )
