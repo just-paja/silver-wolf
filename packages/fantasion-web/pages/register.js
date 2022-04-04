@@ -9,11 +9,21 @@ import { GenericPage } from '../components/layout'
 import { Heading } from '../components/media'
 import { Link } from '../components/links'
 import { RegisterForm, RegisterFormSuccess } from '../components/register'
+import { reverse } from '../routes'
 import { useFetch } from '../components/context'
 import { useTranslation } from 'next-i18next'
 import { withPageProps } from '../server/props'
 
-export const getServerSideProps = withPageProps()
+export const getServerSideProps = withPageProps(({ lang, user }) => {
+  if (user) {
+    return {
+      redirect: {
+        destination: reverse(lang, 'status'),
+        permanent: false,
+      },
+    }
+  }
+})
 
 const RegisterPageContent = ({ onSubmit }) => {
   const { t } = useTranslation()

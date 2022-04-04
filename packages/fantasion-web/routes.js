@@ -89,6 +89,10 @@ const cs = {
     source: '/cookies-podminky',
     destination: '/cookies-policy',
   },
+  status: {
+    source: '/prehled',
+    destination: '/status',
+  },
 }
 
 const defaultLang = 'cs'
