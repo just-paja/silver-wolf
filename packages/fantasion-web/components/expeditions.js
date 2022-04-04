@@ -9,9 +9,11 @@ import { DateRange } from './dates'
 import { Heading } from './media'
 import { Link } from './links'
 import { LocationFuzzyName } from './locations'
+import { reverse } from '../routes'
 import { slug } from './slugs'
 import { TroopLabel } from './troops'
 import { useTranslation } from 'next-i18next'
+import { useSite } from './context'
 
 import styles from './expeditions.module.scss'
 
@@ -33,13 +35,20 @@ const Troop = ({ ageMin, ageMax, startsAt, endsAt }) => {
 
 export const SignupButton = ({ expedition, batch }) => {
   const { t } = useTranslation()
+  const { lang, user } = useSite()
+  const expeditionSlug = slug(expedition.id, expedition.title)
+  const query = user
+    ? { batchId: batch?.id }
+    : {
+        redirectTo: reverse(lang, 'expeditionSignup', { expeditionSlug }),
+      }
   return (
     <Link
       as={Button}
       className={styles.signupButton}
-      route="expeditionSignup"
-      params={{ expeditionSlug: slug(expedition.id, expedition.title) }}
-      query={{ batchId: batch?.id }}
+      route={user ? 'expeditionSignup' : 'login'}
+      params={{ expeditionSlug }}
+      query={query}
     >
       {t('signup-to-expedition')}
     </Link>
