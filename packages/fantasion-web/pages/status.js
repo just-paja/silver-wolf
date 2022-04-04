@@ -4,9 +4,9 @@ import React from 'react'
 import { asPage, MetaPage } from '../components/meta'
 import { GenericPage } from '../components/layout'
 import { useTranslation } from 'next-i18next'
-import { withPageProps } from '../server/props'
+import { requireUser, withPageProps } from '../server/props'
 
-export const getServerSideProps = withPageProps()
+export const getServerSideProps = withPageProps(requireUser())
 
 const Status = () => {
   const { t } = useTranslation()

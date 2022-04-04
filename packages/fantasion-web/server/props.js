@@ -62,7 +62,7 @@ export const requireUser = (fn) => (props) => {
       },
     }
   }
-  return fn(props)
+  return fn && fn(props)
 }
 
 export const withPageProps = (fn) =>
