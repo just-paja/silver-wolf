@@ -3,6 +3,7 @@ import getConfig from 'next/config'
 import { curryAuth, TOKEN_COOKIE } from '../api'
 import { getCookie } from 'cookies-next'
 import { NotFound } from '../errors'
+import { reverse } from '../routes'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const { publicRuntimeConfig } = getConfig()
@@ -47,6 +48,21 @@ const withFetch = (fn) => (props) =>
 
 const defaultProps = {
   statusCode: 200,
+}
+
+export const requireUser = (fn) => (props) => {
+  if (!props.user) {
+    return {
+      redirect: {
+        destination: `${reverse(
+          props.lang,
+          'login'
+        )}?redirectTo=${encodeURIComponent(props.req.url)}`,
+        permanent: false,
+      },
+    }
+  }
+  return fn(props)
 }
 
 export const withPageProps = (fn) =>

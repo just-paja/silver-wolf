@@ -8,20 +8,22 @@ import { Heading } from '../../../components/media'
 import { parseSlug } from '../../../components/slugs'
 import { slug } from '../../../components/slugs'
 import { useTranslation } from 'next-i18next'
-import { withPageProps } from '../../../server/props'
+import { requireUser, withPageProps } from '../../../server/props'
 import { ParticipantForm } from '../../../components/signups'
 import { ExpeditionContext } from '../../../components/expeditions'
 
-export const getServerSideProps = withPageProps(async ({ fetch, params }) => {
-  const expeditionId = parseSlug(params.expeditionSlug)
-  const expedition = await fetch(`/expeditions/${expeditionId}`)
-  return {
-    props: {
-      expeditionId,
-      expedition,
-    },
-  }
-})
+export const getServerSideProps = withPageProps(
+  requireUser(async ({ fetch, params }) => {
+    const expeditionId = parseSlug(params.expeditionSlug)
+    const expedition = await fetch(`/expeditions/${expeditionId}`)
+    return {
+      props: {
+        expeditionId,
+        expedition,
+      },
+    }
+  })
+)
 
 const ExpeditionBatchSignupPage = ({ expedition }) => {
   const { t } = useTranslation()
