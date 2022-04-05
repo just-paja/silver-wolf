@@ -217,7 +217,7 @@ msgstr "Nezapomeňte také prosím vyplnit a nahrát nezbytné dokumenty k vaš�
 
 #: fantasion/templates/mail/overpaid.html:5
 msgid "email-overpaid-thanks"
-msgstr "Děkujeme za ty dary"
+msgstr "To jsme opravdu nečekali."
 
 #: fantasion/templates/mail/overpaid.html:10
 msgid "email-overpaid-info"
