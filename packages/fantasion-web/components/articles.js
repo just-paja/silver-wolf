@@ -19,7 +19,7 @@ export const ArticleBody = ({ className, text }) => (
 
 export const ArticleLead = ({ text }) => (
   <i>
-    <ArticleBody className="" text={text}/>
+    <ArticleBody className="" text={text} />
   </i>
 )
 
