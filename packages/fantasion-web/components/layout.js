@@ -56,6 +56,9 @@ const SiteMenu = () => {
       <Linker route="contacts">
         <Nav.Link>{t('contacts-link')}</Nav.Link>
       </Linker>
+      <Linker route="faq">
+        <Nav.Link>{t('faq-link')}</Nav.Link>
+      </Linker>
     </Nav>
   )
 }
