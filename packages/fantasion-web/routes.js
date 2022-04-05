@@ -89,6 +89,10 @@ const cs = {
     source: '/cookies-podminky',
     destination: '/cookies-policy',
   },
+  codex: {
+    source: '/kodex',
+    destination: '/codex',
+  },
   status: {
     source: '/prehled',
     destination: '/status',
