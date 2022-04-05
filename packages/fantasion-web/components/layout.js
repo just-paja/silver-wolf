@@ -157,7 +157,7 @@ const FooterLinks = () => {
     <nav>
       <ul className={styles.quickLinks}>
         <li>
-          <Link route="faq">{t('faq-title-short')}</Link>
+          <Link route="codex">{t('codex-title')}</Link>
         </li>
         <li>
           <Link route="cookiesPolicy">{t('cookies')}</Link>
