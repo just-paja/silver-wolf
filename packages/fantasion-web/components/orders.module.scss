@@ -4,3 +4,14 @@
   color: $text-muted;
   font-size: 75%;
 }
+
+.paymentRow .orderRowLabel {
+  display: inline-block;
+  font-weight: bold;
+  width: $spacer * 9;
+}
+
+.copyPasta {
+  display: inline-block;
+  padding: calc($spacer / 4) $spacer;
+}

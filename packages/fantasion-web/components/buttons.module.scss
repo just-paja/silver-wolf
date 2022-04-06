@@ -1,0 +1,6 @@
+@import '../styles/variables.scss';
+
+.copyButton {
+  margin-left: $spacer / 2;
+  padding: calc($spacer / 8) calc($spacer / 4);
+}

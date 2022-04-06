@@ -4,7 +4,7 @@
 
 import { BsPersonFill, BsPinMapFill } from 'react-icons/bs'
 import { HiHome, HiMailOpen } from 'react-icons/hi'
-import { MdGppGood, MdGppBad, MdGppMaybe } from 'react-icons/md'
+import { MdContentCopy, MdGppGood, MdGppBad, MdGppMaybe } from 'react-icons/md'
 import { GiJourney } from 'react-icons/gi'
 import {
   FaCalendarWeek,
@@ -14,6 +14,7 @@ import {
   FaTwitter,
 } from 'react-icons/fa'
 
+export const CopyIcon = MdContentCopy
 export const EmailContactIcon = HiMailOpen
 export const DurationIcon = FaCalendarWeek
 export const FacebookIcon = FaFacebook
