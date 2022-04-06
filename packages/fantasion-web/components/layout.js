@@ -16,7 +16,8 @@ import { HiMenu } from 'react-icons/hi'
 import { Link, Linker } from './links'
 import { HeadingContext, PageTopGallery } from './media'
 import { SiteLogo } from './SiteLogo'
-import { SocialNetworks } from '../components/social'
+import { SocialNetworks } from './social'
+import { UserName } from './users'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useOutsideClick, useScroll } from './window'
 import { useSite, useUser } from './context'
@@ -26,14 +27,9 @@ import styles from './layout.module.scss'
 
 const expandOn = 'lg'
 
-const getFullName = (user) => `${user.firstName} ${user.lastName}`
-
-const UserName = () => {
-  const user = useUser()
-  return user ? (
-    <span className={styles.menuUserName}>{getFullName(user)}</span>
-  ) : null
-}
+const CurrentUserName = () => (
+  <UserName user={useUser()} className={styles.menuUserName} />
+)
 
 const SiteMenu = () => {
   const { t } = useTranslation()
@@ -134,7 +130,7 @@ export const SiteNavbar = ({ fixed, sticky }) => {
             aria-controls="site-navbar"
             className={styles.navbarToggle}
           >
-            <UserName />
+            <CurrentUserName />
             <HiMenu />
           </Navbar.Toggle>
         </div>

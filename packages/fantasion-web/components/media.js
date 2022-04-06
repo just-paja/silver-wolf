@@ -53,10 +53,11 @@ export const Heading = ({ level, relativeLevel = 0, children, ...props }) => {
 export const Section = ({
   children,
   component: Component = 'section',
+  headingLevel = 1,
   ...props
 }) => (
   <Component {...props}>
-    <HeadingContext baseLevel={useHeadingLevel() + 1}>
+    <HeadingContext baseLevel={useHeadingLevel() + headingLevel}>
       {children}
     </HeadingContext>
   </Component>

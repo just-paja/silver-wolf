@@ -387,6 +387,10 @@ class OrderItem(TimeStampedModel):
         Model = type(self)
         return f"{Model._meta.app_label}.{Model._meta.object_name}"
 
+    def remarshall(self):
+        Model = apps.get_model(self.product_type)
+        return Model.objects.get(pk=self.pk)
+
     def recalculate(self):
         pass
 

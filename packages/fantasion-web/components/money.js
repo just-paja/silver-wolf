@@ -4,15 +4,15 @@ import styles from './money.module.scss'
 import { DateLabel } from './dates'
 import { useTranslation } from 'next-i18next'
 
-const currencyMap = {
-  CZK: (amount) => `${amount}\u00A0Kč`,
-}
+const formatMoney = (locale, amount, currency) =>
+  new Intl.NumberFormat(locale, { style: 'currency', currency }).format(
+    parseFloat(amount)
+  )
 
-const formatMoney = (amount, currency) =>
-  currencyMap[currency](parseFloat(amount))
-
-const Money = ({ amount, currency = 'CZK', ...props }) => (
-  <span {...props}>{formatMoney(amount, currency)}</span>
+export const Money = ({ amount, currency = 'CZK', ...props }) => (
+  <span {...props}>
+    {formatMoney(useTranslation().i18n.language, amount, currency)}
+  </span>
 )
 
 const PriceTagDate = ({ direction, date }) =>

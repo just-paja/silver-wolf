@@ -3,6 +3,7 @@ from rest_framework import routers
 
 from fantasion_content import api as content
 from fantasion_locations import api as locations
+from fantasion_eshop import api as orders
 from fantasion_expeditions import api as expeditions
 from fantasion_people import api as people
 
@@ -75,6 +76,7 @@ router.register(
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('orders/', include(orders.urlpatterns)),
     path('users/', include(users.urlpatterns)),
     path('auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
