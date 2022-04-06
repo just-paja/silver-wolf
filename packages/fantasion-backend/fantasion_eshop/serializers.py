@@ -166,6 +166,7 @@ class OrderSerializer(ModelSerializer):
         model = models.Order
         fields = (
             "id",
+            "is_cancellable",
             "items",
             "price",
             "promise",

@@ -175,12 +175,13 @@ REST_FRAMEWORK = {
         "fantasion_api.auth.CsrfExemptAuth",
         "rest_framework.authentication.TokenAuthentication",
     ),
-    "DEFAULT_PAGINATION_CLASS":
-    ("rest_framework.pagination.PageNumberPagination"),
-    "DEFAULT_PERMISSION_CLASSES":
-    ["rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"],
-    "PAGE_SIZE":
-    20,
+    "DEFAULT_PAGINATION_CLASS": (
+        "rest_framework.pagination.PageNumberPagination",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly",
+    ),
+    "PAGE_SIZE": 20,
     "DEFAULT_RENDERER_CLASSES": (
         "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
         "djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer",
@@ -325,6 +326,7 @@ VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
     ],
 }
 
+CSRF_COOKIE_SECURE = False
 BANK_ACCOUNT_NUMBER = os.environ.get("BANK_ACCOUNT_NUMBER", "xxxxxxxxx/0300")
 BASE_CURRENCY = "CZK"
 CURRENCIES = ('CZK', )

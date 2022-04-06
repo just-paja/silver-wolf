@@ -1,3 +1,4 @@
+import Alert from 'react-bootstrap/Alert'
 import Carousel from 'react-bootstrap/Carousel'
 import classnames from 'classnames'
 import ListGroup from 'react-bootstrap/ListGroup'
@@ -8,8 +9,9 @@ import styles from './orders.module.scss'
 
 import { Heading, Section } from './media'
 import { CopyButton, InteractiveButton } from './buttons'
+import { CancelIcon } from './icons'
 import { UserName } from './users'
-import { useUser } from './context'
+import { useFetch, useUser } from './context'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
 
@@ -263,11 +265,88 @@ const OrderControls = ({ order, ...props }) =>
     <OrderPayControls order={order} {...props} />
   )
 
-const OrderCard = ({ order }) => {
+const OrderCancelDialog = ({ error, inProgress, onCancel, onHide, show }) => {
   const { t } = useTranslation()
   return (
+    <Modal show={show} onHide={inProgress ? null : onHide}>
+      <Modal.Header closeButton={!inProgress}>
+        <Modal.Title>{t('order-cancel')}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <p>{t('order-cancel-cannot-go-back')}</p>
+        <p className="mt-2">{t('order-will-be-refunded')}</p>
+        {error && (
+          <div className="mt-3">
+            <Alert variant="danger">{t('operation-failed')}</Alert>
+          </div>
+        )}
+        <div className="mt-3">
+          <InteractiveButton
+            inProgress={inProgress}
+            onClick={onCancel}
+            variant="danger"
+          >
+            {t('order-cancel')}
+          </InteractiveButton>
+        </div>
+      </Modal.Body>
+    </Modal>
+  )
+}
+
+const OrderCancel = ({ order, setOrder }) => {
+  const { t } = useTranslation()
+  const [inProgress, setInProgress] = useState(false)
+  const [error, setError] = useState(null)
+  const [show, setShow] = useState(false)
+  const fetch = useFetch()
+
+  const handleCancel = async () => {
+    setError(null)
+    setInProgress(true)
+    try {
+      setOrder(await fetch.put(`/orders/${order.id}/cancel`))
+      setShow(false)
+    } catch (e) {
+      setError(e)
+    } finally {
+      setInProgress(false)
+    }
+  }
+
+  return (
+    order.isCancellable && (
+      <>
+        <OrderCancelDialog
+          error={error}
+          inProgress={inProgress}
+          onCancel={handleCancel}
+          onHide={() => setShow(false)}
+          order={order}
+          show={show}
+        />
+        <InteractiveButton
+          icon={CancelIcon}
+          onClick={() => setShow(true)}
+          title={t('order-cancel')}
+          variant="link"
+        />
+      </>
+    )
+  )
+}
+
+const OrderCard = ({ defaultOrder }) => {
+  const { t } = useTranslation()
+  const [order, setOrder] = useState(defaultOrder)
+  return (
     <Section component="article">
-      <Heading>{order.variableSymbol}</Heading>
+      <header className="d-flex align-items-start justify-content-between">
+        <Heading>{order.variableSymbol}</Heading>
+        {order.isCancellable && (
+          <OrderCancel order={order} setOrder={setOrder} />
+        )}
+      </header>
       <OrderItems items={order.items} />
       <Row className="flex-column-reverse flex-md-row">
         <Col md={6} className="mt-1">
@@ -305,7 +384,7 @@ export const OrderList = ({ orders }) => {
     <Section headingLevel={0} className={styles.orderList}>
       <Heading>{t('orders')}</Heading>
       {orders.map((order) => (
-        <OrderCard key={order.id} order={order} />
+        <OrderCard key={order.id} defaultOrder={order} />
       ))}
     </Section>
   )

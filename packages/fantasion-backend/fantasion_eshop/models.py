@@ -26,6 +26,7 @@ from django.db.models import (
     RESTRICT,
 )
 
+from rest_framework.exceptions import PermissionDenied
 from fantasion_generics.emails import get_lang, send_mail
 from fantasion_generics.models import PublicModel
 from fantasion_generics.money import MoneyField
@@ -45,6 +46,7 @@ ORDER_STATUS_PAID = 4
 ORDER_STATUS_DISPATCHED = 5
 ORDER_STATUS_RESOLVED = 6
 ORDER_STATUS_CANCELLED = 7
+ORDER_STATUS_REFUNDED = 8
 
 ORDER_STATES = (
     (ORDER_STATUS_NEW, _("New")),
@@ -54,10 +56,20 @@ ORDER_STATES = (
     (ORDER_STATUS_DISPATCHED, _("Dispatched")),
     (ORDER_STATUS_RESOLVED, _("Resolved")),
     (ORDER_STATUS_CANCELLED, _("Cancelled")),
+    (ORDER_STATUS_REFUNDED, _("Refunded")),
 )
 
 ORDER_REACTS_TO_PAYMENTS = (
     ORDER_STATUS_NEW,
+    ORDER_STATUS_CONFIRMED,
+    ORDER_STATUS_DEPOSIT_PAID,
+)
+
+ORDER_CAN_BE_DELETED = (
+    ORDER_STATUS_NEW,
+)
+
+ORDER_CAN_BE_CANCELLED = (
     ORDER_STATUS_CONFIRMED,
     ORDER_STATUS_DEPOSIT_PAID,
 )
@@ -315,9 +327,20 @@ class Order(TimeStampedModel):
             self.status = ORDER_STATUS_DEPOSIT_PAID
         self.save()
 
+    def is_cancellable(self):
+        return self.status in ORDER_CAN_BE_CANCELLED
+
     def __str__(self):
         model_name = _("E-shop Order")
         return f"{model_name}#{self.id}"
+
+    def cancel(self):
+        if not self.is_cancellable():
+            raise PermissionDenied(_(
+                f"Cannot delete order in status {self.status}"
+            ))
+        self.status = ORDER_STATUS_CANCELLED
+        self.save()
 
     calculate_price.short_description = _('Price')
     get_surcharge.short_description = _('Surcharge')

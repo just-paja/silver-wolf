@@ -1,0 +1,9 @@
+@import '../styles/variables.scss';
+
+.iconButton {
+  padding: calc($spacer / 4);
+  font-size: calc($spacer * 1.5);
+  flex-grow: 0;
+  display: flex;
+  align-items: center;
+}

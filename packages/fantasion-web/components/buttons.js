@@ -9,12 +9,30 @@ import { forwardRef, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'next-i18next'
 
 const ReflessInteractiveButton = (
-  { children, disabled, inProgress, ...props },
+  { children, disabled, icon: Icon, inProgress, onClick, ...props },
   ref
 ) => {
+  const [progress, setProgress] = useState(false)
+  const handleClick =
+    typeof inProgress === 'undefined' && onClick
+      ? async (e) => {
+          setProgress(true)
+          try {
+            await onClick(e)
+          } finally {
+            setProgress(false)
+          }
+        }
+      : onClick
+  const running = inProgress || progress
   return (
-    <Button {...props} disabled={disabled || inProgress} ref={ref}>
-      {inProgress ? (
+    <Button
+      {...props}
+      disabled={disabled || running}
+      onClick={handleClick}
+      ref={ref}
+    >
+      {running ? (
         <Spinner
           animation="border"
           aria-hidden="true"
@@ -24,6 +42,7 @@ const ReflessInteractiveButton = (
           size="sm"
         />
       ) : null}
+      {!running && Icon && <Icon />}
       {children}
     </Button>
   )
