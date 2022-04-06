@@ -1,5 +1,12 @@
+from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.utils import timezone
-from rest_framework.serializers import ModelSerializer, SerializerMethodField
+
+from rest_framework.serializers import (
+    ModelSerializer,
+    SerializerMethodField,
+    ReadOnlyField,
+)
 
 from fantasion_banking.serializers import PromiseSerializer
 from fantasion_signups.models import Signup, Participant
@@ -185,3 +192,59 @@ class OrderSerializer(ModelSerializer):
             'items',
         )
 
+
+class OrderOwnerSerializer(ModelSerializer):
+    full_name = SerializerMethodField()
+
+    def get_full_name(self, inst):
+        return inst.get_full_name()
+
+    class Meta:
+        model = get_user_model()
+        fields = (
+            'full_name',
+            'email',
+        )
+
+
+class InvoiceSerializer(ModelSerializer):
+    debts = SerializerMethodField()
+    due_date = SerializerMethodField()
+    items = SerializerMethodField()
+    owner = OrderOwnerSerializer()
+    partial_debts = SerializerMethodField()
+    total = SerializerMethodField()
+    bank_account = ReadOnlyField(default=settings.BANK_ACCOUNT_NUMBER)
+
+    def get_debts(self, inst):
+        return inst.promise.debts.all()
+
+    def get_partial_debts(self, inst):
+        return inst.promise.debts.exclude(
+            debt_type=models.DEBT_TYPE_FULL_PAYMENT,
+        ).all()
+
+    def get_due_date(self, inst):
+        query = inst.promise.debts
+        debt = query.first()
+        return debt.maturity
+
+    def get_items(self, inst):
+        return inst.order_items.all()
+
+    def get_total(self, inst):
+        return inst.price
+
+    class Meta:
+        model = models.Order
+        fields = (
+            'bank_account',
+            'partial_debts',
+            'debts',
+            'owner',
+            'due_date',
+            'variable_symbol',
+            'deposit',
+            'items',
+            'total',
+        )

@@ -1,3 +1,5 @@
+from django.shortcuts import redirect, get_object_or_404
+from django.urls import path, reverse
 from fantasion_generics.admin import BaseAdmin, TranslatedAdmin
 from fantasion_signups.models import Signup
 from nested_admin import NestedStackedInline
@@ -60,6 +62,7 @@ class OrderPromotionCodeAdmin(NestedStackedInline):
 
 class OrderAdmin(BaseAdmin):
     model = models.Order
+    change_form_template = 'admin/order_change_form.html'
     inlines = (OrderSignupAdmin, OrderPromotionCodeAdmin)
     list_display = (
         'id',
@@ -100,6 +103,25 @@ class OrderAdmin(BaseAdmin):
         if not obj:
             return self.fields_add
         return self.fields_edit
+
+    def get_urls(self):
+        return super().get_urls() + [
+            path(
+                '<int:order_id>/preview-invoice',
+                self.admin_site.admin_view(self.preview_invoice),
+                name='order_preview_invoice',
+            ),
+        ]
+
+    def preview_invoice(self, request, order_id=None):
+        order = get_object_or_404(
+            models.Order,
+            pk=order_id,
+        )
+        return redirect(reverse('orders-invoice', kwargs={
+            "format": "html",
+            "pk": order.id,
+        }))
 
 
 class PriceLevelAdmin(TranslatedAdmin):

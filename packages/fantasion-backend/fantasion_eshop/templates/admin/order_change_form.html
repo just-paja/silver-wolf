@@ -1,0 +1,7 @@
+{% extends 'admin/change_form.html' %}
+{% load i18n admin_modify %}
+
+{% block object-tools-items %}
+  <li><a href="{% url 'admin:order_preview_invoice' order_id=original.id %}">{% trans "Preview invoice" %}</a></li>
+  {% change_form_object_tools %}
+{% endblock %}

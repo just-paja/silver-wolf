@@ -1,21 +1,27 @@
-from django.shortcuts import get_object_or_404
-from django.urls import path
-
+from django.http import Http404
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
-from rest_framework.decorators import action, api_view, permission_classes
+from rest_framework import renderers
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+
+from djangorestframework_camel_case.render import CamelCaseJSONRenderer
 
 from . import models, serializers
 
 
 class OrderCollection(ModelViewSet):
+    renderer_classes = [CamelCaseJSONRenderer, renderers.TemplateHTMLRenderer]
     serializer_class = serializers.OrderSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return models.Order.objects.filter(owner=self.request.user)
+        query = models.Order.objects
+        if not self.request.user.has_perm('fantasion_eshop.can_view_order'):
+            query = query.filter(owner=self.request.user)
+        return query
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
@@ -34,6 +40,18 @@ class OrderCollection(ModelViewSet):
             status=models.ORDER_STATUS_NEW, ).first()
         serializer = self.get_serializer(order)
         return Response(serializer.data)
+
+    @action(detail=True, methods=['get'])
+    def invoice(self, *args, **kwargs):
+        inst = self.get_object()
+        try:
+            serializer = serializers.InvoiceSerializer(inst)
+            return Response(
+                serializer.data,
+                template_name='eshop/invoice.html',
+            )
+        except ObjectDoesNotExist:
+            raise Http404()
 
     @action(detail=True, methods=['put'])
     def cancel(self, *args, **kwargs):
