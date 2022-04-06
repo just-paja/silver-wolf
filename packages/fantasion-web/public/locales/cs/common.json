@@ -7,7 +7,7 @@
   "age-limit": "{{ageMin}} - {{ageMax}} let",
   "bank-account-number": "Číslo účtu",
   "bank-account-iban": "IBAN",
-  "bank-account-swift": "SWIFT",
+  "bank-account-bic": "BIC",
   "bestiary": "Bestiář",
   "batch-team": "Kdo se o tábor bude starat",
   "batch-team-general-info": "Tento tým zodpovědných lidí se postará o bezpečný chod tábora od začátku do konce.",

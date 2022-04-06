@@ -7,10 +7,14 @@ import styles from './orders.module.scss'
 
 import { Heading, Section } from './media'
 import { CopyButton, InteractiveButton } from './buttons'
-import { Money } from './money'
+import { Money, PaymentQrCode, DEFAULT_CURRENCY } from './money'
 import { UserName } from './users'
+import { useUser } from './context'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
+
+const ACCOUNT_BIC = 'CEKOCZPP'
+const ACCOUNT_IBAN = 'CZ4303000000000304261154'
 
 const ORDER_STATUS_CONFIRMED = 2
 const ORDER_STATUS_DEPOSIT_PAID = 3
@@ -102,6 +106,7 @@ const MoneyRow = ({ amount, label, ...props }) => (
 
 const OrderPayDialog = ({ payAs, onHide, order, show }) => {
   const { t } = useTranslation()
+  const user = useUser()
   const amount = order[payAs]
   return (
     <Modal show={show} onHide={onHide}>
@@ -136,15 +141,26 @@ const OrderPayDialog = ({ payAs, onHide, order, show }) => {
             align="text-start"
             className={styles.paymentRow}
             label={t('bank-account-iban')}
-            value="CZ4303000000000304261154"
-            copyPasta="CZ4303000000000304261154"
+            value={ACCOUNT_IBAN}
+            copyPasta={ACCOUNT_IBAN}
           />
           <OrderRow
             align="text-start"
             className={styles.paymentRow}
-            label={t('bank-account-swift')}
-            value="CEKOCZPP"
-            copyPasta="CEKOCZPP"
+            label={t('bank-account-bic')}
+            value={ACCOUNT_BIC}
+            copyPasta={ACCOUNT_BIC}
+          />
+        </div>
+        <hr />
+        <div className="d-flex align-items-center justify-content-center">
+          <PaymentQrCode
+            amount={amount}
+            bic={ACCOUNT_BIC}
+            currency={DEFAULT_CURRENCY}
+            message={user.email}
+            iban={ACCOUNT_IBAN}
+            variableSymbol={order.variableSymbol}
           />
         </div>
       </Modal.Body>
