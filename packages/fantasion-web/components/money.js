@@ -6,6 +6,11 @@ import { DateLabel } from './dates'
 import { useTranslation } from 'next-i18next'
 
 export const DEFAULT_CURRENCY = 'CZK'
+export const ACCOUNT_BANK = 'ČSOB'
+export const ACCOUNT_BIC = 'CEKOCZPP'
+export const ACCOUNT_IBAN = 'CZ4303000000000304261154'
+export const ACCOUNT_NUMBER = '304261154/0300'
+
 const EMV_HEADER = 'SPD*1.0*'
 
 const formatMoney = (locale, amount, currency) =>

@@ -8,14 +8,19 @@ import styles from './orders.module.scss'
 
 import { Heading, Section } from './media'
 import { CopyButton, InteractiveButton } from './buttons'
-import { Money, PaymentQrCode, DEFAULT_CURRENCY } from './money'
 import { UserName } from './users'
 import { useUser } from './context'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
 
-const ACCOUNT_BIC = 'CEKOCZPP'
-const ACCOUNT_IBAN = 'CZ4303000000000304261154'
+import {
+  Money,
+  PaymentQrCode,
+  ACCOUNT_BIC,
+  ACCOUNT_IBAN,
+  ACCOUNT_NUMBER,
+  DEFAULT_CURRENCY,
+} from './money'
 
 const ORDER_STATUS_CONFIRMED = 2
 const ORDER_STATUS_DEPOSIT_PAID = 3
@@ -132,8 +137,8 @@ const OrderPayDialog = ({ payAs, onHide, order, show }) => {
                 align="text-start"
                 className={styles.paymentRow}
                 label={t('bank-account-number')}
-                value="304261154/0300"
-                copyPasta="304261154/0300"
+                value={ACCOUNT_NUMBER}
+                copyPasta={ACCOUNT_NUMBER}
               />
               <OrderRow
                 align="text-start"
