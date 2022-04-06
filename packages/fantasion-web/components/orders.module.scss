@@ -15,3 +15,7 @@
   display: inline-block;
   padding: calc($spacer / 4) $spacer;
 }
+
+.orderList {
+  max-width: $paragraph-max-width;
+}

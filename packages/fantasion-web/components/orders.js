@@ -1,3 +1,4 @@
+import Carousel from 'react-bootstrap/Carousel'
 import classnames from 'classnames'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Modal from 'react-bootstrap/Modal'
@@ -105,65 +106,87 @@ const MoneyRow = ({ amount, label, ...props }) => (
 )
 
 const OrderPayDialog = ({ payAs, onHide, order, show }) => {
+  const [activeIndex, setActiveIndex] = useState(0)
   const { t } = useTranslation()
   const user = useUser()
+  const markAsPaid = () => setActiveIndex(1)
   const amount =
     payAs == 'surcharge' ? order.price - order.deposit : order[payAs]
   return (
-    <Modal show={show} onHide={onHide}>
+    <Modal show={show} onHide={onHide} onExited={() => setActiveIndex(0)}>
       <Modal.Header closeButton>
         <Modal.Title>{t('order-pay')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>{t('order-send-payment')}</p>
-        <div className="mt-3">
-          <OrderRow
-            align="text-start"
-            className={styles.paymentRow}
-            label={t('bank-account-number')}
-            value="304261154/0300"
-            copyPasta="304261154/0300"
-          />
-          <OrderRow
-            align="text-start"
-            className={styles.paymentRow}
-            label={t('order-variable-symbol')}
-            value={order.variableSymbol}
-            copyPasta={order.variableSymbol}
-          />
-          <MoneyRow
-            align="text-start"
-            className={styles.paymentRow}
-            label={t('order-pay-amount')}
-            amount={amount}
-            copyPasta={amount}
-          />
-          <OrderRow
-            align="text-start"
-            className={styles.paymentRow}
-            label={t('bank-account-iban')}
-            value={ACCOUNT_IBAN}
-            copyPasta={ACCOUNT_IBAN}
-          />
-          <OrderRow
-            align="text-start"
-            className={styles.paymentRow}
-            label={t('bank-account-bic')}
-            value={ACCOUNT_BIC}
-            copyPasta={ACCOUNT_BIC}
-          />
-        </div>
-        <hr />
-        <div className="d-flex align-items-center justify-content-center">
-          <PaymentQrCode
-            amount={amount}
-            bic={ACCOUNT_BIC}
-            currency={DEFAULT_CURRENCY}
-            message={user.email}
-            iban={ACCOUNT_IBAN}
-            variableSymbol={order.variableSymbol}
-          />
-        </div>
+        <Carousel
+          activeIndex={activeIndex}
+          indicators={false}
+          touch={false}
+          wrap={false}
+          controls={false}
+        >
+          <Carousel.Item>
+            <p>{t('order-send-payment')}</p>
+            <div className="mt-3">
+              <OrderRow
+                align="text-start"
+                className={styles.paymentRow}
+                label={t('bank-account-number')}
+                value="304261154/0300"
+                copyPasta="304261154/0300"
+              />
+              <OrderRow
+                align="text-start"
+                className={styles.paymentRow}
+                label={t('order-variable-symbol')}
+                value={order.variableSymbol}
+                copyPasta={order.variableSymbol}
+              />
+              <MoneyRow
+                align="text-start"
+                className={styles.paymentRow}
+                label={t('order-pay-amount')}
+                amount={amount}
+                copyPasta={amount}
+              />
+              <OrderRow
+                align="text-start"
+                className={styles.paymentRow}
+                label={t('bank-account-iban')}
+                value={ACCOUNT_IBAN}
+                copyPasta={ACCOUNT_IBAN}
+              />
+              <OrderRow
+                align="text-start"
+                className={styles.paymentRow}
+                label={t('bank-account-bic')}
+                value={ACCOUNT_BIC}
+                copyPasta={ACCOUNT_BIC}
+              />
+            </div>
+            <hr />
+            <div className="d-flex justify-content-center">
+              <PaymentQrCode
+                amount={amount}
+                bic={ACCOUNT_BIC}
+                currency={DEFAULT_CURRENCY}
+                message={user.email}
+                iban={ACCOUNT_IBAN}
+                variableSymbol={order.variableSymbol}
+              />
+            </div>
+            <hr />
+            <div className="d-flex justify-content-center">
+              <InteractiveButton variant="primary" onClick={markAsPaid}>
+                {t('order-already-paid')}
+              </InteractiveButton>
+            </div>
+          </Carousel.Item>
+          <Carousel.Item>
+            <p className="fs-3">{t('that-is-great')}</p>
+            <p>{t('order-wait-after-payment')}</p>
+          </Carousel.Item>
+        </Carousel>
       </Modal.Body>
     </Modal>
   )
@@ -264,7 +287,7 @@ const OrderCard = ({ order }) => {
 export const OrderList = ({ orders }) => {
   const { t } = useTranslation()
   return (
-    <Section headingLevel={0}>
+    <Section headingLevel={0} className={styles.orderList}>
       <Heading>{t('orders')}</Heading>
       {orders.map((order) => (
         <OrderCard key={order.id} order={order} />
