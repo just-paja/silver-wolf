@@ -192,7 +192,7 @@ const OrderPayDialog = ({ payAs, onHide, order, show }) => {
   )
 }
 
-const OrderPayControls = ({ order }) => {
+const OrderPayControls = ({ order, ...props }) => {
   const [payAs, setPayAs] = useState(null)
   const [showDialog, setShowDialog] = useState(false)
   const { t } = useTranslation()
@@ -210,7 +210,7 @@ const OrderPayControls = ({ order }) => {
     setShowDialog(true)
   }
   return (
-    <div>
+    <div {...props}>
       <OrderPayDialog
         onHide={closeDialog}
         order={order}
@@ -221,18 +221,23 @@ const OrderPayControls = ({ order }) => {
         <InteractiveButton
           variant="primary"
           onClick={payDeposit}
-          className="me-2"
+          className="m-2"
         >
           {t('order-pay-deposit')}
         </InteractiveButton>
       )}
       {order.status === ORDER_STATUS_DEPOSIT_PAID && (
-        <InteractiveButton variant="primary" onClick={paySurcharge}>
+        <InteractiveButton
+          variant="primary"
+          onClick={paySurcharge}
+          className="m-2"
+        >
           {t('order-pay-surcharge')}
         </InteractiveButton>
       )}
       {order.status !== ORDER_STATUS_DEPOSIT_PAID && (
         <InteractiveButton
+          className="m-2"
           variant={order.useDepositPayment ? 'secondary' : 'primary'}
           onClick={payFull}
         >
@@ -243,13 +248,10 @@ const OrderPayControls = ({ order }) => {
   )
 }
 
-const OrderControls = ({ order }) => {
-  return (
-    <div>
-      {CAN_BE_PAID.includes(order.status) && <OrderPayControls order={order} />}
-    </div>
+const OrderControls = ({ order, ...props }) =>
+  CAN_BE_PAID.includes(order.status) && (
+    <OrderPayControls order={order} {...props} />
   )
-}
 
 const OrderCard = ({ order }) => {
   const { t } = useTranslation()
@@ -257,11 +259,14 @@ const OrderCard = ({ order }) => {
     <Section component="article">
       <Heading>{order.variableSymbol}</Heading>
       <OrderItems items={order.items} />
-      <Row>
-        <Col className="mt-2 ms-3">
-          <OrderControls order={order} />
+      <Row className="flex-column-reverse flex-md-row">
+        <Col md={6} className="mt-1">
+          <OrderControls
+            className="d-flex flex-row-reverse flex-md-row justify-content-center justify-content-md-start"
+            order={order}
+          />
         </Col>
-        <Col className="d-flex mt-2">
+        <Col md={6} className="d-flex mt-2">
           <div className="ms-auto me-3">
             {order.useDepositPayment && (
               <>
