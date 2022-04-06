@@ -16,7 +16,6 @@ export const getServerSideProps = withPageProps(
 
 const Status = ({ orders }) => {
   const { t } = useTranslation()
-  console.log(orders)
   return (
     <GenericPage>
       <MetaPage

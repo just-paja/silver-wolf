@@ -38,7 +38,6 @@ export const PriceTag = ({
   price,
 }) => {
   const { t } = useTranslation()
-  console.log(price)
   return (
     <span
       className={classnames({
