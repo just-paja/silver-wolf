@@ -43,16 +43,14 @@ const OrderStatus = ({ status }) => useTranslation().t(OrderStatusMap[status])
 
 const OrderItemPromotionCode = () => useTranslation().t('order-promotion-code')
 
-const OrderItemSignup = ({ signup }) => {
-  return (
-    <>
-      <UserName user={signup.participant} />
-      <div className={styles.troopDescription}>
-        {signup.troop.batch.expedition.title}: {signup.troop.ageGroup.title}
-      </div>
-    </>
-  )
-}
+const OrderItemSignup = ({ signup }) => (
+  <>
+    <UserName user={signup.participant} />
+    <div className={styles.troopDescription}>
+      {signup.troop.batch.expedition.title}: {signup.troop.ageGroup.title}
+    </div>
+  </>
+)
 
 const OrderItemDescription = ({ item }) => {
   if (item.productType === 'fantasion_signups.Signup') {
@@ -64,28 +62,24 @@ const OrderItemDescription = ({ item }) => {
   return item.description
 }
 
-const OrderItem = ({ item }) => {
-  return (
-    <ListGroup.Item className="d-flex">
-      <div className="flex-grow-1">
-        <OrderItemDescription item={item} />
-      </div>
-      <div className="text-end">
-        <Money amount={item.price} />
-      </div>
-    </ListGroup.Item>
-  )
-}
+const OrderItem = ({ item }) => (
+  <ListGroup.Item className="d-flex">
+    <div className="flex-grow-1">
+      <OrderItemDescription item={item} />
+    </div>
+    <div className="text-end">
+      <Money amount={item.price} />
+    </div>
+  </ListGroup.Item>
+)
 
-const OrderItems = ({ items }) => {
-  return (
-    <ListGroup className="mt-2">
-      {items.map((item) => (
-        <OrderItem item={item} key={item.id} />
-      ))}
-    </ListGroup>
-  )
-}
+const OrderItems = ({ items }) => (
+  <ListGroup className="mt-2">
+    {items.map((item) => (
+      <OrderItem item={item} key={item.id} />
+    ))}
+  </ListGroup>
+)
 
 const OrderRow = ({
   align = 'text-end',
@@ -378,25 +372,19 @@ const OrderCard = ({ defaultOrder }) => {
   )
 }
 
-const OrderListEmpty = () => {
-  const { t } = useTranslation()
-  return (
-    <div className="text-muted mt-3">
-      <p>{t('order-list-empty')}</p>
-    </div>
-  )
-}
+const OrderListEmpty = () => (
+  <div className="text-muted mt-3">
+    <p>{useTranslation().t('order-list-empty')}</p>
+  </div>
+)
 
-export const OrderList = ({ orders }) => {
-  const { t } = useTranslation()
-  return (
-    <Section headingLevel={0} className={styles.orderList}>
-      <Heading>{t('orders')}</Heading>
-      {orders.length === 0 ? (
-        <OrderListEmpty />
-      ) : (
-        orders.map((order) => <OrderCard key={order.id} defaultOrder={order} />)
-      )}
-    </Section>
-  )
-}
+export const OrderList = ({ orders }) => (
+  <Section headingLevel={0} className={styles.orderList}>
+    <Heading>{useTranslation().t('orders')}</Heading>
+    {orders.length === 0 ? (
+      <OrderListEmpty />
+    ) : (
+      orders.map((order) => <OrderCard key={order.id} defaultOrder={order} />)
+    )}
+  </Section>
+)
