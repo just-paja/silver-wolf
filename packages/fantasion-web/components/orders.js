@@ -185,6 +185,11 @@ const OrderPayDialog = ({ payAs, onHide, order, show }) => {
           <Carousel.Item>
             <p className="fs-3">{t('that-is-great')}</p>
             <p>{t('order-wait-after-payment')}</p>
+            <div className="mt-3">
+              <InteractiveButton variant="primary" onClick={onHide}>
+                {t('that-is-really-awesome')}
+              </InteractiveButton>
+            </div>
           </Carousel.Item>
         </Carousel>
       </Modal.Body>

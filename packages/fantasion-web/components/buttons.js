@@ -64,7 +64,7 @@ export const CopyButton = ({ value }) => {
       >
         <CopyIcon />
       </InteractiveButton>
-      <Overlay target={target.current} show={show} placement="right">
+      <Overlay target={target.current} show={show} placement="left">
         {(props) => <Tooltip {...props}>{t('copied')}</Tooltip>}
       </Overlay>
     </>
