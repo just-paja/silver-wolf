@@ -378,14 +378,25 @@ const OrderCard = ({ defaultOrder }) => {
   )
 }
 
+const OrderListEmpty = () => {
+  const { t } = useTranslation()
+  return (
+    <div className="text-muted mt-3">
+      <p>{t('order-list-empty')}</p>
+    </div>
+  )
+}
+
 export const OrderList = ({ orders }) => {
   const { t } = useTranslation()
   return (
     <Section headingLevel={0} className={styles.orderList}>
       <Heading>{t('orders')}</Heading>
-      {orders.map((order) => (
-        <OrderCard key={order.id} defaultOrder={order} />
-      ))}
+      {orders.length === 0 ? (
+        <OrderListEmpty />
+      ) : (
+        orders.map((order) => <OrderCard key={order.id} defaultOrder={order} />)
+      )}
     </Section>
   )
 }
