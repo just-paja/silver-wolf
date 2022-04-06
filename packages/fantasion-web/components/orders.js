@@ -107,7 +107,8 @@ const MoneyRow = ({ amount, label, ...props }) => (
 const OrderPayDialog = ({ payAs, onHide, order, show }) => {
   const { t } = useTranslation()
   const user = useUser()
-  const amount = order[payAs]
+  const amount =
+    payAs == 'surcharge' ? order.price - order.deposit : order[payAs]
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
