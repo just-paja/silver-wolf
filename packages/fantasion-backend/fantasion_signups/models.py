@@ -161,6 +161,14 @@ class Signup(OrderItem):
         help_text=_("The exact date and time signup was submitted."
                     "Date is generated automatically"),
     )
+    note = TextField(
+        blank=True,
+        null=True,
+        verbose_name=_('Note'),
+        help_text=_(
+            'Extra information that does not fit in any of the fields'
+        ),
+    )
     cancelled_for = TextField(
         blank=True,
         null=True,

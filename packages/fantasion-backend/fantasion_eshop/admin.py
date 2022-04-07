@@ -16,6 +16,7 @@ class OrderSignupAdmin(NestedStackedInline):
         'price',
         'status',
         'legal_guardian',
+        'note',
         'cancelled_for',
     )
     add_fields = (
@@ -25,6 +26,7 @@ class OrderSignupAdmin(NestedStackedInline):
         'product_price',
         'price',
         'legal_guardian',
+        'note',
     )
     autocomplete_fields = (
         'troop',
