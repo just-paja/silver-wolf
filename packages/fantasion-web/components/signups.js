@@ -1,3 +1,4 @@
+import Accordion from 'react-bootstrap/Accordion'
 import moment from 'moment'
 import React from 'react'
 
@@ -6,6 +7,7 @@ import { formatDateRange } from './dates'
 import { Form, FormControls, Input } from './forms'
 import { useExpedition } from './expeditions'
 import { useTranslation } from 'next-i18next'
+import { useState } from 'react'
 
 const BatchSelection = (props) => {
   const { i18n, t } = useTranslation()
@@ -80,7 +82,7 @@ const FamilyNameInput = (props) => (
   />
 )
 
-const ParticipantSelection = (props) => {
+const ParticipantSelectionInput = (props) => {
   const { t } = useTranslation()
   return (
     <Input
@@ -130,6 +132,22 @@ export const ParticipantForm = ({ onSubmit }) => {
   )
 }
 
+const familyParticipantQuery = selectorFamily({
+  key: 'family:participants:query',
+  get: (familyId) => () => fetch(`/participants?familyId=${familyId}`),
+})
+
+const familyParticipants = atomFamily({
+  key: 'family:participants',
+  default: familyParticipantQuery,
+})
+
+export const ParticipantSelection = ({ onSubmit }) => {
+  const participants = useRecoilValue(familyParticipants())
+  console.log(participants)
+  return null
+}
+
 export const SignupForm = ({ onSubmit }) => {
   const { t } = useTranslation()
   const { batches } = useExpedition()
@@ -139,11 +157,37 @@ export const SignupForm = ({ onSubmit }) => {
   }
   return (
     <Form defaultValues={defaultValues} onSubmit={onSubmit}>
-      <ParticipantSelection name="participantId" required />
+      <ParticipantSelectionInput name="participantId" required />
       <BatchSelection name="batchId" required />
       <TroopSelection name="batchAgeGroupId" required />
       <NoteInput name="note" />
       <FormControls submitLabel={t('input-save-signup')} />
     </Form>
+  )
+}
+
+export const SignupWizzard = ({}) => {
+  const [activeKey, setActiveKey] = useState(1)
+  const { t } = useTranslation()
+
+  return (
+    <Accordion activeKey={activeKey} alwaysOpen>
+      <Accordion.Item eventKey={1}>
+        <Accordion.Header onClick={() => setActiveKey(1)}>
+          {t('signup-participant-selection')}
+        </Accordion.Header>
+        <Accordion.Body>
+          <ParticipantSelection />
+        </Accordion.Body>
+      </Accordion.Item>
+      <Accordion.Item eventKey={2}>
+        <Accordion.Header onClick={() => setActiveKey(2)}>
+          {t('signup-participant-selection')}
+        </Accordion.Header>
+        <Accordion.Body>
+          <SignupForm onSubmit={(values) => console.log(values)} />
+        </Accordion.Body>
+      </Accordion.Item>
+    </Accordion>
   )
 }
