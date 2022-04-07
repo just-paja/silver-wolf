@@ -34,6 +34,12 @@ class Participant(TimeStampedModel):
         verbose_name = _("Participant")
         verbose_name_plural = _("Participants")
 
+    family = ForeignKey(
+        'fantasion_people.Family',
+        on_delete=CASCADE,
+        related_name='participants',
+        verbose_name=_('Family'),
+    )
     first_name = CharField(
         max_length=255,
         verbose_name=_("Given Name"),
