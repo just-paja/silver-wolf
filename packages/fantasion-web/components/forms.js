@@ -172,7 +172,11 @@ export const Input = ({
         'form-check': rightLabel,
       })}
     >
-      {label && !rightLabel ? <BsForm.Label>{label}:</BsForm.Label> : null}
+      {label && !rightLabel ? (
+        <BsForm.Label className={required ? 'fw-bold' : ''}>
+          {label}:
+        </BsForm.Label>
+      ) : null}
       <Component
         as={resolveType(type)}
         type={type}
