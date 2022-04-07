@@ -117,7 +117,7 @@ const NoteInput = (props) => {
   return <Input {...props} type="textarea" label={t('input-note')} />
 }
 
-const ParticipantForm = ({ onSubmit }) => {
+export const ParticipantForm = ({ onSubmit }) => {
   const { t } = useTranslation()
   const defaultValues = {}
   return (
