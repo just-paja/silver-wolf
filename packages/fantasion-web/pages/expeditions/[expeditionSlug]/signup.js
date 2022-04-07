@@ -9,18 +9,20 @@ import { parseSlug } from '../../../components/slugs'
 import { slug } from '../../../components/slugs'
 import { useTranslation } from 'next-i18next'
 import { requireUser, withPageProps } from '../../../server/props'
-import { SignupWizzard } from '../../../components/signups'
+import { OrderSignupWizzard } from '../../../components/signups'
 import { ExpeditionContext } from '../../../components/expeditions'
 
 export const getServerSideProps = withPageProps(
   requireUser(async ({ fetch, params }) => {
     const expeditionId = parseSlug(params.expeditionSlug)
-    const [expedition, participants] = await Promise.all([
+    const [expedition, activeOrder, participants] = await Promise.all([
       fetch(`/expeditions/${expeditionId}`),
+      fetch('/orders/active'),
       fetch('/participants'),
     ])
     return {
       props: {
+        activeOrder,
         participants,
         expeditionId,
         expedition,
@@ -29,7 +31,11 @@ export const getServerSideProps = withPageProps(
   })
 )
 
-const ExpeditionBatchSignupPage = ({ expedition, participants }) => {
+const ExpeditionBatchSignupPage = ({
+  activeOrder,
+  expedition,
+  participants,
+}) => {
   const { t } = useTranslation()
   const title = `${expedition.title}: ${t('expedition-signup')}`
   return (
@@ -55,7 +61,11 @@ const ExpeditionBatchSignupPage = ({ expedition, participants }) => {
               {t('expedition-signup-on', { expeditionTitle: expedition.title })}
             </Heading>
           </header>
-          <SignupWizzard defaultParticipants={participants} />
+          <OrderSignupWizzard
+            className="mt-4"
+            defaultOrder={activeOrder}
+            defaultParticipants={participants}
+          />
         </Container>
       </GenericPage>
     </ExpeditionContext.Provider>

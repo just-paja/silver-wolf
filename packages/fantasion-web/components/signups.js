@@ -1,9 +1,15 @@
 import Accordion from 'react-bootstrap/Accordion'
+import Card from 'react-bootstrap/Card'
+import Col from 'react-bootstrap/Col'
+import ListGroup from 'react-bootstrap/ListGroup'
 import moment from 'moment'
 import React from 'react'
+import Row from 'react-bootstrap/Row'
 
-import { formatDateRange } from './dates'
+import { DateRange, formatDateRange } from './dates'
 import { Form, FormControls, Input } from './forms'
+import { InteractiveButton } from './buttons'
+import { Money } from './money'
 import { useExpedition } from './expeditions'
 import { useFetch } from './context'
 import { useFormContext } from 'react-hook-form'
@@ -84,19 +90,6 @@ const FamilyNameInput = (props) => (
   />
 )
 
-const ParticipantSelectionInput = (props) => {
-  const { t } = useTranslation()
-  return (
-    <Input
-      {...props}
-      label={t('input-participant')}
-      options={[]}
-      required
-      type="select"
-    />
-  )
-}
-
 const DateOfBirthInput = (props) => {
   const { t } = useTranslation()
   const troop = useTroop()
@@ -135,7 +128,7 @@ export const ParticipantForm = () => {
   )
 }
 
-const ParticipantSelectionControls = () => {
+const ParticipantSelectionControls = ({ onCancel }) => {
   const { t } = useTranslation()
   const { watch } = useFormContext()
   const participantId = watch('participantId')
@@ -144,13 +137,20 @@ const ParticipantSelectionControls = () => {
       submitLabel={t(
         participantId ? 'signup-next' : 'signup-create-participant'
       )}
-    />
+    >
+      {onCancel && (
+        <InteractiveButton type="button" variant="warning" onClick={onCancel}>
+          {t('cancel')}
+        </InteractiveButton>
+      )}
+    </FormControls>
   )
 }
 
 export const ParticipantSelection = ({
   participants,
   onAddParticipant,
+  onCancel,
   onSubmit,
 }) => {
   const { t } = useTranslation()
@@ -184,7 +184,7 @@ export const ParticipantSelection = ({
         <Input
           type="radio"
           name="participantId"
-          value={participant.id}
+          value={String(participant.id)}
           key={participant.id}
           label={<UserName user={participant} />}
         />
@@ -196,29 +196,48 @@ export const ParticipantSelection = ({
         label={t('signup-new-participant')}
       />
       <ParticipantForm />
-      <ParticipantSelectionControls />
+      <Input
+        type="checkbox"
+        name="legalGuardian"
+        label={t('signup-is-legal-guardian')}
+        value="true"
+      />
+      <ParticipantSelectionControls onCancel={onCancel} />
     </Form>
   )
 }
 
-export const SignupForm = ({ onSubmit }) => {
+export const SignupForm = ({ onCancel, onSubmit }) => {
   const { t } = useTranslation()
   const { batches } = useExpedition()
   const defaultValues = {
     batchId: batches[0]?.id,
-    batchAgeGroupId: batches[0]?.troops[0]?.id,
+    troopId: batches[0]?.troops[0]?.id,
+    legalGuardian: true,
   }
   return (
     <Form defaultValues={defaultValues} onSubmit={onSubmit}>
       <BatchSelection name="batchId" required />
-      <TroopSelection name="batchAgeGroupId" required />
+      <TroopSelection name="troopId" required />
       <NoteInput name="note" />
-      <FormControls submitLabel={t('input-save-signup')} />
+      <p className="mt-3 text-muted">{t('signup-will-be-added')}</p>
+      <FormControls submitLabel={t('input-save-signup')}>
+        {onCancel && (
+          <InteractiveButton onClick={onCancel}>
+            {t('cancel')}
+          </InteractiveButton>
+        )}
+      </FormControls>
     </Form>
   )
 }
 
-export const SignupWizzard = ({ defaultParticipants }) => {
+export const SignupWizzard = ({
+  defaultParticipants,
+  onCancel,
+  onSubmit,
+  ...props
+}) => {
   const [participants, setParticipants] = useState(defaultParticipants)
   const [participantId, setParticipantId] = useState(null)
   const [activeKey, setActiveKey] = useState(1)
@@ -233,9 +252,15 @@ export const SignupWizzard = ({ defaultParticipants }) => {
     setParticipantId(participant.id)
     setActiveKey(2)
   }
+  const handleSubmit = (values) => {
+    return onSubmit({
+      ...values,
+      participantId,
+    })
+  }
 
   return (
-    <Accordion activeKey={activeKey} alwaysOpen>
+    <Accordion {...props} activeKey={activeKey} alwaysOpen>
       <Accordion.Item eventKey={1}>
         <Accordion.Header onClick={() => setActiveKey(1)}>
           {t('signup-participant-selection')}
@@ -244,21 +269,105 @@ export const SignupWizzard = ({ defaultParticipants }) => {
           <ParticipantSelection
             participants={participants}
             onAddParticipant={addParticipant}
+            onCancel={onCancel}
             onSubmit={selectParticipant}
           />
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey={2}>
-        <Accordion.Header onClick={() => setActiveKey(2)}>
-          {t('signup-troop-selection')}
-        </Accordion.Header>
+        <Accordion.Header>{t('signup-troop-selection')}</Accordion.Header>
         <Accordion.Body>
-          <SignupForm
-            participantId={participantId}
-            onSubmit={(values) => console.log(values)}
-          />
+          <SignupForm participantId={participantId} onSubmit={handleSubmit} />
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>
+  )
+}
+
+const OrderSignup = ({ signup }) => {
+  return (
+    <Card>
+      <Card.Header>
+        <Card.Title className="mb-0">
+          <UserName user={signup.participant} />
+        </Card.Title>
+      </Card.Header>
+
+      <ListGroup variant="flush">
+        <ListGroup.Item>
+          <DateRange start={signup.troop.startsAt} end={signup.troop.endsAt} />
+        </ListGroup.Item>
+        <ListGroup.Item>
+          <Money amount={signup.price} />
+        </ListGroup.Item>
+      </ListGroup>
+    </Card>
+  )
+}
+
+const OrderSignups = ({ signups }) => (
+  <Row>
+    {signups.map((signup) => (
+      <Col key={signup.id} xl={2} lg={3} md={4} sm={6} className="mt-2">
+        <OrderSignup signup={signup} />
+      </Col>
+    ))}
+  </Row>
+)
+
+export const OrderSignupWizzard = ({
+  defaultOrder,
+  defaultParticipants,
+  ...props
+}) => {
+  const [order] = useState(defaultOrder)
+  const [signups, setSignups] = useState(
+    order?.items.filter(
+      (item) => item.productType === 'fantasion_signups.Signup'
+    ) || []
+  )
+  const [addParticipant, setAddParticipant] = useState(signups.length === 0)
+  const { t } = useTranslation()
+  const fetch = useFetch()
+  const createSignup = async (values) => {
+    const s = await fetch.post('/signups', {
+      body: {
+        ...values,
+        orderId: order?.id,
+      },
+    })
+    setSignups([...signups, s])
+    setAddParticipant(false)
+  }
+
+  return (
+    <div {...props}>
+      <OrderSignups signups={signups} />
+      {addParticipant ? (
+        <SignupWizzard
+          className="mt-3"
+          defaultParticipants={{
+            ...defaultParticipants,
+            results: defaultParticipants.results.filter(
+              (p) => !signups.some((s) => s.participant.id === p.id)
+            ),
+          }}
+          onCancel={
+            signups.length === 0 ? null : () => setAddParticipant(false)
+          }
+          onSubmit={createSignup}
+          signups={signups}
+        />
+      ) : (
+        <div className="mt-3">
+          <InteractiveButton
+            variant={signups.length === 0 ? 'primary' : 'secondary'}
+            onClick={() => setAddParticipant(true)}
+          >
+            {t('signup-add-participant')}
+          </InteractiveButton>
+        </div>
+      )}
+    </div>
   )
 }

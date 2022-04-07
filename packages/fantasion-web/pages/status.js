@@ -9,7 +9,7 @@ import { requireUser, withPageProps } from '../server/props'
 
 export const getServerSideProps = withPageProps(
   requireUser(async ({ fetch }) => {
-    const orders = await fetch('/orders/')
+    const orders = await fetch('/orders')
     return { props: { orders } }
   })
 )

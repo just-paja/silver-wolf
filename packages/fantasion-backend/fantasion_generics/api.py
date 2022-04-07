@@ -1,5 +1,6 @@
 from django.conf import settings
 from rest_framework.serializers import HyperlinkedModelSerializer
+from rest_framework.viewsets import ModelViewSet
 from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 
@@ -31,3 +32,10 @@ media_fields = (
     'local_video',
     'width',
 )
+
+
+class RWViewSet(ModelViewSet):
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"request": self.request})
+        return context

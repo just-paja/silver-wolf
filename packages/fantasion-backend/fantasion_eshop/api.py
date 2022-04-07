@@ -2,57 +2,42 @@ from django.shortcuts import get_object_or_404
 from django.urls import path
 
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
 from . import models, serializers
 
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def order_collection(request, format=None):
-    orders = models.Order.objects.filter(owner=request.user).all()
-    serializer = serializers.OrderSerializer(orders, many=True)
-    return Response(serializer.data)
+class OrderCollection(ModelViewSet):
+    serializer_class = serializers.OrderSerializer
+    permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        return models.Order.objects.filter(owner=self.request.user)
 
-def with_order(fn):
-    def inner(request, order_id=None, *args, **kwargs):
-        order = get_object_or_404(
-            models.Order,
-            pk=kwargs.get('order_id'),
-            owner=request.user,
-        )
-        return fn(request, order=order, *args, **kwargs)
-    return inner
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"request": self.request})
+        return context
 
-
-@api_view(['GET', 'DELETE'])
-@permission_classes([IsAuthenticated])
-@with_order
-def order_entity(request, order=None, **kwargs):
-    if request.method == 'DELETE':
-        if order.status in models.ORDER_CAN_BE_DELETED:
-            order.delete()
+    def destroy(self, inst):
+        if inst.status in models.ORDER_CAN_BE_DELETED:
+            inst.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(status=status.HTTP_403_FORBIDDEN)
 
-    serializer = serializers.OrderSerializer(order)
-    return Response(serializer.data)
+    @action(detail=False, methods=['get'])
+    def active(self, *args, **kwargs):
+        order = self.get_queryset().filter(
+            status=models.ORDER_STATUS_NEW, ).first()
+        serializer = self.get_serializer(order)
+        return Response(serializer.data)
 
-
-@api_view(['PUT'])
-@permission_classes([IsAuthenticated])
-@with_order
-def order_cancel(request, order=None, **kwargs):
-    order.cancel()
-    serializer = serializers.OrderSerializer(order)
-    return Response(serializer.data)
-
-
-urlpatterns = [
-    path('', order_collection),
-    path('<int:order_id>', order_entity),
-    path('<int:order_id>/cancel', order_cancel),
-]
+    @action(detail=True, methods=['put'])
+    def cancel(self, *args, **kwargs):
+        inst = self.get_object()
+        inst.cancel()
+        serializer = serializers.OrderSerializer(inst)
+        return Response(serializer.data)

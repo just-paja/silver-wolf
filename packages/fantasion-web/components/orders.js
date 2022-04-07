@@ -381,10 +381,12 @@ const OrderListEmpty = () => (
 export const OrderList = ({ orders }) => (
   <Section headingLevel={0} className={styles.orderList}>
     <Heading>{useTranslation().t('orders')}</Heading>
-    {orders.length === 0 ? (
+    {orders.results.length === 0 ? (
       <OrderListEmpty />
     ) : (
-      orders.map((order) => <OrderCard key={order.id} defaultOrder={order} />)
+      orders.results.map((order) => (
+        <OrderCard key={order.id} defaultOrder={order} />
+      ))
     )}
   </Section>
 )

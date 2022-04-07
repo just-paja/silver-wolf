@@ -126,6 +126,13 @@ class EshopProduct(TimeStampedModel):
     def get_description(self):
         raise NotImplementedError()
 
+    def get_active_price(self):
+        now = timezone.now()
+        return self.prices.filter(
+            available_since__lte=now,
+            available_until__gt=now,
+        ).get()
+
 
 class ProductPrice(TimeStampedModel):
     """
@@ -386,9 +393,9 @@ class OrderItem(TimeStampedModel):
         Backup price and currency in case the parent objects change. The price
         of existing order item must not change.
         """
-        self.recalculate()
         if self.price is None and self.product_price:
             self.price = self.product_price.price
+        self.recalculate()
         """
         Store the item description to make it easy to describe this order item
         on the invoice

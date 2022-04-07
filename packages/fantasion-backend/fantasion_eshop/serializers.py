@@ -175,3 +175,13 @@ class OrderSerializer(ModelSerializer):
             "use_deposit_payment",
             "variable_symbol",
         )
+        read_only_fields = (
+            'is_cancellable',
+            'price',
+            'promise',
+            'status',
+            'deposit',
+            'variable_symbol',
+            'items',
+        )
+

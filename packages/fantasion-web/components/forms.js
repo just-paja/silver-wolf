@@ -238,11 +238,12 @@ export const FormError = () => {
   return null
 }
 
-export const FormControls = ({ submitLabel }) => {
+export const FormControls = ({ submitLabel, children }) => {
   const { formState } = useFormContext()
   return (
     <>
       <div className="mt-3">
+        {children}
         <Submit inProgress={formState.isSubmitting}>{submitLabel}</Submit>
       </div>
     </>
