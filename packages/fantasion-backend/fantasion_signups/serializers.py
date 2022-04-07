@@ -1,5 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
+from fantasion_people.models import Family
 from . import models
 
 
@@ -15,10 +16,20 @@ class ParticipantSerializer(ModelSerializer):
         )
         read_only_fields = ('family',)
 
+
+    def get_or_create_family(self):
+        user = self.context.get('request').user
+        family = user.families.first()
+        if not family:
+            family = Family(owner=user, title=f"{user.get_full_name()} Family")
+            family.save()
+        return family
+
+
     def create(self, validated_data):
         inst = models.Participant(
             **validated_data,
-            family=self.context.get('request').user.families.first(),
+            family=self.get_or_create_family(),
         )
         inst.save()
         return inst

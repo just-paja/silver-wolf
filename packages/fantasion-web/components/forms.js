@@ -148,14 +148,15 @@ export const Input = ({
   size = 'default',
   type,
   validate,
+  value,
   ...props
 }) => {
   const { formId, register, formState } = useFormContext()
   const { t } = useTranslation()
-  const controlId = `${formId}-${name}`
+  const rightLabel = isLabelRight(type)
+  const controlId = `${formId}-${name}${rightLabel ? `-${value}` : null}`
   const htmlOptions = getOptions(options, required)
   const Component = resolveComponent(type, as)
-  const rightLabel = isLabelRight(type)
   const fieldError = error || formState.errors[name]
   const field = register(name, {
     required: required,
@@ -183,6 +184,7 @@ export const Input = ({
         name={name}
         disabled={formState.isSubmitting}
         isInvalid={Boolean(fieldError)}
+        value={value}
         {...props}
         {...field}
         className={classnames(styles[size], className)}

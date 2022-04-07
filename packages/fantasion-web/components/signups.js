@@ -2,12 +2,14 @@ import Accordion from 'react-bootstrap/Accordion'
 import moment from 'moment'
 import React from 'react'
 
-import { useFormContext } from 'react-hook-form'
 import { formatDateRange } from './dates'
 import { Form, FormControls, Input } from './forms'
 import { useExpedition } from './expeditions'
-import { useTranslation } from 'next-i18next'
+import { useFetch } from './context'
+import { useFormContext } from 'react-hook-form'
+import { UserName } from './users'
 import { useState } from 'react'
+import { useTranslation } from 'next-i18next'
 
 const BatchSelection = (props) => {
   const { i18n, t } = useTranslation()
@@ -105,7 +107,6 @@ const DateOfBirthInput = (props) => {
   return (
     <Input
       {...props}
-      disabled={!troop}
       min={min}
       max={max}
       type="date"
@@ -119,33 +120,85 @@ const NoteInput = (props) => {
   return <Input {...props} type="textarea" label={t('input-note')} />
 }
 
-export const ParticipantForm = ({ onSubmit }) => {
-  const { t } = useTranslation()
-  const defaultValues = {}
+export const ParticipantForm = () => {
+  const { watch } = useFormContext()
+  const participantId = watch('participantId')
+  if (participantId) {
+    return null
+  }
   return (
-    <Form defaultValues={defaultValues} onSubmit={onSubmit}>
+    <>
       <GivenNameInput name="firstName" required />
       <FamilyNameInput name="lastName" required />
-      <DateOfBirthInput name="dateOfBirth" required />
-      <FormControls submitLabel={t('input-save-participant')} />
-    </Form>
+      <DateOfBirthInput name="birthdate" required />
+    </>
   )
 }
 
-const familyParticipantQuery = selectorFamily({
-  key: 'family:participants:query',
-  get: (familyId) => () => fetch(`/participants?familyId=${familyId}`),
-})
+const ParticipantSelectionControls = () => {
+  const { t } = useTranslation()
+  const { watch } = useFormContext()
+  const participantId = watch('participantId')
+  return (
+    <FormControls
+      submitLabel={t(
+        participantId ? 'signup-next' : 'signup-create-participant'
+      )}
+    />
+  )
+}
 
-const familyParticipants = atomFamily({
-  key: 'family:participants',
-  default: familyParticipantQuery,
-})
+export const ParticipantSelection = ({
+  participants,
+  onAddParticipant,
+  onSubmit,
+}) => {
+  const { t } = useTranslation()
+  const fetch = useFetch()
+  const defaultValues = {
+    participantId: participants.results[0]?.id || '',
+  }
 
-export const ParticipantSelection = ({ onSubmit }) => {
-  const participants = useRecoilValue(familyParticipants())
-  console.log(participants)
-  return null
+  const handleSubmit = async (values) => {
+    const participant = participants.results.find(
+      (p) => p.id === parseInt(values.participantId, 10)
+    )
+    if (participant) {
+      onSubmit(participant)
+    } else {
+      const newParticipant = await fetch.post('/participants', {
+        body: {
+          birthdate: values.birthdate,
+          firstName: values.firstName,
+          lastName: values.lastName,
+        },
+      })
+      onAddParticipant(newParticipant)
+      onSubmit(newParticipant)
+    }
+  }
+
+  return (
+    <Form defaultValues={defaultValues} onSubmit={handleSubmit}>
+      {participants.results.map((participant) => (
+        <Input
+          type="radio"
+          name="participantId"
+          value={participant.id}
+          key={participant.id}
+          label={<UserName user={participant} />}
+        />
+      ))}
+      <Input
+        type="radio"
+        name="participantId"
+        value=""
+        label={t('signup-new-participant')}
+      />
+      <ParticipantForm />
+      <ParticipantSelectionControls />
+    </Form>
+  )
 }
 
 export const SignupForm = ({ onSubmit }) => {
@@ -157,7 +210,6 @@ export const SignupForm = ({ onSubmit }) => {
   }
   return (
     <Form defaultValues={defaultValues} onSubmit={onSubmit}>
-      <ParticipantSelectionInput name="participantId" required />
       <BatchSelection name="batchId" required />
       <TroopSelection name="batchAgeGroupId" required />
       <NoteInput name="note" />
@@ -166,9 +218,21 @@ export const SignupForm = ({ onSubmit }) => {
   )
 }
 
-export const SignupWizzard = ({}) => {
+export const SignupWizzard = ({ defaultParticipants }) => {
+  const [participants, setParticipants] = useState(defaultParticipants)
+  const [participantId, setParticipantId] = useState(null)
   const [activeKey, setActiveKey] = useState(1)
   const { t } = useTranslation()
+  const addParticipant = (participant) => {
+    setParticipants({
+      ...participants,
+      results: [...participants.results, participant],
+    })
+  }
+  const selectParticipant = (participant) => {
+    setParticipantId(participant.id)
+    setActiveKey(2)
+  }
 
   return (
     <Accordion activeKey={activeKey} alwaysOpen>
@@ -177,15 +241,22 @@ export const SignupWizzard = ({}) => {
           {t('signup-participant-selection')}
         </Accordion.Header>
         <Accordion.Body>
-          <ParticipantSelection />
+          <ParticipantSelection
+            participants={participants}
+            onAddParticipant={addParticipant}
+            onSubmit={selectParticipant}
+          />
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey={2}>
         <Accordion.Header onClick={() => setActiveKey(2)}>
-          {t('signup-participant-selection')}
+          {t('signup-troop-selection')}
         </Accordion.Header>
         <Accordion.Body>
-          <SignupForm onSubmit={(values) => console.log(values)} />
+          <SignupForm
+            participantId={participantId}
+            onSubmit={(values) => console.log(values)}
+          />
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>

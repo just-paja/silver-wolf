@@ -15,9 +15,13 @@ import { ExpeditionContext } from '../../../components/expeditions'
 export const getServerSideProps = withPageProps(
   requireUser(async ({ fetch, params }) => {
     const expeditionId = parseSlug(params.expeditionSlug)
-    const expedition = await fetch(`/expeditions/${expeditionId}`)
+    const [expedition, participants] = await Promise.all([
+      fetch(`/expeditions/${expeditionId}`),
+      fetch('/participants'),
+    ])
     return {
       props: {
+        participants,
         expeditionId,
         expedition,
       },
@@ -25,7 +29,7 @@ export const getServerSideProps = withPageProps(
   })
 )
 
-const ExpeditionBatchSignupPage = ({ expedition }) => {
+const ExpeditionBatchSignupPage = ({ expedition, participants }) => {
   const { t } = useTranslation()
   const title = `${expedition.title}: ${t('expedition-signup')}`
   return (
@@ -51,7 +55,7 @@ const ExpeditionBatchSignupPage = ({ expedition }) => {
               {t('expedition-signup-on', { expeditionTitle: expedition.title })}
             </Heading>
           </header>
-          <SignupWizzard />
+          <SignupWizzard defaultParticipants={participants} />
         </Container>
       </GenericPage>
     </ExpeditionContext.Provider>
