@@ -151,13 +151,14 @@ export const Input = ({
   value,
   ...props
 }) => {
-  const { formId, register, formState } = useFormContext()
+  const { formId, register, formState, watch } = useFormContext()
   const { t } = useTranslation()
   const rightLabel = isLabelRight(type)
   const controlId = `${formId}-${name}${rightLabel ? `-${value}` : null}`
   const htmlOptions = getOptions(options, required)
   const Component = resolveComponent(type, as)
   const fieldError = error || formState.errors[name]
+  const currentValue = watch(name)
   const field = register(name, {
     required: required,
     setValueAs: (v) => (['', undefined].includes(v) ? null : v),
@@ -180,10 +181,11 @@ export const Input = ({
       ) : null}
       <Component
         as={resolveType(type)}
-        type={type}
-        name={name}
         disabled={formState.isSubmitting}
+        checked={currentValue === value}
         isInvalid={Boolean(fieldError)}
+        name={name}
+        type={type}
         value={value}
         {...props}
         {...field}
