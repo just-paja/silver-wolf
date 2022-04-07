@@ -6,6 +6,7 @@ from fantasion_locations import api as locations
 from fantasion_eshop import api as orders
 from fantasion_expeditions import api as expeditions
 from fantasion_people import api as people
+from fantasion_signups import api as signups
 
 from . import users
 
@@ -72,6 +73,12 @@ router.register(
     r'monsters',
     content.MonsterCollection,
     basename='monsters',
+)
+
+router.register(
+    r'participants',
+    signups.ParticipantCollection,
+    basename='participants',
 )
 
 urlpatterns = [
