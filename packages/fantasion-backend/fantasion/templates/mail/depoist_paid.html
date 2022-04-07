@@ -1,0 +1,21 @@
+{% extends "mail/base.html" %}
+{% load i18n %}
+
+{% block intro %}
+  {% trans "email-deposit-paid-thanks" %}
+{% endblock %}
+
+{% block content %}
+  <p>
+    {% trans "email-deposit-paid-info1" %}: <strong>{{deposit}}</strong> {% trans "email-deposit-paid-info2" %}
+  </p>
+
+  <ul>
+    <li>{% trans "email-deposit-paid-debt" %}: <strong>{{debt}}</strong></li>
+  </ul>
+
+  <p>
+    {% trans "email-deposit-paid-wish" %}
+  </p>
+
+{% endblock %}

@@ -250,6 +250,58 @@ msgid "email-overpaid-refund"
 msgstr ""
 "Nemusíte se bát, v nejbližší době vám jej samozřejmě zašleme zpět na účet."
 
+#: fantasion/templates/mail/underpaid.html:5
+msgid "email-underpaid-thanks"
+msgstr "Děkujeme za platbu!"
+
+#: fantasion/templates/mail/underpaid.html:10
+msgid "email-underpaid-info"
+msgstr "Nemohli jsme si nevšimnout, že jste zatím nezaplatili celou vaší objednávku."
+
+#: fantasion/templates/mail/underpaid.html:14
+msgid "email-underpaid-debt"
+msgstr "Zbývá vám doplatit:"
+
+#: fantasion/templates/mail/underpaid.html:18
+msgid "email-underpaid-future"
+msgstr "Po plném doplacení vaší objednávky se vám znovu ozveme."
+
+#: fantasion/templates/mail/deposit-paid.html:5
+msgid "email-deposit-paid-thanks"
+msgstr "Děkujeme za zaplacení zálohy na tábor!"
+
+#: fantasion/templates/mail/deposit-paid.html:10
+msgid "email-deposit-paid-info1"
+msgstr "Právě nám přišla platba za zálohu ve výši"
+
+#: fantasion/templates/mail/deposit-paid.html:10
+msgid "email-deposit-paid-info2"
+msgstr "Záloha je tímto zaplacena."
+
+#: fantasion/templates/mail/deposit-paid.html:14
+msgid "email-deposit-paid-debt"
+msgstr "Doplatek u vaší objednávky činí:"
+
+#: fantasion/templates/mail/deposit-paid.html:18
+msgid "email-deposit-paid-future"
+msgstr "Jakmile bude zaplacen, opět se vám ozveme."
+
+#: fantasion/templates/mail/full_paid.html:5
+msgid "email-full_paid-thanks"
+msgstr "Děkujeme za platbu!"
+
+#: fantasion/templates/mail/full_paid.html:10
+msgid "email-full_paid-info"
+msgstr "Vaše objednávka je tímto splacena a příhláška/y jsou aktivní."
+
+#: fantasion/templates/mail/full_paid.html:14
+msgid "email-full_paid-amount"
+msgstr "Celá zaplacená částka činí:"
+
+#: fantasion/templates/mail/full_paid.html:18
+msgid "email-full_paid-future"
+msgstr "Brzy se vám ozveme s dalšími informacemi. Těšíme se na letní dobrodružství!"
+
 #: fantasion/templates/mail/password_refresh.html:5
 msgid "You asked us to restore your password"
 msgstr "Dostali jsme od Vás požadavek na obnovení hesla"

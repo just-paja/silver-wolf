@@ -68,19 +68,6 @@ class Promise(StatementSpecification, TimeLimitedModel):
         title = str(f": {self.title}") if self.title else '#%s' % self.id
         return f"{model_name}{title}"
 
-    def notify_overpaid(self):
-        subject = (_("Order {number}")).format(number=self.variable_symbol)
-        received = self.sum_statements()
-        amount = self.amount
-        overpayment = received - amount
-        body = render_to_string(
-            'mail/order_confirmation.html',
-            context={
-                'overpayment': overpayment,
-            },
-        )
-        send_mail([self.owner.email], subject, body)
-
     def save(self, *args, **kwargs):
         if not self.pk:
             self.initial_amount = self.amount
@@ -90,6 +77,12 @@ class Promise(StatementSpecification, TimeLimitedModel):
         self.status = self.calculate_status()
         if self.status == PROMISE_STATUS_OVERPAID:
             self.notify_overpaid()
+        elif self.status == PROMISE_STATUS_UNDERPAID:
+            self.notify_underpaid()
+        elif self.status == PROMISE_STATUS_DEPOSIT_PAID:
+            self.notify_deposit_paid()
+        elif self.status == PROMISE_STATUS_PAID:
+            self.notify_full_paid()
         super().save(*args, **kwargs)
 
     def get_volume_price_tag(self):
@@ -108,6 +101,58 @@ class Promise(StatementSpecification, TimeLimitedModel):
                 return PROMISE_STATUS_DEPOSIT_PAID
             return PROMISE_STATUS_UNDERPAID
         return PROMISE_STATUS_PAID
+
+    def notify_overpaid(self):
+        subject = (_("Order {number}")).format(number=self.variable_symbol)
+        received = self.sum_statements()
+        amount = self.amount
+        overpayment = received - amount
+        body = render_to_string(
+            'mail/overpaid.html',
+            context={
+                'overpayment': overpayment,
+            },
+        )
+        send_mail([self.owner.email], subject, body)
+
+    def notify_underpaid(self):
+        subject = (_("Order {number}")).format(number=self.variable_symbol)
+        received = self.sum_statements()
+        amount = self.amount
+        debt = amount - received
+        body = render_to_string(
+            'mail/underpaid.html',
+            context={
+                'debt': debt,
+            },
+        )
+        send_mail([self.owner.email], subject, body)
+
+    def notify_deposit_paid(self):
+        subject = (_("Order {number}")).format(number=self.variable_symbol)
+        received = self.sum_statements()
+        amount = self.amount
+        debt = amount - received
+        deposit = self.sum_deposit()
+        body = render_to_string(
+            'mail/deposit_paid.html',
+            context={
+                'debt': debt,
+                'deposit': deposit,
+            },
+        )
+        send_mail([self.owner.email], subject, body)
+
+    def notify_full_paid(self):
+        subject = (_("Order {number}")).format(number=self.variable_symbol)
+        amount = self.amount
+        body = render_to_string(
+            'mail/full_paid.html',
+            context={
+                'amount': amount,
+            },
+        )
+        send_mail([self.owner.email], subject, body)
 
     def create_debts(self):
         self.create_initial_debt()
