@@ -22,13 +22,12 @@ const BatchSelection = (props) => {
       label={t('input-expedition-batch')}
       type="select"
       options={options}
-      required
     />
   )
 }
 
 const formatTroopLabel = (troop) =>
-  `${troop.ageGroup.title} (${troop.ageGroup.ageMin} - ${troop.ageGroup.ageMax})`
+  `${troop.ageGroup.title} (${troop.ageGroup.ageMin} - ${troop.ageGroup.ageMax} let)`
 
 const useBatch = () => {
   const { batches } = useExpedition()
@@ -65,14 +64,33 @@ const TroopSelection = (props) => {
   )
 }
 
-const GivenNameInput = (props) => {
-  const { t } = useTranslation()
-  return <Input {...props} type="text" label={t('input-given-name')} />
-}
+const GivenNameInput = (props) => (
+  <Input
+    {...props}
+    type="text"
+    label={useTranslation().t('input-given-name')}
+  />
+)
 
-const FamilyNameInput = (props) => {
+const FamilyNameInput = (props) => (
+  <Input
+    {...props}
+    type="text"
+    label={useTranslation().t('input-family-name')}
+  />
+)
+
+const ParticipantSelection = (props) => {
   const { t } = useTranslation()
-  return <Input {...props} type="text" label={t('input-family-name')} />
+  return (
+    <Input
+      {...props}
+      label={t('input-participant')}
+      options={[]}
+      required
+      type="select"
+    />
+  )
 }
 
 const DateOfBirthInput = (props) => {
@@ -99,7 +117,20 @@ const NoteInput = (props) => {
   return <Input {...props} type="textarea" label={t('input-note')} />
 }
 
-export const ParticipantForm = ({ onSubmit }) => {
+const ParticipantForm = ({ onSubmit }) => {
+  const { t } = useTranslation()
+  const defaultValues = {}
+  return (
+    <Form defaultValues={defaultValues} onSubmit={onSubmit}>
+      <GivenNameInput name="firstName" required />
+      <FamilyNameInput name="lastName" required />
+      <DateOfBirthInput name="dateOfBirth" required />
+      <FormControls submitLabel={t('input-save-participant')} />
+    </Form>
+  )
+}
+
+export const SignupForm = ({ onSubmit }) => {
   const { t } = useTranslation()
   const { batches } = useExpedition()
   const defaultValues = {
@@ -108,13 +139,11 @@ export const ParticipantForm = ({ onSubmit }) => {
   }
   return (
     <Form defaultValues={defaultValues} onSubmit={onSubmit}>
-      <BatchSelection name="batchId" />
-      <TroopSelection name="batchAgeGroupId" />
-      <GivenNameInput name="firstName" />
-      <FamilyNameInput name="lastName" />
-      <DateOfBirthInput name="dateOfBirth" />
+      <ParticipantSelection name="participantId" required />
+      <BatchSelection name="batchId" required />
+      <TroopSelection name="batchAgeGroupId" required />
       <NoteInput name="note" />
-      <FormControls submitLabel={t('input-save-participant')} />
+      <FormControls submitLabel={t('input-save-signup')} />
     </Form>
   )
 }

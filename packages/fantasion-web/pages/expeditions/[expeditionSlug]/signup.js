@@ -9,7 +9,7 @@ import { parseSlug } from '../../../components/slugs'
 import { slug } from '../../../components/slugs'
 import { useTranslation } from 'next-i18next'
 import { requireUser, withPageProps } from '../../../server/props'
-import { ParticipantForm } from '../../../components/signups'
+import { SignupForm } from '../../../components/signups'
 import { ExpeditionContext } from '../../../components/expeditions'
 
 export const getServerSideProps = withPageProps(
@@ -51,7 +51,7 @@ const ExpeditionBatchSignupPage = ({ expedition }) => {
               {t('expedition-signup-on', { expeditionTitle: expedition.title })}
             </Heading>
           </header>
-          <ParticipantForm onSubmit={(values) => console.log(values)} />
+          <SignupForm onSubmit={(values) => console.log(values)} />
         </Container>
       </GenericPage>
     </ExpeditionContext.Provider>
