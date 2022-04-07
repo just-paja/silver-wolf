@@ -175,9 +175,8 @@ REST_FRAMEWORK = {
         "fantasion_api.auth.CsrfExemptAuth",
         "rest_framework.authentication.TokenAuthentication",
     ),
-    "DEFAULT_PAGINATION_CLASS": (
+    "DEFAULT_PAGINATION_CLASS":
         "rest_framework.pagination.PageNumberPagination",
-    ),
     "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly",
     ),
