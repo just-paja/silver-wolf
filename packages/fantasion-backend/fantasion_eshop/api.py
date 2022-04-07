@@ -17,11 +17,21 @@ def order_collection(request, format=None):
     return Response(serializer.data)
 
 
+def with_order(fn):
+    def inner(request, order_id=None, *args, **kwargs):
+        order = get_object_or_404(
+            models.Order,
+            pk=kwargs.get('order_id'),
+            owner=request.user,
+        )
+        return fn(request, order=order, *args, **kwargs)
+    return inner
+
+
 @api_view(['GET', 'DELETE'])
 @permission_classes([IsAuthenticated])
-def order_entity(request, format=None, order_id=None):
-    order = get_object_or_404(models.Order, pk=order_id, owner=request.user)
-
+@with_order
+def order_entity(request, order=None, **kwargs):
     if request.method == 'DELETE':
         if order.status in models.ORDER_CAN_BE_DELETED:
             order.delete()
@@ -34,8 +44,8 @@ def order_entity(request, format=None, order_id=None):
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
-def order_cancel(request, format=None, order_id=None):
-    order = get_object_or_404(models.Order, pk=order_id, owner=request.user)
+@with_order
+def order_cancel(request, order=None, **kwargs):
     order.cancel()
     serializer = serializers.OrderSerializer(order)
     return Response(serializer.data)
