@@ -84,7 +84,7 @@ const resolveComponent = (type, as) => {
   if (as) {
     return as
   }
-  if (type === 'checkbox') {
+  if (type === 'checkbox' || type === 'radio') {
     return FormCheck.Input
   }
   if (type === 'select') {
@@ -93,7 +93,7 @@ const resolveComponent = (type, as) => {
   return BsForm.Control
 }
 
-const rightLabelMap = ['checkbox']
+const rightLabelMap = ['checkbox', 'radio']
 
 const isLabelRight = (type) => rightLabelMap.includes(type)
 
