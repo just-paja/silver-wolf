@@ -152,11 +152,11 @@ export const ParticipantSelection = ({
   const { t } = useTranslation()
   const fetch = useFetch()
   const defaultValues = {
-    participantId: participants.results[0]?.id || '',
+    participantId: participants[0]?.id || '',
   }
 
   const handleSubmit = async (values) => {
-    const participant = participants.results.find(
+    const participant = participants.find(
       (p) => p.id === parseInt(values.participantId, 10)
     )
     if (participant) {
@@ -176,7 +176,7 @@ export const ParticipantSelection = ({
 
   return (
     <Form defaultValues={defaultValues} onSubmit={handleSubmit}>
-      {participants.results.map((participant) => (
+      {participants.map((participant) => (
         <Input
           type="radio"
           name="participantId"
@@ -233,10 +233,7 @@ export const SignupWizzard = ({
   const [activeKey, setActiveKey] = useState(1)
   const { t } = useTranslation()
   const addParticipant = (participant) => {
-    setParticipants({
-      ...participants,
-      results: [...participants.results, participant],
-    })
+    setParticipants([...participants, participant])
   }
   const selectParticipant = (participant) => {
     setParticipantId(participant.id)
@@ -336,6 +333,29 @@ const OrderWizzardControls = ({ empty, onAddParticipant, onNext }) => {
   )
 }
 
+const AddSignup = ({
+  add,
+  empty,
+  onCancel,
+  onCreateSignup,
+  onShowAddForm,
+  participants,
+  signups,
+}) => {
+  if (add) {
+    return (
+      <SignupWizzard
+        className="mt-3"
+        defaultParticipants={participants}
+        onCancel={onCancel}
+        onSubmit={onCreateSignup}
+        signups={signups}
+      />
+    )
+  }
+  return <OrderWizzardControls empty={empty} onAddParticipant={onShowAddForm} />
+}
+
 export const OrderSignupWizzard = ({
   defaultOrder,
   defaultParticipants,
@@ -367,31 +387,26 @@ export const OrderSignupWizzard = ({
       setAddParticipant(true)
     }
   }
+  const unusedParticipants = defaultParticipants.results.filter(
+    (p) => !signups.some((s) => s.participant.id === p.id)
+  )
+  const cancelSignupAdd =
+    signups.length === 0 ? null : () => setAddParticipant(false)
 
   return (
     <div {...props}>
       <OrderSignups onCancelSignup={cancelSignup} signups={signups} />
-      {addParticipant ? (
-        <SignupWizzard
-          className="mt-3"
-          defaultParticipants={{
-            ...defaultParticipants,
-            results: defaultParticipants.results.filter(
-              (p) => !signups.some((s) => s.participant.id === p.id)
-            ),
-          }}
-          onCancel={
-            signups.length === 0 ? null : () => setAddParticipant(false)
-          }
-          onSubmit={createSignup}
-          signups={signups}
-        />
-      ) : (
-        <OrderWizzardControls
-          empty={signups.length === 0}
-          onAddParticipant={() => setAddParticipant(true)}
-        />
-      )}
+      <AddSignup
+        add={addParticipant}
+        className="mt-3"
+        empty={signups.length === 0}
+        onAddParticipant={() => setAddParticipant(true)}
+        onCancel={cancelSignupAdd}
+        onCreateSignup={createSignup}
+        onShowAddForm={() => setAddParticipant(true)}
+        participants={unusedParticipants}
+        signups={signups}
+      />
     </div>
   )
 }
