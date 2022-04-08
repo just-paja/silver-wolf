@@ -1,5 +1,9 @@
+import json
+
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.translation import ugettext_lazy as _
+
 from rest_framework import status
 from rest_framework import renderers
 from rest_framework.decorators import action
@@ -52,6 +56,39 @@ class OrderCollection(ModelViewSet):
             )
         except ObjectDoesNotExist:
             raise Http404()
+
+    @action(detail=True, methods=['post'], url_path=r'promotion-codes')
+    def promotion_codes(self, *args, **kwargs):
+        order = self.get_object()
+        try:
+            body = json.loads(self.request.body)
+            code = models.PromotionCode.objects.filter(
+                code=body.get('code', None),
+            ).get()
+            existing = models.OrderPromotionCode.objects.filter(
+                order=order,
+                promotion_code=code,
+            ).first()
+            if existing:
+                return Response(
+                    {"code": [
+                        _("Cannot use the same Promotion Code multiple times")
+                    ]},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
+            item = models.OrderPromotionCode(
+                order=order,
+                promotion_code=code,
+            )
+            item.save()
+            return Response(
+                self.get_serializer(order).data,
+                status=status.HTTP_201_CREATED,
+            )
+        except models.PromotionCode.DoesNotExist:
+            return Response({
+                "code": [_("Invalid Promotion Code")],
+            }, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['put'])
     def cancel(self, *args, **kwargs):

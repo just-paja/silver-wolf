@@ -11,9 +11,11 @@ import { DateRange, formatDateRange } from './dates'
 import { Form, FormControls, Input } from './forms'
 import { InteractiveButton } from './buttons'
 import { Money } from './money'
+import { reverse } from '../routes'
 import { useExpedition } from './expeditions'
-import { useFetch } from './context'
+import { useFetch, useLang } from './context'
 import { useFormContext } from 'react-hook-form'
+import { useRouter } from 'next/router'
 import { UserName } from './users'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
@@ -282,11 +284,13 @@ const OrderSignup = ({ onCancel, signup }) => {
         <Card.Title className="mb-0">
           <UserName user={signup.participant} />
         </Card.Title>
-        <InteractiveButton
-          onClick={() => onCancel(signup)}
-          variant="link"
-          icon={CancelIcon}
-        />
+        {onCancel && (
+          <InteractiveButton
+            onClick={() => onCancel(signup)}
+            variant="link"
+            icon={CancelIcon}
+          />
+        )}
       </Card.Header>
 
       <ListGroup variant="flush">
@@ -304,7 +308,7 @@ const OrderSignup = ({ onCancel, signup }) => {
   )
 }
 
-const OrderSignups = ({ onCancelSignup, signups }) => (
+export const OrderSignups = ({ onCancelSignup, signups }) => (
   <Row>
     {signups.map((signup) => (
       <Col key={signup.id} xl={2} lg={3} md={4} sm={6} className="mt-3">
@@ -338,6 +342,7 @@ const AddSignup = ({
   empty,
   onCancel,
   onCreateSignup,
+  onNext,
   onShowAddForm,
   participants,
   signups,
@@ -353,7 +358,13 @@ const AddSignup = ({
       />
     )
   }
-  return <OrderWizzardControls empty={empty} onAddParticipant={onShowAddForm} />
+  return (
+    <OrderWizzardControls
+      empty={empty}
+      onAddParticipant={onShowAddForm}
+      onNext={onNext}
+    />
+  )
 }
 
 export const OrderSignupWizzard = ({
@@ -369,6 +380,8 @@ export const OrderSignupWizzard = ({
   )
   const [addParticipant, setAddParticipant] = useState(signups.length === 0)
   const fetch = useFetch()
+  const lang = useLang()
+  const router = useRouter()
   const createSignup = async (values) => {
     const s = await fetch.post('/signups', {
       body: {
@@ -393,6 +406,10 @@ export const OrderSignupWizzard = ({
   const cancelSignupAdd =
     signups.length === 0 ? null : () => setAddParticipant(false)
 
+  const goToCheckout = () => {
+    router.push(reverse(lang, 'basket'))
+  }
+
   return (
     <div {...props}>
       <OrderSignups onCancelSignup={cancelSignup} signups={signups} />
@@ -403,6 +420,7 @@ export const OrderSignupWizzard = ({
         onAddParticipant={() => setAddParticipant(true)}
         onCancel={cancelSignupAdd}
         onCreateSignup={createSignup}
+        onNext={goToCheckout}
         onShowAddForm={() => setAddParticipant(true)}
         participants={unusedParticipants}
         signups={signups}

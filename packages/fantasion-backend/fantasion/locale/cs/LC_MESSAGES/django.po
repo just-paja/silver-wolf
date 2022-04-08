@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-08 14:06+0200\n"
+"POT-Creation-Date: 2022-04-09 14:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -203,7 +203,7 @@ msgstr "Položka"
 
 #: fantasion/templates/eshop/invoice.html:227
 #: fantasion/templates/mail/order_confirmation.html:23
-#: fantasion_eshop/models.py:153 fantasion_eshop/models.py:351
+#: fantasion_eshop/models.py:160 fantasion_eshop/models.py:358
 msgid "Price"
 msgstr "Cena"
 
@@ -517,11 +517,11 @@ msgstr "Vytvořeno opakováním"
 msgid "Created from order"
 msgstr "Vytvořeno z objednávky"
 
-#: fantasion_banking/constants.py:28 fantasion_eshop/models.py:204
+#: fantasion_banking/constants.py:28 fantasion_eshop/models.py:211
 msgid "Deposit"
 msgstr "Záloha"
 
-#: fantasion_banking/constants.py:29 fantasion_eshop/models.py:352
+#: fantasion_banking/constants.py:29 fantasion_eshop/models.py:359
 msgid "Surcharge"
 msgstr "Doplatek"
 
@@ -659,7 +659,7 @@ msgstr "Opakovat"
 
 #: fantasion_banking/promises.py:106 fantasion_banking/promises.py:119
 #: fantasion_banking/promises.py:132 fantasion_banking/promises.py:147
-#: fantasion_eshop/models.py:300
+#: fantasion_eshop/models.py:307
 #, python-brace-format
 msgid "Order {number}"
 msgstr "Objednávka {number}"
@@ -871,6 +871,14 @@ msgstr "Text"
 msgid "Fantasion Domain"
 msgstr "Doména"
 
+#: fantasion_eshop/api.py:75
+msgid "Cannot use the same Promotion Code multiple times"
+msgstr "Nelze použít ten samý kód dvakrát."
+
+#: fantasion_eshop/api.py:90
+msgid "Invalid Promotion Code"
+msgstr "Neplatný slevový kód"
+
 #: fantasion_eshop/apps.py:7
 msgid "Fantasion Eshop"
 msgstr "E-shop"
@@ -919,56 +927,56 @@ msgstr "Objednávka"
 msgid "E-shop Products"
 msgstr "Objednávky"
 
-#: fantasion_eshop/models.py:138
+#: fantasion_eshop/models.py:145
 msgid "E-shop Product Price"
 msgstr "Produktová cena"
 
-#: fantasion_eshop/models.py:139
+#: fantasion_eshop/models.py:146
 msgid "E-shop Product Prices"
 msgstr "Produktové ceny"
 
-#: fantasion_eshop/models.py:145
+#: fantasion_eshop/models.py:152
 msgid "Product"
 msgstr "Produkt"
 
-#: fantasion_eshop/models.py:151
+#: fantasion_eshop/models.py:158
 msgid "Price level"
 msgstr "Cenová hladina"
 
-#: fantasion_eshop/models.py:157
+#: fantasion_eshop/models.py:164
 msgid "Available since"
 msgstr "Dostupné od"
 
-#: fantasion_eshop/models.py:162
+#: fantasion_eshop/models.py:169
 msgid "Available until"
 msgstr "Dostupné do"
 
-#: fantasion_eshop/models.py:180 fantasion_eshop/models.py:340
-#: fantasion_eshop/models.py:371
+#: fantasion_eshop/models.py:187 fantasion_eshop/models.py:347
+#: fantasion_eshop/models.py:378
 msgid "E-shop Order"
 msgstr "Objednávka"
 
-#: fantasion_eshop/models.py:181
+#: fantasion_eshop/models.py:188
 msgid "E-shop Orders"
 msgstr "Objednávky"
 
-#: fantasion_eshop/models.py:187
+#: fantasion_eshop/models.py:194
 msgid "Order owner"
 msgstr "Majitel objednávky"
 
-#: fantasion_eshop/models.py:191
+#: fantasion_eshop/models.py:198
 msgid "Order Status"
 msgstr "Stav objednávky"
 
-#: fantasion_eshop/models.py:199
+#: fantasion_eshop/models.py:206
 msgid "Payment Promise"
 msgstr "Pohledávka"
 
-#: fantasion_eshop/models.py:201
+#: fantasion_eshop/models.py:208
 msgid "Total Price"
 msgstr "Celková cena"
 
-#: fantasion_eshop/models.py:209
+#: fantasion_eshop/models.py:216
 msgid ""
 "System will split the payment into deposit and surcharge based on Order "
 "Items configuration"
@@ -976,53 +984,53 @@ msgstr ""
 "Systém rozdělí platbu na zálohu a doplatek na základě nastavení položek "
 "objednávky"
 
-#: fantasion_eshop/models.py:211
+#: fantasion_eshop/models.py:218
 msgid "Use Deposit Payment"
 msgstr "Rozdělit na zálohu a doplatek"
 
-#: fantasion_eshop/models.py:216 fantasion_signups/models.py:166
+#: fantasion_eshop/models.py:223 fantasion_signups/models.py:166
 msgid "Submitted at"
 msgstr "Čas odeslání"
 
-#: fantasion_eshop/models.py:346
+#: fantasion_eshop/models.py:353
 #, python-brace-format
 msgid "Cannot delete order in status {self.status}"
 msgstr "Nelze smazat objednávku ve stavu {self.status}"
 
-#: fantasion_eshop/models.py:358
+#: fantasion_eshop/models.py:365
 msgid "This product price is not available."
 msgstr "Tato cena není k dispozici"
 
-#: fantasion_eshop/models.py:364
+#: fantasion_eshop/models.py:371
 msgid "E-shop Order Item"
 msgstr "Položka objednávky"
 
-#: fantasion_eshop/models.py:365
+#: fantasion_eshop/models.py:372
 msgid "E-shop Order Items"
 msgstr "Položky objednávky"
 
-#: fantasion_eshop/models.py:379
+#: fantasion_eshop/models.py:386
 msgid "Product Price"
 msgstr "Produktová cena"
 
-#: fantasion_eshop/models.py:382
+#: fantasion_eshop/models.py:389
 msgid "Real Price"
 msgstr "Skutečná cena"
 
-#: fantasion_eshop/models.py:385
+#: fantasion_eshop/models.py:392
 msgid "Product Type"
 msgstr "Typ produktu"
 
-#: fantasion_eshop/models.py:438 fantasion_eshop/models.py:445
-#: fantasion_eshop/models.py:505
+#: fantasion_eshop/models.py:445 fantasion_eshop/models.py:452
+#: fantasion_eshop/models.py:512
 msgid "Promotion Code"
 msgstr "Propagační kód"
 
-#: fantasion_eshop/models.py:439
+#: fantasion_eshop/models.py:446
 msgid "Promotion Codes"
 msgstr "Propagační kódy"
 
-#: fantasion_eshop/models.py:447
+#: fantasion_eshop/models.py:454
 msgid ""
 "Type an unique code with combination of letters, numbers and symbols that "
 "are not too difficult to type"
@@ -1030,53 +1038,53 @@ msgstr ""
 "Napiš unikátní kód sestavený písmen a číslic, který není složitý na naťukání "
 "na klávesnici telefonu"
 
-#: fantasion_eshop/models.py:455 fantasion_eshop/models.py:523
+#: fantasion_eshop/models.py:462 fantasion_eshop/models.py:530
 msgid "Discount"
 msgstr "Sleva"
 
-#: fantasion_eshop/models.py:456
+#: fantasion_eshop/models.py:463
 msgid "This percentage will be cut of the total order price."
 msgstr "Procentuální sleva z celé objednávky"
 
-#: fantasion_eshop/models.py:461
+#: fantasion_eshop/models.py:468
 msgid "Maximum discount"
 msgstr "Maximální sleva"
 
-#: fantasion_eshop/models.py:462
+#: fantasion_eshop/models.py:469
 msgid "The system will cap the absolute discount."
 msgstr "System zeshora omezí absolutní slevu."
 
-#: fantasion_eshop/models.py:467
+#: fantasion_eshop/models.py:474
 msgid "Maximum Usages"
 msgstr "Maximum použití"
 
-#: fantasion_eshop/models.py:469
+#: fantasion_eshop/models.py:476
 msgid ""
 "This Promotion Code can be used only so many times, then it will be "
 "deactivated"
 msgstr "Kód bude možné použít pouze tolikrát. Potom bude deaktivován."
 
-#: fantasion_eshop/models.py:476
+#: fantasion_eshop/models.py:483
 msgid "Valid from"
 msgstr "Platné od"
 
-#: fantasion_eshop/models.py:478
+#: fantasion_eshop/models.py:485
 msgid "This Promotion Code will be invalid until this date and time"
 msgstr "Kód začne platit s uplynutím tohoto data a času"
 
-#: fantasion_eshop/models.py:483 fantasion_signups/models.py:301
+#: fantasion_eshop/models.py:490 fantasion_signups/models.py:301
 msgid "Valid until"
 msgstr "Platné do"
 
-#: fantasion_eshop/models.py:485
+#: fantasion_eshop/models.py:492
 msgid "This Promotion Code will be invalid after this date and time"
 msgstr "Kód přestane platit s uplynutím tohoto data a času"
 
-#: fantasion_eshop/models.py:499
+#: fantasion_eshop/models.py:506
 msgid "Order Promotion Code"
 msgstr "Slevový kód"
 
-#: fantasion_eshop/models.py:500
+#: fantasion_eshop/models.py:507
 msgid "Order Promotion Codes"
 msgstr "Slevové kódy"
 

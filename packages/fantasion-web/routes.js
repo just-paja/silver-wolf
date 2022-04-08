@@ -61,6 +61,10 @@ const cs = {
     source: '/strediska/:leisureCentreSlug',
     destination: '/leisure-centres/:leisureCentreSlug',
   },
+  basket: {
+    source: '/objednavka/kosik',
+    destination: '/order/basket',
+  },
   login: {
     source: '/prihlaseni',
     destination: '/login',

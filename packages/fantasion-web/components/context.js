@@ -16,6 +16,7 @@ export const SiteContext = createContext({})
 
 export const useFetch = () => useSite().fetch
 export const useHeadingLevel = () => useContext(HeadingLevelContext)
+export const useLang = () => useSite().lang
 export const useSite = () => useContext(SiteContext)
 export const useUser = () => useSite().user
 

@@ -10,6 +10,7 @@ import styles from './orders.module.scss'
 import { Heading, Section } from './media'
 import { CopyButton, InteractiveButton } from './buttons'
 import { CancelIcon } from './icons'
+import { Form, FormControls, Input } from './forms'
 import { UserName } from './users'
 import { useFetch, useUser } from './context'
 import { useState } from 'react'
@@ -330,17 +331,19 @@ const OrderCancel = ({ order, setOrder }) => {
   )
 }
 
-const OrderCard = ({ defaultOrder }) => {
+export const OrderCard = ({ defaultOrder, hideStatus, ...props }) => {
   const { t } = useTranslation()
   const [order, setOrder] = useState(defaultOrder)
   return (
-    <Section component="article">
-      <header className="d-flex align-items-start justify-content-between">
-        <Heading>{order.variableSymbol}</Heading>
-        {order.isCancellable && (
-          <OrderCancel order={order} setOrder={setOrder} />
-        )}
-      </header>
+    <Section component="article" {...props}>
+      {!hideStatus && (
+        <header className="d-flex align-items-start justify-content-between">
+          <Heading>{order.variableSymbol}</Heading>
+          {order.isCancellable && (
+            <OrderCancel order={order} setOrder={setOrder} />
+          )}
+        </header>
+      )}
       <OrderItems items={order.items} />
       <Row className="flex-column-reverse flex-md-row">
         <Col md={6} className="mt-1">
@@ -361,10 +364,12 @@ const OrderCard = ({ defaultOrder }) => {
               </>
             )}
             <MoneyRow label={t('order-total')} amount={order.price} />
-            <OrderRow
-              label={t('order-status')}
-              value={<OrderStatus status={order.status} />}
-            />
+            {!hideStatus && (
+              <OrderRow
+                label={t('order-status')}
+                value={<OrderStatus status={order.status} />}
+              />
+            )}
           </div>
         </Col>
       </Row>
@@ -390,3 +395,27 @@ export const OrderList = ({ orders }) => (
     )}
   </Section>
 )
+
+export const PromotionCodeForm = ({ order, onSubmit }) => {
+  const fetch = useFetch()
+  const { t } = useTranslation()
+  const handleSubmit = async (body) => {
+    onSubmit(
+      await fetch.post(`/orders/${order.id}/promotion-codes`, {
+        body,
+      })
+    )
+  }
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <Input
+        name="code"
+        type="text"
+        label={t('order-promotion-code')}
+        required
+      />
+      <FormControls submitLabel={t('order-add-promotion-code')} />
+    </Form>
+  )
+}
