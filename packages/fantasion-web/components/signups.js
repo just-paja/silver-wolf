@@ -308,6 +308,20 @@ const OrderSignups = ({ signups }) => (
   </Row>
 )
 
+const OrderWizzardControls = ({ empty, onAddParticipant }) => {
+  const { t } = useTranslation()
+  return (
+    <div className="mt-3">
+      <InteractiveButton
+        variant={empty ? 'primary' : 'secondary'}
+        onClick={onAddParticipant}
+      >
+        {t('signup-add-participant')}
+      </InteractiveButton>
+    </div>
+  )
+}
+
 export const OrderSignupWizzard = ({
   defaultOrder,
   defaultParticipants,
@@ -320,7 +334,6 @@ export const OrderSignupWizzard = ({
     ) || []
   )
   const [addParticipant, setAddParticipant] = useState(signups.length === 0)
-  const { t } = useTranslation()
   const fetch = useFetch()
   const createSignup = async (values) => {
     const s = await fetch.post('/signups', {
@@ -352,14 +365,10 @@ export const OrderSignupWizzard = ({
           signups={signups}
         />
       ) : (
-        <div className="mt-3">
-          <InteractiveButton
-            variant={signups.length === 0 ? 'primary' : 'secondary'}
-            onClick={() => setAddParticipant(true)}
-          >
-            {t('signup-add-participant')}
-          </InteractiveButton>
-        </div>
+        <OrderWizzardControls
+          empty={signups.length === 0}
+          onAddParticipant={() => setAddParticipant(true)}
+        />
       )}
     </div>
   )
