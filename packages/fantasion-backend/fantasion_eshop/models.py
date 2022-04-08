@@ -217,6 +217,11 @@ class Order(TimeStampedModel):
             "on Order Items configuration"),
         verbose_name=_("Use Deposit Payment"),
     )
+    submitted_at = DateTimeField(
+        null=True,
+        blank=True,
+        verbose_name=_('Submitted at'),
+    )
 
     @property
     def variable_symbol(self):
@@ -323,6 +328,7 @@ class Order(TimeStampedModel):
             Model = apps.get_model(item.product_type)
             Model.objects.get(pk=item.pk).save(avoid_order_save=True)
         if self.status == ORDER_STATUS_CONFIRMED and not self.promise:
+            self.submitted_at = timezone.now()
             self.create_promise()
             self.notify_order_confirmed()
 
