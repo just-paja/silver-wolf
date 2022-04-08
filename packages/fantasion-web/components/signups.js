@@ -361,7 +361,11 @@ export const OrderSignupWizzard = ({
   }
   const cancelSignup = async (signup) => {
     await fetch.delete(`/signups/${signup.id}`)
-    setSignups(signups.filter((s) => s.id !== signup.id))
+    const nextSignups = signups.filter((s) => s.id !== signup.id)
+    setSignups(nextSignups)
+    if (nextSignups.length === 0) {
+      setAddParticipant(true)
+    }
   }
 
   return (
