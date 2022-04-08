@@ -238,14 +238,30 @@ export const FormError = () => {
   return null
 }
 
-export const FormControls = ({ submitLabel, children }) => {
+export const FormControls = ({
+  cancelLabel,
+  children,
+  onCancel,
+  submitLabel,
+}) => {
+  const { t } = useTranslation()
   const { formState } = useFormContext()
   return (
     <>
       <FormError />
       <div className="mt-3">
-        {children}
+        {onCancel && (
+          <InteractiveButton
+            className="me-2"
+            type="button"
+            variant="warning"
+            onClick={onCancel}
+          >
+            {cancelLabel || t('cancel')}
+          </InteractiveButton>
+        )}
         <Submit inProgress={formState.isSubmitting}>{submitLabel}</Submit>
+        {children}
       </div>
     </>
   )

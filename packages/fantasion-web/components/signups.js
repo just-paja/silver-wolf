@@ -134,16 +134,11 @@ const ParticipantSelectionControls = ({ onCancel }) => {
   const participantId = watch('participantId')
   return (
     <FormControls
+      onCancel={onCancel}
       submitLabel={t(
         participantId ? 'signup-next' : 'signup-create-participant'
       )}
-    >
-      {onCancel && (
-        <InteractiveButton type="button" variant="warning" onClick={onCancel}>
-          {t('cancel')}
-        </InteractiveButton>
-      )}
-    </FormControls>
+    />
   )
 }
 
@@ -221,13 +216,7 @@ export const SignupForm = ({ onCancel, onSubmit }) => {
       <TroopSelection name="troopId" required />
       <NoteInput name="note" />
       <p className="mt-3 text-muted">{t('signup-will-be-added')}</p>
-      <FormControls submitLabel={t('input-save-signup')}>
-        {onCancel && (
-          <InteractiveButton onClick={onCancel}>
-            {t('cancel')}
-          </InteractiveButton>
-        )}
-      </FormControls>
+      <FormControls onCancel={onCancel} submitLabel={t('input-save-signup')} />
     </Form>
   )
 }
@@ -267,17 +256,21 @@ export const SignupWizzard = ({
         </Accordion.Header>
         <Accordion.Body>
           <ParticipantSelection
-            participants={participants}
             onAddParticipant={addParticipant}
             onCancel={onCancel}
             onSubmit={selectParticipant}
+            participants={participants}
           />
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey={2}>
         <Accordion.Header>{t('signup-troop-selection')}</Accordion.Header>
         <Accordion.Body>
-          <SignupForm participantId={participantId} onSubmit={handleSubmit} />
+          <SignupForm
+            onCancel={onCancel}
+            onSubmit={handleSubmit}
+            participantId={participantId}
+          />
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>
