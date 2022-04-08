@@ -307,7 +307,7 @@ const OrderSignup = ({ onCancel, signup }) => {
 const OrderSignups = ({ onCancelSignup, signups }) => (
   <Row>
     {signups.map((signup) => (
-      <Col key={signup.id} xl={2} lg={3} md={4} sm={6} className="mt-2">
+      <Col key={signup.id} xl={2} lg={3} md={4} sm={6} className="mt-3">
         <OrderSignup onCancel={onCancelSignup} signup={signup} />
       </Col>
     ))}

@@ -62,7 +62,6 @@ const ExpeditionBatchSignupPage = ({
             </Heading>
           </header>
           <OrderSignupWizzard
-            className="mt-4"
             defaultOrder={activeOrder}
             defaultParticipants={participants}
           />
