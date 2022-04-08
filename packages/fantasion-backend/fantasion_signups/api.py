@@ -1,7 +1,11 @@
 from django.db.models import Q
 
 from fantasion_generics.api import RWViewSet
+from fantasion_eshop import models as eshop
+
+from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from . import models, serializers
 
@@ -24,3 +28,10 @@ class SignupCollection(RWViewSet):
 
     serializer_class = serializers.SignupSerializer
     permission_classes = [IsAuthenticated]
+
+    def destroy(self, request, *args, **kwargs):
+        inst = self.get_object()
+        if inst.order.status == eshop.ORDER_STATUS_NEW:
+            inst.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_403_FORBIDDEN)

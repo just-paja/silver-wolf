@@ -6,6 +6,7 @@ import moment from 'moment'
 import React from 'react'
 import Row from 'react-bootstrap/Row'
 
+import { CancelIcon } from './icons'
 import { DateRange, formatDateRange } from './dates'
 import { Form, FormControls, Input } from './forms'
 import { InteractiveButton } from './buttons'
@@ -277,16 +278,24 @@ export const SignupWizzard = ({
   )
 }
 
-const OrderSignup = ({ signup }) => {
+const OrderSignup = ({ onCancel, signup }) => {
   return (
     <Card>
-      <Card.Header>
+      <Card.Header className="d-flex justify-content-between">
         <Card.Title className="mb-0">
           <UserName user={signup.participant} />
         </Card.Title>
+        <InteractiveButton
+          onClick={() => onCancel(signup)}
+          variant="link"
+          icon={CancelIcon}
+        />
       </Card.Header>
 
       <ListGroup variant="flush">
+        <ListGroup.Item>
+          {signup.troop.batch.expedition.title}: {signup.troop.ageGroup.title}
+        </ListGroup.Item>
         <ListGroup.Item>
           <DateRange start={signup.troop.startsAt} end={signup.troop.endsAt} />
         </ListGroup.Item>
@@ -298,17 +307,17 @@ const OrderSignup = ({ signup }) => {
   )
 }
 
-const OrderSignups = ({ signups }) => (
+const OrderSignups = ({ onCancelSignup, signups }) => (
   <Row>
     {signups.map((signup) => (
       <Col key={signup.id} xl={2} lg={3} md={4} sm={6} className="mt-2">
-        <OrderSignup signup={signup} />
+        <OrderSignup onCancel={onCancelSignup} signup={signup} />
       </Col>
     ))}
   </Row>
 )
 
-const OrderWizzardControls = ({ empty, onAddParticipant }) => {
+const OrderWizzardControls = ({ empty, onAddParticipant, onNext }) => {
   const { t } = useTranslation()
   return (
     <div className="mt-3">
@@ -318,6 +327,11 @@ const OrderWizzardControls = ({ empty, onAddParticipant }) => {
       >
         {t('signup-add-participant')}
       </InteractiveButton>
+      {!empty && (
+        <InteractiveButton className="ms-3" onClick={onNext} variant="primary">
+          {t('signup-next')}
+        </InteractiveButton>
+      )}
     </div>
   )
 }
@@ -345,10 +359,14 @@ export const OrderSignupWizzard = ({
     setSignups([...signups, s])
     setAddParticipant(false)
   }
+  const cancelSignup = async (signup) => {
+    await fetch.delete(`/signups/${signup.id}`)
+    setSignups(signups.filter((s) => s.id !== signup.id))
+  }
 
   return (
     <div {...props}>
-      <OrderSignups signups={signups} />
+      <OrderSignups onCancelSignup={cancelSignup} signups={signups} />
       {addParticipant ? (
         <SignupWizzard
           className="mt-3"
