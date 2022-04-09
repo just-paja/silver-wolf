@@ -20,6 +20,7 @@ from rest_framework.serializers import (
 )
 
 from fantasion import models
+from fantasion_generics.api import RWViewSet
 
 from .decorators import public_endpoint, with_serializer
 
@@ -213,6 +214,36 @@ def get_me(request, format=None):
     if isinstance(user, AnonymousUser):
         user = None
     return Response(RegistrationSerializer(user).data)
+
+
+class UserAddressSerializer(ModelSerializer):
+    class Meta:
+        model = models.UserAddress
+        fields = (
+            'city',
+            'country',
+            'id',
+            'postal_code',
+            'street',
+            'street_number',
+            'title',
+        )
+
+    def create(self, data):
+        inst = models.UserAddress(
+            **data,
+            user=self.context.get('request').user,
+        )
+        inst.save()
+        return inst
+
+
+class UserAddressCollection(RWViewSet):
+    serializer_class = UserAddressSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return models.UserAddress.objects.filter(user=self.request.user)
 
 
 urlpatterns = [

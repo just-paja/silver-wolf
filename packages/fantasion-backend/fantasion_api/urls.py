@@ -99,6 +99,12 @@ router.register(
     basename='signups',
 )
 
+router.register(
+    r'user-addresses',
+    users.UserAddressCollection,
+    basename='user-addresses',
+)
+
 urlpatterns = [
     path('', include(router.urls)),
     path('users/', include(users.urlpatterns)),
