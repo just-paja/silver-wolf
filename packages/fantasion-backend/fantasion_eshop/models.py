@@ -232,7 +232,7 @@ class Order(TimeStampedModel):
 
     def calculate_price(self):
         data = self.order_items.aggregate(Sum('price'))
-        return data['price__sum'] or 0
+        return max(0, data['price__sum'] or 0)
 
     def calculate_deposit(self):
         if self.use_deposit_payment:
