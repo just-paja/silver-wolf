@@ -5,6 +5,8 @@ import { asPage, MetaPage } from '../../components/meta'
 import { Breadcrumbs } from '../../components/breadcrumbs'
 import { GenericPage } from '../../components/layout'
 import { Heading } from '../../components/media'
+import { Link } from '../../components/links'
+import { InteractiveButton } from '../../components/buttons'
 import { OrderCard, PromotionCodeForm } from '../../components/orders'
 import { requireUser, withPageProps } from '../../server/props'
 import { useFetch } from '../../components/context'
@@ -55,6 +57,11 @@ const BasketPage = ({ activeOrder }) => {
           hideStatus
           onItemDelete={deleteItem}
         />
+        <div className="d-flex justify-content-end mt-3">
+          <Link as={InteractiveButton} size="lg" route="delivery">
+            {t('order-next')}
+          </Link>
+        </div>
         {!hasPromotionCode && (
           <PromotionCodeForm order={order} onSubmit={setOrder} />
         )}

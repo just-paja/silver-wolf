@@ -65,6 +65,10 @@ const cs = {
     source: '/objednavka/kosik',
     destination: '/order/basket',
   },
+  delivery: {
+    source: '/objednavka/doruceni',
+    destination: '/order/delivery',
+  },
   login: {
     source: '/prihlaseni',
     destination: '/login',
