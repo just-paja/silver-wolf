@@ -69,6 +69,10 @@ const cs = {
     source: '/objednavka/platba-a-doruceni',
     destination: '/order/payment-and-delivery',
   },
+  checkout: {
+    source: '/objednavka/potvrzeni',
+    destination: '/order/checkout',
+  },
   login: {
     source: '/prihlaseni',
     destination: '/login',

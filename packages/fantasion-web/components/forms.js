@@ -182,7 +182,7 @@ export const Input = ({
       <Component
         as={resolveType(type)}
         disabled={formState.isSubmitting}
-        checked={currentValue === value}
+        checked={type === 'radio' ? currentValue === value : currentValue}
         isInvalid={Boolean(fieldError)}
         name={name}
         type={type}

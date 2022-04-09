@@ -181,7 +181,6 @@ class OrderSerializer(ModelSerializer):
     invoice_address_id = IntegerField(allow_null=True)
     user_invoice_address_id = IntegerField(allow_null=True)
 
-
     def get_items(self, inst):
         items = inst.order_items.all()
         value = []

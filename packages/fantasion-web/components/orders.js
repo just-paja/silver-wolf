@@ -495,7 +495,7 @@ export const BillingInformation = ({ addresses, onSubmit, order }) => {
    * 3. Umoznit pridat adresu
    */
   return (
-    <Section>
+    <Section className="mt-3">
       <Heading>{t('order-billing-information')}</Heading>
       <Form defaultValues={defaultValues} onSubmit={selectAddress}>
         {addresses.results.map((address) => (
@@ -515,6 +515,36 @@ export const BillingInformation = ({ addresses, onSubmit, order }) => {
         />
         <AddAddressForm />
         <FormControls submitLabel={t('order-select-address')} />
+      </Form>
+    </Section>
+  )
+}
+
+export const PaymentInformation = ({ order, onSubmit }) => {
+  const { t } = useTranslation()
+  const fetch = useFetch()
+  const defaultValues = {
+    useDepositPayment: order.useDepositPayment,
+  }
+  const selectPaymentMethod = async (values) => {
+    onSubmit(
+      await fetch.patch(`/orders/${order.id}`, {
+        body: {
+          useDepositPayment: values.useDepositPayment,
+        },
+      })
+    )
+  }
+  return (
+    <Section className="mt-3">
+      <Heading>{t('order-payment-information')}</Heading>
+      <Form defaultValues={defaultValues} onSubmit={selectPaymentMethod}>
+        <Input
+          type="checkbox"
+          name="useDepositPayment"
+          label={t('order-use-deposit-payment')}
+        />
+        <FormControls submitLabel={t('order-select-payment-method')} />
       </Form>
     </Section>
   )

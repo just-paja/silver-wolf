@@ -20,7 +20,7 @@ from rest_framework.serializers import (
 )
 
 from fantasion import models
-from fantasion_generics.api import RWViewSet, address_fields 
+from fantasion_generics.api import RWViewSet, address_fields
 
 from .decorators import public_endpoint, with_serializer
 
