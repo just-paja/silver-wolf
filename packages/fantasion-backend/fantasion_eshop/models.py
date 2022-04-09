@@ -344,6 +344,10 @@ class Order(TimeStampedModel):
         )
         send_mail([self.owner.email], subject, body)
 
+    def confirm(self):
+        self.status = ORDER_STATUS_CONFIRMED
+        self.save()
+
     def save(self, *args, **kwargs):
         self.price = self.calculate_price()
         self.deposit = self.calculate_deposit()

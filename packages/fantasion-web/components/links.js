@@ -31,13 +31,20 @@ export const Link = ({
   query,
   route,
   ...props
-}) => (
-  <Linker href={href} params={params} query={query} route={route}>
+}) => {
+  const comp = (
     <As {...props} onClick={external && handleExternalClick}>
       {children}
     </As>
-  </Linker>
-)
+  )
+  return props.disabled ? (
+    comp
+  ) : (
+    <Linker href={href} params={params} query={query} route={route}>
+      {comp}
+    </Linker>
+  )
+}
 
 export const A = ({ href, children, props, As = 'a' }) => (
   <NextLink href={href} passHref>

@@ -40,6 +40,15 @@ class OrderCollection(RWViewSet):
         serializer = self.get_serializer(order)
         return Response(serializer.data)
 
+    @action(detail=True, methods=['put'])
+    def confirm(self, *args, **kwargs):
+        order = self.get_object()
+        if order.status == models.ORDER_STATUS_NEW:
+            order.confirm()
+            serializer = self.get_serializer(order)
+            return Response(serializer.data)
+        return Response(status=status.HTTP_403_FORBIDDEN)
+
     @action(detail=True, methods=['get'])
     def invoice(self, *args, **kwargs):
         inst = self.get_object()

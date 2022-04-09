@@ -475,6 +475,18 @@ const AddAddressForm = () => {
   )
 }
 
+export const BillingInformationPreview = ({ order }) => {
+  const { t } = useTranslation()
+  return (
+    <Section className="mt-3">
+      <Heading>{t('order-billing-information')}</Heading>
+      <Address {...order.userInvoiceAddress} />
+      <Heading>{t('order-payment-information')}</Heading>
+      <p>{t('order-payment-method-transfer')}</p>
+    </Section>
+  )
+}
+
 export const BillingInformation = ({ addresses, onSubmit, order }) => {
   const { t } = useTranslation()
   const fetch = useFetch()

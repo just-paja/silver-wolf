@@ -31,6 +31,10 @@ from .constants import (
 )
 
 
+class UnownedPromise(Exception):
+    pass
+
+
 class PromiseManager(TimeLimitedManager):
 
     def filter_by_transaction(self, variable_symbol, specific_symbol):
@@ -102,6 +106,12 @@ class Promise(StatementSpecification, TimeLimitedModel):
             return PROMISE_STATUS_UNDERPAID
         return PROMISE_STATUS_PAID
 
+    def get_owner_email(self):
+        order = self.order_set.first()
+        if order:
+            return order.owner.email
+        raise UnownedPromise(_(f"Promise {self.id} does not have any owner"))
+
     def notify_overpaid(self):
         subject = (_("Order {number}")).format(number=self.variable_symbol)
         received = self.sum_statements()
@@ -113,7 +123,7 @@ class Promise(StatementSpecification, TimeLimitedModel):
                 'overpayment': overpayment,
             },
         )
-        send_mail([self.owner.email], subject, body)
+        send_mail([self.get_owner_email()], subject, body)
 
     def notify_underpaid(self):
         subject = (_("Order {number}")).format(number=self.variable_symbol)
@@ -126,7 +136,7 @@ class Promise(StatementSpecification, TimeLimitedModel):
                 'debt': debt,
             },
         )
-        send_mail([self.owner.email], subject, body)
+        send_mail([self.get_owner_email()], subject, body)
 
     def notify_deposit_paid(self):
         subject = (_("Order {number}")).format(number=self.variable_symbol)
@@ -141,7 +151,7 @@ class Promise(StatementSpecification, TimeLimitedModel):
                 'deposit': deposit,
             },
         )
-        send_mail([self.owner.email], subject, body)
+        send_mail([self.get_owner_email()], subject, body)
 
     def notify_full_paid(self):
         subject = (_("Order {number}")).format(number=self.variable_symbol)
@@ -152,7 +162,7 @@ class Promise(StatementSpecification, TimeLimitedModel):
                 'amount': amount,
             },
         )
-        send_mail([self.owner.email], subject, body)
+        send_mail([self.get_owner_email()], subject, body)
 
     def create_debts(self):
         self.create_initial_debt()
@@ -217,8 +227,7 @@ class Promise(StatementSpecification, TimeLimitedModel):
 
     def sum_deposit(self):
         result = self.debts.filter(
-            debt_type=DEBT_TYPE_DEPOSIT,
-        ).aggregate(ballance=Sum('amount'))
+            debt_type=DEBT_TYPE_DEPOSIT, ).aggregate(ballance=Sum('amount'))
         ballance = result['ballance']
         return Money(ballance if ballance else 0, settings.BASE_CURRENCY)
 

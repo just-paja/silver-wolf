@@ -9,34 +9,36 @@ import { GenericPage } from '../../components/layout'
 import { Heading } from '../../components/media'
 import { Link } from '../../components/links'
 import { InteractiveButton } from '../../components/buttons'
-import {
-  BillingInformation,
-  PaymentInformation,
-  OrderCard,
-} from '../../components/orders'
 import { requireUser, withPageProps } from '../../server/props'
+import { reverse } from '../../routes'
+import { useFetch, useLang } from '../../components/context'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
+import { BillingInformationPreview, OrderCard } from '../../components/orders'
 
 export const getServerSideProps = withPageProps(
   requireUser(async ({ fetch }) => {
-    const [activeOrder, addresses] = await Promise.all([
-      fetch('/orders/active'),
-      fetch('/user-addresses'),
-    ])
+    const [activeOrder] = await Promise.all([fetch('/orders/active')])
     return {
       props: {
         activeOrder,
-        addresses,
       },
     }
   })
 )
 
-const PaymentAndDeliveryPage = ({ activeOrder, addresses }) => {
+const OrderCheckoutPage = ({ activeOrder }) => {
   const [order, setOrder] = useState(activeOrder)
   const { t } = useTranslation()
-  const title = `${t('order-payment-and-delivery')}`
+  const fetch = useFetch()
+  const title = `${t('order-checkout')}`
+  const router = useRouter()
+  const lang = useLang()
+  const confirmOrder = async () => {
+    setOrder(await fetch.put(`/orders/${order.id}/confirm`))
+    router.push(reverse(lang, 'status'))
+  }
   return (
     <GenericPage>
       <MetaPage title={title} description={t('order-checkout-description')} />
@@ -44,7 +46,7 @@ const PaymentAndDeliveryPage = ({ activeOrder, addresses }) => {
         <Breadcrumbs
           links={[
             {
-              children: t('order-payment-and-delivery'),
+              children: t('order-checkout'),
             },
           ]}
         />
@@ -54,32 +56,25 @@ const PaymentAndDeliveryPage = ({ activeOrder, addresses }) => {
         <OrderCard className="mt-4" order={order} hideStatus />
         <Row>
           <Col md={6}>
-            <PaymentInformation order={order} onSubmit={setOrder} />
-          </Col>
-          <Col md={6}>
-            <BillingInformation
-              addresses={addresses}
-              order={order}
-              onSubmit={setOrder}
-            />
+            <BillingInformationPreview order={order} />
           </Col>
         </Row>
         <div className="d-flex justify-content-between mt-3">
           <Link
             as={InteractiveButton}
             size="lg"
-            route="basket"
+            route="paymentAndDelivery"
             variant="secondary"
           >
             {t('order-previous')}
           </Link>
-          <Link as={InteractiveButton} size="lg" route="checkout">
-            {t('order-next')}
-          </Link>
+          <InteractiveButton size="lg" onClick={confirmOrder}>
+            {t('order-confirm')}
+          </InteractiveButton>
         </div>
       </Container>
     </GenericPage>
   )
 }
 
-export default asPage(PaymentAndDeliveryPage)
+export default asPage(OrderCheckoutPage)

@@ -73,7 +73,12 @@ const PaymentAndDeliveryPage = ({ activeOrder, addresses }) => {
           >
             {t('order-previous')}
           </Link>
-          <Link as={InteractiveButton} size="lg" route="checkout">
+          <Link
+            as={InteractiveButton}
+            disabled={!order.userInvoiceAddressId}
+            size="lg"
+            route="checkout"
+          >
             {t('order-next')}
           </Link>
         </div>

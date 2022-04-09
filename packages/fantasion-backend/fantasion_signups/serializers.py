@@ -100,7 +100,7 @@ class TroopSerializer(ModelSerializer):
 class SignupSerializer(ModelSerializer):
     participant = ParticipantSerializer(read_only=True)
     participant_id = IntegerField()
-    order_id = IntegerField()
+    order_id = IntegerField(required=False)
     troop_id = IntegerField()
     troop = TroopSerializer(read_only=True)
 
