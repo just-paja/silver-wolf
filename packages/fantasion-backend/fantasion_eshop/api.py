@@ -9,14 +9,14 @@ from rest_framework import renderers
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
 
+from fantasion_generics.api import RWViewSet
 from djangorestframework_camel_case.render import CamelCaseJSONRenderer
 
 from . import models, serializers
 
 
-class OrderCollection(ModelViewSet):
+class OrderCollection(RWViewSet):
     renderer_classes = [CamelCaseJSONRenderer, renderers.TemplateHTMLRenderer]
     serializer_class = serializers.OrderSerializer
     permission_classes = [IsAuthenticated]
@@ -26,11 +26,6 @@ class OrderCollection(ModelViewSet):
         if not self.request.user.has_perm('fantasion_eshop.can_view_order'):
             query = query.filter(owner=self.request.user)
         return query
-
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        context.update({"request": self.request})
-        return context
 
     def destroy(self, inst):
         if inst.status in models.ORDER_CAN_BE_DELETED:
@@ -62,18 +57,17 @@ class OrderCollection(ModelViewSet):
         order = self.get_object()
         try:
             body = json.loads(self.request.body)
-            code = models.PromotionCode.objects.filter(
-                code=body.get('code', None),
-            ).get()
+            code = models.PromotionCode.objects.filter(code=body.get(
+                'code', None), ).get()
             existing = models.OrderPromotionCode.objects.filter(
                 order=order,
                 promotion_code=code,
             ).first()
             if existing:
+                message = _(
+                    "Cannot use the same Promotion Code multiple times")
                 return Response(
-                    {"code": [
-                        _("Cannot use the same Promotion Code multiple times")
-                    ]},
+                    {"code": [message]},
                     status=status.HTTP_403_FORBIDDEN,
                 )
             item = models.OrderPromotionCode(
@@ -86,9 +80,12 @@ class OrderCollection(ModelViewSet):
                 status=status.HTTP_201_CREATED,
             )
         except models.PromotionCode.DoesNotExist:
-            return Response({
-                "code": [_("Invalid Promotion Code")],
-            }, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {
+                    "code": [_("Invalid Promotion Code")],
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
     @action(detail=True, methods=['put'])
     def cancel(self, *args, **kwargs):
