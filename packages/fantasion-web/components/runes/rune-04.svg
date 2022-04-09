@@ -1,16 +1,16 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-  width="32"
-  height="32"
-  viewBox="0 0 8.4666668 8.4666666"
-  version="1.1"
-  xmlns="http://www.w3.org/2000/svg"
-  xmlns:svg="http://www.w3.org/2000/svg"
->
-  <g transform="translate(-139.94794,-89.485555)">
-    <polygon
-      points="353.375,476.469 361.313,476.469 367.313,466.281 338.094,466.281 352.703,491.781 358.625,481.563 354.75,481.563 352.703,484.531 344.094,469.375 361.469,469.406 359.313,472.906 351.531,472.906 "
-      transform="matrix(0.27350275,0,0,0.27350275,47.714252,-37.365982)"
-    />
-  </g>
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+ "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+ width="115.000000pt" height="93.000000pt" viewBox="0 0 115.000000 93.000000"
+ preserveAspectRatio="xMidYMid meet">
+
+<g transform="translate(0.000000,93.000000) scale(0.100000,-0.100000)"
+ stroke="none">
+<path d="M422 653 c-264 -444 -322 -548 -320 -563 3 -13 62 -15 468 -15 442 0
+465 1 462 18 -7 42 -285 502 -309 511 -22 9 -39 -10 -52 -57 -12 -48 -13 -45
+76 -199 40 -69 73 -136 73 -147 0 -21 -4 -21 -254 -21 -168 0 -257 4 -261 11
+-7 11 30 78 203 369 57 96 106 189 109 207 6 36 -28 103 -52 103 -8 0 -72 -98
+-143 -217z"/>
+</g>
 </svg>

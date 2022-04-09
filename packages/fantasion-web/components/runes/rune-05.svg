@@ -1,16 +1,16 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-  width="32"
-  height="32"
-  viewBox="0 0 8.4666665 8.4666665"
-  version="1.1"
-  xmlns="http://www.w3.org/2000/svg"
-  xmlns:svg="http://www.w3.org/2000/svg"
->
-  <g transform="translate(-183.81979,-88.769129)">
-    <polyline
-      points="409.125,466.281 394.375,492.563 423.5,492.563 412.813,473.25   410.5,476.781 417.469,488.938 400.406,489 411.219,469.938 "
-      transform="matrix(0.27465015,0,0,0.27465015,75.739181,-38.70592)"
-    />
-  </g>
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+ "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+ width="102.000000pt" height="94.000000pt" viewBox="0 0 102.000000 94.000000"
+ preserveAspectRatio="xMidYMid meet">
+
+<g transform="translate(0.000000,94.000000) scale(0.100000,-0.100000)"
+ stroke="none">
+<path d="M90 840 c-20 -12 6 -63 177 -355 200 -339 264 -436 287 -433 20 3
+195 289 196 320 0 23 -15 31 -64 31 -36 0 -45 -6 -88 -53 -28 -31 -52 -50 -61
+-47 -14 5 -247 397 -247 415 0 6 7 13 16 16 20 8 458 8 478 0 22 -8 20 -47 -3
+-75 -18 -23 -24 -24 -134 -21 -164 5 -193 -19 -123 -96 l34 -37 124 -3 c86 -2
+130 1 148 10 24 13 68 81 151 236 37 70 42 84 29 92 -20 13 -900 13 -920 0z"/>
+</g>
 </svg>

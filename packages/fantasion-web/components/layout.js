@@ -14,8 +14,8 @@ import Rune05 from './runes/rune-05.svg'
 
 import { Alerts } from './alerts'
 import { HamburgerMenuIcon, BasketIcon } from './icons'
+import { Link, Linker } from './links'
 import { HeadingContext, PageTopGallery } from './media'
-import { Link } from './links'
 import { Money } from './money'
 import { SiteLogo } from './SiteLogo'
 import { SocialNetworks } from './social'
@@ -282,11 +282,20 @@ export const GalleryPage = ({ children, media }) => {
 }
 
 const runes = [Rune01, Rune02, Rune03, Rune04, Rune05]
+const runesLinks = [
+  'adventureList',
+  'leisureCentreList',
+  'bestiary',
+  'about',
+  'team',
+]
 
 export const Runes = () => (
   <div className={styles.runes}>
     {runes.map((Rune, index) => (
-      <Rune className={styles.rune} fill="currentColor" key={index} />
+      <Linker route={runesLinks[index]} key={index}>
+        <Rune className={styles.rune} fill="currentColor" />
+      </Linker>
     ))}
   </div>
 )
