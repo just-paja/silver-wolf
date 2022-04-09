@@ -1,6 +1,7 @@
 import Card from 'react-bootstrap/Card'
 import ListGroup from 'react-bootstrap/ListGroup'
 
+import { Address } from './addresses'
 import { Heading, Section } from './media'
 import { useTranslation } from 'next-i18next'
 import {
@@ -31,13 +32,12 @@ export const ContactCard = () => {
         <Heading>{t('contact-address')}</Heading>
         <Card className="mt-3">
           <Card.Body>
-            <adress>
-              Zborovská 512/40
-              <br />
-              Praha 5 Smíchov
-              <br />
-              150 00
-            </adress>
+            <Address
+              city="Praha 5 Smíchov"
+              street="Zborovská"
+              streetNumber="512/40"
+              postalCode="150 00"
+            />
           </Card.Body>
         </Card>
       </Section>

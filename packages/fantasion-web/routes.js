@@ -65,9 +65,9 @@ const cs = {
     source: '/objednavka/kosik',
     destination: '/order/basket',
   },
-  delivery: {
-    source: '/objednavka/doruceni',
-    destination: '/order/delivery',
+  paymentAndDelivery: {
+    source: '/objednavka/platba-a-doruceni',
+    destination: '/order/payment-and-delivery',
   },
   login: {
     source: '/prihlaseni',

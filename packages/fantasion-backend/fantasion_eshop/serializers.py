@@ -6,9 +6,12 @@ from rest_framework.serializers import (
     ModelSerializer,
     SerializerMethodField,
     ReadOnlyField,
+    IntegerField,
 )
 
+from fantasion.models import UserAddress
 from fantasion_banking.serializers import PromiseSerializer
+from fantasion_generics.api import address_fields
 from fantasion_signups.models import Signup, Participant
 from fantasion_expeditions.models import (
     AgeGroup,
@@ -18,6 +21,18 @@ from fantasion_expeditions.models import (
 )
 
 from . import models
+
+
+class UserAddressSerializer(ModelSerializer):
+    class Meta:
+        model = UserAddress
+        fields = address_fields
+
+
+class OrderInvoiceAddressSerializer(ModelSerializer):
+    class Meta:
+        model = models.OrderInvoiceAddress
+        fields = address_fields
 
 
 class PriceLevelSerializer(ModelSerializer):
@@ -161,6 +176,11 @@ def serialize_order_item(item):
 class OrderSerializer(ModelSerializer):
     promise = PromiseSerializer()
     items = SerializerMethodField()
+    invoice_address = OrderInvoiceAddressSerializer()
+    user_invoice_address = UserAddressSerializer()
+    invoice_address_id = IntegerField(allow_null=True)
+    user_invoice_address_id = IntegerField(allow_null=True)
+
 
     def get_items(self, inst):
         items = inst.order_items.all()
@@ -172,14 +192,18 @@ class OrderSerializer(ModelSerializer):
     class Meta:
         model = models.Order
         fields = (
+            "deposit",
             "id",
+            "invoice_address",
+            "invoice_address_id",
             "is_cancellable",
             "items",
             "price",
             "promise",
             "status",
-            "deposit",
             "use_deposit_payment",
+            "user_invoice_address",
+            "user_invoice_address_id",
             "variable_symbol",
         )
         read_only_fields = (

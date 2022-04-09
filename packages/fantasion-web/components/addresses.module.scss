@@ -1,0 +1,9 @@
+@import '../styles/variables.scss';
+
+form .postalCodeInput {
+  max-width: $spacer * 6;
+}
+
+form .streetNumberInput {
+  max-width: $spacer * 7;
+}

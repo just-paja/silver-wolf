@@ -7,12 +7,14 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import styles from './orders.module.scss'
 
-import { Heading, Section } from './media'
-import { CopyButton, InteractiveButton } from './buttons'
+import { Address, PostalCodeInput, StreetNumberInput } from './addresses'
 import { CancelIcon } from './icons'
+import { CopyButton, InteractiveButton } from './buttons'
 import { Form, FormControls, Input } from './forms'
-import { UserName } from './users'
+import { Heading, Section } from './media'
 import { useFetch, useUser } from './context'
+import { useFormContext } from 'react-hook-form'
+import { UserName } from './users'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
 
@@ -431,5 +433,89 @@ export const PromotionCodeForm = ({ order, onSubmit }) => {
       />
       <FormControls submitLabel={t('order-add-promotion-code')} />
     </Form>
+  )
+}
+
+const AddAddressForm = () => {
+  const { t } = useTranslation()
+  const { watch } = useFormContext()
+  const addressId = watch('addressId')
+  if (addressId) {
+    return null
+  }
+  return (
+    <>
+      <Input name="title" label={t('address-title')} required />
+      <Row>
+        <Col>
+          <Input name="street" label={t('address-street')} required />
+        </Col>
+        <Col>
+          <StreetNumberInput
+            name="street_number"
+            label={t('address-street-number')}
+            required
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Input name="country" label={t('address-country')} required />
+        <Col>
+          <Input name="city" label={t('address-city')} required />
+        </Col>
+        <Col>
+          <PostalCodeInput
+            name="postal_code"
+            label={t('address-postal-code')}
+            required
+          />
+        </Col>
+      </Row>
+    </>
+  )
+}
+
+export const BillingInformation = ({ addresses, onSubmit, order }) => {
+  const { t } = useTranslation()
+  const fetch = useFetch()
+  const defaultValues = {
+    addressId: String(order.userInvoiceAddressId) || addresses[0]?.id,
+    title: t('user-address-title-home'),
+  }
+  const selectAddress = async (values) =>
+    onSubmit(
+      await fetch.patch(`/orders/${order.id}`, {
+        body: {
+          userInvoiceAddressId: parseInt(values.addressId, 10),
+        },
+      })
+    )
+
+  /*
+   * 3. Umoznit pridat adresu
+   */
+  return (
+    <Section>
+      <Heading>{t('order-billing-information')}</Heading>
+      <Form defaultValues={defaultValues} onSubmit={selectAddress}>
+        {addresses.results.map((address) => (
+          <Input
+            type="radio"
+            name="addressId"
+            key={address.id}
+            label={<Address {...address} />}
+            value={String(address.id)}
+          />
+        ))}
+        <Input
+          type="radio"
+          name="addressId"
+          label={t('address-new')}
+          value=""
+        />
+        <AddAddressForm />
+        <FormControls submitLabel={t('order-select-address')} />
+      </Form>
+    </Section>
   )
 }

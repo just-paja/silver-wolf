@@ -20,7 +20,7 @@ from rest_framework.serializers import (
 )
 
 from fantasion import models
-from fantasion_generics.api import RWViewSet
+from fantasion_generics.api import RWViewSet, address_fields 
 
 from .decorators import public_endpoint, with_serializer
 
@@ -219,15 +219,7 @@ def get_me(request, format=None):
 class UserAddressSerializer(ModelSerializer):
     class Meta:
         model = models.UserAddress
-        fields = (
-            'city',
-            'country',
-            'id',
-            'postal_code',
-            'street',
-            'street_number',
-            'title',
-        )
+        fields = address_fields
 
     def create(self, data):
         inst = models.UserAddress(

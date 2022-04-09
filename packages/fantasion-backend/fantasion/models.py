@@ -198,9 +198,10 @@ class EmailVerification(TimeStampedModel):
             ))
 
 
-class UserAddress(Address, TimeStampedModel):
+class UserAddressBase(Address, TimeStampedModel):
 
     class Meta:
+        abstract = True
         unique_together = (('user', 'title'), )
         verbose_name = _("User Address")
         verbose_name_plural = _("User Addresses")
@@ -216,6 +217,9 @@ class UserAddress(Address, TimeStampedModel):
             "Human readable identifier that will help user select this "
             "address, like \"Home\""),
     )
+
+
+class UserAddress(UserAddressBase):
     country = ForeignKey(
         "fantasion_locations.Country",
         on_delete=CASCADE,

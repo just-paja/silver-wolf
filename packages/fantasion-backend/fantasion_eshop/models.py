@@ -24,9 +24,11 @@ from django.db.models import (
     PositiveIntegerField,
     CASCADE,
     RESTRICT,
+    SET_NULL,
 )
 
 from rest_framework.exceptions import PermissionDenied
+from fantasion.models import UserAddressBase
 from fantasion_generics.emails import get_lang, send_mail
 from fantasion_generics.models import PublicModel
 from fantasion_generics.money import MoneyField
@@ -179,6 +181,15 @@ class ProductPrice(TimeStampedModel):
         return self.available_since <= now <= self.available_until
 
 
+class OrderInvoiceAddress(UserAddressBase):
+    country = ForeignKey(
+        "fantasion_locations.Country",
+        on_delete=CASCADE,
+        related_name='order_invoice_addresses',
+        verbose_name=_('Country'),
+    )
+
+
 class Order(TimeStampedModel):
 
     class Meta:
@@ -219,6 +230,18 @@ class Order(TimeStampedModel):
         null=True,
         blank=True,
         verbose_name=_('Submitted at'),
+    )
+    user_invoice_address = ForeignKey(
+        'fantasion.UserAddress',
+        null=True,
+        blank=True,
+        on_delete=SET_NULL,
+    )
+    invoice_address = ForeignKey(
+        'OrderInvoiceAddress',
+        null=True,
+        blank=True,
+        on_delete=RESTRICT,
     )
 
     @property

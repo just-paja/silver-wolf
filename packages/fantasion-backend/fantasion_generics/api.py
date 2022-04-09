@@ -33,6 +33,16 @@ media_fields = (
     'width',
 )
 
+address_fields = (
+    'city',
+    'country',
+    'id',
+    'postal_code',
+    'street',
+    'street_number',
+    'title',
+)
+
 
 class RWViewSet(ModelViewSet):
     def get_serializer_context(self):

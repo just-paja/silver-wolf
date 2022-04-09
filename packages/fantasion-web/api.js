@@ -68,6 +68,7 @@ const getFetch = (token) => {
 export const curryAuth = (token) => {
   const fetch = getFetch(token)
   fetch.delete = withMethod(fetch, 'DELETE')
+  fetch.patch = withMethod(fetch, 'PATCH')
   fetch.post = withMethod(fetch, 'POST')
   fetch.put = withMethod(fetch, 'PUT')
   return fetch
