@@ -374,7 +374,7 @@ export const OrderSignupWizzard = ({
 }) => {
   const [order] = useState(defaultOrder)
   const [signups, setSignups] = useState(
-    order?.items.filter(
+    order?.items?.filter(
       (item) => item.productType === 'fantasion_signups.Signup'
     ) || []
   )
