@@ -82,6 +82,12 @@ router.register(
 )
 
 router.register(
+    r'order-items',
+    eshop.OrderItemCollection,
+    basename='order_items',
+)
+
+router.register(
     r'participants',
     signups.ParticipantCollection,
     basename='participants',

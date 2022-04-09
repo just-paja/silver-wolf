@@ -65,9 +65,7 @@ ORDER_REACTS_TO_PAYMENTS = (
     ORDER_STATUS_DEPOSIT_PAID,
 )
 
-ORDER_CAN_BE_DELETED = (
-    ORDER_STATUS_NEW,
-)
+ORDER_CAN_BE_DELETED = (ORDER_STATUS_NEW, )
 
 ORDER_CAN_BE_CANCELLED = (
     ORDER_STATUS_CONFIRMED,
@@ -240,6 +238,9 @@ class Order(TimeStampedModel):
             return base / 2
         return 0
 
+    def can_be_modified(self):
+        return self.status in ORDER_CAN_BE_DELETED
+
     def get_surcharge(self):
         return self.price - self.deposit
 
@@ -331,6 +332,9 @@ class Order(TimeStampedModel):
             self.submitted_at = timezone.now()
             self.create_promise()
             self.notify_order_confirmed()
+        self.price = self.calculate_price()
+        self.deposit = self.calculate_deposit()
+        super().save(*args, **kwargs)
 
     def sync_with_promise(self, promise=None):
         p = promise or self.promise
@@ -349,9 +353,8 @@ class Order(TimeStampedModel):
 
     def cancel(self):
         if not self.is_cancellable():
-            raise PermissionDenied(_(
-                f"Cannot delete order in status {self.status}"
-            ))
+            raise PermissionDenied(
+                _(f"Cannot delete order in status {self.status}"))
         self.status = ORDER_STATUS_CANCELLED
         self.save()
 

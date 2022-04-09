@@ -63,21 +63,30 @@ const OrderItemDescription = ({ item }) => {
   return item.description
 }
 
-const OrderItem = ({ item }) => (
-  <ListGroup.Item className="d-flex">
-    <div className="flex-grow-1">
-      <OrderItemDescription item={item} />
-    </div>
-    <div className="text-end">
-      <Money amount={item.price} />
-    </div>
-  </ListGroup.Item>
+const OrderItem = ({ item, onDelete }) => (
+  <div className="d-flex">
+    <ListGroup.Item className="d-flex flex-fill">
+      <div className="flex-grow-1">
+        <OrderItemDescription item={item} />
+      </div>
+      <div className="text-end">
+        <Money amount={item.price} />
+      </div>
+    </ListGroup.Item>
+    {onDelete && (
+      <InteractiveButton
+        icon={CancelIcon}
+        onClick={() => onDelete(item)}
+        variant="danger"
+      />
+    )}
+  </div>
 )
 
-const OrderItems = ({ items }) => (
+const OrderItems = ({ items, onDelete }) => (
   <ListGroup className="mt-2">
     {items.map((item) => (
-      <OrderItem item={item} key={item.id} />
+      <OrderItem item={item} key={item.id} onDelete={onDelete} />
     ))}
   </ListGroup>
 )
@@ -289,7 +298,7 @@ const OrderCancelDialog = ({ error, inProgress, onCancel, onHide, show }) => {
   )
 }
 
-const OrderCancel = ({ order, setOrder }) => {
+const OrderCancel = ({ order, onCancel }) => {
   const { t } = useTranslation()
   const [inProgress, setInProgress] = useState(false)
   const [error, setError] = useState(null)
@@ -300,7 +309,7 @@ const OrderCancel = ({ order, setOrder }) => {
     setError(null)
     setInProgress(true)
     try {
-      setOrder(await fetch.put(`/orders/${order.id}/cancel`))
+      onCancel(await fetch.put(`/orders/${order.id}/cancel`))
       setShow(false)
     } catch (e) {
       setError(e)
@@ -331,20 +340,25 @@ const OrderCancel = ({ order, setOrder }) => {
   )
 }
 
-export const OrderCard = ({ defaultOrder, hideStatus, ...props }) => {
+export const OrderCard = ({
+  order,
+  hideStatus,
+  onCancel,
+  onItemDelete,
+  ...props
+}) => {
   const { t } = useTranslation()
-  const [order, setOrder] = useState(defaultOrder)
   return (
     <Section component="article" {...props}>
       {!hideStatus && (
         <header className="d-flex align-items-start justify-content-between">
           <Heading>{order.variableSymbol}</Heading>
           {order.isCancellable && (
-            <OrderCancel order={order} setOrder={setOrder} />
+            <OrderCancel order={order} onCancel={onCancel} />
           )}
         </header>
       )}
-      <OrderItems items={order.items} />
+      <OrderItems items={order?.items || []} onDelete={onItemDelete} />
       <Row className="flex-column-reverse flex-md-row">
         <Col md={6} className="mt-1">
           <OrderControls
@@ -383,14 +397,14 @@ const OrderListEmpty = () => (
   </div>
 )
 
-export const OrderList = ({ orders }) => (
+export const OrderList = ({ orders, onOrderCancel }) => (
   <Section headingLevel={0} className={styles.orderList}>
     <Heading>{useTranslation().t('orders')}</Heading>
     {orders.results.length === 0 ? (
       <OrderListEmpty />
     ) : (
       orders.results.map((order) => (
-        <OrderCard key={order.id} defaultOrder={order} />
+        <OrderCard key={order.id} order={order} onCancel={onOrderCancel} />
       ))
     )}
   </Section>

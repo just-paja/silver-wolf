@@ -93,3 +93,23 @@ class OrderCollection(RWViewSet):
         inst.cancel()
         serializer = serializers.OrderSerializer(inst)
         return Response(serializer.data)
+
+
+class OrderItemCollection(RWViewSet):
+    serializer_class = serializers.OrderItemSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        query = models.OrderItem.objects
+        if not self.request.user.has_perm('fantasion_eshop.can_view_order'):
+            query = query.filter(order__owner=self.request.user)
+        return query
+
+    def destroy(self, *args, **kwargs):
+        item = self.get_object()
+        order = item.order
+        if order.can_be_modified():
+            item.delete()
+            order.refresh_from_db()
+            return Response(serializers.OrderSerializer(order).data)
+        return Response(status=status.HTTP_403_FORBIDDEN)
