@@ -30,6 +30,11 @@ const BasketPage = ({ activeOrder }) => {
   const deleteItem = async (item) => {
     setOrder(await fetch.delete(`/order-items/${item.id}`))
   }
+  const hasPromotionCode = Boolean(
+    order?.items?.some(
+      (item) => item.productType === 'fantasion_eshop.OrderPromotionCode'
+    )
+  )
   return (
     <GenericPage>
       <MetaPage title={title} description={t('order-checkout-description')} />
@@ -50,7 +55,9 @@ const BasketPage = ({ activeOrder }) => {
           hideStatus
           onItemDelete={deleteItem}
         />
-        <PromotionCodeForm order={order} onSubmit={setOrder} />
+        {!hasPromotionCode && (
+          <PromotionCodeForm order={order} onSubmit={setOrder} />
+        )}
       </Container>
     </GenericPage>
   )
