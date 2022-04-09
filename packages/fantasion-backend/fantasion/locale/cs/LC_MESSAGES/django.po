@@ -252,17 +252,17 @@ msgstr "Děkujeme za zaplacení zálohy na tábor!"
 msgid "email-deposit-paid-info1"
 msgstr "Právě nám přišla platba za zálohu ve výši"
 
-#: fantasion/templates/mail/depoist_paid.html:10
+#: fantasion/templates/mail/depoist_paid.html:14
 msgid "email-deposit-paid-info2"
 msgstr "Záloha je tímto zaplacena."
 
-#: fantasion/templates/mail/depoist_paid.html:14
-msgid "email-deposit-paid-debt"
-msgstr "Doplatek u vaší objednávky činí:"
-
 #: fantasion/templates/mail/depoist_paid.html:18
+msgid "email-deposit-paid-debt"
+msgstr "Doplatek u vaší objednávky činí"
+
+#: fantasion/templates/mail/depoist_paid.html:22
 msgid "email-deposit-paid-wish"
-msgstr "Právě nám přišla platba za zálohu ve výši"
+msgstr "Jakmile obdržíme zaplacený doplatek, ozveme se vám s dalšími informacemi."
 
 #: fantasion/templates/mail/full_paid.html:5
 msgid "email-full-paid-thanks"
@@ -278,7 +278,7 @@ msgstr "Celá zaplacená částka činí:"
 
 #: fantasion/templates/mail/full_paid.html:18
 msgid "email-full-paid-wish"
-msgstr "Vaše objednávka je tímto splacena a příhláška/y jsou aktivní."
+msgstr ""
 
 #: fantasion/templates/mail/order_confirmation.html:5
 msgid "email-signup-confirmed"
@@ -362,7 +362,7 @@ msgstr ""
 
 #: fantasion/templates/mail/underpaid.html:5
 msgid "email-paid-thanks"
-msgstr "To jsme opravdu nečekali."
+msgstr "Děkujeme za platbu!"
 
 #: fantasion/templates/mail/underpaid.html:10
 msgid "email-underpaid-info"
@@ -371,12 +371,12 @@ msgstr ""
 
 #: fantasion/templates/mail/underpaid.html:14
 msgid "email-underpaid-debt"
-msgstr "Zbývá vám doplatit:"
+msgstr "Zbývá doplatit"
 
 #: fantasion/templates/mail/underpaid.html:18
 msgid "email-underpaid-wish"
 msgstr ""
-"Nemohli jsme si nevšimnout, že jste zatím nezaplatili celou vaší objednávku."
+"Jakmile zaplatíte zbylou částku, ozveme se vám."
 
 #: fantasion_api/users.py:34
 msgid "Password does not match the confirmation value"
