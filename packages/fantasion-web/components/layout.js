@@ -1,9 +1,11 @@
+import Badge from 'react-bootstrap/Badge'
 import classnames from 'classnames'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import Nav from 'react-bootstrap/Nav'
+import Overlay from 'react-bootstrap/Overlay'
 import Row from 'react-bootstrap/Row'
 import Rune01 from './runes/rune-01.svg'
 import Rune02 from './runes/rune-02.svg'
@@ -12,20 +14,54 @@ import Rune04 from './runes/rune-04.svg'
 import Rune05 from './runes/rune-05.svg'
 
 import { Alerts } from './alerts'
-import { HiMenu } from 'react-icons/hi'
-import { Link, Linker } from './links'
+import { HamburgerMenuIcon, BasketIcon } from './icons'
+import { Link } from './links'
 import { HeadingContext, PageTopGallery } from './media'
 import { SiteLogo } from './SiteLogo'
 import { SocialNetworks } from './social'
 import { UserName } from './users'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useOutsideClick, useScroll } from './window'
-import { useSite, useUser } from './context'
+import { useActiveOrder, useSite, useUser } from './context'
 import { useTranslation } from 'next-i18next'
 
 import styles from './layout.module.scss'
 
 const expandOn = 'lg'
+
+const BasketNotice = () => {
+  const [show, setShow] = useState(false)
+  const order = useActiveOrder()
+  const icon = useRef()
+
+  useEffect(() => {
+    const to = setTimeout(() => setShow(true), 1000)
+    return () => clearTimeout(to)
+  }, [order])
+
+  if (!order) {
+    return null
+  }
+
+  // eslint-disable-next-line no-unused-vars
+  const renderBadge = ({ arrowProps, placement, popper, show, ...props }) => (
+    <Badge pill bg="danger" className={styles.basketBadge} {...props}>
+      {order.items.length}
+    </Badge>
+  )
+
+  return (
+    <>
+      <span className={styles.basketIcon} ref={icon}>
+        {' '}
+        <BasketIcon />
+      </span>
+      <Overlay target={icon.current} show={show} placement="left">
+        {renderBadge}
+      </Overlay>
+    </>
+  )
+}
 
 const CurrentUserName = () => (
   <UserName user={useUser()} className={styles.menuUserName} />
@@ -35,26 +71,26 @@ const SiteMenu = () => {
   const { t } = useTranslation()
   return (
     <Nav>
-      <Linker route="adventureList">
-        <Nav.Link>{t('adventures-title')}</Nav.Link>
-      </Linker>
-      <Linker route="leisureCentreList">
-        <Nav.Link>{t('leisure-centre-title')}</Nav.Link>
-      </Linker>
+      <Link as={Nav.Link} route="adventureList">
+        {t('adventures-title')}
+      </Link>
+      <Link as={Nav.Link} route="leisureCentreList">
+        {t('leisure-centre-title')}
+      </Link>
       <NavDropdown title={t('about-fantasion')} id="about-nav">
-        <Linker route="about">
-          <NavDropdown.Item>{t('about-us')}</NavDropdown.Item>
-        </Linker>
-        <Linker route="team">
-          <NavDropdown.Item>{t('our-team')}</NavDropdown.Item>
-        </Linker>
+        <Link as={NavDropdown.Item} route="about">
+          {t('about-us')}
+        </Link>
+        <Link as={NavDropdown.Item} route="team">
+          {t('our-team')}
+        </Link>
       </NavDropdown>
-      <Linker route="contacts">
-        <Nav.Link>{t('contacts-link')}</Nav.Link>
-      </Linker>
-      <Linker route="faq">
-        <Nav.Link>{t('faq-link')}</Nav.Link>
-      </Linker>
+      <Link as={Nav.Link} route="contacts">
+        {t('contacts-link')}
+      </Link>
+      <Link as={Nav.Link} route="faq">
+        {t('faq-link')}
+      </Link>
     </Nav>
   )
 }
@@ -66,18 +102,18 @@ const UserMenu = () => {
     ...(user
       ? []
       : [
-          <Linker key="login" route="login">
-            <Nav.Link>{t('login')}</Nav.Link>
-          </Linker>,
-          <Linker key="register" route="register">
-            <Nav.Link>{t('register-title')}</Nav.Link>
-          </Linker>,
+          <Link as={Nav.Link} key="login" route="login">
+            {t('login')}
+          </Link>,
+          <Link as={Nav.Link} key="register" route="register">
+            {t('register-title')}
+          </Link>,
         ]),
     ...(user?.passwordCreated
       ? [
-          <Linker key="status" route="status">
-            <Nav.Link>{t('my-status')}</Nav.Link>
-          </Linker>,
+          <Link as={Nav.Link} key="status" route="status">
+            {t('my-status')}
+          </Link>,
           <Nav.Link key="logout" onClick={logout}>
             {t('logout')}
           </Nav.Link>,
@@ -114,24 +150,25 @@ export const SiteNavbar = ({ fixed, sticky }) => {
       ref={ref}
     >
       <Container className="position-relative">
-        <Linker route="home">
-          <Navbar.Brand
-            className={classnames(
-              styles.navbarBrand,
-              'd-inline-flex align-items-center'
-            )}
-          >
-            <SiteLogo className={styles.logo} />{' '}
-            <span>{t('fantasion-brand')}</span>
-          </Navbar.Brand>
-        </Linker>
+        <Link
+          as={Navbar.Brand}
+          route="home"
+          className={classnames(
+            styles.navbarBrand,
+            'd-inline-flex align-items-center'
+          )}
+        >
+          <SiteLogo className={styles.logo} />{' '}
+          <span>{t('fantasion-brand')}</span>
+        </Link>
         <div className={styles.menuWidget}>
           <Navbar.Toggle
             aria-controls="site-navbar"
             className={styles.navbarToggle}
           >
+            <BasketNotice />
             <CurrentUserName />
-            <HiMenu />
+            <HamburgerMenuIcon />
           </Navbar.Toggle>
         </div>
         <Navbar.Collapse id="site-navbar">

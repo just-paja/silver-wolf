@@ -14,13 +14,14 @@ import { useTranslation } from 'next-i18next'
 export const HeadingLevelContext = createContext(0)
 export const SiteContext = createContext({})
 
+export const useActiveOrder = () => useSite().activeOrder
 export const useFetch = () => useSite().fetch
 export const useHeadingLevel = () => useContext(HeadingLevelContext)
 export const useLang = () => useSite().lang
 export const useSite = () => useContext(SiteContext)
 export const useUser = () => useSite().user
 
-export const SiteContextProvider = ({ children, user }) => {
+export const SiteContextProvider = ({ activeOrder, children, user }) => {
   const authCookie = getCookie(TOKEN_COOKIE)
   const { i18n } = useTranslation()
   const router = useRouter()
@@ -44,12 +45,13 @@ export const SiteContextProvider = ({ children, user }) => {
 
   const context = useMemo(
     () => ({
+      activeOrder,
       fetch: curryAuth(authCookie),
       lang,
       logout,
       user,
     }),
-    [authCookie, lang, logout, user]
+    [activeOrder, authCookie, lang, logout, user]
   )
   return <SiteContext.Provider value={context}>{children}</SiteContext.Provider>
 }

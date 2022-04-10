@@ -71,6 +71,19 @@
   }
 }
 
+.basketIcon {
+  display: inline-flex;
+  margin-right: calc($spacer / 2);
+  vertical-align: top;
+}
+
+.basketBadge {
+  margin-right: calc(-0.75 * $spacer);
+  margin-top: calc(-0.5 * $spacer);
+  pointer-events: none;
+  z-index: 1024;
+}
+
 .logo {
   margin-right: calc($spacer / 2);
   width: 30px;

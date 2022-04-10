@@ -1,5 +1,5 @@
-import { BsPersonFill, BsPinMapFill } from 'react-icons/bs'
-import { HiHome, HiMailOpen } from 'react-icons/hi'
+import { BsBasket2Fill, BsPersonFill, BsPinMapFill } from 'react-icons/bs'
+import { HiHome, HiMenu, HiMailOpen } from 'react-icons/hi'
 import { GiJourney } from 'react-icons/gi'
 import { IoPricetags } from 'react-icons/io5'
 import {
@@ -21,11 +21,13 @@ import {
  * are here to prevent unnecessary confusion from accidentally using different
  * icon for the same purpose. */
 
+export const BasketIcon = BsBasket2Fill
 export const CancelIcon = MdCancel
 export const CopyIcon = MdContentCopy
 export const EmailContactIcon = HiMailOpen
 export const DurationIcon = FaCalendarWeek
 export const FacebookIcon = FaFacebook
+export const HamburgerMenuIcon = HiMenu
 export const HomeIcon = HiHome
 export const InsecureIcon = MdGppBad
 export const InstagramIcon = FaInstagram
