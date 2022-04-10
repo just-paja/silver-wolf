@@ -166,7 +166,7 @@ const ExpeditionBatch = ({ batch, expedition }) => {
           </Link>
         </Col>
         <div className={styles.ArticleLead}>
-            <ArticleLead text={t('price-info')} />
+          <ArticleLead text={t('price-info')} />
         </div>
       </Row>
     </div>
