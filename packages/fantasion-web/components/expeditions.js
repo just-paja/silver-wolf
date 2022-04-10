@@ -110,7 +110,7 @@ export const SignupButton = ({ expedition, batch }) => {
   )
 }
 
-const ExpeditionBatch = ({ batch, expedition}) => {
+const ExpeditionBatch = ({ batch, expedition }) => {
   const { t } = useTranslation()
   const lowestPrice = batch.troops.reduce((aggr, troop) => {
     const priceObj = troop.prices.find((p) => p.active)
@@ -149,9 +149,9 @@ const ExpeditionBatch = ({ batch, expedition}) => {
               <PriceLabel price={lowestPrice} />
             </p>
           )}
-            <p>
-              <ArticleLead text={t('price-info')} />
-            </p>
+          <p>
+            <ArticleLead text={t('price-info')} />
+          </p>
         </Col>
         <Col className={styles.batchButtons} lg={6}>
           {batch.troops.length === 0 ? null : (
