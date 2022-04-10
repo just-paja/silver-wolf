@@ -160,7 +160,6 @@ export const Input = ({
   const fieldError = error || formState.errors[name]
   const currentValue = watch(name)
   const field = register(name, {
-    required: required,
     setValueAs: (v) => (['', undefined].includes(v) ? null : v),
     validate,
   })
@@ -186,7 +185,7 @@ export const Input = ({
         isInvalid={Boolean(fieldError)}
         name={name}
         type={type}
-        value={value}
+        value={type === 'checkbox' ? value || 'true' : value}
         {...props}
         {...field}
         className={classnames(styles[size], className)}

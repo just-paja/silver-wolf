@@ -6,9 +6,10 @@ import moment from 'moment'
 import React from 'react'
 import Row from 'react-bootstrap/Row'
 
+import { bool } from 'yup'
 import { CancelIcon } from './icons'
 import { DateRange, formatDateRange } from './dates'
-import { Form, FormControls, Input } from './forms'
+import { Form, FormControls, Input, useValidator } from './forms'
 import { InteractiveButton } from './buttons'
 import { Money } from './money'
 import { reverse } from '../routes'
@@ -153,6 +154,10 @@ export const ParticipantSelection = ({
 }) => {
   const { t } = useTranslation()
   const fetch = useFetch()
+
+  const validator = useValidator({
+    legalGuardian: bool().oneOf([true], t('form-input-required')),
+  })
   const defaultValues = {
     participantId: participants[0]?.id || '',
   }
@@ -177,7 +182,11 @@ export const ParticipantSelection = ({
   }
 
   return (
-    <Form defaultValues={defaultValues} onSubmit={handleSubmit}>
+    <Form
+      defaultValues={defaultValues}
+      onSubmit={handleSubmit}
+      resolver={validator}
+    >
       {participants.map((participant) => (
         <Input
           type="radio"
@@ -198,7 +207,7 @@ export const ParticipantSelection = ({
         type="checkbox"
         name="legalGuardian"
         label={t('signup-is-legal-guardian')}
-        value="true"
+        required
       />
       <ParticipantSelectionControls onCancel={onCancel} />
     </Form>
