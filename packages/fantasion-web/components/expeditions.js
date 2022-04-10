@@ -199,16 +199,20 @@ const ExpeditionBatchStamp = ({ batch, showBase = true }) => {
   )
 }
 
-export const ExpeditionBatchSummary = ({ batches, className }) => {
+export const ExpeditionBatchSummary = ({ batches, expedition, className }) => {
   const defaultBase = getDefaultBase(batches)
   return (
     <div className={className}>
       {batches.map((batch) => (
-        <ExpeditionBatchStamp
-          batch={batch}
+        <Link
           key={batch.id}
-          showBase={!defaultBase}
-        />
+          route="expeditionBatchDetail"
+          params={{
+            expeditionBatchSlug: slug(batch.id, expedition.title),
+          }}
+        >
+          <ExpeditionBatchStamp batch={batch} showBase={!defaultBase} />
+        </Link>
       ))}
       {defaultBase ? (
         <>

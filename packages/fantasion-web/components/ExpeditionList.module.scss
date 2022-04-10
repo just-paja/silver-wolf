@@ -21,6 +21,10 @@
     color: $secondary;
     font-weight: bold;
     font-size: $h5-font-size;
+
+    a:hover {
+      color: darken($secondary, 10%);
+    }
   }
 }
 

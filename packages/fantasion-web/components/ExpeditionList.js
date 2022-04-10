@@ -53,6 +53,7 @@ const Expedition = ({ expedition }) => {
           </Heading>
           <MarkdownContent>{expedition.description}</MarkdownContent>
           <ExpeditionBatchSummary
+            expedition={expedition}
             batches={expedition.batches}
             className={styles.batches}
           />
