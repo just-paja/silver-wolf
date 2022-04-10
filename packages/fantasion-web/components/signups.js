@@ -2,6 +2,7 @@ import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
+import Modal from 'react-bootstrap/Modal'
 import moment from 'moment'
 import React from 'react'
 import Row from 'react-bootstrap/Row'
@@ -12,11 +13,8 @@ import { DateRange, formatDateRange } from './dates'
 import { Form, FormControls, Input, useValidator } from './forms'
 import { InteractiveButton } from './buttons'
 import { Money } from './money'
-import { reverse } from '../routes'
-import { useExpedition } from './expeditions'
-import { useFetch, useLang } from './context'
+import { useActiveOrder, useExpedition, useFetch } from './context'
 import { useFormContext } from 'react-hook-form'
-import { useRouter } from 'next/router'
 import { UserName } from './users'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
@@ -234,18 +232,15 @@ export const SignupForm = ({ onCancel, onSubmit }) => {
 }
 
 export const SignupWizzard = ({
-  defaultParticipants,
+  participants,
+  onAddParticipant,
   onCancel,
   onSubmit,
   ...props
 }) => {
-  const [participants, setParticipants] = useState(defaultParticipants)
   const [participantId, setParticipantId] = useState(null)
   const [activeKey, setActiveKey] = useState(1)
   const { t } = useTranslation()
-  const addParticipant = (participant) => {
-    setParticipants([...participants, participant])
-  }
   const selectParticipant = (participant) => {
     setParticipantId(participant.id)
     setActiveKey(2)
@@ -265,7 +260,7 @@ export const SignupWizzard = ({
         </Accordion.Header>
         <Accordion.Body>
           <ParticipantSelection
-            onAddParticipant={addParticipant}
+            onAddParticipant={onAddParticipant}
             onCancel={onCancel}
             onSubmit={selectParticipant}
             participants={participants}
@@ -327,113 +322,34 @@ export const OrderSignups = ({ onCancelSignup, signups }) => (
   </Row>
 )
 
-const OrderWizzardControls = ({ empty, onAddParticipant, onNext }) => {
-  const { t } = useTranslation()
-  return (
-    <div className="mt-3">
-      <InteractiveButton
-        variant={empty ? 'primary' : 'secondary'}
-        onClick={onAddParticipant}
-      >
-        {t('signup-add-participant')}
-      </InteractiveButton>
-      {!empty && (
-        <InteractiveButton className="ms-3" onClick={onNext} variant="primary">
-          {t('signup-next')}
-        </InteractiveButton>
-      )}
-    </div>
-  )
-}
-
-const AddSignup = ({
-  add,
-  empty,
+export const SignupDialog = ({
+  expedition,
+  participants,
+  onAddParticipant,
   onCancel,
   onCreateSignup,
-  onNext,
-  onShowAddForm,
-  participants,
-  signups,
+  onHide,
+  show,
 }) => {
-  if (add) {
-    return (
-      <SignupWizzard
-        className="mt-3"
-        defaultParticipants={participants}
-        onCancel={onCancel}
-        onSubmit={onCreateSignup}
-        signups={signups}
-      />
-    )
-  }
+  const { t } = useTranslation()
+  const order = useActiveOrder()
+  const unusedParticipants = participants.filter(
+    (p) => !order.items.some((s) => s.participant.id === p.id)
+  )
   return (
-    <OrderWizzardControls
-      empty={empty}
-      onAddParticipant={onShowAddForm}
-      onNext={onNext}
-    />
-  )
-}
-
-export const OrderSignupWizzard = ({
-  defaultOrder,
-  defaultParticipants,
-  ...props
-}) => {
-  const [order] = useState(defaultOrder)
-  const [signups, setSignups] = useState(
-    order?.items?.filter(
-      (item) => item.productType === 'fantasion_signups.Signup'
-    ) || []
-  )
-  const [addParticipant, setAddParticipant] = useState(signups.length === 0)
-  const fetch = useFetch()
-  const lang = useLang()
-  const router = useRouter()
-  const createSignup = async (values) => {
-    const s = await fetch.post('/signups', {
-      body: {
-        ...values,
-        orderId: order?.id,
-      },
-    })
-    setSignups([...signups, s])
-    setAddParticipant(false)
-  }
-  const cancelSignup = async (signup) => {
-    await fetch.delete(`/signups/${signup.id}`)
-    const nextSignups = signups.filter((s) => s.id !== signup.id)
-    setSignups(nextSignups)
-    if (nextSignups.length === 0) {
-      setAddParticipant(true)
-    }
-  }
-  const unusedParticipants = defaultParticipants.results.filter(
-    (p) => !signups.some((s) => s.participant.id === p.id)
-  )
-  const cancelSignupAdd =
-    signups.length === 0 ? null : () => setAddParticipant(false)
-
-  const goToCheckout = () => {
-    router.push(reverse(lang, 'basket'))
-  }
-
-  return (
-    <div {...props}>
-      <OrderSignups onCancelSignup={cancelSignup} signups={signups} />
-      <AddSignup
-        add={addParticipant}
-        className="mt-3"
-        empty={signups.length === 0}
-        onAddParticipant={() => setAddParticipant(true)}
-        onCancel={cancelSignupAdd}
-        onCreateSignup={createSignup}
-        onNext={goToCheckout}
-        onShowAddForm={() => setAddParticipant(true)}
-        participants={unusedParticipants}
-        signups={signups}
-      />
-    </div>
+    <Modal show={show}>
+      <Modal.Header closeButton onHide={onHide}>
+        {t('expedition-signup-on', { expeditionTitle: expedition.title })}
+      </Modal.Header>
+      <Modal.Body>
+        <SignupWizzard
+          className="mt-3"
+          participants={unusedParticipants}
+          onCancel={onCancel}
+          onSubmit={onCreateSignup}
+          onAddParticipant={onAddParticipant}
+        />
+      </Modal.Body>
+    </Modal>
   )
 }

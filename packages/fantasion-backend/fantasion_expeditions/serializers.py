@@ -218,6 +218,7 @@ class ExpeditionBatchSerializer(PlainExpeditionBatchSerializer):
             "troops",
             "ends_at",
             "expedition",
+            "expedition_id",
             "id",
             "leisure_centre",
             "starts_at",

@@ -12,14 +12,21 @@ import { reverse } from '../routes'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
+export const AlertContext = createContext({})
+export const ExpeditionContext = createContext(null)
 export const HeadingLevelContext = createContext(0)
 export const SiteContext = createContext({})
+export const ToastContext = createContext({})
 
 export const useActiveOrder = () => useSite().activeOrder
+export const useAlerts = () => useContext(AlertContext)
+export const useExpedition = () => useContext(ExpeditionContext)
 export const useFetch = () => useSite().fetch
 export const useHeadingLevel = () => useContext(HeadingLevelContext)
 export const useLang = () => useSite().lang
+export const useSetActiveOrder = () => useSite().setActiveOrder
 export const useSite = () => useContext(SiteContext)
+export const useToasts = () => useContext(ToastContext)
 export const useUser = () => useSite().user
 
 export const SiteContextProvider = ({ activeOrder, children, user }) => {
@@ -62,9 +69,10 @@ export const SiteContextProvider = ({ activeOrder, children, user }) => {
       fetch,
       lang,
       logout,
+      setActiveOrder: setCurrentOrder,
       user,
     }),
-    [currentOrder, fetch, lang, logout, user]
+    [currentOrder, fetch, lang, logout, setCurrentOrder, user]
   )
   return <SiteContext.Provider value={context}>{children}</SiteContext.Provider>
 }

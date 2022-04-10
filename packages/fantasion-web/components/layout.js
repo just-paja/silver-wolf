@@ -5,7 +5,6 @@ import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import Nav from 'react-bootstrap/Nav'
-import Overlay from 'react-bootstrap/Overlay'
 import Row from 'react-bootstrap/Row'
 import Rune01 from './runes/rune-01.svg'
 import Rune02 from './runes/rune-02.svg'
@@ -40,7 +39,7 @@ const BasketNotice = () => {
     return () => clearTimeout(to)
   }, [order])
 
-  if (!order) {
+  if (!order || order.items.length === 0) {
     return null
   }
 
@@ -51,7 +50,7 @@ const BasketNotice = () => {
       <Badge
         pill
         bg="danger"
-        className={classnames(styles.basketBadge, styles.show)}
+        className={classnames(styles.basketBadge, { [styles.show]: show })}
       >
         {order.items.length}
       </Badge>

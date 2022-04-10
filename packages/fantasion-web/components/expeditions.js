@@ -7,19 +7,24 @@ import Row from 'react-bootstrap/Row'
 import { ArticleBody } from './articles'
 import { DateRange } from './dates'
 import { Heading } from './media'
+import { InteractiveButton } from './buttons'
 import { Link } from './links'
 import { LocationFuzzyName } from './locations'
 import { PriceLabel } from './money'
 import { reverse } from '../routes'
 import { slug } from './slugs'
+import { SignupDialog } from './signups'
 import { TroopLabel } from './troops'
 import { useTranslation } from 'next-i18next'
-import { useSite } from './context'
+import { useState } from 'react'
+import {
+  useActiveOrder,
+  useSetActiveOrder,
+  useSite,
+  useToasts,
+} from './context'
 
 import styles from './expeditions.module.scss'
-
-export const ExpeditionContext = React.createContext(null)
-export const useExpedition = () => React.useContext(ExpeditionContext)
 
 const Troop = ({ ageMin, ageMax, startsAt, endsAt }) => {
   return (
@@ -35,8 +40,43 @@ const Troop = ({ ageMin, ageMax, startsAt, endsAt }) => {
 }
 
 export const SignupButton = ({ expedition, batch }) => {
+  const [show, setShow] = useState(false)
   const { t } = useTranslation()
-  const { lang, user } = useSite()
+  const { fetch, lang, user } = useSite()
+  const [participants, setParticipants] = useState([])
+  const order = useActiveOrder()
+  const setOrder = useSetActiveOrder()
+  const hideDialog = () => setShow(false)
+  const toasts = useToasts()
+  const showDialog = async () => {
+    const p = await fetch('/participants')
+    setParticipants(p.results)
+    setShow(true)
+  }
+  const addParticipant = (participant) => {
+    setParticipants([...participants, participant])
+  }
+  const createSignup = async (values) => {
+    await fetch.post('/signups', {
+      body: {
+        ...values,
+        orderId: order?.id,
+      },
+    })
+    const o = await fetch('/orders/active')
+    toasts.add({
+      subject: t('signup-was-created'),
+      message: t('signup-created-buy-it'),
+      actions: [
+        {
+          message: t('go-to-basket'),
+          route: 'basket',
+        },
+      ],
+    })
+    setOrder(o)
+    hideDialog()
+  }
   const expeditionSlug = slug(expedition.id, expedition.title)
   const query = user
     ? { batchId: batch?.id }
@@ -44,15 +84,24 @@ export const SignupButton = ({ expedition, batch }) => {
         redirectTo: reverse(lang, 'expeditionSignup', { expeditionSlug }),
       }
   return (
-    <Link
-      as={Button}
-      className={styles.signupButton}
-      route={user ? 'expeditionSignup' : 'login'}
-      params={{ expeditionSlug }}
-      query={query}
-    >
-      {t('signup-to-expedition')}
-    </Link>
+    <>
+      <SignupDialog
+        expedition={expedition}
+        batch={batch}
+        show={show}
+        participants={participants}
+        onAddParticipant={addParticipant}
+        onCreateSignup={createSignup}
+        onHide={hideDialog}
+      />
+      <InteractiveButton
+        className={styles.signupButton}
+        query={query}
+        onClick={showDialog}
+      >
+        {t('signup-to-expedition')}
+      </InteractiveButton>
+    </>
   )
 }
 
