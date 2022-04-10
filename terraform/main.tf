@@ -234,7 +234,7 @@ module "frontend_cloudrun" {
 resource "google_cloud_scheduler_job" "bank_sync" {
   name = "bank-sync-${terraform.workspace}"
   description = "Sync payments with the banks"
-  schedule = "*/5 * * * *"
+  schedule = terraform.workspace == "production" ? "*/5 * * * *" : "*/30 * * * *"
   time_zone = "Europe/Prague"
   attempt_deadline = "60s"
 
