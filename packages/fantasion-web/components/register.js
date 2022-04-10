@@ -29,19 +29,26 @@ export const RegisterForm = ({ onSubmit }) => {
 
   return (
     <Form id="register" onSubmit={onSubmit} resolver={validator}>
-      <Input label={t('user-first-name')} name="firstName" type="text" />
+      <Input
+        label={t('user-first-name')}
+        name="firstName"
+        type="text"
+        required
+      />
       <Input label={t('user-last-name')} name="lastName" type="text" required />
       <Input
         helpText={t('user-email-help-text')}
         label={t('user-email')}
         name="email"
         type="email"
+        required
       />
       <Input
         helpText={t('user-phone-number-help-text')}
         label={t('user-phone-number')}
         name="phone"
         type="tel"
+        required
       />
       <Input
         label={
@@ -57,6 +64,7 @@ export const RegisterForm = ({ onSubmit }) => {
         }
         name="privacy"
         type="checkbox"
+        required
       />
       <FormControls submitLabel={t('register-submit')} />
     </Form>
