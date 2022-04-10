@@ -56,10 +56,12 @@ export const SiteContextProvider = ({ activeOrder, children, user }) => {
 
   useEffect(() => {
     if (!currentOrder && !once) {
-      fetch('/orders/active').then((o) => {
-        setCurrentOrder(o)
-        setOnce(true)
-      })
+      fetch('/orders/active')
+        .then((o) => {
+          setCurrentOrder(o)
+          setOnce(true)
+        })
+        .catch(() => {})
     }
   }, [currentOrder, fetch, once])
 
