@@ -15,14 +15,15 @@ import Rune05 from './runes/rune-05.svg'
 
 import { Alerts } from './alerts'
 import { HamburgerMenuIcon, BasketIcon } from './icons'
-import { Link } from './links'
 import { HeadingContext, PageTopGallery } from './media'
+import { Link } from './links'
+import { Money } from './money'
 import { SiteLogo } from './SiteLogo'
 import { SocialNetworks } from './social'
-import { UserName } from './users'
+import { useActiveOrder, useSite, useUser } from './context'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useOutsideClick, useScroll } from './window'
-import { useActiveOrder, useSite, useUser } from './context'
+import { UserName } from './users'
 import { useTranslation } from 'next-i18next'
 
 import styles from './layout.module.scss'
@@ -98,6 +99,8 @@ const SiteMenu = () => {
 const UserMenu = () => {
   const { t } = useTranslation()
   const { logout, user } = useSite()
+  const order = useActiveOrder()
+  const basketPrice = order ? order.price : 0
   const items = [
     ...(user
       ? []
@@ -111,6 +114,9 @@ const UserMenu = () => {
         ]),
     ...(user?.passwordCreated
       ? [
+          <Link as={Nav.Link} key="basket" route="basket">
+            {t('order-basket')}: <Money amount={basketPrice} />
+          </Link>,
           <Link as={Nav.Link} key="status" route="status">
             {t('my-status')}
           </Link>,
