@@ -22,7 +22,7 @@ const restorePassword = async (fetch, values) =>
 const getVerification = async (fetch, secret) =>
   await fetch(`/users/verifications/${secret}`)
 
-const parseSecret = (query) => Object.keys(query)[0] || null
+const parseSecret = (query) => query.s || null
 
 export const getServerSideProps = withPageProps(async ({ fetch, query }) => {
   const secret = parseSecret(query)
