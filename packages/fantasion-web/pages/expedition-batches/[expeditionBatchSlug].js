@@ -66,14 +66,12 @@ const ExpeditionBatchDetailPage = ({ expeditionBatch }) => {
           </p>
         </header>
         <Row>
-          <Col lg={6} className="mt-3">
-            <BatchTroops
-              batch={batch}
-              expedition={expedition}
-              troops={batch.troops}
-            />
-          </Col>
-          <Col lg={6} className="mt-3">
+          <BatchTroops
+            batch={batch}
+            expedition={expedition}
+            troops={batch.troops}
+          />
+          <Col lg={5} xl={6} className="mt-3">
             <LeisureCentreStub leisureCentre={batch.leisureCentre} />
           </Col>
         </Row>

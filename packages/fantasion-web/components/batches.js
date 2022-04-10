@@ -12,9 +12,9 @@ import styles from './batches.module.scss'
 
 export const BatchTroops = ({ expedition, batch, troops }) => {
   return (
-    <Row>
+    <>
       {troops.map((troop) => (
-        <Col md={6} key={troop.id}>
+        <Col md={6} lg={5} xl={4} key={troop.id} className="mt-3">
           <TroopCard
             expedition={expedition}
             batch={batch}
@@ -23,7 +23,7 @@ export const BatchTroops = ({ expedition, batch, troops }) => {
           />
         </Col>
       ))}
-    </Row>
+    </>
   )
 }
 

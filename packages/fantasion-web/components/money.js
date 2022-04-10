@@ -3,6 +3,7 @@ import QrCode from 'react-qr-code'
 import styles from './money.module.scss'
 
 import { DateLabel } from './dates'
+import { IconLabel, PriceIcon } from './icons'
 import { useTranslation } from 'next-i18next'
 
 export const DEFAULT_CURRENCY = 'CZK'
@@ -63,6 +64,10 @@ export const PriceTag = ({
     </span>
   )
 }
+
+export const PriceLabel = ({ price }) => (
+  <IconLabel icon={PriceIcon} text={<Money amount={price} />} />
+)
 
 export const PaymentQrCode = ({
   amount,

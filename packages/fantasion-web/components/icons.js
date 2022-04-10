@@ -1,6 +1,7 @@
 import { BsPersonFill, BsPinMapFill } from 'react-icons/bs'
 import { HiHome, HiMailOpen } from 'react-icons/hi'
 import { GiJourney } from 'react-icons/gi'
+import { IoPricetags } from 'react-icons/io5'
 import {
   MdCancel,
   MdContentCopy,
@@ -30,6 +31,7 @@ export const InsecureIcon = MdGppBad
 export const InstagramIcon = FaInstagram
 export const LocationPinIcon = BsPinMapFill
 export const PersonIcon = BsPersonFill
+export const PriceIcon = IoPricetags
 export const SecureIcon = MdGppGood
 export const SecurityWarningIcon = MdGppMaybe
 export const StoryIcon = GiJourney

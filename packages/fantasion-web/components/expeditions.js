@@ -9,6 +9,7 @@ import { DateRange } from './dates'
 import { Heading } from './media'
 import { Link } from './links'
 import { LocationFuzzyName } from './locations'
+import { PriceLabel } from './money'
 import { reverse } from '../routes'
 import { slug } from './slugs'
 import { TroopLabel } from './troops'
@@ -57,6 +58,12 @@ export const SignupButton = ({ expedition, batch }) => {
 
 const ExpeditionBatch = ({ batch, expedition }) => {
   const { t } = useTranslation()
+  const lowestPrice = batch.troops.reduce((aggr, troop) => {
+    const priceObj = troop.prices.find((p) => p.active)
+    const priceStr = priceObj?.price
+    const price = priceStr ? parseFloat(priceStr) : null
+    return aggr === null || aggr > price ? price : aggr
+  }, null)
   return (
     <div className={classnames('mt-3', styles.batch)}>
       <Row>
@@ -83,6 +90,11 @@ const ExpeditionBatch = ({ batch, expedition }) => {
               />
             ))}
           </div>
+          {lowestPrice && (
+            <p>
+              <PriceLabel price={lowestPrice} />
+            </p>
+          )}
         </Col>
         <Col className={styles.batchButtons} lg={6}>
           {batch.troops.length === 0 ? null : (
