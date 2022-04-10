@@ -2,6 +2,7 @@ import Alert from 'react-bootstrap/Alert'
 import classnames from 'classnames'
 import BsForm from 'react-bootstrap/Form'
 import FormCheck from 'react-bootstrap/FormCheck'
+import PhoneNumberInput from 'react-phone-number-input/react-hook-form'
 
 import { FormProvider, useForm } from 'react-hook-form'
 import { forwardRef, useCallback, useState } from 'react'
@@ -291,4 +292,32 @@ export const useValidator = (shape) => {
     },
   })
   return yupResolver(object().shape(shape))
+}
+
+export const PhoneInput = ({ name, label, helpText, required, ...props }) => {
+  const { control, formState } = useFormContext()
+  const { t } = useTranslation()
+  const fieldError = formState.errors[name]
+  return (
+    <BsForm.Group>
+      {label && (
+        <BsForm.Label className={required ? 'fw-bold' : ''}>
+          {label}:
+        </BsForm.Label>
+      )}
+      <PhoneNumberInput
+        className={classnames('form-control d-flex', styles.phoneInput)}
+        control={control}
+        defaultCountry="CZ"
+        name={name}
+        {...props}
+      />
+      {fieldError ? (
+        <BsForm.Control.Feedback type="invalid">
+          {describeError(t, fieldError)}
+        </BsForm.Control.Feedback>
+      ) : null}
+      {helpText ? <BsForm.Text as="div">{helpText}</BsForm.Text> : null}
+    </BsForm.Group>
+  )
 }

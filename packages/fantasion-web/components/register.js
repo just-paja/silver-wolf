@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 
 import { bool, string } from 'yup'
-import { Form, FormControls, Input, useValidator } from './forms'
+import { Form, FormControls, Input, PhoneInput, useValidator } from './forms'
 import { Link } from './links'
 import { PasswordStrengthInput } from './passwords'
 import { Trans, useTranslation } from 'next-i18next'
@@ -43,7 +43,7 @@ export const RegisterForm = ({ onSubmit }) => {
         type="email"
         required
       />
-      <Input
+      <PhoneInput
         helpText={t('user-phone-number-help-text')}
         label={t('user-phone-number')}
         name="phone"

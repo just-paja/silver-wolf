@@ -6,3 +6,16 @@ input, select {
     max-width: $input-medium;
   }
 }
+
+.phoneInput {
+  max-width: $spacer * 12;
+  input {
+    border: none;
+
+    &:focus,
+    &:hover {
+      outline: none;
+
+    }
+  }
+}
