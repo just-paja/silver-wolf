@@ -317,6 +317,21 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "fiobank"
+version = "3.0.0"
+description = "Fio Bank API in Python"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+requests = "*"
+
+[package.extras]
+release = ["python-semantic-release"]
+tests = ["pytest-runner", "pytest", "pylama", "responses", "mock", "coveralls", "pytest-cov"]
+
+[[package]]
 name = "flake8"
 version = "4.0.1"
 description = "the modular source code checker: pep8 pyflakes and co"
@@ -841,7 +856,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "5e63cda1f069f81972eb07c664eeb22d0f0dda82d286664fa683a6cb66ecaba9"
+content-hash = "16cb080a03978afdf483ab53b6c68344aed67dd90bf2d294aba99789dad04e12"
 
 [metadata.files]
 asgiref = [
@@ -1012,6 +1027,10 @@ djangorestframework-camel-case = [
 ]
 ffmpeg = [
     {file = "ffmpeg-1.4.tar.gz", hash = "sha256:6931692c890ff21d39938433c2189747815dca0c60ddc7f9bb97f199dba0b5b9"},
+]
+fiobank = [
+    {file = "fiobank-3.0.0-py2.py3-none-any.whl", hash = "sha256:6b335210f92be648342ee879a1156e8fb450ff1d059f6e8757c857611a55ef26"},
+    {file = "fiobank-3.0.0.tar.gz", hash = "sha256:ecc13d37046bc2f36f50c9ee563e389eedab955c158b6c7293e00d5ee0c39bb3"},
 ]
 flake8 = [
     {file = "flake8-4.0.1-py2.py3-none-any.whl", hash = "sha256:479b1304f72536a55948cb40a32dce8bb0ffe3501e26eaf292c7e60eb5e0428d"},

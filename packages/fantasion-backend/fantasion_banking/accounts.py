@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.dispatch import Signal
 from django_extensions.db.models import TimeStampedModel
 from django.utils.translation import ugettext_lazy as _
@@ -14,7 +15,7 @@ from fantasion_generics.models import PublicModel
 
 from .fields import AccountNumberField, BankNumberField, BicField, IBanField
 from .constants import (
-    ACCOUNT_DRIVER_CSOB,
+    ACCOUNT_DRIVER_FIO,
     ACCOUNT_DRIVER_CHOICES,
     SCRAPE_SOURCE_CHOICES,
     SCRAPE_SOURCE_MANUAL,
@@ -56,10 +57,20 @@ class Account(PublicModel):
         return ballance if ballance else 0
 
     def resolve_driver(self):
-        if self.driver == ACCOUNT_DRIVER_CSOB:
-            from . import csob
-            return csob
+        if self.driver == ACCOUNT_DRIVER_FIO:
+            from . import driver_fio
+            return driver_fio
         return None
+
+    def get_last_scrape_statement(self):
+        return self.statements.filter(
+            ident__isnull=False, ).order_by('-created').first()
+
+    def clean(self):
+        if self.driver == ACCOUNT_DRIVER_FIO and not self.fio_readonly_key:
+            raise ValidationError({
+                'fio_readonly_key': _('The Fio Bank token must be provided'),
+            })
 
     def sync(self, days_back=1, source=SCRAPE_SOURCE_MANUAL):
         driver = self.resolve_driver()
@@ -71,7 +82,7 @@ class Account(PublicModel):
             )
             scrape.save()
             try:
-                driver.sync(self)
+                driver.sync(self, scrape)
                 scrape.status = SCRAPE_STATUS_SUCCESS
                 scrape.save()
             except Exception as exc:

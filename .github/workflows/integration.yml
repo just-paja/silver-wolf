@@ -170,6 +170,7 @@ jobs:
           TF_VAR_ADMIN_SSO_SUPERUSER: ${{ secrets.ADMIN_SSO_SUPERUSER }}
           TF_VAR_BACKEND_HOST: ${{ secrets.BACKEND_HOST }}
           TF_VAR_BUCKET_PUBLIC: ${{ secrets.BUCKET_PUBLIC }}
+          TF_VAR_CRON_AUTH: ${{ secrets.CRON_AUTH }}
           TF_VAR_DB_PASS: ${{ secrets.DB_PASS }}
           TF_VAR_DB_USER: ${{ secrets.DB_USER }}
           TF_VAR_EMAIL_ROBOT_HOST: ${{ secrets.EMAIL_ROBOT_HOST }}

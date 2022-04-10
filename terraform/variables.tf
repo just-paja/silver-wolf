@@ -94,3 +94,6 @@ variable "EMAIL_ROBOT_HOST" { type = string }
 variable "EMAIL_ROBOT_HOST_USER" { type = string }
 variable "EMAIL_ROBOT_HOST_PASS" { type = string }
 
+variable "CRON_AUTH" {
+  type = string
+}

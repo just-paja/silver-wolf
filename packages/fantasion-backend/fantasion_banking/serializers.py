@@ -3,7 +3,15 @@ from rest_framework.serializers import HyperlinkedModelSerializer
 from . import models
 
 
+class AccountSerializer(HyperlinkedModelSerializer):
+
+    class Meta:
+        model = models.Account
+        fields = ("id", "driver")
+
+
 class DebtSerializer(HyperlinkedModelSerializer):
+
     class Meta:
         model = models.Debt
         fields = (

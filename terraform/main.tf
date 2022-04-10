@@ -230,3 +230,19 @@ module "frontend_cloudrun" {
     module.frontend_docker,
   ]
 }
+
+resource "google_cloud_scheduler_job" "bank_sync" {
+  name = "bank-sync-${terraform.workspace}"
+  description = "Sync payments with the banks"
+  schedule = "*/5 * * * *"
+  time_zone = "Europe/Prague"
+  attempt_deadline = "60s"
+
+  http_target {
+    http_method = "PUT"
+    uri = "https://${var.BACKEND_HOST}/api/v1/accounts/sync"
+    headers = {
+      "Authorization": "Basic ${var.CRON_AUTH}"
+    }
+  }
+}

@@ -1,11 +1,11 @@
 from django.utils.translation import ugettext_lazy as _
 
 ACCOUNT_DRIVER_OFFLINE = 1
-ACCOUNT_DRIVER_CSOB = 2
+ACCOUNT_DRIVER_FIO = 2
 
 ACCOUNT_DRIVER_CHOICES = (
     (ACCOUNT_DRIVER_OFFLINE, _('Offline')),
-    (ACCOUNT_DRIVER_CSOB, _('ČSOB')),
+    (ACCOUNT_DRIVER_FIO, _('Fio Banka')),
 )
 
 DEBT_SOURCE_MANUAL = 1

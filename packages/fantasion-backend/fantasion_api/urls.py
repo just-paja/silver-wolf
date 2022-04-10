@@ -1,6 +1,7 @@
 from django.urls import include, path
 from rest_framework import routers
 
+from fantasion_banking import api as banking
 from fantasion_content import api as content
 from fantasion_locations import api as locations
 from fantasion_eshop import api as eshop
@@ -103,6 +104,12 @@ router.register(
     r'user-addresses',
     users.UserAddressCollection,
     basename='user-addresses',
+)
+
+router.register(
+    r'accounts',
+    banking.AccountCollection,
+    basename='accounts',
 )
 
 urlpatterns = [
