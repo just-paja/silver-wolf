@@ -223,14 +223,16 @@ const desecribeProcessingError = (t, err) => {
   return t('form-failed-to-submit')
 }
 
-export const FormError = () => {
+export const FormError = ({ vague }) => {
   const { processingError } = useFormContext()
   const { t } = useTranslation()
   if (processingError) {
     return (
       <div className="mt-3">
         <Alert variant="danger">
-          {desecribeProcessingError(t, processingError)}
+          {vague
+            ? t('form-failed-to-submit')
+            : desecribeProcessingError(t, processingError)}
         </Alert>
       </div>
     )
@@ -248,7 +250,7 @@ export const FormControls = ({
   const { formState } = useFormContext()
   return (
     <>
-      <FormError />
+      <FormError vague />
       <div className="mt-3">
         {onCancel && (
           <InteractiveButton
