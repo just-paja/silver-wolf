@@ -15,8 +15,9 @@ import { reverse } from '../routes'
 import { slug } from './slugs'
 import { SignupDialog } from './signups'
 import { TroopLabel } from './troops'
-import { useTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { useTranslation } from 'next-i18next'
 import {
   useActiveOrder,
   useSetActiveOrder,
@@ -40,7 +41,8 @@ const Troop = ({ ageMin, ageMax, startsAt, endsAt }) => {
 }
 
 export const SignupButton = ({ expedition, batch }) => {
-  const [show, setShow] = useState(false)
+  const router = useRouter()
+  const [show, setShow] = useState(router?.query?.action === 'signup')
   const { t } = useTranslation()
   const { fetch, lang, user } = useSite()
   const [participants, setParticipants] = useState([])
@@ -48,6 +50,16 @@ export const SignupButton = ({ expedition, batch }) => {
   const setOrder = useSetActiveOrder()
   const hideDialog = () => setShow(false)
   const toasts = useToasts()
+  const loginFirst = () => {
+    const redirectPath = reverse(lang, 'expeditionDetail', {
+      expeditionSlug: slug(expedition),
+    })
+    const query = '?action=signup'
+    const redirectTo = `${redirectPath}${query}`
+    router.push(
+      `${reverse(lang, 'login')}?redirectTo=${encodeURIComponent(redirectTo)}`
+    )
+  }
   const showDialog = async () => {
     const p = await fetch('/participants')
     setParticipants(p.results)
@@ -77,12 +89,6 @@ export const SignupButton = ({ expedition, batch }) => {
     setOrder(o)
     hideDialog()
   }
-  const expeditionSlug = slug(expedition.id, expedition.title)
-  const query = user
-    ? { batchId: batch?.id }
-    : {
-        redirectTo: reverse(lang, 'expeditionSignup', { expeditionSlug }),
-      }
   return (
     <>
       <SignupDialog
@@ -96,8 +102,7 @@ export const SignupButton = ({ expedition, batch }) => {
       />
       <InteractiveButton
         className={styles.signupButton}
-        query={query}
-        onClick={showDialog}
+        onClick={user ? showDialog : loginFirst}
       >
         {t('signup-to-expedition')}
       </InteractiveButton>
