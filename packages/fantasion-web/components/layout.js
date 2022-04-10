@@ -44,23 +44,18 @@ const BasketNotice = () => {
     return null
   }
 
-  // eslint-disable-next-line no-unused-vars
-  const renderBadge = ({ arrowProps, placement, popper, show, ...props }) => (
-    <Badge pill bg="danger" className={styles.basketBadge} {...props}>
-      {order.items.length}
-    </Badge>
-  )
-
   return (
-    <>
-      <span className={styles.basketIcon} ref={icon}>
-        {' '}
-        <BasketIcon />
-      </span>
-      <Overlay target={icon.current} show={show} placement="left">
-        {renderBadge}
-      </Overlay>
-    </>
+    <span className={styles.basketIcon} ref={icon}>
+      {' '}
+      <BasketIcon />
+      <Badge
+        pill
+        bg="danger"
+        className={classnames(styles.basketBadge, styles.show)}
+      >
+        {order.items.length}
+      </Badge>
+    </span>
   )
 }
 

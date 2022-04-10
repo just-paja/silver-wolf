@@ -74,14 +74,24 @@
 .basketIcon {
   display: inline-flex;
   margin-right: calc($spacer / 2);
+  position: relative;
   vertical-align: top;
 }
 
 .basketBadge {
-  margin-right: calc(-0.75 * $spacer);
-  margin-top: calc(-0.5 * $spacer);
+  left: calc(-0.75 * $spacer);
+  top: calc(-0.5 * $spacer);
   pointer-events: none;
+  position: absolute;
+  transform: scale(0);
+  opacity: 0;
   z-index: 1024;
+  transition: all 200ms;
+
+  &.show {
+    opacity: 1;
+    transform: scale(0.75);
+  }
 }
 
 .logo {

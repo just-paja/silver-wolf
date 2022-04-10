@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useState,
 } from 'react'
 import { curryAuth, TOKEN_COOKIE } from '../api'
 import { getCookie, setCookies } from 'cookies-next'
@@ -22,6 +23,8 @@ export const useSite = () => useContext(SiteContext)
 export const useUser = () => useSite().user
 
 export const SiteContextProvider = ({ activeOrder, children, user }) => {
+  const [currentOrder, setCurrentOrder] = useState(activeOrder)
+  const [once, setOnce] = useState(false)
   const authCookie = getCookie(TOKEN_COOKIE)
   const { i18n } = useTranslation()
   const router = useRouter()
@@ -30,6 +33,7 @@ export const SiteContextProvider = ({ activeOrder, children, user }) => {
     setCookies(TOKEN_COOKIE, null, { sameSite: 'strict' })
     router.push(reverse(lang, 'home'))
   }, [lang, router])
+  const fetch = curryAuth(authCookie)
 
   useEffect(() => {
     const query = Object.fromEntries(
@@ -43,15 +47,24 @@ export const SiteContextProvider = ({ activeOrder, children, user }) => {
     }
   }, [])
 
+  useEffect(() => {
+    if (!currentOrder && !once) {
+      fetch('/orders/active').then((o) => {
+        setCurrentOrder(o)
+        setOnce(true)
+      })
+    }
+  }, [currentOrder, fetch, once])
+
   const context = useMemo(
     () => ({
-      activeOrder,
-      fetch: curryAuth(authCookie),
+      activeOrder: currentOrder,
+      fetch,
       lang,
       logout,
       user,
     }),
-    [activeOrder, authCookie, lang, logout, user]
+    [currentOrder, fetch, lang, logout, user]
   )
   return <SiteContext.Provider value={context}>{children}</SiteContext.Provider>
 }
