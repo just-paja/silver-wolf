@@ -37,8 +37,9 @@ class OrderCollection(RWViewSet):
     def active(self, *args, **kwargs):
         order = self.get_queryset().filter(
             status=models.ORDER_STATUS_NEW, ).first()
-        serializer = self.get_serializer(order)
-        return Response(serializer.data)
+        if order:
+            return Response(self.get_serializer(order).data)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(detail=True, methods=['put'])
     def confirm(self, *args, **kwargs):
