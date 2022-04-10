@@ -561,3 +561,7 @@ export const PaymentInformation = ({ order, onSubmit }) => {
     </Section>
   )
 }
+
+export const EmptyBasket = ({ ...props }) => (
+  <Alert {...props}>{useTranslation().t('order-basket-empty')}</Alert>
+)

@@ -103,6 +103,7 @@
   "order-add-promotion-code": "Přidat slevový kód",
   "order-already-paid": "Mám hotovo!",
   "order-basket": "Košík",
+  "order-basket-empty": "Váš košík je prázdný...",
   "order-billing-information": "Fakturační údaje",
   "order-cancel-cannot-go-back": "Objednávka bude zrušena a místa na táboře uvolněny. Tato operace nelze vzít zpátky!",
   "order-cancel": "Zrušit objednávku",

@@ -7,11 +7,18 @@ import { GenericPage } from '../../components/layout'
 import { Heading } from '../../components/media'
 import { Link } from '../../components/links'
 import { InteractiveButton } from '../../components/buttons'
-import { OrderCard, PromotionCodeForm } from '../../components/orders'
 import { requireUser, withPageProps } from '../../server/props'
-import { useFetch } from '../../components/context'
-import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
+import {
+  useActiveOrder,
+  useSetActiveOrder,
+  useFetch,
+} from '../../components/context'
+import {
+  EmptyBasket,
+  OrderCard,
+  PromotionCodeForm,
+} from '../../components/orders'
 
 export const getServerSideProps = withPageProps(
   requireUser(async ({ fetch }) => {
@@ -24,8 +31,9 @@ export const getServerSideProps = withPageProps(
   })
 )
 
-const BasketPage = ({ activeOrder }) => {
-  const [order, setOrder] = useState(activeOrder)
+const BasketPage = () => {
+  const order = useActiveOrder()
+  const setOrder = useSetActiveOrder()
   const fetch = useFetch()
   const { t } = useTranslation()
   const title = `${t('order-basket')}`
@@ -51,19 +59,25 @@ const BasketPage = ({ activeOrder }) => {
         <header>
           <Heading>{t('order-basket')}</Heading>
         </header>
-        <OrderCard
-          className="mt-4"
-          order={order}
-          hideStatus
-          onItemDelete={deleteItem}
-        />
-        <div className="d-flex justify-content-end mt-3">
-          <Link as={InteractiveButton} size="lg" route="paymentAndDelivery">
-            {t('order-next')}
-          </Link>
-        </div>
-        {!hasPromotionCode && (
-          <PromotionCodeForm order={order} onSubmit={setOrder} />
+        {order.items.length === 0 ? (
+          <EmptyBasket className="mt-4" />
+        ) : (
+          <>
+            <OrderCard
+              className="mt-4"
+              order={order}
+              hideStatus
+              onItemDelete={deleteItem}
+            />
+            <div className="d-flex justify-content-end mt-3">
+              <Link as={InteractiveButton} size="lg" route="paymentAndDelivery">
+                {t('order-next')}
+              </Link>
+            </div>
+            {!hasPromotionCode && (
+              <PromotionCodeForm order={order} onSubmit={setOrder} />
+            )}
+          </>
         )}
       </Container>
     </GenericPage>
