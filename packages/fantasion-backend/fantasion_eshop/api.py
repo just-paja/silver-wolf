@@ -28,7 +28,9 @@ class OrderCollection(RWViewSet):
         return query
 
     def list(self, request):
-        queryset = self.get_queryset().exclude(status=models.ORDER_STATUS_NEW)
+        queryset = self.get_queryset().exclude(
+            status=models.ORDER_STATUS_NEW,
+        ).order_by('-submitted_at')
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
