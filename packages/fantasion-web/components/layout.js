@@ -14,14 +14,16 @@ import Rune05 from './runes/rune-05.svg'
 
 import { Alerts } from './alerts'
 import { HamburgerMenuIcon, BasketIcon } from './icons'
-import { Link, Linker } from './links'
+import { Link } from './links'
 import { HeadingContext, PageTopGallery } from './media'
 import { Money } from './money'
+import { reverse } from '../routes'
 import { SiteLogo } from './SiteLogo'
 import { SocialNetworks } from './social'
-import { useActiveOrder, useSite, useUser } from './context'
+import { useActiveOrder, useLang, useSite, useUser } from './context'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useOutsideClick, useScroll } from './window'
+import { useRouter } from 'next/router'
 import { UserName } from './users'
 import { useTranslation } from 'next-i18next'
 
@@ -290,12 +292,21 @@ const runesLinks = [
   'team',
 ]
 
-export const Runes = () => (
-  <div className={styles.runes}>
-    {runes.map((Rune, index) => (
-      <Linker route={runesLinks[index]} key={index}>
-        <Rune className={styles.rune} fill="currentColor" />
-      </Linker>
-    ))}
-  </div>
-)
+export const Runes = () => {
+  const router = useRouter()
+  const lang = useLang()
+  return (
+    <div className={styles.runes}>
+      {runes.map((Rune, index) => (
+        <Rune
+          className={styles.rune}
+          fill="currentColor"
+          key={index}
+          onClick={() => {
+            router.push(reverse(lang, runesLinks[index]))
+          }}
+        />
+      ))}
+    </div>
+  )
+}
