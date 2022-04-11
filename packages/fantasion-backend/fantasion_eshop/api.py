@@ -27,6 +27,15 @@ class OrderCollection(RWViewSet):
             query = query.filter(owner=self.request.user)
         return query
 
+    def list(self, request):
+        queryset = self.get_queryset().exclude(status=models.ORDER_STATUS_NEW)
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
     def destroy(self, inst):
         if inst.status in models.ORDER_CAN_BE_DELETED:
             inst.delete()
