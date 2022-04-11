@@ -278,7 +278,7 @@ msgstr "Celá zaplacená částka činí:"
 
 #: fantasion/templates/mail/full_paid.html:18
 msgid "email-full-paid-wish"
-msgstr ""
+msgstr "Budeme se na Vás a Vaše děti těšit v létě! Pro novinky nás nezapomeňte sledovat na facebooku či instagramu."
 
 #: fantasion/templates/mail/order_confirmation.html:5
 msgid "email-signup-confirmed"
