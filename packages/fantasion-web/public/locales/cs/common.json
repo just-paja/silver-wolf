@@ -130,6 +130,7 @@
   "order-deposit-help-text": "V tomto nastavení zálohu zaplatíte hned a doplatek až 60 dnů před zahájením akce",
   "order-list-empty": "Nemáte u nás žádné objednávky. Nechcete s námi třeba jet na tábor?",
   "order-next": "Pokračovat",
+  "order-id-title": "Objednávka {{orderNumber}}",
   "order-pay-amount": "Částka",
   "order-pay-deposit": "Zaplatit zálohu",
   "order-pay-full": "Zaplatit celé",

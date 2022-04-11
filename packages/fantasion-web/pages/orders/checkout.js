@@ -48,8 +48,9 @@ const OrderCheckoutPage = ({ activeOrder }) => {
   const router = useRouter()
   const lang = useLang()
   const confirmOrder = async () => {
-    setOrder(await fetch.put(`/orders/${order.id}/confirm`))
-    router.push(reverse(lang, 'status'))
+    const o = await fetch.put(`/orders/${order.id}/confirm`)
+    setOrder(o)
+    router.push(reverse(lang, 'orderDetail', { orderId: o.id }))
   }
   return (
     <GenericPage>

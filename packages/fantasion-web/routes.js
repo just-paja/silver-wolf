@@ -59,15 +59,15 @@ const cs = {
   },
   basket: {
     source: '/objednavka/kosik',
-    destination: '/order/basket',
+    destination: '/orders/basket',
   },
   paymentAndDelivery: {
     source: '/objednavka/platba-a-doruceni',
-    destination: '/order/payment-and-delivery',
+    destination: '/orders/payment-and-delivery',
   },
   checkout: {
     source: '/objednavka/potvrzeni',
-    destination: '/order/checkout',
+    destination: '/orders/checkout',
   },
   login: {
     source: '/prihlaseni',
@@ -101,9 +101,13 @@ const cs = {
     source: '/kodex',
     destination: '/codex',
   },
+  orderDetail: {
+    source: '/objednavky/:orderId',
+    destination: '/orders/:orderId',
+  },
   signupDetail: {
-    source: '/prehled/prihlasky/:signupId',
-    destination: '/signups/detail',
+    source: '/prehled/:signupId',
+    destination: '/signups/:signupId',
   },
   status: {
     source: '/prehled',

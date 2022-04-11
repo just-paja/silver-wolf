@@ -3,6 +3,7 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Row from 'react-bootstrap/Row'
 
 import { DateLabel } from '../dates'
+import { Link } from '../links'
 import { Money } from '../money'
 import { OrderItemIcons } from './OrderItem'
 import { OrderStatus } from './OrderStatus'
@@ -15,7 +16,9 @@ const OrderListRow = ({ order, ...props }) => (
       <Col md={3}>
         <Row>
           <Col xs={12} lg={6}>
-            <strong>{order.variableSymbol}</strong>
+            <Link route="orderDetail" params={{ orderId: order.id }}>
+              <strong>{order.variableSymbol}</strong>
+            </Link>
           </Col>
           <Col xs={12} lg={6}>
             <DateLabel date={order.submittedAt} />
