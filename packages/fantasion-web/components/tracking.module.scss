@@ -1,0 +1,32 @@
+@import '../styles/variables.scss';
+
+div.canvas {
+  min-height: 20vh;
+  height: auto;
+  max-height: 75%;
+  transition: min-height 0.2s;
+
+  :global(.form-check),
+  :global(.form-check-label) {
+    margin: 0 !important;
+  }
+}
+
+.container {
+  max-width: 480px !important;
+}
+
+.quickForm {
+  display: flex;
+  margin-top: $spacer;
+
+  button {
+    flex-grow: 1;
+    font-size: $font-size-base;
+  }
+
+  button:last-child {
+    margin-left: $spacer;
+    font-weight: bold;
+  }
+}

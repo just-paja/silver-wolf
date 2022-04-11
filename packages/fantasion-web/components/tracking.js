@@ -1,6 +1,144 @@
+import Accordion from 'react-bootstrap/Accordion'
+import classnames from 'classnames'
+import Container from 'react-bootstrap/Container'
+import Offcanvas from 'react-bootstrap/Offcanvas'
 import Script from 'next/script'
 
-export const GoogleTagManager = () => (
+import styles from './tracking.module.scss'
+
+import { getCookie, setCookies } from 'cookies-next'
+import { InteractiveButton } from './buttons'
+import { Form, FormControls, Input } from './forms'
+import { useState } from 'react'
+import { useTranslation } from 'next-i18next'
+
+const COOKIE_CONSENT = 'cookieConsent'
+const CONSENT_FUNCTIONAL = 'functional'
+const CONSENT_TRACKING = 'tracking'
+const CONSENT_MARKETING = 'marketing'
+
+const defaultConsent = {
+  [CONSENT_FUNCTIONAL]: true,
+  [CONSENT_TRACKING]: true,
+  [CONSENT_MARKETING]: true,
+}
+
+const ConsentForm = ({ consent, onCancel, onSubmit }) => {
+  const { t } = useTranslation()
+  const defaultValues = consent || defaultConsent
+  const stopPropagation = (e) => e.stopPropagation()
+  return (
+    <Form
+      defaultValues={defaultValues}
+      id="cookieConsent"
+      onSubmit={(values) =>
+        onSubmit({
+          ...values,
+          [CONSENT_FUNCTIONAL]: true,
+        })
+      }
+    >
+      <Accordion>
+        <Accordion.Item eventKey={CONSENT_FUNCTIONAL}>
+          <Accordion.Header>
+            <Input
+              type="checkbox"
+              disabled
+              checked
+              name={CONSENT_FUNCTIONAL}
+              label={t('cookie-functional')}
+              onClick={stopPropagation}
+            />
+          </Accordion.Header>
+          <Accordion.Body>
+            <p>{t('cookie-functional-help-text')}</p>
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey={CONSENT_TRACKING}>
+          <Accordion.Header>
+            <Input
+              type="checkbox"
+              name={CONSENT_TRACKING}
+              label={t('cookie-tracking')}
+              onClick={stopPropagation}
+            />
+          </Accordion.Header>
+          <Accordion.Body>
+            <p>{t('cookie-tracking-help-text')}</p>
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey={CONSENT_MARKETING}>
+          <Accordion.Header>
+            <Input
+              type="checkbox"
+              name={CONSENT_MARKETING}
+              label={t('cookie-marketing')}
+              onClick={stopPropagation}
+            />
+          </Accordion.Header>
+          <Accordion.Body>
+            <p>{t('cookie-marketing-help-text')}</p>
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
+      <FormControls
+        submitLabel={t('cookie-confirm')}
+        onCancel={onCancel}
+        cancelLabel={t('cookie-go-back')}
+      />
+    </Form>
+  )
+}
+
+const QuickConsentForm = ({ onAccept, onCustomize }) => {
+  const { t } = useTranslation()
+  return (
+    <div className={styles.quickForm}>
+      <InteractiveButton variant="secondary" size="lg" onClick={onCustomize}>
+        {t('cookie-customize')}
+      </InteractiveButton>
+      <InteractiveButton size="lg" onClick={onAccept}>
+        {t('cookie-confirm-all')}
+      </InteractiveButton>
+    </div>
+  )
+}
+
+const ConsentDialog = ({ consent, onResolve, show }) => {
+  const [showForm, setShowForm] = useState(false)
+  const acceptAll = () => onResolve(defaultConsent)
+
+  const { t } = useTranslation()
+  return (
+    <Offcanvas
+      show={show}
+      placement="bottom"
+      className={classnames(styles.canvas, { [styles.canvasBig]: showForm })}
+    >
+      <Offcanvas.Body>
+        <Container className={styles.container}>
+          <Offcanvas.Title>{t('cookie-consent-title')}</Offcanvas.Title>
+          <p>{t('cookie-consent-description')}</p>
+          {showForm ? (
+            <ConsentForm
+              onAccept={acceptAll}
+              onCancel={() => setShowForm(false)}
+              onSubmit={onResolve}
+              consent={consent}
+            />
+          ) : (
+            <QuickConsentForm
+              onAccept={acceptAll}
+              onCustomize={() => setShowForm(true)}
+            />
+          )}
+        </Container>
+      </Offcanvas.Body>
+    </Offcanvas>
+  )
+}
+
+const GoogleTagManager = () => (
   <Script
     id="gtm"
     strategy="afterInteractive"
@@ -14,3 +152,42 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }}
   />
 )
+
+const getConsentValue = () => {
+  const cookie = getCookie(COOKIE_CONSENT)
+  if (!cookie) {
+    return null
+  }
+  return cookie
+    .split(',')
+    .reduce((aggr, key) => Object.assign(aggr, { [key]: true }), {})
+}
+
+const FIVE_YEARS = 60 * 60 * 24 * 365 * 5
+
+export const Tracking = () => {
+  const [consent, setConsent] = useState(getConsentValue())
+  const [showDialog, setShowDialog] = useState(!consent)
+  const saveConsent = (values) => {
+    console.log(values)
+    setConsent(values)
+    const cookieValue = Object.entries(values)
+      .reduce((aggr, [key, value]) => (value ? [...aggr, key] : aggr), [])
+      .join(',')
+    setCookies(COOKIE_CONSENT, cookieValue, {
+      maxAge: FIVE_YEARS,
+      sameSite: 'strict',
+    })
+    setShowDialog(false)
+  }
+  return (
+    <>
+      <ConsentDialog
+        consent={consent}
+        show={showDialog}
+        onResolve={saveConsent}
+      />
+      {consent?.tracking && <GoogleTagManager />}
+    </>
+  )
+}
