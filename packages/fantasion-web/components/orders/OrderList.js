@@ -13,29 +13,33 @@ import { useTranslation } from 'next-i18next'
 const OrderListRow = ({ order, ...props }) => (
   <ListGroup.Item {...props}>
     <Row>
-      <Col md={3}>
+      <Col xs={6} sm={8} md={10}>
         <Row>
-          <Col xs={12} lg={6}>
-            <Link route="orderDetail" params={{ orderId: order.id }}>
-              <strong>{order.variableSymbol}</strong>
-            </Link>
+          <Col sm={6} md={4}>
+            <Row>
+              <Col xs={12} lg={6}>
+                <Link route="orderDetail" params={{ orderId: order.id }}>
+                  <strong>{order.variableSymbol}</strong>
+                </Link>
+              </Col>
+              <Col xs={12} lg={6}>
+                <DateLabel date={order.submittedAt} />
+              </Col>
+            </Row>
           </Col>
-          <Col xs={12} lg={6}>
-            <DateLabel date={order.submittedAt} />
+          <Col sm={6} md={8}>
+            <Row>
+              <Col xs={12} lg={6}>
+                <Money amount={order.price} />
+              </Col>
+              <Col xs={12} lg={6}>
+                <OrderStatus status={order.status} />
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Col>
-      <Col md={6}>
-        <Row>
-          <Col xs={12} lg={6}>
-            <Money amount={order.price} />
-          </Col>
-          <Col xs={12} lg={6}>
-            <OrderStatus status={order.status} />
-          </Col>
-        </Row>
-      </Col>
-      <Col md={3} className="d-flex justify-content-end">
+      <Col xs={6} sm={4} md={2} className="d-flex justify-content-end">
         <OrderItemIcons items={order.items} />
       </Col>
     </Row>

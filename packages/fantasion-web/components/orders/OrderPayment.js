@@ -153,7 +153,7 @@ const OrderPaymentButtons = ({ order, ...props }) => {
     setShowDialog(true)
   }
   return (
-    <div {...props}>
+    <>
       <OrderPayDialog
         onHide={closeDialog}
         order={order}
@@ -187,7 +187,7 @@ const OrderPaymentButtons = ({ order, ...props }) => {
           {t('order-pay-full')}
         </InteractiveButton>
       )}
-    </div>
+    </>
   )
 }
 

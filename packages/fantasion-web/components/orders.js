@@ -145,10 +145,9 @@ export const OrderCard = ({
       <OrderItems items={order?.items || []} onDelete={onItemDelete} />
       <Row className="flex-column-reverse flex-md-row">
         <Col md={hideStatus ? 12 : 6} className="mt-1">
-          <OrderPaymentControls
-            className="d-flex flex-row-reverse flex-md-row justify-content-center justify-content-md-start"
-            order={order}
-          />
+          <div className="d-flex flex-row-reverse flex-md-row justify-content-center justify-content-md-start">
+            <OrderPaymentControls order={order} />
+          </div>
         </Col>
         <Col md={hideStatus ? 12 : 6} className="d-flex mt-2">
           <div className="ms-auto me-3">
