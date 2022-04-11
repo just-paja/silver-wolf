@@ -56,6 +56,13 @@ class OrderCollection(RWViewSet):
     def confirm(self, *args, **kwargs):
         order = self.get_object()
         if order.status == models.ORDER_STATUS_NEW:
+            print(args, flush=True)
+            print(kwargs, flush=True)
+            body = json.loads(self.request.body)
+            order.request_insurance = bool(body.get(
+                'request_insurance',
+                False,
+            ))
             order.confirm()
             serializer = self.get_serializer(order)
             return Response(serializer.data)

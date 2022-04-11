@@ -199,6 +199,7 @@ class OrderSerializer(ModelSerializer):
             "items",
             "price",
             "promise",
+            "request_insurance",
             "status",
             "submitted_at",
             "use_deposit_payment",
@@ -207,13 +208,16 @@ class OrderSerializer(ModelSerializer):
             "variable_symbol",
         )
         read_only_fields = (
+            'deposit',
+            'invoice_address',
             'is_cancellable',
+            'items',
+            'items',
             'price',
             'promise',
             'status',
-            'deposit',
+            'submitted_at',
             'variable_symbol',
-            'items',
         )
 
 

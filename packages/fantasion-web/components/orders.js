@@ -400,14 +400,21 @@ export const EmptyBasket = ({ ...props }) => (
 export const ConfirmOrderForm = ({ onSubmit }) => {
   const { t } = useTranslation()
   const validator = useValidator({
+    requestInsurance: bool().oneOf([true, false], t('form-input-required')),
     termsAndConditions: bool().oneOf([true], t('form-input-required')),
   })
   return (
     <Form onSubmit={onSubmit} resolver={validator}>
       <Input
         type="checkbox"
+        name="requestInsurance"
+        label={t('order-request-insurance')}
+      />
+      <Input
+        type="checkbox"
         name="termsAndConditions"
         label={t('order-agree-terms-and-conditions')}
+        required
       />
       <FormControls size="lg" submitLabel={t('order-confirm')} />
     </Form>

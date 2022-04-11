@@ -68,6 +68,7 @@ class OrderAdmin(BaseAdmin):
         'id',
         'price',
         'status',
+        'request_insurance',
         'owner',
         'created',
     )
@@ -88,12 +89,14 @@ class OrderAdmin(BaseAdmin):
     fields_add = (
         'owner',
         'use_deposit_payment',
+        'request_insurance',
     )
     fields_edit = (
         'owner',
         'status',
         'promise',
         'use_deposit_payment',
+        'request_insurance',
         'deposit',
         'get_surcharge',
         'price',

@@ -202,7 +202,11 @@ export const Input = ({
         {htmlOptions}
       </Component>
       {label && rightLabel ? (
-        <BsForm.Label className="form-check-label">{label}</BsForm.Label>
+        <BsForm.Label
+          className={classnames('form-check-label', { 'fw-bold': required })}
+        >
+          {label}
+        </BsForm.Label>
       ) : null}
       {fieldError ? (
         <BsForm.Control.Feedback type="invalid">

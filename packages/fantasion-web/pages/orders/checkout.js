@@ -47,8 +47,10 @@ const OrderCheckoutPage = ({ activeOrder }) => {
   const title = `${t('order-checkout')}`
   const router = useRouter()
   const lang = useLang()
-  const confirmOrder = async () => {
-    const o = await fetch.put(`/orders/${order.id}/confirm`)
+  const confirmOrder = async (body) => {
+    const o = await fetch.put(`/orders/${order.id}/confirm`, {
+      body,
+    })
     setOrder(o)
     router.push(reverse(lang, 'orderDetail', { orderId: o.id }))
   }

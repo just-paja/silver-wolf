@@ -226,6 +226,14 @@ class Order(TimeStampedModel):
             "on Order Items configuration"),
         verbose_name=_("Use Deposit Payment"),
     )
+    request_insurance = BooleanField(
+        default=False,
+        verbose_name=_("Insurance Request"),
+        help_text=_(
+            "The Order Owner requested assistance with getting insurance and "
+            "expects to be contacted by Fantasion staff."
+        ),
+    )
     submitted_at = DateTimeField(
         null=True,
         blank=True,
