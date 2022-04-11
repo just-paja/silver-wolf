@@ -169,7 +169,6 @@ export const Tracking = () => {
   const [consent, setConsent] = useState(getConsentValue())
   const [showDialog, setShowDialog] = useState(!consent)
   const saveConsent = (values) => {
-    console.log(values)
     setConsent(values)
     const cookieValue = Object.entries(values)
       .reduce((aggr, [key, value]) => (value ? [...aggr, key] : aggr), [])

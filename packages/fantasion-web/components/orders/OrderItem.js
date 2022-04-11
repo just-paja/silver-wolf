@@ -7,7 +7,6 @@ const PRODUCT_SIGNUP = 'fantasion_signups.Signup'
 const PRODUCT_PROMOTION_CODE = 'fantasion_eshop.OrderPromotionCode'
 
 export const OrderItemIcon = ({ item }) => {
-  console.log(item.productType)
   if (item.productType === PRODUCT_SIGNUP) {
     return (
       <Link route="signupDetail" params={{ signupId: item.id }}>
