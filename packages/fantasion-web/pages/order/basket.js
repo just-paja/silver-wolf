@@ -1,5 +1,7 @@
+import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import React from 'react'
+import Row from 'react-bootstrap/Row'
 
 import { asPage, MetaPage } from '../../components/meta'
 import { Breadcrumbs } from '../../components/breadcrumbs'
@@ -56,29 +58,37 @@ const BasketPage = () => {
             },
           ]}
         />
-        <header>
-          <Heading>{t('order-basket')}</Heading>
-        </header>
-        {order.items.length === 0 ? (
-          <EmptyBasket className="mt-4" />
-        ) : (
-          <>
-            <OrderCard
-              className="mt-4"
-              order={order}
-              hideStatus
-              onItemDelete={deleteItem}
-            />
-            <div className="d-flex justify-content-end mt-3">
-              <Link as={InteractiveButton} size="lg" route="paymentAndDelivery">
-                {t('order-next')}
-              </Link>
-            </div>
-            {!hasPromotionCode && (
-              <PromotionCodeForm order={order} onSubmit={setOrder} />
+        <Row>
+          <Col lg={{ span: 8, offset: 2 }} xl={{ span: 6, offset: 3 }}>
+            <header>
+              <Heading>{t('order-basket')}</Heading>
+            </header>
+            {order.items.length === 0 ? (
+              <EmptyBasket className="mt-4" />
+            ) : (
+              <>
+                <OrderCard
+                  className="mt-4"
+                  order={order}
+                  hideStatus
+                  onItemDelete={deleteItem}
+                />
+                <div className="d-flex justify-content-end mt-3">
+                  <Link
+                    as={InteractiveButton}
+                    size="lg"
+                    route="paymentAndDelivery"
+                  >
+                    {t('order-next')}
+                  </Link>
+                </div>
+                {!hasPromotionCode && (
+                  <PromotionCodeForm order={order} onSubmit={setOrder} />
+                )}
+              </>
             )}
-          </>
-        )}
+          </Col>
+        </Row>
       </Container>
     </GenericPage>
   )
