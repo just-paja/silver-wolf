@@ -11,6 +11,8 @@ import {
   ACCOUNT_NUMBER,
 } from './money'
 
+const CONTACT_TEL = '+420 732 368 412'
+
 export const ContactCard = () => {
   const { t } = useTranslation()
   return (
@@ -22,8 +24,7 @@ export const ContactCard = () => {
             <a href="mailto:info@fantasion.cz">info@fantasion.cz</a>
           </ListGroup.Item>
           <ListGroup.Item>
-            {t('contact-phone')}:{' '}
-            <a href="tel:+420 605 527 276">+420 605 527 276</a>
+            {t('contact-phone')}: <a href="tel:{CONTACT_TEL}">{CONTACT_TEL}</a>
           </ListGroup.Item>
           <ListGroup.Item>{t('contact-in')}: 14166658</ListGroup.Item>
         </ListGroup>
