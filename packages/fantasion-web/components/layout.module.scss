@@ -178,30 +178,6 @@
   100% { color: $primary; }
 }
 
-@keyframes rune-02 {
-  0% { color: $primary; }
-  50% { color: $secondary; filter: drop-shadow(0 0 calc($spacer / 4) $secondary); }
-  100% { color: $primary; }
-}
-
-@keyframes rune-03 {
-  0% { color: $primary; }
-  50% { color: #e12; filter: drop-shadow(0 0 calc($spacer / 4) #e12); }
-  100% { color: $primary; }
-}
-
-@keyframes rune-04 {
-  0% { color: $primary; }
-  50% { color: #1e2; filter: drop-shadow(0 0 calc($spacer / 4) #1e2); }
-  100% { color: $primary; }
-}
-
-@keyframes rune-05 {
-  0% { color: $primary; }
-  50% { color: #39e; filter: drop-shadow(0 0 calc($spacer / 4) #39e); }
-  100% { color: $primary; }
-}
-
 .rune {
   background-position: center center;
   background-repeat: no-repeat;
