@@ -10,9 +10,8 @@ import { GenericPage } from '../components/layout'
 import { Heading } from '../components/media'
 import { setCookies } from 'cookies-next'
 import { TOKEN_COOKIE } from '../api'
-import { useAlerts } from '../components/alerts'
+import { useAlerts, useSite } from '../components/context'
 import { useRouter } from 'next/router'
-import { useSite } from '../components/context'
 import { useTranslation } from 'next-i18next'
 import { withPageProps } from '../server/props'
 
@@ -39,9 +38,9 @@ export const getServerSideProps = withPageProps(
 
 const VerifyEmailPage = ({ secret }) => {
   const { fetch, user } = useSite()
-  const { addAlert } = useAlerts()
   const { t } = useTranslation()
   const [verified, setVerified] = useState(user.passwordCreated)
+  const alerts = useAlerts()
   const router = useRouter()
   const onSubmit = async (values) => {
     const res = await fetch.post(`/users/create-password/${secret}`, {
@@ -51,7 +50,7 @@ const VerifyEmailPage = ({ secret }) => {
       sameSite: 'strict',
     })
     setVerified(res.user.passwordCreated)
-    addAlert({
+    alerts.add({
       id: 'verification-finished',
       severity: 'success',
       text: t('verification-finished'),
