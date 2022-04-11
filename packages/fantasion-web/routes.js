@@ -101,6 +101,10 @@ const cs = {
     source: '/kodex',
     destination: '/codex',
   },
+  signupDetail: {
+    source: '/prehled/prihlasky/:signupId',
+    destination: '/signups/detail',
+  },
   status: {
     source: '/prehled',
     destination: '/status',

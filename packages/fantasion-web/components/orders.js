@@ -9,16 +9,22 @@ import Row from 'react-bootstrap/Row'
 import styles from './orders.module.scss'
 
 import { Address, PostalCodeInput, StreetNumberInput } from './addresses'
+import { AutosaveForm, Form, FormControls, Input, useValidator } from './forms'
 import { bool, string } from 'yup'
 import { CancelIcon } from './icons'
 import { CopyButton, InteractiveButton } from './buttons'
-import { AutosaveForm, Form, FormControls, Input, useValidator } from './forms'
 import { Heading, Section } from './media'
+import { OrderItemDescription } from './orders/OrderItem'
 import { useFetch, useUser } from './context'
 import { useFormContext } from 'react-hook-form'
 import { UserName } from './users'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
+import {
+  OrderStatus,
+  ORDER_STATUS_DEPOSIT_PAID,
+  CAN_BE_PAID,
+} from './orders/OrderStatus.js'
 
 import {
   Money,
@@ -28,44 +34,6 @@ import {
   ACCOUNT_NUMBER,
   DEFAULT_CURRENCY,
 } from './money'
-
-const ORDER_STATUS_CONFIRMED = 2
-const ORDER_STATUS_DEPOSIT_PAID = 3
-
-const OrderStatusMap = {
-  1: 'order-status-new',
-  [ORDER_STATUS_CONFIRMED]: 'order-status-confirmed',
-  [ORDER_STATUS_DEPOSIT_PAID]: 'order-status-deposit-paid',
-  4: 'order-status-paid',
-  5: 'order-status-dispatched',
-  6: 'order-status-resolved',
-  7: 'order-status-cancelled',
-}
-
-const CAN_BE_PAID = [ORDER_STATUS_CONFIRMED, ORDER_STATUS_DEPOSIT_PAID]
-
-const OrderStatus = ({ status }) => useTranslation().t(OrderStatusMap[status])
-
-const OrderItemPromotionCode = () => useTranslation().t('order-promotion-code')
-
-const OrderItemSignup = ({ signup }) => (
-  <>
-    <UserName user={signup.participant} />
-    <div className={styles.troopDescription}>
-      {signup.troop.batch.expedition.title}: {signup.troop.ageGroup.title}
-    </div>
-  </>
-)
-
-const OrderItemDescription = ({ item }) => {
-  if (item.productType === 'fantasion_signups.Signup') {
-    return <OrderItemSignup signup={item} />
-  }
-  if (item.productType === 'fantasion_eshop.OrderPromotionCode') {
-    return <OrderItemPromotionCode code={item} />
-  }
-  return item.description
-}
 
 const OrderItem = ({ item, onDelete }) => (
   <div className="d-flex">
@@ -394,25 +362,6 @@ export const OrderCard = ({
     </Section>
   )
 }
-
-const OrderListEmpty = () => (
-  <div className="text-muted mt-3">
-    <p>{useTranslation().t('order-list-empty')}</p>
-  </div>
-)
-
-export const OrderList = ({ orders, onOrderCancel }) => (
-  <Section headingLevel={0} className={styles.orderList}>
-    <Heading>{useTranslation().t('orders')}</Heading>
-    {orders.results.length === 0 ? (
-      <OrderListEmpty />
-    ) : (
-      orders.results.map((order) => (
-        <OrderCard key={order.id} order={order} onCancel={onOrderCancel} />
-      ))
-    )}
-  </Section>
-)
 
 export const PromotionCodeForm = ({ order, onSubmit }) => {
   const fetch = useFetch()

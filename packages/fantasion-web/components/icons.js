@@ -1,3 +1,5 @@
+import styles from './icons.module.scss'
+
 import { BsBasket2Fill, BsPersonFill, BsPinMapFill } from 'react-icons/bs'
 import { HiHome, HiMenu, HiMailOpen } from 'react-icons/hi'
 import { GiJourney } from 'react-icons/gi'
@@ -10,6 +12,7 @@ import {
   MdGppMaybe,
 } from 'react-icons/md'
 import {
+  FaCampground,
   FaCalendarWeek,
   FaFacebook,
   FaInstagram,
@@ -36,6 +39,7 @@ export const PersonIcon = BsPersonFill
 export const PriceIcon = IoPricetags
 export const SecureIcon = MdGppGood
 export const SecurityWarningIcon = MdGppMaybe
+export const SignupIcon = FaCampground
 export const StoryIcon = GiJourney
 export const TiktokIcon = FaTiktok
 export const TwitterIcon = FaTwitter
@@ -45,4 +49,8 @@ export const IconLabel = ({ icon: Icon, text }) => (
     <Icon className="me-1" />
     &nbsp;{text}
   </>
+)
+
+export const IconBubble = ({ children }) => (
+  <div className={styles.bubble}>{children}</div>
 )

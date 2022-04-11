@@ -3,7 +3,8 @@ import React from 'react'
 
 import { asPage, MetaPage } from '../components/meta'
 import { GenericPage } from '../components/layout'
-import { OrderList } from '../components/orders'
+import { Heading } from '../components/media'
+import { OrderList } from '../components/orders/OrderList'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 import { requireUser, withPageProps } from '../server/props'
@@ -31,6 +32,7 @@ const Status = ({ defaultOrders }) => {
         description={t('fantasion-general-description')}
       />
       <Container>
+        <Heading>{t('orders')}</Heading>
         <OrderList orders={orders} onOrderCancel={onOrderCancel} />
       </Container>
     </GenericPage>

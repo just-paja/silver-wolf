@@ -1,9 +1,22 @@
 @import '../styles/variables.scss';
 
-.iconButton {
-  padding: calc($spacer / 4);
-  font-size: calc($spacer * 1.5);
-  flex-grow: 0;
-  display: flex;
+.bubble {
+  $size: $spacer * 2;
+
   align-items: center;
+  background: $primary;
+  border-radius: 100%;
+  color: $white;
+  display: flex;
+  height: $size;
+  justify-content: center;
+  overflow: hidden;
+  width: $size;
+}
+
+a:link.bubble,
+a:link .bubble {
+  &:hover {
+    color: $navbar-dark-hover-color;
+  }
 }

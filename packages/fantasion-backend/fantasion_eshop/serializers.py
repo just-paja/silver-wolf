@@ -200,6 +200,7 @@ class OrderSerializer(ModelSerializer):
             "price",
             "promise",
             "status",
+            "submitted_at",
             "use_deposit_payment",
             "user_invoice_address",
             "user_invoice_address_id",
