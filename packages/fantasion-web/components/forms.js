@@ -2,7 +2,7 @@ import Alert from 'react-bootstrap/Alert'
 import classnames from 'classnames'
 import BsForm from 'react-bootstrap/Form'
 import FormCheck from 'react-bootstrap/FormCheck'
-import PhoneNumberInput from 'react-phone-number-input/react-hook-form'
+import PhoneNumberInput from 'react-phone-input-2'
 
 import { FormProvider, useForm } from 'react-hook-form'
 import { forwardRef, useCallback, useState } from 'react'
@@ -182,7 +182,9 @@ export const Input = ({
       <Component
         as={resolveType(type)}
         disabled={formState.isSubmitting}
-        checked={type === 'radio' ? currentValue === value : currentValue}
+        checked={
+          type === 'radio' ? currentValue === value : Boolean(currentValue)
+        }
         isInvalid={Boolean(fieldError)}
         name={name}
         type={type}
@@ -295,9 +297,13 @@ export const useValidator = (shape) => {
 }
 
 export const PhoneInput = ({ name, label, helpText, required, ...props }) => {
-  const { control, formState } = useFormContext()
+  const { setValue, register, formState } = useFormContext()
   const { t } = useTranslation()
   const fieldError = formState.errors[name]
+  const field = register(name)
+  const handleChange = (value) => {
+    setValue(name, `+${value}`)
+  }
   return (
     <BsForm.Group>
       {label && (
@@ -306,11 +312,16 @@ export const PhoneInput = ({ name, label, helpText, required, ...props }) => {
         </BsForm.Label>
       )}
       <PhoneNumberInput
-        className={classnames('form-control d-flex', styles.phoneInput)}
-        control={control}
-        defaultCountry="CZ"
-        name={name}
         {...props}
+        autocompleteSearch
+        className={classnames('form-control', 'd-flex', styles.phoneInput, {
+          'is-invalid': Boolean(fieldError),
+        })}
+        country="cz"
+        name={name}
+        prefix="+"
+        {...field}
+        onChange={handleChange}
       />
       {fieldError ? (
         <BsForm.Control.Feedback type="invalid">

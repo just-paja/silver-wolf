@@ -38,6 +38,7 @@ export const SiteContextProvider = ({ activeOrder, children, user }) => {
   const lang = i18n.language
   const logout = useCallback(() => {
     setCookies(TOKEN_COOKIE, null, { sameSite: 'strict' })
+    setCurrentOrder(null)
     router.push(reverse(lang, 'home'))
   }, [lang, router])
   const fetch = curryAuth(authCookie)

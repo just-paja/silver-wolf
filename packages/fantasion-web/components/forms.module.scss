@@ -8,14 +8,45 @@ input, select {
 }
 
 .phoneInput {
-  max-width: $spacer * 12;
-  input {
+  max-width: $spacer * 14;
+  position: relative;
+  padding-top: 0;
+  padding-bottom: 0;
+
+  :global(.flag-dropdown) {
+    left: 0;
+    border-left: none;
+    border-top: none;
+    border-bottom: none;
+
+    :global(.country) {
+      cursor: default;
+
+      &:hover {
+        background: darken($white, 10%);
+      }
+
+      &:global(.highlight) {
+        background: lighten($primary, 10%);
+        color: $white;
+
+        &:hover {
+          background: lighten($primary, 20%);
+        }
+      }
+    }
+  }
+
+  :global(input.form-control) {
     border: none;
+    min-width: 0;
+    padding-left: $spacer * 2.5;
+    width: auto;
 
     &:focus,
     &:hover {
       outline: none;
-
+      box-shadow: none;
     }
   }
 }
