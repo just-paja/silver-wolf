@@ -144,13 +144,13 @@ export const OrderCard = ({
       )}
       <OrderItems items={order?.items || []} onDelete={onItemDelete} />
       <Row className="flex-column-reverse flex-md-row">
-        <Col md={6} className="mt-1">
+        <Col md={hideStatus ? 12 : 6} className="mt-1">
           <OrderPaymentControls
             className="d-flex flex-row-reverse flex-md-row justify-content-center justify-content-md-start"
             order={order}
           />
         </Col>
-        <Col md={6} className="d-flex mt-2">
+        <Col md={hideStatus ? 12 : 6} className="d-flex mt-2">
           <div className="ms-auto me-3">
             {order.useDepositPayment && (
               <>
