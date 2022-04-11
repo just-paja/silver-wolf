@@ -10,7 +10,7 @@ import styles from './orders.module.scss'
 import { Address, PostalCodeInput, StreetNumberInput } from './addresses'
 import { CancelIcon } from './icons'
 import { CopyButton, InteractiveButton } from './buttons'
-import { Form, FormControls, Input } from './forms'
+import { AutosaveForm, Form, FormControls, Input } from './forms'
 import { Heading, Section } from './media'
 import { useFetch, useUser } from './context'
 import { useFormContext } from 'react-hook-form'
@@ -532,6 +532,22 @@ export const BillingInformation = ({ addresses, onSubmit, order }) => {
   )
 }
 
+const DepositSplitInput = () => {
+  const { t } = useTranslation()
+  const { watch } = useFormContext()
+  const split = watch('useDepositPayment')
+  return (
+    <Input
+      helpText={t(
+        split ? 'order-deposit-help-text' : 'order-full-payment-help-text'
+      )}
+      label={t('order-use-deposit-payment')}
+      name="useDepositPayment"
+      type="checkbox"
+    />
+  )
+}
+
 export const PaymentInformation = ({ order, onSubmit }) => {
   const { t } = useTranslation()
   const fetch = useFetch()
@@ -550,14 +566,14 @@ export const PaymentInformation = ({ order, onSubmit }) => {
   return (
     <Section className="mt-3">
       <Heading>{t('order-payment-information')}</Heading>
-      <Form defaultValues={defaultValues} onSubmit={selectPaymentMethod}>
-        <Input
-          type="checkbox"
-          name="useDepositPayment"
-          label={t('order-use-deposit-payment')}
-        />
-        <FormControls submitLabel={t('order-select-payment-method')} />
-      </Form>
+      <AutosaveForm
+        defaultValues={defaultValues}
+        onSubmit={selectPaymentMethod}
+      >
+        <p>{t('order-pay-via-bank-transfer-only')}</p>
+
+        <DepositSplitInput />
+      </AutosaveForm>
     </Section>
   )
 }

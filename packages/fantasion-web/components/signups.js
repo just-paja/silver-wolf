@@ -333,7 +333,6 @@ export const SignupDialog = ({
 }) => {
   const { t } = useTranslation()
   const order = useActiveOrder()
-  console.log(order)
   const unusedParticipants = participants.filter(
     (p) => !order || !order.items.some((s) => s.participant.id === p.id)
   )

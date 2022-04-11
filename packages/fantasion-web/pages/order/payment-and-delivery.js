@@ -51,17 +51,17 @@ const PaymentAndDeliveryPage = ({ activeOrder, addresses }) => {
         <header>
           <Heading>{t('order-payment-and-delivery')}</Heading>
         </header>
-        <OrderCard className="mt-4" order={order} hideStatus />
         <Row>
           <Col md={6}>
             <PaymentInformation order={order} onSubmit={setOrder} />
-          </Col>
-          <Col md={6}>
             <BillingInformation
               addresses={addresses}
               order={order}
               onSubmit={setOrder}
             />
+          </Col>
+          <Col md={6}>
+            <OrderCard className="mt-4" order={order} hideStatus />
           </Col>
         </Row>
         <div className="d-flex justify-content-between mt-3">

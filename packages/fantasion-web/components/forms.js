@@ -5,7 +5,7 @@ import FormCheck from 'react-bootstrap/FormCheck'
 import PhoneNumberInput from 'react-phone-input-2'
 
 import { FormProvider, useForm } from 'react-hook-form'
-import { forwardRef, useCallback, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import { InteractiveButton } from './buttons'
 import { object, setLocale } from 'yup'
 import { useFormContext } from 'react-hook-form'
@@ -330,5 +330,43 @@ export const PhoneInput = ({ name, label, helpText, required, ...props }) => {
       ) : null}
       {helpText ? <BsForm.Text as="div">{helpText}</BsForm.Text> : null}
     </BsForm.Group>
+  )
+}
+
+const shallowCompare = (obj1, obj2) => {
+  for (const key in obj2) {
+    if (obj2[key] !== obj1[key]) {
+      return false
+    }
+  }
+  return true
+}
+
+const AutosaveAgent = ({ defaultValues, onSubmit }) => {
+  const { handleSubmit, watch } = useFormContext()
+  const value = useRef(defaultValues)
+  const newData = watch()
+  const changed = !shallowCompare(value.current, newData)
+  const triggerSubmit = handleSubmit(onSubmit)
+  useEffect(() => {
+    if (changed) {
+      value.current = newData
+      triggerSubmit(newData)
+    }
+  }, [changed, newData, triggerSubmit])
+  return null
+}
+
+export const AutosaveForm = ({
+  children,
+  defaultValues,
+  onSubmit,
+  ...props
+}) => {
+  return (
+    <Form {...props} defaultValues={defaultValues} onSubmit={onSubmit}>
+      <AutosaveAgent defaultValues={defaultValues} onSubmit={onSubmit} />
+      {children}
+    </Form>
   )
 }
