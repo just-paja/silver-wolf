@@ -1,6 +1,8 @@
 {
   "about-fantasion": "O Fantasionu",
   "about-us": "O nás",
+  "address-add": "Přidat adresu",
+  "address-save": "Uložit adresu",
   "address-city": "Město",
   "address-country": "Země",
   "address-postal-code": "PSČ",
@@ -180,7 +182,7 @@
   "that-is-great": "Skvělé!",
   "that-is-really-awesome": "Paráda 🙏",
   "usage-terms": "Podmínky užití",
-  "user-address-title-home": "Doma",
+  "user-address-title-home": "Domov",
   "user-email": "E-mailová adresa",
   "user-email-help-text": "Na e-mail vám budeme zasílat pouze informace o táboře a potvrzení přihlášky.",
   "user-first-name": "Křestní jméno",

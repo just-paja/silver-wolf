@@ -33,6 +33,7 @@
     "react-password-strength-bar": "^0.4.0",
     "react-phone-input-2": "^2.15.0",
     "react-qr-code": "^2.0.5",
+    "react-select-country-list": "^2.2.3",
     "recoil": "^0.7.0",
     "sass": "1.49",
     "uuid": "^8.3.2",

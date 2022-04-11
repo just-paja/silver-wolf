@@ -19,6 +19,11 @@ class Country(Model):
         unique=True,
         verbose_name=_('Country name'),
     )
+    code = CharField(
+        max_length=3,
+        unique=True,
+        verbose_name=_('Country code'),
+    )
 
     def __str__(self):
         return self.name

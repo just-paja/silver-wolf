@@ -158,6 +158,9 @@ class EmailVerification(TimeStampedModel):
         self.sent += 1
         self.save()
 
+    def get_default_invoice_address(self):
+        return self.user_addresses.first()
+
     def get_landing_path(self):
         if self.next_step == NEXT_STEP_CREATE_PASSWORD:
             return 'potvrzeni-registrace'
@@ -202,7 +205,6 @@ class UserAddressBase(Address, TimeStampedModel):
 
     class Meta:
         abstract = True
-        unique_together = (('user', 'title'), )
         verbose_name = _("User Address")
         verbose_name_plural = _("User Addresses")
 
@@ -210,6 +212,9 @@ class UserAddressBase(Address, TimeStampedModel):
         User,
         on_delete=CASCADE,
     )
+
+
+class UserAddress(UserAddressBase):
     title = CharField(
         max_length=32,
         verbose_name=_("Title"),
@@ -217,9 +222,6 @@ class UserAddressBase(Address, TimeStampedModel):
             "Human readable identifier that will help user select this "
             "address, like \"Home\""),
     )
-
-
-class UserAddress(UserAddressBase):
     country = ForeignKey(
         "fantasion_locations.Country",
         on_delete=CASCADE,

@@ -155,7 +155,7 @@ export const Input = ({
   const { formId, register, formState, watch } = useFormContext()
   const { t } = useTranslation()
   const rightLabel = isLabelRight(type)
-  const controlId = `${formId}-${name}${rightLabel ? `-${value}` : null}`
+  const controlId = `${formId}-${name}${rightLabel ? `-${value}` : ''}`
   const htmlOptions = getOptions(options, required)
   const Component = resolveComponent(type, as)
   const fieldError = error || formState.errors[name]
@@ -167,6 +167,14 @@ export const Input = ({
   const handleChange = onChange
     ? getChangeWrapper(field, onChange)
     : field.onChange
+  const inputProps = {}
+  if (type === 'checkbox') {
+    inputProps.value = value || 'true'
+  }
+  if (type === 'radio') {
+    inputProps.checked = currentValue === value
+    inputProps.value = value
+  }
   return (
     <BsForm.Group
       controlId={controlId}
@@ -182,13 +190,10 @@ export const Input = ({
       <Component
         as={resolveType(type)}
         disabled={formState.isSubmitting}
-        checked={
-          type === 'radio' ? currentValue === value : Boolean(currentValue)
-        }
         isInvalid={Boolean(fieldError)}
         name={name}
         type={type}
-        value={type === 'checkbox' ? value || 'true' : value}
+        {...inputProps}
         {...props}
         {...field}
         className={classnames(styles[size], className)}

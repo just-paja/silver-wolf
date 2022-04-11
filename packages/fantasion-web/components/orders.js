@@ -1,17 +1,19 @@
 import Alert from 'react-bootstrap/Alert'
 import Carousel from 'react-bootstrap/Carousel'
 import classnames from 'classnames'
+import Col from 'react-bootstrap/Col'
+import countryList from 'react-select-country-list'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Modal from 'react-bootstrap/Modal'
-import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import styles from './orders.module.scss'
 
 import { Address, PostalCodeInput, StreetNumberInput } from './addresses'
 import { CancelIcon } from './icons'
 import { CopyButton, InteractiveButton } from './buttons'
-import { AutosaveForm, Form, FormControls, Input } from './forms'
+import { AutosaveForm, Form, FormControls, Input, useValidator } from './forms'
 import { Heading, Section } from './media'
+import { string } from 'yup'
 import { useFetch, useUser } from './context'
 import { useFormContext } from 'react-hook-form'
 import { UserName } from './users'
@@ -436,21 +438,32 @@ export const PromotionCodeForm = ({ order, onSubmit }) => {
   )
 }
 
-const AddAddressForm = () => {
+const AddressForm = ({ onSubmit }) => {
   const { t } = useTranslation()
-  const { watch } = useFormContext()
-  const addressId = watch('addressId')
-  if (addressId) {
-    return null
+  const defaultValues = {
+    title: t('user-address-title-home'),
+    countryCode: 'CZ',
   }
+  const validator = useValidator({
+    title: string().nullable().required(t('form-input-required')),
+    street: string().nullable().required(t('form-input-required')),
+    countryCode: string().nullable().required(t('form-input-required')),
+    city: string().nullable().required(t('form-input-required')),
+  })
+  const countries = countryList().getData()
   return (
-    <>
+    <Form
+      id="address"
+      onSubmit={onSubmit}
+      defaultValues={defaultValues}
+      resolver={validator}
+    >
       <Input name="title" label={t('address-title')} required />
       <Row>
-        <Col>
+        <Col sm="auto">
           <Input name="street" label={t('address-street')} required />
         </Col>
-        <Col>
+        <Col sm="auto">
           <StreetNumberInput
             name="street_number"
             label={t('address-street-number')}
@@ -459,11 +472,17 @@ const AddAddressForm = () => {
         </Col>
       </Row>
       <Row>
-        <Input name="country" label={t('address-country')} required />
-        <Col>
+        <Input
+          name="countryCode"
+          type="select"
+          options={countries}
+          label={t('address-country')}
+          required
+        />
+        <Col sm="auto">
           <Input name="city" label={t('address-city')} required />
         </Col>
-        <Col>
+        <Col sm="auto">
           <PostalCodeInput
             name="postal_code"
             label={t('address-postal-code')}
@@ -471,7 +490,22 @@ const AddAddressForm = () => {
           />
         </Col>
       </Row>
-    </>
+      <FormControls submitLabel={t('address-save')} />
+    </Form>
+  )
+}
+
+const AddAddressDialog = ({ show, onHide, onSubmit }) => {
+  const { t } = useTranslation()
+  return (
+    <Modal show={show}>
+      <Modal.Header closeButton onHide={onHide}>
+        <Modal.Title>{t('address-add')}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <AddressForm onSubmit={onSubmit} />
+      </Modal.Body>
+    </Modal>
   )
 }
 
@@ -487,12 +521,17 @@ export const BillingInformationPreview = ({ order }) => {
   )
 }
 
-export const BillingInformation = ({ addresses, onSubmit, order }) => {
+export const BillingInformation = ({
+  addresses,
+  onAddAddress,
+  onSubmit,
+  order,
+}) => {
+  const [showDialog, setShowDialog] = useState(false)
   const { t } = useTranslation()
   const fetch = useFetch()
   const defaultValues = {
     addressId: String(order.userInvoiceAddressId) || addresses[0]?.id,
-    title: t('user-address-title-home'),
   }
   const selectAddress = async (values) =>
     onSubmit(
@@ -502,14 +541,28 @@ export const BillingInformation = ({ addresses, onSubmit, order }) => {
         },
       })
     )
+  const showAddAddressDialog = () => setShowDialog(true)
+  const hideAddAddressDialog = () => setShowDialog(false)
+  const createAddress = async (values) => {
+    const addr = await fetch.post('/user-addresses', {
+      body: values,
+    })
+    await fetch.patch(`/orders/${order.id}`, {
+      userInvoiceAddressId: addr.id,
+    })
+    onAddAddress(addr)
+    hideAddAddressDialog()
+  }
 
-  /*
-   * 3. Umoznit pridat adresu
-   */
   return (
     <Section className="mt-3">
       <Heading>{t('order-billing-information')}</Heading>
-      <Form defaultValues={defaultValues} onSubmit={selectAddress}>
+      <AddAddressDialog
+        show={showDialog}
+        onHide={hideAddAddressDialog}
+        onSubmit={createAddress}
+      />
+      <AutosaveForm defaultValues={defaultValues} onSubmit={selectAddress}>
         {addresses.results.map((address) => (
           <Input
             type="radio"
@@ -519,15 +572,10 @@ export const BillingInformation = ({ addresses, onSubmit, order }) => {
             value={String(address.id)}
           />
         ))}
-        <Input
-          type="radio"
-          name="addressId"
-          label={t('address-new')}
-          value=""
-        />
-        <AddAddressForm />
-        <FormControls submitLabel={t('order-select-address')} />
-      </Form>
+        <InteractiveButton variant="link" onClick={showAddAddressDialog}>
+          {t('address-add')}
+        </InteractiveButton>
+      </AutosaveForm>
     </Section>
   )
 }

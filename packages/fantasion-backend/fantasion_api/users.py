@@ -21,6 +21,7 @@ from rest_framework.serializers import (
 
 from fantasion import models
 from fantasion_generics.api import RWViewSet, address_fields
+from fantasion_locations import models as locations
 
 from .decorators import public_endpoint, with_serializer
 
@@ -217,13 +218,32 @@ def get_me(request, format=None):
 
 
 class UserAddressSerializer(ModelSerializer):
+    country_code = CharField(write_only=True)
+
     class Meta:
         model = models.UserAddress
-        fields = address_fields
+        fields = (*address_fields, 'country_code')
+        read_only_fields = ('country',)
+
+    def get_or_create_country(self, country_code):
+        try:
+            return locations.Country.objects.filter(code=country_code).get()
+        except locations.Country.DoesNotExist:
+            c = locations.Country(
+                name=country_code,
+                code=country_code,
+            )
+            c.save()
+            return c
 
     def create(self, data):
         inst = models.UserAddress(
-            **data,
+            city=data.get('city'),
+            country=self.get_or_create_country(data.get('country_code')),
+            postal_code=data.get('postal_code'),
+            street=data.get('street'),
+            street_number=data.get('street_number'),
+            title=data.get('title'),
             user=self.context.get('request').user,
         )
         inst.save()

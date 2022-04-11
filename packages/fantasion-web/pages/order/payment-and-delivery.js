@@ -20,23 +20,30 @@ import { useTranslation } from 'next-i18next'
 
 export const getServerSideProps = withPageProps(
   requireUser(async ({ fetch }) => {
-    const [activeOrder, addresses] = await Promise.all([
+    const [activeOrder, userAddresses] = await Promise.all([
       fetch('/orders/active'),
       fetch('/user-addresses'),
     ])
     return {
       props: {
         activeOrder,
-        addresses,
+        userAddresses,
       },
     }
   })
 )
 
-const PaymentAndDeliveryPage = ({ activeOrder, addresses }) => {
+const PaymentAndDeliveryPage = ({ activeOrder, userAddresses }) => {
   const [order, setOrder] = useState(activeOrder)
+  const [addresses, setAddresses] = useState(userAddresses)
   const { t } = useTranslation()
   const title = `${t('order-payment-and-delivery')}`
+  const handleAddAddress = (address) => {
+    setAddresses({
+      ...addresses,
+      results: [...addresses.results, address],
+    })
+  }
   return (
     <GenericPage>
       <MetaPage title={title} description={t('order-checkout-description')} />
@@ -58,6 +65,7 @@ const PaymentAndDeliveryPage = ({ activeOrder, addresses }) => {
               addresses={addresses}
               order={order}
               onSubmit={setOrder}
+              onAddAddress={handleAddAddress}
             />
           </Col>
           <Col md={6}>

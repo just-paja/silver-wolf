@@ -142,7 +142,10 @@ class SignupSerializer(ModelSerializer):
                 owner=user, status=eshop.ORDER_STATUS_NEW).first()
 
         if not order:
-            order = eshop.Order(owner=user)
+            order = eshop.Order(
+                owner=user,
+                user_invoice_address=user.get_default_invoice_address(),
+            )
             order.save()
         return order
 
