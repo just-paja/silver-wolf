@@ -51,6 +51,8 @@ export const IconLabel = ({ icon: Icon, text }) => (
   </>
 )
 
-export const IconBubble = ({ children }) => (
-  <div className={styles.bubble}>{children}</div>
+export const IconBubble = ({ children, ...props }) => (
+  <div className={styles.bubble} {...props}>
+    {children}
+  </div>
 )

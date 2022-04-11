@@ -1,6 +1,6 @@
 import { IconBubble, SignupIcon } from '../icons'
 import { Link } from '../links'
-import { UserName } from '../users'
+import { UserName, getFullName } from '../users'
 import { useTranslation } from 'next-i18next'
 
 const PRODUCT_SIGNUP = 'fantasion_signups.Signup'
@@ -10,7 +10,7 @@ export const OrderItemIcon = ({ item }) => {
   if (item.productType === PRODUCT_SIGNUP) {
     return (
       <Link route="signupDetail" params={{ signupId: item.id }}>
-        <IconBubble>
+        <IconBubble title={getFullName(item.participant)}>
           <SignupIcon />
         </IconBubble>
       </Link>
