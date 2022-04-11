@@ -35,7 +35,7 @@ const OrderListRow = ({ order, ...props }) => (
           </Col>
         </Row>
       </Col>
-      <Col md={3}>
+      <Col md={3} className="d-flex justify-content-end">
         <OrderItemIcons items={order.items} />
       </Col>
     </Row>
