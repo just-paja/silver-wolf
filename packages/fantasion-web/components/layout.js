@@ -13,7 +13,7 @@ import Rune04 from './runes/rune-04.svg'
 import Rune05 from './runes/rune-05.svg'
 
 import { Alerts } from './alerts'
-import { HamburgerMenuIcon, BasketIcon } from './icons'
+import { HamburgerMenuIcon, HomeIcon, BasketIcon, LogoutIcon } from './icons'
 import { Link } from './links'
 import { HeadingContext, PageTopGallery } from './media'
 import { Money } from './money'
@@ -111,13 +111,13 @@ const UserMenu = () => {
     ...(user?.passwordCreated
       ? [
           <Link as={Nav.Link} key="basket" route="basket">
-            {t('order-basket')}: <Money amount={basketPrice} />
+            <BasketIcon /> {t('order-basket')}: <Money amount={basketPrice} />
           </Link>,
           <Link as={Nav.Link} key="status" route="status">
-            {t('my-status')}
+            <HomeIcon /> {t('my-status')}
           </Link>,
           <Nav.Link key="logout" onClick={logout}>
-            {t('logout')}
+            <LogoutIcon /> {t('logout')}
           </Nav.Link>,
         ]
       : []),

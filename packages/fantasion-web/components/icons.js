@@ -10,6 +10,7 @@ import {
   MdGppGood,
   MdGppBad,
   MdGppMaybe,
+  MdLogout,
 } from 'react-icons/md'
 import {
   FaCampground,
@@ -35,6 +36,7 @@ export const HomeIcon = HiHome
 export const InsecureIcon = MdGppBad
 export const InstagramIcon = FaInstagram
 export const LocationPinIcon = BsPinMapFill
+export const LogoutIcon = MdLogout
 export const PersonIcon = BsPersonFill
 export const PriceIcon = IoPricetags
 export const SecureIcon = MdGppGood
