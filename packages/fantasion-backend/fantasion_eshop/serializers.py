@@ -138,9 +138,10 @@ class TroopSerializer(ModelSerializer):
         model = Troop
         fields = (
             "age_group",
+            "batch",
             "ends_at",
             "id",
-            "batch",
+            "price_includes",
             "program",
             "starts_at",
         )

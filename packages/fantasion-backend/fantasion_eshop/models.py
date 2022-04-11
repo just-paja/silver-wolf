@@ -30,7 +30,7 @@ from django.db.models import (
 from rest_framework.exceptions import PermissionDenied
 from fantasion.models import UserAddressBase
 from fantasion_generics.emails import get_lang, send_mail
-from fantasion_generics.models import PublicModel
+from fantasion_generics.models import MarkdownField, PublicModel
 from fantasion_generics.money import MoneyField
 from fantasion_banking.constants import (
     DEBT_SOURCE_GENERATED_ORDER,
@@ -110,6 +110,12 @@ class EshopProduct(TimeStampedModel):
         max_length=255,
         help_text=_(("Description is automatically generated"
                      "summary of the product")),
+    )
+    price_includes = MarkdownField(
+        blank=True,
+        help_text=_("Desription of services included in price"),
+        null=True,
+        verbose_name=_("Price includes"),
     )
 
     def save(self, *args, **kwargs):

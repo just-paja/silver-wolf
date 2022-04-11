@@ -1,12 +1,16 @@
+import classnames from 'classnames'
 import Card from 'react-bootstrap/Card'
 import ListGroup from 'react-bootstrap/ListGroup'
 
+import { ArticleStub } from './articles'
 import { DurationIcon, IconLabel, PersonIcon, StoryIcon } from './icons'
 import { getDaysDuration } from './dates'
 import { Heading, Section } from './media'
 import { PriceTag } from './money'
 import { SignupButton } from './expeditions'
 import { useTranslation } from 'next-i18next'
+
+import styles from './troops.module.scss'
 
 export const TroopLabel = ({ ageMin, ageMax, startsAt, endsAt }) => {
   const { t } = useTranslation()
@@ -57,7 +61,17 @@ export const TroopCard = ({ expedition, batch, troop }) => {
             ))}
           </ul>
         </ListGroup.Item>
+        {troop.priceIncludes && (
+          <ListGroup.Item>
+            <ArticleStub
+              className={classnames('mt-3', styles.priceIncludes)}
+              heading={t('signup-troop-price-includes')}
+              text={troop.priceIncludes}
+            />
+          </ListGroup.Item>
+        )}
       </ListGroup>
+
       <Card.Body>
         <SignupButton expedition={expedition} batch={batch} />
       </Card.Body>

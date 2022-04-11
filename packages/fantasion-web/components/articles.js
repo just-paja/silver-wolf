@@ -9,7 +9,7 @@ import { asPage, MetaPage } from './meta'
 import { GenericPage } from './layout'
 import { Link } from './links'
 import { MarkdownContent } from './content'
-import { Heading, HeadingContext, ThumbGallery } from './media'
+import { Heading, HeadingContext, Section, ThumbGallery } from './media'
 
 export const ArticleBody = ({ className, text }) => (
   <MarkdownContent className={classnames('mt-3', className)}>
@@ -17,16 +17,21 @@ export const ArticleBody = ({ className, text }) => (
   </MarkdownContent>
 )
 
-export const ArticleLead = ({ text }) => (
-  <i>
-    <ArticleBody className="" text={text} />
-  </i>
+export const ArticleLead = ({ className, text }) => (
+  <ArticleBody className={classnames('fst-italic', className)} text={text} />
 )
 
 export const ArticleHeading = ({ selfLink, children }) => {
   const content = selfLink ? <Link {...selfLink}>{children}</Link> : children
   return <Heading>{content}</Heading>
 }
+
+export const ArticleStub = ({ heading, text, ...props }) => (
+  <Section as="article" {...props}>
+    <Heading>{heading}</Heading>
+    <ArticleBody text={text} />
+  </Section>
+)
 
 export const Article = ({
   afterText,

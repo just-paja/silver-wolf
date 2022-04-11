@@ -94,6 +94,7 @@ class TroopSerializer(ModelSerializer):
             "batch",
             "program",
             "starts_at",
+            "price_includes",
         )
 
 

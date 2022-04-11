@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-12 01:12+0200\n"
+"POT-Creation-Date: 2022-04-12 01:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -168,7 +168,7 @@ msgstr ""
 "Lidsky čitelný identifikátor, který pomůže uživateli rozpoznat tuto adresu, "
 "například \"Doma\""
 
-#: fantasion/models.py:229 fantasion_eshop/models.py:189
+#: fantasion/models.py:229 fantasion_eshop/models.py:193
 #: fantasion_locations/models.py:14 fantasion_locations/models.py:77
 msgid "Country"
 msgstr "Země"
@@ -203,7 +203,7 @@ msgstr "Položka"
 
 #: fantasion/templates/eshop/invoice.html:227
 #: fantasion/templates/mail/order_confirmation.html:23
-#: fantasion_eshop/models.py:160 fantasion_eshop/models.py:407
+#: fantasion_eshop/models.py:164 fantasion_eshop/models.py:411
 msgid "Price"
 msgstr "Cena"
 
@@ -523,11 +523,11 @@ msgstr "Vytvořeno opakováním"
 msgid "Created from order"
 msgstr "Vytvořeno z objednávky"
 
-#: fantasion_banking/constants.py:28 fantasion_eshop/models.py:220
+#: fantasion_banking/constants.py:28 fantasion_eshop/models.py:224
 msgid "Deposit"
 msgstr "Záloha"
 
-#: fantasion_banking/constants.py:29 fantasion_eshop/models.py:408
+#: fantasion_banking/constants.py:29 fantasion_eshop/models.py:412
 msgid "Surcharge"
 msgstr "Doplatek"
 
@@ -670,7 +670,7 @@ msgstr "Pohledávka {self.id} nemá žádného vlastníka"
 
 #: fantasion_banking/promises.py:116 fantasion_banking/promises.py:129
 #: fantasion_banking/promises.py:142 fantasion_banking/promises.py:157
-#: fantasion_eshop/models.py:339
+#: fantasion_eshop/models.py:343
 #, python-brace-format
 msgid "Order {number}"
 msgstr "Objednávka {number}"
@@ -882,11 +882,11 @@ msgstr "Text"
 msgid "Fantasion Domain"
 msgstr "Doména"
 
-#: fantasion_eshop/api.py:93
+#: fantasion_eshop/api.py:96
 msgid "Cannot use the same Promotion Code multiple times"
 msgstr "Nelze použít ten samý kód dvakrát."
 
-#: fantasion_eshop/api.py:110
+#: fantasion_eshop/api.py:113
 msgid "Invalid Promotion Code"
 msgstr "Neplatný slevový kód"
 
@@ -938,56 +938,64 @@ msgstr "Objednávka"
 msgid "E-shop Products"
 msgstr "Objednávky"
 
-#: fantasion_eshop/models.py:145
+#: fantasion_eshop/models.py:115
+msgid "Desription of services included in price"
+msgstr "Detailní popis služeb a produktů obsažených v ceně"
+
+#: fantasion_eshop/models.py:116
+msgid "Price includes"
+msgstr "V ceně"
+
+#: fantasion_eshop/models.py:149
 msgid "E-shop Product Price"
 msgstr "Produktová cena"
 
-#: fantasion_eshop/models.py:146
+#: fantasion_eshop/models.py:150
 msgid "E-shop Product Prices"
 msgstr "Produktové ceny"
 
-#: fantasion_eshop/models.py:152
+#: fantasion_eshop/models.py:156
 msgid "Product"
 msgstr "Produkt"
 
-#: fantasion_eshop/models.py:158
+#: fantasion_eshop/models.py:162
 msgid "Price level"
 msgstr "Cenová hladina"
 
-#: fantasion_eshop/models.py:164
+#: fantasion_eshop/models.py:168
 msgid "Available since"
 msgstr "Dostupné od"
 
-#: fantasion_eshop/models.py:169
+#: fantasion_eshop/models.py:173
 msgid "Available until"
 msgstr "Dostupné do"
 
-#: fantasion_eshop/models.py:196 fantasion_eshop/models.py:397
-#: fantasion_eshop/models.py:427
+#: fantasion_eshop/models.py:200 fantasion_eshop/models.py:401
+#: fantasion_eshop/models.py:431
 msgid "E-shop Order"
 msgstr "Objednávka"
 
-#: fantasion_eshop/models.py:197
+#: fantasion_eshop/models.py:201
 msgid "E-shop Orders"
 msgstr "Objednávky"
 
-#: fantasion_eshop/models.py:203
+#: fantasion_eshop/models.py:207
 msgid "Order owner"
 msgstr "Majitel objednávky"
 
-#: fantasion_eshop/models.py:207
+#: fantasion_eshop/models.py:211
 msgid "Order Status"
 msgstr "Stav objednávky"
 
-#: fantasion_eshop/models.py:215
+#: fantasion_eshop/models.py:219
 msgid "Payment Promise"
 msgstr "Pohledávka"
 
-#: fantasion_eshop/models.py:217
+#: fantasion_eshop/models.py:221
 msgid "Total Price"
 msgstr "Celková cena"
 
-#: fantasion_eshop/models.py:225
+#: fantasion_eshop/models.py:229
 msgid ""
 "System will split the payment into deposit and surcharge based on Order "
 "Items configuration"
@@ -995,15 +1003,15 @@ msgstr ""
 "Systém rozdělí platbu na zálohu a doplatek na základě nastavení položek "
 "objednávky"
 
-#: fantasion_eshop/models.py:227
+#: fantasion_eshop/models.py:231
 msgid "Use Deposit Payment"
 msgstr "Rozdělit na zálohu a doplatek"
 
-#: fantasion_eshop/models.py:231
+#: fantasion_eshop/models.py:235
 msgid "Insurance Request"
 msgstr "Žádost o pojištění"
 
-#: fantasion_eshop/models.py:233
+#: fantasion_eshop/models.py:237
 msgid ""
 "The Order Owner requested assistance with getting insurance and expects to "
 "be contacted by Fantasion staff."
@@ -1011,49 +1019,49 @@ msgstr ""
 "Majitel objednávky požádal o pomoc se zajištěním pojištění a očekává, že ho "
 "budou kontaktovat zaměstnanci Fantasionu."
 
-#: fantasion_eshop/models.py:240 fantasion_signups/models.py:166
+#: fantasion_eshop/models.py:244 fantasion_signups/models.py:166
 msgid "Submitted at"
 msgstr "Čas odeslání"
 
-#: fantasion_eshop/models.py:403
+#: fantasion_eshop/models.py:407
 #, python-brace-format
 msgid "Cannot delete order in status {self.status}"
 msgstr "Nelze smazat objednávku ve stavu {self.status}"
 
-#: fantasion_eshop/models.py:414
+#: fantasion_eshop/models.py:418
 msgid "This product price is not available."
 msgstr "Tato cena není k dispozici"
 
-#: fantasion_eshop/models.py:420
+#: fantasion_eshop/models.py:424
 msgid "E-shop Order Item"
 msgstr "Položka objednávky"
 
-#: fantasion_eshop/models.py:421
+#: fantasion_eshop/models.py:425
 msgid "E-shop Order Items"
 msgstr "Položky objednávky"
 
-#: fantasion_eshop/models.py:435
+#: fantasion_eshop/models.py:439
 msgid "Product Price"
 msgstr "Produktová cena"
 
-#: fantasion_eshop/models.py:438
+#: fantasion_eshop/models.py:442
 msgid "Real Price"
 msgstr "Skutečná cena"
 
-#: fantasion_eshop/models.py:441
+#: fantasion_eshop/models.py:445
 msgid "Product Type"
 msgstr "Typ produktu"
 
-#: fantasion_eshop/models.py:494 fantasion_eshop/models.py:501
-#: fantasion_eshop/models.py:561
+#: fantasion_eshop/models.py:498 fantasion_eshop/models.py:505
+#: fantasion_eshop/models.py:565
 msgid "Promotion Code"
 msgstr "Propagační kód"
 
-#: fantasion_eshop/models.py:495
+#: fantasion_eshop/models.py:499
 msgid "Promotion Codes"
 msgstr "Propagační kódy"
 
-#: fantasion_eshop/models.py:503
+#: fantasion_eshop/models.py:507
 msgid ""
 "Type an unique code with combination of letters, numbers and symbols that "
 "are not too difficult to type"
@@ -1061,53 +1069,53 @@ msgstr ""
 "Napiš unikátní kód sestavený písmen a číslic, který není složitý na naťukání "
 "na klávesnici telefonu"
 
-#: fantasion_eshop/models.py:511 fantasion_eshop/models.py:579
+#: fantasion_eshop/models.py:515 fantasion_eshop/models.py:583
 msgid "Discount"
 msgstr "Sleva"
 
-#: fantasion_eshop/models.py:512
+#: fantasion_eshop/models.py:516
 msgid "This percentage will be cut of the total order price."
 msgstr "Procentuální sleva z celé objednávky"
 
-#: fantasion_eshop/models.py:517
+#: fantasion_eshop/models.py:521
 msgid "Maximum discount"
 msgstr "Maximální sleva"
 
-#: fantasion_eshop/models.py:518
+#: fantasion_eshop/models.py:522
 msgid "The system will cap the absolute discount."
 msgstr "System zeshora omezí absolutní slevu."
 
-#: fantasion_eshop/models.py:523
+#: fantasion_eshop/models.py:527
 msgid "Maximum Usages"
 msgstr "Maximum použití"
 
-#: fantasion_eshop/models.py:525
+#: fantasion_eshop/models.py:529
 msgid ""
 "This Promotion Code can be used only so many times, then it will be "
 "deactivated"
 msgstr "Kód bude možné použít pouze tolikrát. Potom bude deaktivován."
 
-#: fantasion_eshop/models.py:532
+#: fantasion_eshop/models.py:536
 msgid "Valid from"
 msgstr "Platné od"
 
-#: fantasion_eshop/models.py:534
+#: fantasion_eshop/models.py:538
 msgid "This Promotion Code will be invalid until this date and time"
 msgstr "Kód začne platit s uplynutím tohoto data a času"
 
-#: fantasion_eshop/models.py:539 fantasion_signups/models.py:301
+#: fantasion_eshop/models.py:543 fantasion_signups/models.py:301
 msgid "Valid until"
 msgstr "Platné do"
 
-#: fantasion_eshop/models.py:541
+#: fantasion_eshop/models.py:545
 msgid "This Promotion Code will be invalid after this date and time"
 msgstr "Kód přestane platit s uplynutím tohoto data a času"
 
-#: fantasion_eshop/models.py:555
+#: fantasion_eshop/models.py:559
 msgid "Order Promotion Code"
 msgstr "Slevový kód"
 
-#: fantasion_eshop/models.py:556
+#: fantasion_eshop/models.py:560
 msgid "Order Promotion Codes"
 msgstr "Slevové kódy"
 
@@ -1119,119 +1127,119 @@ msgstr "Náhled faktury"
 msgid "Fantasion Expeditions"
 msgstr "Tábory"
 
-#: fantasion_expeditions/models.py:26 fantasion_expeditions/models.py:125
+#: fantasion_expeditions/models.py:27 fantasion_expeditions/models.py:126
 msgid "Leisure Centre"
 msgstr "Rekreační středisko"
 
-#: fantasion_expeditions/models.py:27
+#: fantasion_expeditions/models.py:28
 msgid "Leisure Centres"
 msgstr "Rekreační střediska"
 
-#: fantasion_expeditions/models.py:37
+#: fantasion_expeditions/models.py:38
 msgid "This location will be posted on the map and used for navigation."
 msgstr "Umístění bude zobrazeno na mapě a použito k navigaci"
 
-#: fantasion_expeditions/models.py:41 fantasion_locations/models.py:64
+#: fantasion_expeditions/models.py:42 fantasion_locations/models.py:64
 msgid "Location"
 msgstr "Umístění"
 
-#: fantasion_expeditions/models.py:46
+#: fantasion_expeditions/models.py:47
 msgid ""
 "This location will be used as a postal address,instruct people to mail here."
 msgstr ""
 "Umístění bude označeno jako poštovní adresa a uživatelé budou naváděni aby "
 "posílali poštu sem"
 
-#: fantasion_expeditions/models.py:51
+#: fantasion_expeditions/models.py:52
 msgid "Mailing address"
 msgstr "Poštovní adresa"
 
-#: fantasion_expeditions/models.py:57
+#: fantasion_expeditions/models.py:58
 msgid "Website"
 msgstr "Webové stránky"
 
-#: fantasion_expeditions/models.py:70 fantasion_expeditions/models.py:98
+#: fantasion_expeditions/models.py:71 fantasion_expeditions/models.py:99
 msgid "Expedition Theme"
 msgstr "Táborové téma"
 
-#: fantasion_expeditions/models.py:71
+#: fantasion_expeditions/models.py:72
 msgid "Expedition Themes"
 msgstr "Táborová témata"
 
-#: fantasion_expeditions/models.py:87 fantasion_expeditions/models.py:119
+#: fantasion_expeditions/models.py:88 fantasion_expeditions/models.py:120
 msgid "Expedition"
 msgstr "Tábor"
 
-#: fantasion_expeditions/models.py:88
+#: fantasion_expeditions/models.py:89
 msgid "Expeditions"
 msgstr "Tábory"
 
-#: fantasion_expeditions/models.py:112 fantasion_expeditions/models.py:158
-#: fantasion_expeditions/models.py:227
+#: fantasion_expeditions/models.py:113 fantasion_expeditions/models.py:159
+#: fantasion_expeditions/models.py:228
 msgid "Expedition Batch"
 msgstr "Turnus"
 
-#: fantasion_expeditions/models.py:113
+#: fantasion_expeditions/models.py:114
 msgid "Expedition Batches"
 msgstr "Turnusy"
 
-#: fantasion_expeditions/models.py:127 fantasion_expeditions/models.py:243
+#: fantasion_expeditions/models.py:128 fantasion_expeditions/models.py:244
 msgid "Starts at"
 msgstr "Začátek"
 
-#: fantasion_expeditions/models.py:128 fantasion_expeditions/models.py:244
+#: fantasion_expeditions/models.py:129 fantasion_expeditions/models.py:245
 msgid "Ends at"
 msgstr "Konec"
 
-#: fantasion_expeditions/models.py:141
+#: fantasion_expeditions/models.py:142
 msgid "Staff Role"
 msgstr "Zaměstnanecká role"
 
-#: fantasion_expeditions/models.py:142
+#: fantasion_expeditions/models.py:143
 msgid "Staff Roles"
 msgstr "Zaměstnanecké role"
 
-#: fantasion_expeditions/models.py:151 fantasion_expeditions/models.py:152
+#: fantasion_expeditions/models.py:152 fantasion_expeditions/models.py:153
 msgid "Batch Staff"
 msgstr "Zaměstnanci"
 
-#: fantasion_expeditions/models.py:164 fantasion_people/models.py:30
+#: fantasion_expeditions/models.py:165 fantasion_people/models.py:30
 msgid "Profile"
 msgstr "Profil"
 
-#: fantasion_expeditions/models.py:170
+#: fantasion_expeditions/models.py:171
 msgid "Role"
 msgstr "Role"
 
-#: fantasion_expeditions/models.py:182 fantasion_expeditions/models.py:233
+#: fantasion_expeditions/models.py:183 fantasion_expeditions/models.py:234
 msgid "Age Group"
 msgstr "Věková skupina"
 
-#: fantasion_expeditions/models.py:183
+#: fantasion_expeditions/models.py:184
 msgid "Age Groups"
 msgstr "Věkové skupiny"
 
-#: fantasion_expeditions/models.py:186
+#: fantasion_expeditions/models.py:187
 msgid "Minimal age"
 msgstr "Minimální věk"
 
-#: fantasion_expeditions/models.py:187
+#: fantasion_expeditions/models.py:188
 msgid "Maximal age"
 msgstr "Maximální věk"
 
-#: fantasion_expeditions/models.py:203 fantasion_expeditions/models.py:241
+#: fantasion_expeditions/models.py:204 fantasion_expeditions/models.py:242
 msgid "Expedition Program"
 msgstr "Táborový program"
 
-#: fantasion_expeditions/models.py:204
+#: fantasion_expeditions/models.py:205
 msgid "Expedition Programs"
 msgstr "Táborové programy"
 
-#: fantasion_expeditions/models.py:220 fantasion_signups/models.py:146
+#: fantasion_expeditions/models.py:221 fantasion_signups/models.py:146
 msgid "Troop"
 msgstr "Oddíl"
 
-#: fantasion_expeditions/models.py:221
+#: fantasion_expeditions/models.py:222
 msgid "Troops"
 msgstr "Oddíly"
 

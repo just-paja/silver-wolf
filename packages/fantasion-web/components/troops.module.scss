@@ -1,0 +1,9 @@
+@import '../styles/variables.scss';
+
+.priceIncludes {
+  font-size: calc($font-size-base / 1.2);
+
+  h3 {
+    font-size: calc($h3-font-size / 1.5);
+  }
+}

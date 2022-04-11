@@ -118,6 +118,7 @@ class TroopAdmin(BaseAdmin):
         'age_group__title',
         'starts_at',
         'ends_at',
+        'price_includes',
     )
 
     def expedition(self, instance):

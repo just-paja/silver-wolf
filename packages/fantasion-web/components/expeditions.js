@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col'
 import React from 'react'
 import Row from 'react-bootstrap/Row'
 
-import { ArticleBody, ArticleLead } from './articles'
+import { ArticleBody } from './articles'
 import { DateRange } from './dates'
 import { Heading } from './media'
 import { InteractiveButton } from './buttons'
@@ -116,7 +116,7 @@ const ExpeditionBatch = ({ batch, expedition }) => {
     const priceObj = troop.prices.find((p) => p.active)
     const priceStr = priceObj?.price
     const price = priceStr ? parseFloat(priceStr) : null
-    return aggr === null || aggr > price ? price : aggr
+    return !aggr || aggr.price > price ? price : aggr
   }, null)
   return (
     <div className={classnames('mt-3', styles.batch)}>
@@ -141,6 +141,7 @@ const ExpeditionBatch = ({ batch, expedition }) => {
                 ageMin={troop.ageGroup.ageMin}
                 endsAt={troop.endsAt}
                 startsAt={troop.startsAt}
+                priceIncludes={troop.priceIncludes}
               />
             ))}
           </div>
@@ -165,9 +166,6 @@ const ExpeditionBatch = ({ batch, expedition }) => {
             {t('expedition-batch-more-info')}
           </Link>
         </Col>
-        <div className={styles.ArticleLead}>
-          <ArticleLead text={t('price-info')} />
-        </div>
       </Row>
     </div>
   )

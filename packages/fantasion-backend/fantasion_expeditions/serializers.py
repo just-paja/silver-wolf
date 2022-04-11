@@ -166,6 +166,7 @@ class TroopSerializer(HyperlinkedModelSerializer):
             "prices",
             "program",
             "starts_at",
+            "price_includes",
         )
 
 
