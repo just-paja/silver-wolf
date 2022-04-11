@@ -135,7 +135,7 @@ const OrderPayDialog = ({ payAs, onHide, order, show }) => {
   )
 }
 
-const OrderPaymentButtons = ({ order, ...props }) => {
+const OrderPaymentButtons = ({ order }) => {
   const [payAs, setPayAs] = useState(null)
   const [showDialog, setShowDialog] = useState(false)
   const { t } = useTranslation()
