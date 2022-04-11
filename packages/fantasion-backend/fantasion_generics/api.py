@@ -40,7 +40,6 @@ address_fields = (
     'postal_code',
     'street',
     'street_number',
-    'title',
 )
 
 

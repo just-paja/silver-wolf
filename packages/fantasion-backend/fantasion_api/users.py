@@ -222,7 +222,7 @@ class UserAddressSerializer(ModelSerializer):
 
     class Meta:
         model = models.UserAddress
-        fields = (*address_fields, 'country_code')
+        fields = (*address_fields, 'title', 'country_code')
         read_only_fields = ('country',)
 
     def get_or_create_country(self, country_code):

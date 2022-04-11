@@ -89,6 +89,9 @@ class User(AbstractUser):
     def __str__(self):
         return f"{self.get_full_name()} <{self.email}>"
 
+    def get_default_invoice_address(self):
+        return self.useraddress_set.first()
+
 
 NEXT_STEP_CREATE_PASSWORD = 1
 NEXT_STEP_RESTORE_PASSWORD = 2
@@ -157,9 +160,6 @@ class EmailVerification(TimeStampedModel):
             self.send_password_refresh()
         self.sent += 1
         self.save()
-
-    def get_default_invoice_address(self):
-        return self.user_addresses.first()
 
     def get_landing_path(self):
         if self.next_step == NEXT_STEP_CREATE_PASSWORD:

@@ -251,6 +251,7 @@ export const FormControls = ({
   cancelLabel,
   children,
   onCancel,
+  size,
   submitLabel,
 }) => {
   const { t } = useTranslation()
@@ -264,12 +265,15 @@ export const FormControls = ({
             className="me-2"
             type="button"
             variant="warning"
+            size={size}
             onClick={onCancel}
           >
             {cancelLabel || t('cancel')}
           </InteractiveButton>
         )}
-        <Submit inProgress={formState.isSubmitting}>{submitLabel}</Submit>
+        <Submit inProgress={formState.isSubmitting} size={size}>
+          {submitLabel}
+        </Submit>
         {children}
       </div>
     </>

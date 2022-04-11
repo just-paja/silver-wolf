@@ -9,11 +9,11 @@ import Row from 'react-bootstrap/Row'
 import styles from './orders.module.scss'
 
 import { Address, PostalCodeInput, StreetNumberInput } from './addresses'
+import { bool, string } from 'yup'
 import { CancelIcon } from './icons'
 import { CopyButton, InteractiveButton } from './buttons'
 import { AutosaveForm, Form, FormControls, Input, useValidator } from './forms'
 import { Heading, Section } from './media'
-import { string } from 'yup'
 import { useFetch, useUser } from './context'
 import { useFormContext } from 'react-hook-form'
 import { UserName } from './users'
@@ -511,11 +511,15 @@ const AddAddressDialog = ({ show, onHide, onSubmit }) => {
 
 export const BillingInformationPreview = ({ order }) => {
   const { t } = useTranslation()
+  const user = useUser()
   return (
     <Section className="mt-3">
       <Heading>{t('order-billing-information')}</Heading>
+      <p>
+        <UserName user={user} />{' '}
+      </p>
       <Address {...order.userInvoiceAddress} />
-      <Heading>{t('order-payment-information')}</Heading>
+      <Heading className="mt-3">{t('order-payment-information')}</Heading>
       <p>{t('order-payment-method-transfer')}</p>
     </Section>
   )
@@ -629,3 +633,20 @@ export const PaymentInformation = ({ order, onSubmit }) => {
 export const EmptyBasket = ({ ...props }) => (
   <Alert {...props}>{useTranslation().t('order-basket-empty')}</Alert>
 )
+
+export const ConfirmOrderForm = ({ onSubmit }) => {
+  const { t } = useTranslation()
+  const validator = useValidator({
+    termsAndConditions: bool().oneOf([true], t('form-input-required')),
+  })
+  return (
+    <Form onSubmit={onSubmit} resolver={validator}>
+      <Input
+        type="checkbox"
+        name="termsAndConditions"
+        label={t('order-agree-terms-and-conditions')}
+      />
+      <FormControls size="lg" submitLabel={t('order-confirm')} />
+    </Form>
+  )
+}

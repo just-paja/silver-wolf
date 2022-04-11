@@ -15,11 +15,23 @@ import { useFetch, useLang } from '../../components/context'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
-import { BillingInformationPreview, OrderCard } from '../../components/orders'
+import {
+  BillingInformationPreview,
+  ConfirmOrderForm,
+  OrderCard,
+} from '../../components/orders'
 
 export const getServerSideProps = withPageProps(
-  requireUser(async ({ fetch }) => {
+  requireUser(async ({ fetch, lang }) => {
     const [activeOrder] = await Promise.all([fetch('/orders/active')])
+    if (!activeOrder) {
+      return {
+        redirect: {
+          destination: reverse(lang, 'basket'),
+          permanent: false,
+        },
+      }
+    }
     return {
       props: {
         activeOrder,
@@ -43,35 +55,35 @@ const OrderCheckoutPage = ({ activeOrder }) => {
     <GenericPage>
       <MetaPage title={title} description={t('order-checkout-description')} />
       <Container as="article" className="mt-3">
-        <Breadcrumbs
-          links={[
-            {
-              children: t('order-checkout'),
-            },
-          ]}
-        />
-        <header>
-          <Heading>{t('order-payment-and-delivery')}</Heading>
-        </header>
-        <OrderCard className="mt-4" order={order} hideStatus />
         <Row>
-          <Col md={6}>
+          <Col lg={{ span: 8, offset: 2 }} xl={{ span: 6, offset: 3 }}>
+            <Breadcrumbs
+              links={[
+                {
+                  children: t('order-checkout'),
+                },
+              ]}
+            />
+            <header>
+              <Heading>{t('order-payment-and-delivery')}</Heading>
+            </header>
+            <OrderCard className="mt-4" order={order} hideStatus />
             <BillingInformationPreview order={order} />
+            <div className="d-flex justify-content-between align-items-end mt-3">
+              <Link
+                as={InteractiveButton}
+                size="lg"
+                route="paymentAndDelivery"
+                variant="secondary"
+              >
+                {t('order-previous')}
+              </Link>
+              <div>
+                <ConfirmOrderForm onSubmit={confirmOrder} />
+              </div>
+            </div>
           </Col>
         </Row>
-        <div className="d-flex justify-content-between mt-3">
-          <Link
-            as={InteractiveButton}
-            size="lg"
-            route="paymentAndDelivery"
-            variant="secondary"
-          >
-            {t('order-previous')}
-          </Link>
-          <InteractiveButton size="lg" onClick={confirmOrder}>
-            {t('order-confirm')}
-          </InteractiveButton>
-        </div>
       </Container>
     </GenericPage>
   )

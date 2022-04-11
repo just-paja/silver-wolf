@@ -9,6 +9,7 @@ import { GenericPage } from '../../components/layout'
 import { Heading } from '../../components/media'
 import { Link } from '../../components/links'
 import { InteractiveButton } from '../../components/buttons'
+import { reverse } from '../../routes'
 import {
   BillingInformation,
   PaymentInformation,
@@ -19,11 +20,19 @@ import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
 
 export const getServerSideProps = withPageProps(
-  requireUser(async ({ fetch }) => {
+  requireUser(async ({ fetch, lang }) => {
     const [activeOrder, userAddresses] = await Promise.all([
       fetch('/orders/active'),
       fetch('/user-addresses'),
     ])
+    if (!activeOrder) {
+      return {
+        redirect: {
+          destination: reverse(lang, 'basket'),
+          permanent: false,
+        },
+      }
+    }
     return {
       props: {
         activeOrder,

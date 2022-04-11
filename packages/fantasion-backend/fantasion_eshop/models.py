@@ -346,6 +346,17 @@ class Order(TimeStampedModel):
 
     def confirm(self):
         self.status = ORDER_STATUS_CONFIRMED
+        address = self.user_invoice_address
+        self.invoice_address = OrderInvoiceAddress(
+            city=address.city,
+            street=address.street,
+            street_number=address.street_number,
+            country=address.country,
+            postal_code=address.postal_code,
+            user=self.owner,
+            order=self,
+        )
+        self.invoice_address.save()
         self.save()
 
     def save(self, *args, **kwargs):
