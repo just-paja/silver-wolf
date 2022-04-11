@@ -283,7 +283,7 @@ export const BillingInformationPreview = ({ order }) => {
       </p>
       <Address {...order.userInvoiceAddress} />
       <Heading className="mt-3">{t('order-payment-information')}</Heading>
-      <p>{t('order-payment-method-transfer')}</p>
+      <p>{t('order-pay-via-bank-transfer-only')}</p>
     </Section>
   )
 }
