@@ -182,11 +182,13 @@ export const Tracking = () => {
   }
   return (
     <>
-      <ConsentDialog
-        consent={consent}
-        show={showDialog}
-        onResolve={saveConsent}
-      />
+      {showDialog && (
+        <ConsentDialog
+          consent={consent}
+          show={showDialog}
+          onResolve={saveConsent}
+        />
+      )}
       {consent?.tracking && <GoogleTagManager />}
     </>
   )
