@@ -29,8 +29,7 @@ class OrderCollection(RWViewSet):
 
     def list(self, request):
         queryset = self.get_queryset().exclude(
-            status=models.ORDER_STATUS_NEW,
-        ).order_by('-submitted_at')
+            status=models.ORDER_STATUS_NEW, ).order_by('-submitted_at')
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
@@ -56,13 +55,12 @@ class OrderCollection(RWViewSet):
     def confirm(self, *args, **kwargs):
         order = self.get_object()
         if order.status == models.ORDER_STATUS_NEW:
-            print(args, flush=True)
-            print(kwargs, flush=True)
             body = json.loads(self.request.body)
-            order.request_insurance = bool(body.get(
-                'request_insurance',
-                False,
-            ))
+            order.request_insurance = bool(
+                body.get(
+                    'request_insurance',
+                    False,
+                ))
             order.confirm()
             serializer = self.get_serializer(order)
             return Response(serializer.data)

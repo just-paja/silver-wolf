@@ -20,9 +20,6 @@ def sync(account, scrape, *args, **kwargs):
     else:
         gen = client.last(from_date='2022-04-01')
 
-    print(last, flush=True)
-    print(gen, flush=True)
-
     for line in gen:
         defaults = {
             'amount': Money(get(line, 'amount'), get(line, 'currency')),
