@@ -10,8 +10,11 @@ input, select {
 .phoneInput {
   max-width: $spacer * 14;
   position: relative;
-  padding-top: 0;
-  padding-bottom: 0;
+
+  &:global(.form-control) {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 
   :global(.flag-dropdown) {
     left: 0;
