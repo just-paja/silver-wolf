@@ -1,8 +1,12 @@
 import classnames from 'classnames'
 import Col from 'react-bootstrap/Col'
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
 
+import { CloseIcon, NextIcon, PrevIcon } from './icons'
 import { HeadingLevelContext, useHeadingLevel } from './context'
-import { forwardRef, useEffect, useState } from 'react'
+import { forwardRef, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'next-i18next'
 
 import styles from './media.module.scss'
 
@@ -87,16 +91,26 @@ const LocalPhoto = ({
   ...props
 }) => <PreviewComponent localPhoto={localPhoto} {...props} />
 
-const MediaObject = ({ mediaObject, ...props }) => {
+const MediaObject = ({ className, mediaObject, onDetail, ...props }) => {
+  const onClick = onDetail ? (e) => onDetail(mediaObject, e) : null
+  const composedClass = classnames(
+    { [styles.interactiveThumb]: onDetail },
+    className
+  )
   if (mediaObject.localPhoto) {
-    return <LocalPhoto localPhoto={mediaObject.localPhoto} {...props} />
+    return (
+      <LocalPhoto
+        {...props}
+        className={composedClass}
+        localPhoto={mediaObject.localPhoto}
+        onClick={onClick}
+      />
+    )
   }
   return null
 }
 
-const isValid = (mediaObject) => {
-  return Boolean(mediaObject.localPhoto)
-}
+const isValid = (mediaObject) => Boolean(mediaObject.localPhoto)
 
 const ReflessSlideShowGallery = (
   {
@@ -137,18 +151,114 @@ const ReflessSlideShowGallery = (
 
 export const SlideShowGallery = forwardRef(ReflessSlideShowGallery)
 
-export const ThumbGallery = ({ className, media, ...props }) => {
+const LightBoxButton = ({ className, icon: Icon, onClick, ...props }) => (
+  <Button
+    className={classnames(styles.lightboxButton, className)}
+    disabled={!onClick}
+    onClick={onClick}
+    {...props}
+  >
+    <Icon />
+  </Button>
+)
+
+const LightBox = ({ mediaObject, onNext, onPrev, onClose, show }) => {
+  const { t } = useTranslation()
+  const container = useRef(null)
+  const handleBackdropClick = (e) =>
+    e.target.classList.contains('modal-content') && onClose()
+
+  const handleOpenFocus = () => container.current && container.current.focus()
+  const handleKeyUp = (e) => {
+    if (e.key === 'ArrowLeft' && onPrev) {
+      onPrev()
+    }
+    if (e.key === 'ArrowRight' && onNext) {
+      onNext()
+    }
+  }
   return (
-    <div className={classnames(styles.thumbGallery, className)} {...props}>
-      {media.filter(isValid).map((mediaObject) => (
-        <MediaObject
-          className={styles.thumb}
-          key={mediaObject.id}
-          mediaObject={mediaObject}
-          size="galleryDecoration"
+    <Modal
+      centered
+      className={styles.lightbox}
+      fullscreen
+      onClick={handleBackdropClick}
+      onEntered={handleOpenFocus}
+      onHide={onClose}
+      show={show}
+      size="xl"
+    >
+      <div
+        className={styles.lightboxContainer}
+        onKeyUp={handleKeyUp}
+        ref={container}
+        tabIndex={-1}
+      >
+        <LightBoxButton
+          className={styles.lightboxClose}
+          icon={CloseIcon}
+          onClick={onClose}
+          title={t('close')}
         />
-      ))}
-    </div>
+        <LightBoxButton
+          className={styles.lightboxPrev}
+          icon={PrevIcon}
+          onClick={onPrev}
+          title={t('prev')}
+        />
+        <LightBoxButton
+          className={styles.lightboxNext}
+          icon={NextIcon}
+          onClick={onNext}
+          title={t('next')}
+        />
+        <MediaObject mediaObject={mediaObject} size="galleryDetail" />
+      </div>
+    </Modal>
+  )
+}
+
+export const ThumbGallery = ({
+  className,
+  media,
+  lightbox = true,
+  ...props
+}) => {
+  const [showDetail, setShowDetail] = useState(false)
+  const [detail, setDetail] = useState(null)
+  const createLightboxOpen = (mediaObject) => () => {
+    setDetail(mediaObject)
+    setShowDetail(true)
+  }
+  const currentIndex = media.indexOf(detail)
+  const nextObj = media[currentIndex + 1]
+  const prevObj = media[currentIndex - 1]
+  const handleClose = () => setShowDetail(false)
+  const handleNext = nextObj ? () => setDetail(nextObj) : null
+  const handlePrev = prevObj ? () => setDetail(prevObj) : null
+  return (
+    <>
+      {lightbox && (
+        <LightBox
+          mediaObject={detail}
+          onClose={handleClose}
+          onNext={handleNext}
+          onPrev={handlePrev}
+          show={showDetail}
+        />
+      )}
+      <div className={classnames(styles.thumbGallery, className)} {...props}>
+        {media.filter(isValid).map((mediaObject) => (
+          <MediaObject
+            className={styles.thumb}
+            key={mediaObject.id}
+            mediaObject={mediaObject}
+            size="galleryDecoration"
+            onDetail={createLightboxOpen(mediaObject)}
+          />
+        ))}
+      </div>
+    </>
   )
 }
 

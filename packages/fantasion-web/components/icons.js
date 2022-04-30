@@ -5,6 +5,8 @@ import { HiHome, HiMenu, HiMailOpen } from 'react-icons/hi'
 import { GiJourney } from 'react-icons/gi'
 import { IoPricetags } from 'react-icons/io5'
 import {
+  MdArrowLeft,
+  MdArrowRight,
   MdCancel,
   MdContentCopy,
   MdGppGood,
@@ -27,9 +29,10 @@ import {
 
 export const BasketIcon = BsBasket2Fill
 export const CancelIcon = MdCancel
+export const CloseIcon = MdCancel
 export const CopyIcon = MdContentCopy
-export const EmailContactIcon = HiMailOpen
 export const DurationIcon = FaCalendarWeek
+export const EmailContactIcon = HiMailOpen
 export const FacebookIcon = FaFacebook
 export const HamburgerMenuIcon = HiMenu
 export const HomeIcon = HiHome
@@ -37,7 +40,9 @@ export const InsecureIcon = MdGppBad
 export const InstagramIcon = FaInstagram
 export const LocationPinIcon = BsPinMapFill
 export const LogoutIcon = MdLogout
+export const NextIcon = MdArrowRight
 export const PersonIcon = BsPersonFill
+export const PrevIcon = MdArrowLeft
 export const PriceIcon = IoPricetags
 export const SecureIcon = MdGppGood
 export const SecurityWarningIcon = MdGppMaybe

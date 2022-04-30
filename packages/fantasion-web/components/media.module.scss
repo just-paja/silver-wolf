@@ -69,6 +69,16 @@
   background-size: cover;
 }
 
+.interactiveThumb {
+  border-radius: $border-radius;
+  overflow: hidden;
+  transition: all 0.2s;
+
+  &:hover {
+    box-shadow: $input-btn-focus-box-shadow;
+  }
+}
+
 @media (min-width: map-get($grid-breakpoints, 'sm')) {
   .pageTopGallery {
     height: 380px;
@@ -104,5 +114,59 @@
       background-size: contain;
       height: 100%;
     }
+  }
+}
+
+.lightbox {
+  user-select: none;
+
+  :global(.modal-content) {
+    background: rgba($black, 0.66);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2;
+  }
+}
+
+.lightboxButton {
+  background: none;
+  border: none;
+  display: block;
+  font-size: $h2-font-size;
+  line-height: calc($h2-font-size - 8px);
+  padding: 0;
+  position: absolute;
+  z-index: 1000;
+  color: $primary;
+
+  &:disabled,
+  &:hover {
+    background: transparent;
+  }
+}
+
+.lightboxClose {
+  right: calc($spacer / 2);
+  top: calc($spacer / 2);
+}
+
+.lightboxPrev,
+.lightboxNext {
+  bottom: $spacer;
+}
+
+.lightboxPrev {
+  left: calc($spacer / 2);
+}
+
+.lightboxNext {
+  right: calc($spacer / 2);
+}
+
+@include media-breakpoint-up(md) {
+  .lightboxContainer {
+    position: relative;
   }
 }

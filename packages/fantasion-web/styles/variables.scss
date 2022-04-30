@@ -20,3 +20,5 @@ $form-check-input-bg: $white;
 $input-medium: calc($spacer * 18);
 $paragraph-max-width: $spacer * 40;
 $enable-button-pointers: false;
+
+@import 'bootstrap/scss/_mixins.scss';
