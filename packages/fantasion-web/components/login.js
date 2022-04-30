@@ -1,7 +1,4 @@
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
-
-import { Form, FormControls, FormError, Input } from './forms'
+import { Form, FormControls, Input } from './forms'
 import { Link } from './links'
 import { useTranslation } from 'next-i18next'
 
@@ -18,19 +15,11 @@ export const LoginForm = ({ onSubmit }) => {
         type="password"
         required
       />
-      <FormError />
-      <Row>
-        <Col className="flex-grow-0 flex-shrink-1">
-          <FormControls submitLabel={t('login-submit')} />
-        </Col>
-        <Col>
-          <div className="mt-4">
-            <Link route="forgottenPassword">
-              {t('login-forgotten-password')}
-            </Link>
-          </div>
-        </Col>
-      </Row>
+      <FormControls submitLabel={t('login-submit')}>
+        <Link className="ms-3" route="forgottenPassword">
+          {t('login-forgotten-password')}
+        </Link>
+      </FormControls>
     </Form>
   )
 }
