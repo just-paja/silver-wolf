@@ -63,17 +63,17 @@ const Toasts = ({ remove, toasts }) => (
 )
 
 export const Alerts = () => {
-  const alerts = useAlerts()
-  if (alerts.empty) {
+  const { empty, items, remove } = useAlerts()
+  if (empty) {
     return null
   }
   return (
     <Container>
-      {alerts.map((alert) => (
+      {items.map((alert) => (
         <Alert
           className="m-auto mb-4"
           key={alert.id}
-          onClose={() => alerts.remove(alert.id)}
+          onClose={() => remove(alert.id)}
           variant={alert.severity}
         >
           {alert.text}
