@@ -136,6 +136,18 @@ const getChangeWrapper = (field, onChange) => (e) => {
   field.onChange(e)
 }
 
+const FormLabel = ({ colon = true, formCheck, required, text }) => (
+  <BsForm.Label
+    className={classnames(styles.label, {
+      'form-check-label': formCheck,
+      'fw-bold': required,
+    })}
+  >
+    {text}
+    {colon ? ':' : ''}
+  </BsForm.Label>
+)
+
 export const Input = ({
   as,
   className,
@@ -183,9 +195,7 @@ export const Input = ({
       })}
     >
       {label && !rightLabel ? (
-        <BsForm.Label className={required ? 'fw-bold' : ''}>
-          {label}:
-        </BsForm.Label>
+        <FormLabel required={required} text={label} />
       ) : null}
       <Component
         as={resolveType(type)}
@@ -202,11 +212,7 @@ export const Input = ({
         {htmlOptions}
       </Component>
       {label && rightLabel ? (
-        <BsForm.Label
-          className={classnames('form-check-label', { 'fw-bold': required })}
-        >
-          {label}
-        </BsForm.Label>
+        <FormLabel colon={false} text={label} required={required} formCheck />
       ) : null}
       {fieldError ? (
         <BsForm.Control.Feedback type="invalid">
@@ -318,12 +324,8 @@ export const PhoneInput = ({ name, label, helpText, required, ...props }) => {
     setValue(name, `+${value}`)
   }
   return (
-    <BsForm.Group>
-      {label && (
-        <BsForm.Label className={required ? 'fw-bold' : ''}>
-          {label}:
-        </BsForm.Label>
-      )}
+    <BsForm.Group className="mt-2">
+      {label && <FormLabel required={required} text={label} />}
       <PhoneNumberInput
         {...props}
         autocompleteSearch

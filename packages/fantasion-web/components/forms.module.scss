@@ -7,6 +7,10 @@ input, select {
   }
 }
 
+.label {
+  margin-bottom: 0;
+}
+
 .phoneInput {
   max-width: $spacer * 14;
   position: relative;
