@@ -2,7 +2,7 @@ import classnames from 'classnames'
 import Col from 'react-bootstrap/Col'
 
 import { HeadingLevelContext, useHeadingLevel } from './context'
-import { useEffect, useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 
 import styles from './media.module.scss'
 
@@ -98,15 +98,18 @@ const isValid = (mediaObject) => {
   return Boolean(mediaObject.localPhoto)
 }
 
-export const SlideShowGallery = ({
-  as: Component = 'div',
-  className,
-  media,
-  previewComponent,
-  size = 'galleryDecoration',
-  square,
-  ...props
-}) => {
+const ReflessSlideShowGallery = (
+  {
+    as: Component = 'div',
+    className,
+    media,
+    previewComponent,
+    size = 'galleryDecoration',
+    square,
+    ...props
+  },
+  ref
+) => {
   const validMedia = media.filter(isValid)
   const [activeIndex] = useRotatingIndex(validMedia, 6000)
   return (
@@ -114,6 +117,7 @@ export const SlideShowGallery = ({
       className={classnames(className, styles.slideShow, {
         [styles.squareLayout]: square,
       })}
+      ref={ref}
       {...props}
     >
       {validMedia.map((mediaObject, index) => (
@@ -130,6 +134,8 @@ export const SlideShowGallery = ({
     </Component>
   )
 }
+
+export const SlideShowGallery = forwardRef(ReflessSlideShowGallery)
 
 export const ThumbGallery = ({ className, media, ...props }) => {
   return (

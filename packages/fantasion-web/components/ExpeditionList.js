@@ -8,7 +8,7 @@ import { ExpeditionBatchSummary } from './expeditions'
 import { slug } from './slugs'
 import { SlideShowGallery, Heading } from './media'
 import { GeneralNewsletterForm } from './GeneralNewsletterForm'
-import { Link } from './links'
+import { Link, Linker } from './links'
 import { MarkdownContent } from './content'
 import { useTranslation } from 'next-i18next'
 
@@ -33,6 +33,7 @@ const ExpeditionC2A = ({ expedition }) => {
 }
 
 const Expedition = ({ expedition }) => {
+  const params = { expeditionSlug: slug(expedition) }
   return (
     <Row as="article" className={styles.expedition}>
       <Col
@@ -44,10 +45,7 @@ const Expedition = ({ expedition }) => {
       >
         <div className={styles.expeditionDescription}>
           <Heading>
-            <Link
-              route="expeditionDetail"
-              params={{ expeditionSlug: slug(expedition) }}
-            >
+            <Link route="expeditionDetail" params={params}>
               {expedition.title}
             </Link>
           </Heading>
@@ -68,7 +66,9 @@ const Expedition = ({ expedition }) => {
             styles.galleryColumn
           )}
         >
-          <SlideShowGallery media={expedition.media} square />
+          <Linker route="expeditionDetail" params={params}>
+            <SlideShowGallery as="a" media={expedition.media} square />
+          </Linker>
         </Col>
       )}
     </Row>
