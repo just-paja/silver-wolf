@@ -99,6 +99,7 @@ const isValid = (mediaObject) => {
 }
 
 export const SlideShowGallery = ({
+  as: Component = 'div',
   className,
   media,
   previewComponent,
@@ -109,7 +110,7 @@ export const SlideShowGallery = ({
   const validMedia = media.filter(isValid)
   const [activeIndex] = useRotatingIndex(validMedia, 6000)
   return (
-    <div
+    <Component
       className={classnames(className, styles.slideShow, {
         [styles.squareLayout]: square,
       })}
@@ -126,7 +127,7 @@ export const SlideShowGallery = ({
           size={size}
         />
       ))}
-    </div>
+    </Component>
   )
 }
 
