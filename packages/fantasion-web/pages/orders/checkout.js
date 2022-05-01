@@ -15,11 +15,8 @@ import { useFetch, useLang } from '../../components/context'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
-import {
-  BillingInformationPreview,
-  ConfirmOrderForm,
-  OrderCard,
-} from '../../components/orders'
+import { OrderConfirmForm } from '../../components/orders/OrderConfirmForm'
+import { BillingInformationPreview, OrderCard } from '../../components/orders'
 
 export const getServerSideProps = withPageProps(
   requireUser(async ({ fetch, lang }) => {
@@ -82,7 +79,7 @@ const OrderCheckoutPage = ({ activeOrder }) => {
                 {t('order-previous')}
               </Link>
               <div>
-                <ConfirmOrderForm onSubmit={confirmOrder} />
+                <OrderConfirmForm onSubmit={confirmOrder} />
               </div>
             </div>
           </Col>
