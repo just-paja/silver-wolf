@@ -1,18 +1,35 @@
 import NextLink from 'next/link'
 
+import { cloneElement } from 'react'
 import { qsm } from 'query-string-manipulator'
-import { useTranslation } from 'next-i18next'
 import { reverse } from '../routes'
+import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
-export const Linker = ({ children, href, query, params, route }) => {
+export const Linker = ({
+  activeProp,
+  children,
+  href,
+  query,
+  params,
+  route,
+}) => {
   const { i18n } = useTranslation()
+  const router = useRouter()
   const target = route
     ? qsm(reverse(i18n.resolvedLanguage, route, params), { set: query })
     : href
 
+  let extraProps = null
+  if (activeProp) {
+    extraProps = {}
+    const routerPath = `/${i18n.resolvedLanguage}${router.asPath}`
+    extraProps[activeProp] = `${target}/` === routerPath
+  }
+
   return (
     <NextLink href={target} passHref>
-      {children}
+      {cloneElement(children, { ...extraProps })}
     </NextLink>
   )
 }
@@ -23,6 +40,7 @@ const handleExternalClick = (e) => {
 }
 
 export const Link = ({
+  activeProp,
   as: As = 'a',
   children,
   external,
@@ -40,7 +58,13 @@ export const Link = ({
   return props.disabled ? (
     comp
   ) : (
-    <Linker href={href} params={params} query={query} route={route}>
+    <Linker
+      activeProp={activeProp}
+      href={href}
+      params={params}
+      query={query}
+      route={route}
+    >
       {comp}
     </Linker>
   )

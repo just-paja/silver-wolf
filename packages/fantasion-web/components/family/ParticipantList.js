@@ -281,7 +281,7 @@ const ParticipantListItem = ({
 export const ParticipantList = ({ onParticipantUpdate, results, ...props }) => (
   <Row {...props}>
     {results.map((participant) => (
-      <Col key={participant.id} md={6} xl={4}>
+      <Col key={participant.id} md={12} lg={6}>
         <ParticipantListItem
           {...participant}
           onParticipantUpdate={onParticipantUpdate}

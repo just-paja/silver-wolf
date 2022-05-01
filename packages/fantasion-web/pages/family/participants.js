@@ -1,4 +1,3 @@
-import Container from 'react-bootstrap/Container'
 import React from 'react'
 
 import { asPage, MetaPage } from '../../components/meta'
@@ -6,6 +5,7 @@ import { capitalize } from '../../api'
 import { GenericPage } from '../../components/layout'
 import { Heading, Main } from '../../components/media'
 import { ParticipantList } from '../../components/family/ParticipantList'
+import { ProfileLayout } from '../../components/family/ProfileLayout'
 import { requireUser, withPageProps } from '../../server/props'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
@@ -45,7 +45,7 @@ const ParticipantsPage = ({ participants, updateParticipantsItem }) => {
         title={title}
         description={t('family-participants-description')}
       />
-      <Container>
+      <ProfileLayout>
         <Main>
           <Heading>{title}</Heading>
           <ParticipantList
@@ -54,7 +54,7 @@ const ParticipantsPage = ({ participants, updateParticipantsItem }) => {
             className="mt-3"
           />
         </Main>
-      </Container>
+      </ProfileLayout>
     </GenericPage>
   )
 }
