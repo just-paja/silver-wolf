@@ -7,12 +7,18 @@ import Spinner from 'react-bootstrap/Spinner'
 
 import { CancelIcon } from './icons'
 import { FormLabel } from './forms'
-import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import { TextTooltip } from './tooltips'
 import { useCombobox } from 'downshift'
 import { useFetch } from './context'
 import { useFormContext } from 'react-hook-form'
 import { useTranslation } from 'next-i18next'
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react'
 
 import styles from './search.module.scss'
 
@@ -102,6 +108,8 @@ const createOption = (str) => ({
   title: str,
 })
 
+const TYPING_THROTTLE = 125
+
 const ReflessSearchInput = (
   {
     allowNew,
@@ -122,21 +130,38 @@ const ReflessSearchInput = (
   const fetch = useFetch()
   const equals = (a, b) => itemToString(a) === itemToString(b)
   const optionEquals = (a, b) => optionToString(a) === optionToString(b)
-  const handleSearch = async ({ inputValue }) => {
-    setLoading(true)
+  const searchTimeout = useRef(null)
+  const mounted = useRef(true)
+  const queryBackend = async ({ inputValue }) => {
     try {
       const data = await fetch(`/${collection}?q=${inputValue}`)
-      setOptions(
-        allowNew
-          ? [...data.results, stringToOption(inputValue)].filter(
-              (item, index, src) =>
-                src.findIndex((i) => optionEquals(i, item)) === index
-            )
-          : data.results
-      )
+      const nextOptions = allowNew
+        ? [...data.results, stringToOption(inputValue)].filter(
+            (item, index, src) =>
+              src.findIndex((i) => optionEquals(i, item)) === index
+          )
+        : data.results
+      if (mounted.current) {
+        setOptions(nextOptions)
+      }
     } finally {
       setLoading(false)
     }
+  }
+  useEffect(
+    () => () => {
+      mounted.current = false
+      clearTimeout(searchTimeout.current)
+    },
+    []
+  )
+  const handleSearch = async ({ inputValue }) => {
+    setLoading(true)
+    clearTimeout(searchTimeout.current)
+    searchTimeout.current = setTimeout(
+      () => queryBackend({ inputValue }),
+      TYPING_THROTTLE
+    )
   }
   const value = watch(name)
   const handleRemove = (item) => {
