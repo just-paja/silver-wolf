@@ -22,18 +22,21 @@ class TraitSerializer(ModelSerializer):
 
 
 class AllergySerializer(TraitSerializer):
+
     class Meta:
         model = people.Allergy
         fields = TRAIT_FIELDS
 
 
 class DietSerializer(TraitSerializer):
+
     class Meta:
         model = people.Diet
         fields = TRAIT_FIELDS
 
 
 class HobbySerializer(TraitSerializer):
+
     class Meta:
         model = people.Hobby
         fields = TRAIT_FIELDS
@@ -54,24 +57,24 @@ class ParticipantTraitSerializer:
                 trait = seri.save()
 
         if self.participant:
-            data = {
-                "participant": self.participant,
-                self.trait: trait
-            }
+            data = {"participant": self.participant, self.trait: trait}
         inst, created = self.__class__.Meta.model.objects.get_or_create(**data)
         return inst
 
 
 class ParticipantAllergySerializer(
-    ParticipantTraitSerializer,
-    ModelSerializer,
+        ParticipantTraitSerializer,
+        ModelSerializer,
 ):
     allergy = AllergySerializer()
     trait = 'allergy'
 
     class Meta:
         model = models.ParticipantAllergy
-        fields = ('id', 'allergy',)
+        fields = (
+            'id',
+            'allergy',
+        )
 
 
 class ParticipantDietSerializer(ParticipantTraitSerializer, ModelSerializer):
@@ -80,7 +83,10 @@ class ParticipantDietSerializer(ParticipantTraitSerializer, ModelSerializer):
 
     class Meta:
         model = models.ParticipantDiet
-        fields = ('id', 'diet',)
+        fields = (
+            'id',
+            'diet',
+        )
 
 
 class ParticipantHobbySerializer(ParticipantTraitSerializer, ModelSerializer):
@@ -89,20 +95,26 @@ class ParticipantHobbySerializer(ParticipantTraitSerializer, ModelSerializer):
 
     class Meta:
         model = models.ParticipantHobby
-        fields = ('id', 'hobby',)
+        fields = (
+            'id',
+            'hobby',
+        )
 
 
 class ParticipantSerializer(ModelSerializer):
     allergies = ParticipantAllergySerializer(
         many=True,
+        required=False,
         source='participant_allergies',
     )
     diets = ParticipantDietSerializer(
         many=True,
+        required=False,
         source='participant_diets',
     )
     hobbies = ParticipantHobbySerializer(
         many=True,
+        required=False,
         source='participant_hobbies',
     )
 
