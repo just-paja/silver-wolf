@@ -17,7 +17,7 @@ export const getServerSideProps = withPageProps(
   })
 )
 
-const ParticipantDetailPage = ({ participant, setParticipants }) => {
+const ParticipantDetailPage = ({ participant, setParticipant }) => {
   const { t } = useTranslation()
   const title = getFullName(participant)
   return (
@@ -44,7 +44,7 @@ const ParticipantDetailPage = ({ participant, setParticipants }) => {
         />
         <ParticipantListItem
           {...participant}
-          onParticipantUpdate={setParticipants}
+          onParticipantUpdate={setParticipant}
           className="mt-3"
         />
       </ProfileLayout>
