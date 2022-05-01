@@ -1,12 +1,10 @@
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
 import React from 'react'
-import Row from 'react-bootstrap/Row'
 
 import { asPage, MetaPage } from '../../components/meta'
 import { Breadcrumbs } from '../../components/breadcrumbs'
 import { GenericPage } from '../../components/layout'
 import { Heading } from '../../components/media'
+import { ProfileLayout } from '../../components/family/ProfileLayout'
 import { requireUser, withPageProps } from '../../server/props'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
@@ -32,27 +30,23 @@ const OrderDetailPage = ({ defaultOrder }) => {
   return (
     <GenericPage>
       <MetaPage title={title} description={t('order-checkout-description')} />
-      <Container as="article" className="mt-3">
-        <Row>
-          <Col lg={{ span: 8, offset: 2 }} xl={{ span: 6, offset: 3 }}>
-            <Breadcrumbs
-              links={[
-                {
-                  children: t('my-status'),
-                  route: 'status',
-                },
-                {
-                  children: title,
-                },
-              ]}
-            />
-            <header>
-              <Heading>{title}</Heading>
-            </header>
-            <OrderCard order={order} />
-          </Col>
-        </Row>
-      </Container>
+      <ProfileLayout>
+        <Breadcrumbs
+          links={[
+            {
+              children: t('my-status'),
+              route: 'status',
+            },
+            {
+              children: title,
+            },
+          ]}
+        />
+        <header>
+          <Heading>{title}</Heading>
+        </header>
+        <OrderCard order={order} />
+      </ProfileLayout>
     </GenericPage>
   )
 }
