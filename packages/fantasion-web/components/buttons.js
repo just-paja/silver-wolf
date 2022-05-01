@@ -13,6 +13,7 @@ const ReflessInteractiveButton = (
   ref
 ) => {
   const [progress, setProgress] = useState(false)
+  const mounted = useRef(true)
   const handleClick =
     typeof inProgress === 'undefined' && onClick
       ? async (e) => {
@@ -20,11 +21,19 @@ const ReflessInteractiveButton = (
           try {
             await onClick(e)
           } finally {
-            setProgress(false)
+            if (mounted.current) {
+              setProgress(false)
+            }
           }
         }
       : onClick
   const running = inProgress || progress
+  useEffect(
+    () => () => {
+      mounted.current = false
+    },
+    []
+  )
   return (
     <Button
       {...props}
