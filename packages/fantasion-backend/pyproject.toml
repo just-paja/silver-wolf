@@ -47,6 +47,8 @@ django-money = "^2.1.1"
 python-dateutil = "^2.8.2"
 django-encrypted-model-fields = "^0.6.5"
 fiobank = "^3.0.0"
+xhtml2pdf = "^0.2.7"
+qrcode = {extras = ["pil"], version = "^7.3.1"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

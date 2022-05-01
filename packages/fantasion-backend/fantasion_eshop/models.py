@@ -20,6 +20,7 @@ from django.db.models import (
     CharField,
     DateTimeField,
     DecimalField,
+    FileField,
     ForeignKey,
     PositiveIntegerField,
     CASCADE,
@@ -32,6 +33,7 @@ from fantasion.models import UserAddressBase
 from fantasion_generics.emails import get_lang, send_mail
 from fantasion_generics.models import MarkdownField, PublicModel
 from fantasion_generics.money import MoneyField
+from fantasion_generics.storages import private_storage
 from fantasion_banking.constants import (
     DEBT_SOURCE_GENERATED_ORDER,
     DEBT_TYPE_DEPOSIT,
@@ -237,8 +239,7 @@ class Order(TimeStampedModel):
         verbose_name=_("Insurance Request"),
         help_text=_(
             "The Order Owner requested assistance with getting insurance and "
-            "expects to be contacted by Fantasion staff."
-        ),
+            "expects to be contacted by Fantasion staff."),
     )
     submitted_at = DateTimeField(
         null=True,
@@ -250,6 +251,13 @@ class Order(TimeStampedModel):
         null=True,
         blank=True,
         on_delete=SET_NULL,
+    )
+    invoice = FileField(
+        upload_to="invoices/%Y/%m",
+        storage=private_storage,
+        max_length=255,
+        null=True,
+        blank=True,
     )
     invoice_address = ForeignKey(
         'OrderInvoiceAddress',
@@ -371,7 +379,15 @@ class Order(TimeStampedModel):
             order=self,
         )
         self.invoice_address.save()
+        self.submitted_at = timezone.now()
         self.save()
+        self.render_invoice()
+        self.save()
+
+    def render_invoice(self):
+        from .invoices import render_invoice
+        invoice = render_invoice(self)
+        self.invoice = invoice
 
     def save(self, *args, **kwargs):
         self.price = self.calculate_price()
@@ -381,7 +397,6 @@ class Order(TimeStampedModel):
             Model = apps.get_model(item.product_type)
             Model.objects.get(pk=item.pk).save(avoid_order_save=True)
         if self.status == ORDER_STATUS_CONFIRMED and not self.promise:
-            self.submitted_at = timezone.now()
             self.create_promise()
             self.notify_order_confirmed()
         self.price = self.calculate_price()

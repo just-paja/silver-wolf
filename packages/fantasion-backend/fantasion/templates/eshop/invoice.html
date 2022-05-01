@@ -3,19 +3,31 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title>Invoice</title>
-    <style type="text/css">
+    <style>
+      @font-face {
+        font-family: Raleway;
+        font-weight: normal;
+        src: url({% static 'fonts/Raleway-Regular.ttf' %});
+      }
+      @font-face {
+        font-family: Raleway;
+        font-weight: bold;
+        src: url({% static 'fonts/Raleway-Bold.ttf' %});
+      }
+
       a {
         color: #472a7e;
         text-decoration: none;
       }
 
-      body {
+      html, body {
         background: #FFFFFF;
         color: #555555;
         font-family: 'Raleway', sans-serif;
-        font-size: 14px;
-        height: 29.7cm;
+        font-size: 12px;
+        max-height: 29.7cm;
         margin: 0 auto;
         position: relative;
         width: 21cm;
@@ -39,7 +51,7 @@
 
       #name {
         color: #472a7e;
-        font-weight:bold;
+        font-weight: bold;
         font-size: 1.5em;
         margin-bottom: 0.5rem;
       }
@@ -111,6 +123,7 @@
         background: #EEEEEE;
         text-align: center;
         border-bottom: 1px solid #FFFFFF;
+        max-height: 120px;
       }
 
       table th {
@@ -133,7 +146,7 @@
         font-size: 1.6em;
         color: white;
         background: #472a7e;
-        width: 2rem;
+        width: 80px;
         text-align: center;
       }
 
@@ -157,7 +170,7 @@
       }
 
       table .qty {
-        width: 80px;
+        width: 100px;
         text-align: center;
       }
 
@@ -188,7 +201,7 @@
         justify-content: center;
       }
 
-      .debt-payment { margin: 1rem; }
+      .debt-payment { margin: 1rem; max-width: 50%;}
 
       .debt-payment-details {
         list-style: none;
@@ -205,7 +218,6 @@
         <div>150 00 Česká republika</div>
         <div><a href="mailto:info@fantasion.cz">info@fantasion.cz</a></div>
       </div>
-      </div>
     </header>
     <main>
       <div id="details" class="clearfix">
@@ -221,7 +233,7 @@
           <div class="date">{% trans "Due Date" %}: {{due_date}}</div>
         </div>
       </div>
-      <table cellspacing="0" cellpadding="0">
+      <table>
         <thead>
           <tr>
             <th class="no">#</th>

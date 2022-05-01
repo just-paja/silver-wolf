@@ -83,6 +83,7 @@ class OrderAdmin(BaseAdmin):
     readonly_fields = (
         'deposit',
         'get_surcharge',
+        'invoice',
         'price',
         'promise',
     )
@@ -95,6 +96,7 @@ class OrderAdmin(BaseAdmin):
         'owner',
         'status',
         'promise',
+        'invoice',
         'use_deposit_payment',
         'request_insurance',
         'deposit',
@@ -121,10 +123,12 @@ class OrderAdmin(BaseAdmin):
             models.Order,
             pk=order_id,
         )
-        return redirect(reverse('orders-invoice', kwargs={
-            "format": "html",
-            "pk": order.id,
-        }))
+        return redirect(
+            reverse('orders-invoice',
+                    kwargs={
+                        "format": "html",
+                        "pk": order.id,
+                    }))
 
 
 class PriceLevelAdmin(TranslatedAdmin):

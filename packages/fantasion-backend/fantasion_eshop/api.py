@@ -1,6 +1,7 @@
 import json
 
-from django.http import Http404
+from django.http import Http404, HttpResponse
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 
@@ -10,6 +11,8 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from fantasion_banking.constants import DEBT_TYPE_FULL_PAYMENT
+from fantasion_banking.debts import Debt
 from fantasion_generics.api import RWViewSet
 from djangorestframework_camel_case.render import CamelCaseJSONRenderer
 
@@ -119,6 +122,40 @@ class OrderCollection(RWViewSet):
         inst.cancel()
         serializer = serializers.OrderSerializer(inst)
         return Response(serializer.data)
+
+    def get_emv_code(self, order, debt):
+        EMV_HEADER = "SPD*1.0*"
+        code_vars = (
+            ("ACC", f"{settings.BANK_ACCOUNT_IBAN}+{settings.BANK_ACCOUNT_BIC}"),
+            ("AM", str(debt.amount.amount)),
+            ("CC", str(debt.amount.currency)),
+            ("RF", str(debt.promise.variable_symbol)),
+            ("MSG", order.owner.email),
+            ("X-VS", str(debt.promise.variable_symbol)),
+        )
+        code_headers = [":".join(item) for item in code_vars]
+        code = "*".join(code_headers)
+        return f"{EMV_HEADER}{code}"
+
+    @action(detail=True, methods=['get'])
+    def qr(self, *args, **kwargs):
+        inst = self.get_object()
+        promise = inst.promise
+        debt_type = self.request.GET.get('type', None)
+        if promise:
+            try:
+                query = promise.debts
+                if debt_type:
+                    query = query.filter(debt_type=debt_type)
+                debt = query.all()[:1].get()
+            except Debt.DoesNotExist:
+                raise Http404
+            import qrcode
+            img = qrcode.make(self.get_emv_code(inst, debt))
+            res = HttpResponse(content_type="image/png")
+            img.save(res, 'PNG')
+            return res
+        raise Http404
 
 
 class OrderItemCollection(RWViewSet):

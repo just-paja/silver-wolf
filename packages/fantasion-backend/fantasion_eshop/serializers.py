@@ -221,7 +221,6 @@ class OrderSerializer(ModelSerializer):
             'invoice_address',
             'is_cancellable',
             'items',
-            'items',
             'price',
             'promise',
             'status',
@@ -252,6 +251,10 @@ class InvoiceSerializer(ModelSerializer):
     partial_debts = SerializerMethodField()
     total = SerializerMethodField()
     bank_account = ReadOnlyField(default=settings.BANK_ACCOUNT_NUMBER)
+    submitted_at = SerializerMethodField()
+
+    def get_submitted_at(self, inst):
+        return inst.submitted_at
 
     def get_debts(self, inst):
         promise = inst.promise
@@ -291,4 +294,5 @@ class InvoiceSerializer(ModelSerializer):
             'deposit',
             'items',
             'total',
+            'submitted_at',
         )
