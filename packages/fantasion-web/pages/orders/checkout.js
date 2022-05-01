@@ -60,12 +60,20 @@ const OrderCheckoutPage = ({ activeOrder }) => {
             <Breadcrumbs
               links={[
                 {
+                  children: t('order-basket'),
+                  route: 'basket',
+                },
+                {
+                  children: t('order-payment-and-delivery'),
+                  route: 'paymentAndDelivery',
+                },
+                {
                   children: t('order-checkout'),
                 },
               ]}
             />
             <header>
-              <Heading>{t('order-payment-and-delivery')}</Heading>
+              <Heading>{title}</Heading>
             </header>
             <OrderCard className="mt-4" order={order} hideStatus />
             <BillingInformationPreview order={order} />

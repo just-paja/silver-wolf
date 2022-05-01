@@ -60,6 +60,10 @@ const PaymentAndDeliveryPage = ({ activeOrder, userAddresses }) => {
         <Breadcrumbs
           links={[
             {
+              children: t('order-basket'),
+              route: 'basket',
+            },
+            {
               children: t('order-payment-and-delivery'),
             },
           ]}
