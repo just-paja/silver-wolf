@@ -136,7 +136,7 @@ const getChangeWrapper = (field, onChange) => (e) => {
   field.onChange(e)
 }
 
-const FormLabel = ({ colon = true, formCheck, required, text }) => (
+export const FormLabel = ({ colon = true, formCheck, required, text }) => (
   <BsForm.Label
     className={classnames(styles.label, {
       'form-check-label': formCheck,
@@ -148,44 +148,39 @@ const FormLabel = ({ colon = true, formCheck, required, text }) => (
   </BsForm.Label>
 )
 
-export const Input = ({
-  as,
-  className,
-  error,
-  label,
-  name,
-  onChange,
-  options,
-  helpText,
-  required,
-  size = 'default',
-  type,
-  validate,
-  value,
-  ...props
-}) => {
-  const { formId, register, formState, watch } = useFormContext()
+export const FormlessInput = forwardRef(function InnerForlessInput(
+  {
+    as,
+    className,
+    error,
+    id,
+    label,
+    name,
+    options,
+    helpText,
+    required,
+    size = 'default',
+    type,
+    ...props
+  },
+  ref
+) {
+  const { formId, formState, watch } = useFormContext()
   const { t } = useTranslation()
   const rightLabel = isLabelRight(type)
-  const controlId = `${formId}-${name}${rightLabel ? `-${value}` : ''}`
+  const controlId =
+    id || `${formId}-${name}${rightLabel ? `-${props.value}` : ''}`
   const htmlOptions = getOptions(options, required)
   const Component = resolveComponent(type, as)
   const fieldError = error || formState.errors[name]
   const currentValue = watch(name)
-  const field = register(name, {
-    setValueAs: (v) => (['', undefined].includes(v) ? null : v),
-    validate,
-  })
-  const handleChange = onChange
-    ? getChangeWrapper(field, onChange)
-    : field.onChange
   const inputProps = {}
   if (type === 'checkbox') {
-    inputProps.value = value || 'true'
+    inputProps.value = props.value || 'true'
   }
   if (type === 'radio') {
-    inputProps.checked = currentValue === value
-    inputProps.value = value
+    inputProps.checked = currentValue === props.value
+    inputProps.value = props.value
   }
   return (
     <BsForm.Group
@@ -205,9 +200,8 @@ export const Input = ({
         type={type}
         {...inputProps}
         {...props}
-        {...field}
         className={classnames(styles[size], className)}
-        onChange={handleChange}
+        ref={ref}
       >
         {htmlOptions}
       </Component>
@@ -222,6 +216,18 @@ export const Input = ({
       {helpText ? <BsForm.Text as="div">{helpText}</BsForm.Text> : null}
     </BsForm.Group>
   )
+})
+
+export const Input = ({ name, onChange, validate, ...props }) => {
+  const { register } = useFormContext()
+  const field = register(name, {
+    setValueAs: (v) => (['', undefined].includes(v) ? null : v),
+    validate,
+  })
+  const handleChange = onChange
+    ? getChangeWrapper(field, onChange)
+    : field.onChange
+  return <FormlessInput {...props} {...field} onChange={handleChange} />
 }
 
 export const Submit = ({ children, ...props }) => (
@@ -260,6 +266,7 @@ export const FormError = ({ vague }) => {
 export const FormControls = ({
   cancelLabel,
   children,
+  disabled,
   onCancel,
   size,
   submitLabel,
@@ -270,21 +277,26 @@ export const FormControls = ({
     <>
       <FormError vague />
       <div className="mt-3">
+        <Submit
+          disabled={disabled}
+          inProgress={formState.isSubmitting}
+          size={size}
+        >
+          {submitLabel}
+        </Submit>
+        {children}
         {onCancel && (
           <InteractiveButton
-            className="me-2"
+            className="ms-2"
+            disabled={disabled}
             type="button"
-            variant="warning"
+            variant="secondary"
             size={size}
             onClick={onCancel}
           >
             {cancelLabel || t('cancel')}
           </InteractiveButton>
         )}
-        <Submit inProgress={formState.isSubmitting} size={size}>
-          {submitLabel}
-        </Submit>
-        {children}
       </div>
     </>
   )

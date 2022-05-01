@@ -73,3 +73,5 @@ export const curryAuth = (token) => {
   fetch.put = withMethod(fetch, 'PUT')
   return fetch
 }
+
+export const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)

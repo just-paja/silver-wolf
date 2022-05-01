@@ -73,6 +73,10 @@ const cs = {
     source: '/prihlaseni',
     destination: '/login',
   },
+  participants: {
+    source: '/ucastnici',
+    destination: '/family/participants',
+  },
   profileDetail: {
     source: '/tym/:profileSlug',
     destination: '/team/:profileSlug',

@@ -49,6 +49,18 @@ class Participant(TimeStampedModel):
         verbose_name=_("Family Name"),
     )
     birthdate = DateField(verbose_name=_("Birth date"))
+    no_allergies = BooleanField(
+        default=False,
+        verbose_name=_("Has no allergies"),
+    )
+    no_diets = BooleanField(
+        default=False,
+        verbose_name=_("Has no diets"),
+    )
+    no_hobbies = BooleanField(
+        default=False,
+        verbose_name=_("Has no hobbies"),
+    )
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.birthdate})"
@@ -58,6 +70,7 @@ class ParticipantAllergy(TimeStampedModel):
     class Meta:
         verbose_name = _("Participant Allergy")
         verbose_name_plural = _("Participant Allergies")
+        unique_together = ('participant', 'allergy')
 
     participant = ForeignKey(
         Participant,
@@ -76,6 +89,7 @@ class ParticipantDiet(TimeStampedModel):
     class Meta:
         verbose_name = _("Participant Diet")
         verbose_name_plural = _("Participant Diets")
+        unique_together = ('participant', 'diet')
 
     participant = ForeignKey(
         Participant,
@@ -94,6 +108,7 @@ class ParticipantHobby(TimeStampedModel):
     class Meta:
         verbose_name = _("Participant Hobby")
         verbose_name_plural = _("Participant Hobbies")
+        unique_together = ('participant', 'hobby')
 
     participant = ForeignKey(
         Participant,

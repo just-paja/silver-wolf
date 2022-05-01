@@ -8,6 +8,7 @@ import {
   MdArrowLeft,
   MdArrowRight,
   MdCancel,
+  MdCheck,
   MdContentCopy,
   MdGppGood,
   MdGppBad,
@@ -29,6 +30,7 @@ import {
 
 export const BasketIcon = BsBasket2Fill
 export const CancelIcon = MdCancel
+export const CheckIcon = MdCheck
 export const CloseIcon = MdCancel
 export const CopyIcon = MdContentCopy
 export const DurationIcon = FaCalendarWeek

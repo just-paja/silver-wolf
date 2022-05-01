@@ -1,0 +1,91 @@
+@import '../styles/variables.scss';
+
+.menuElement {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.2s;
+
+  &:not(.show) {
+    padding-bottom: 0;
+    padding-top: 0;
+  }
+}
+
+.show {
+  max-height: 1000px;
+  opacity: 1;
+}
+
+.bubble {
+  align-items: center;
+  cursor: default;
+  display: flex;
+  user-select: none;
+
+  button {
+    line-height: 100%;
+    padding: calc($spacer / 8);
+    padding-left: calc($spacer / 8 * 3);
+    padding-right: calc($spacer / 8 * 3);
+    margin-right: -8px;
+    margin-top: -4px;
+    margin-bottom: -4px;
+
+    &:active,
+    &:hover,
+    &:active:focus,
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  .bubbleLabel {
+    border-right: 1px solid $white;
+    padding-right: $spacer / 2;
+  }
+}
+
+.writable {
+  $spacing: calc($spacer / 4);
+  cursor: text;
+  flex-wrap: wrap;
+  padding: 0 $spacing $spacing 0;
+
+  .bubble,
+  .inputContainer {
+    margin: $spacing 0 0 $spacing;
+  }
+
+  .inputContainer {
+    display: flex;
+    flex-shrink: 1;
+    flex-grow: 1;
+    flex-basis: 0;
+  }
+
+  input {
+    flex-shrink: 1;
+    flex-basis: 0;
+    border: none;
+    background: transparent;
+
+    &:active,
+    &:hover,
+    &:active:focus,
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
+  }
+
+  &:focus-within {
+    box-shadow: $input-focus-box-shadow;
+    border-color: $input-focus-border-color;
+  }
+
+  &.disabled {
+    background-color: $input-disabled-bg;
+    border-color: $input-disabled-border-color;
+  }
+}

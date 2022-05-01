@@ -1,7 +1,7 @@
-from rest_framework.serializers import ModelSerializer, IntegerField
+from rest_framework.serializers import CharField, ModelSerializer, IntegerField
 
 from . import models
-from fantasion_people.models import Family
+from fantasion_people import models as people
 from fantasion_eshop import models as eshop
 from fantasion_expeditions.models import (
     AgeGroup,
@@ -10,17 +10,116 @@ from fantasion_expeditions.models import (
     Troop,
 )
 
+TRAIT_FIELDS = ('id', 'title', 'description')
+
+
+class TraitSerializer(ModelSerializer):
+    title = CharField()
+
+    def create(self, data):
+        inst, created = self.Meta.model.objects.get_or_create(**data)
+        return inst
+
+
+class AllergySerializer(TraitSerializer):
+    class Meta:
+        model = people.Allergy
+        fields = TRAIT_FIELDS
+
+
+class DietSerializer(TraitSerializer):
+    class Meta:
+        model = people.Diet
+        fields = TRAIT_FIELDS
+
+
+class HobbySerializer(TraitSerializer):
+    class Meta:
+        model = people.Hobby
+        fields = TRAIT_FIELDS
+
+
+class ParticipantTraitSerializer:
+    trait = None
+
+    def __init__(self, *args, participant=None, **kwargs):
+        self.participant = participant
+        super().__init__(*args, **kwargs)
+
+    def create(self, data):
+        if self.trait in data:
+            field = self.fields.get(self.trait)
+            seri = field.__class__(data=data.get(self.trait))
+            if seri.is_valid():
+                trait = seri.save()
+
+        if self.participant:
+            data = {
+                "participant": self.participant,
+                self.trait: trait
+            }
+        inst, created = self.__class__.Meta.model.objects.get_or_create(**data)
+        return inst
+
+
+class ParticipantAllergySerializer(
+    ParticipantTraitSerializer,
+    ModelSerializer,
+):
+    allergy = AllergySerializer()
+    trait = 'allergy'
+
+    class Meta:
+        model = models.ParticipantAllergy
+        fields = ('id', 'allergy',)
+
+
+class ParticipantDietSerializer(ParticipantTraitSerializer, ModelSerializer):
+    diet = DietSerializer()
+    trait = 'diet'
+
+    class Meta:
+        model = models.ParticipantDiet
+        fields = ('id', 'diet',)
+
+
+class ParticipantHobbySerializer(ParticipantTraitSerializer, ModelSerializer):
+    hobby = HobbySerializer()
+    trait = 'hobby'
+
+    class Meta:
+        model = models.ParticipantHobby
+        fields = ('id', 'hobby',)
+
 
 class ParticipantSerializer(ModelSerializer):
+    allergies = ParticipantAllergySerializer(
+        many=True,
+        source='participant_allergies',
+    )
+    diets = ParticipantDietSerializer(
+        many=True,
+        source='participant_diets',
+    )
+    hobbies = ParticipantHobbySerializer(
+        many=True,
+        source='participant_hobbies',
+    )
 
     class Meta:
         model = models.Participant
         fields = (
-            'id',
+            'allergies',
+            'birthdate',
+            'diets',
             'family',
             'first_name',
+            'hobbies',
+            'id',
             'last_name',
-            'birthdate',
+            'no_allergies',
+            'no_diets',
+            'no_hobbies',
         )
         read_only_fields = ('family', )
 
@@ -28,7 +127,10 @@ class ParticipantSerializer(ModelSerializer):
         user = self.context.get('request').user
         family = user.families.first()
         if not family:
-            family = Family(owner=user, title=f"{user.get_full_name()} Family")
+            family = people.Family(
+                owner=user,
+                title=f"{user.get_full_name()} Family",
+            )
             family.save()
         return family
 
@@ -40,12 +142,26 @@ class ParticipantSerializer(ModelSerializer):
         inst.save()
         return inst
 
-    def update(self, instance, data):
-        instance.birthday = data.get('birthday', instance.birthday)
-        instance.first_name = data.get('first_name', instance.first_name)
-        instance.last_name = data.get('last_name', instance.last_name)
-        instance.save()
-        return instance
+    def store_trait(self, inst, serializer, data):
+        seri = serializer(data=data, participant=inst, many=True)
+        if seri.is_valid():
+            stored = seri.save()
+            ids = [item.pk for item in stored]
+            serializer.Meta.model.objects.exclude(id__in=ids).delete()
+            return stored
+
+    def update(self, inst, data):
+        allergies = data.pop('participant_allergies', None)
+        diets = data.pop('participant_diets', None)
+        hobbies = data.pop('participant_hobbies', None)
+        inst = super().update(inst, data)
+        if allergies is not None:
+            self.store_trait(inst, ParticipantAllergySerializer, allergies)
+        if diets is not None:
+            self.store_trait(inst, ParticipantDietSerializer, diets)
+        if hobbies is not None:
+            self.store_trait(inst, ParticipantHobbySerializer, hobbies)
+        return inst
 
 
 class AgeGroupSerializer(ModelSerializer):

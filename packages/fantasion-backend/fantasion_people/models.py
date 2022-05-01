@@ -75,17 +75,23 @@ class Allergy(NamedModel):
         verbose_name = _("Allergy")
         verbose_name_plural = _("Allergies")
 
+    title = TitleField(unique=True)
+
 
 class Diet(NamedModel):
     class Meta:
         verbose_name = _("Diet")
         verbose_name_plural = _("Diets")
 
+    title = TitleField(unique=True)
+
 
 class Hobby(NamedModel):
     class Meta:
         verbose_name = _("Hobby")
         verbose_name_plural = _("Hobbies")
+
+    title = TitleField(unique=True)
 
 
 class Family(TimeStampedModel):

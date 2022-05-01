@@ -71,6 +71,21 @@ router.register(
     basename='profiles',
 )
 router.register(
+    r'allergies',
+    people.AllergyCollection,
+    basename='allergies',
+)
+router.register(
+    r'diets',
+    people.DietCollection,
+    basename='diets',
+)
+router.register(
+    r'hobbies',
+    people.HobbyCollection,
+    basename='hobbies',
+)
+router.register(
     r'monsters',
     content.MonsterCollection,
     basename='monsters',

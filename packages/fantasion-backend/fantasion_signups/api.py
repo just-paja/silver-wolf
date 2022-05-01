@@ -11,7 +11,6 @@ from . import models, serializers
 
 
 class ParticipantCollection(RWViewSet):
-
     def get_queryset(self):
         return models.Participant.objects.filter(
             Q(family__members__user=self.request.user)

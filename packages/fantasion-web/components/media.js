@@ -67,6 +67,12 @@ export const Section = ({
   </Component>
 )
 
+export const Main = ({ children, ...props }) => (
+  <Section headingLevel={0} {...props}>
+    {children}
+  </Section>
+)
+
 const PreviewImage = ({ localPhoto, size, ...props }) => {
   return (
     <div {...props}>
