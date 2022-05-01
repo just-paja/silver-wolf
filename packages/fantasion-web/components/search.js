@@ -11,6 +11,7 @@ import { TextTooltip } from './tooltips'
 import { useCombobox } from 'downshift'
 import { useFetch } from './context'
 import { useFormContext } from 'react-hook-form'
+import { useMounted } from './hooks'
 import { useTranslation } from 'next-i18next'
 import {
   forwardRef,
@@ -131,30 +132,28 @@ const ReflessSearchInput = (
   const equals = (a, b) => itemToString(a) === itemToString(b)
   const optionEquals = (a, b) => optionToString(a) === optionToString(b)
   const searchTimeout = useRef(null)
-  const mounted = useRef(true)
+  const mounted = useMounted()
   const queryBackend = async ({ inputValue }) => {
     try {
-      const data = await fetch(`/${collection}?q=${inputValue}`)
-      const nextOptions = allowNew
-        ? [...data.results, stringToOption(inputValue)].filter(
-            (item, index, src) =>
-              src.findIndex((i) => optionEquals(i, item)) === index
-          )
-        : data.results
+      const query = String(inputValue).trim()
+      const data = await fetch(`/${collection}?q=${query}`)
+      const nextOptions =
+        allowNew && query
+          ? [...data.results, stringToOption(query)].filter(
+              (item, index, src) =>
+                src.findIndex((i) => optionEquals(i, item)) === index
+            )
+          : data.results
       if (mounted.current) {
         setOptions(nextOptions)
       }
     } finally {
-      setLoading(false)
+      if (mounted.current) {
+        setLoading(false)
+      }
     }
   }
-  useEffect(
-    () => () => {
-      mounted.current = false
-      clearTimeout(searchTimeout.current)
-    },
-    []
-  )
+  useEffect(() => () => clearTimeout(searchTimeout.current), [])
   const handleSearch = async ({ inputValue }) => {
     setLoading(true)
     clearTimeout(searchTimeout.current)

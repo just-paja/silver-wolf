@@ -6,6 +6,7 @@ import styles from './buttons.module.scss'
 
 import { CopyIcon } from './icons'
 import { forwardRef, useEffect, useRef, useState } from 'react'
+import { useMounted } from './hooks'
 import { useTranslation } from 'next-i18next'
 
 const ReflessInteractiveButton = (
@@ -13,7 +14,7 @@ const ReflessInteractiveButton = (
   ref
 ) => {
   const [progress, setProgress] = useState(false)
-  const mounted = useRef(true)
+  const mounted = useMounted()
   const handleClick =
     typeof inProgress === 'undefined' && onClick
       ? async (e) => {
@@ -28,12 +29,6 @@ const ReflessInteractiveButton = (
         }
       : onClick
   const running = inProgress || progress
-  useEffect(
-    () => () => {
-      mounted.current = false
-    },
-    []
-  )
   return (
     <Button
       {...props}
