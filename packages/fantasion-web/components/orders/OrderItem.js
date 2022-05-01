@@ -1,5 +1,7 @@
+import { DateRange } from '../dates'
 import { IconBubble, SignupIcon } from '../icons'
 import { Link } from '../links'
+import { slug } from '../slugs'
 import { UserName, getFullName } from '../users'
 import { useTranslation } from 'next-i18next'
 
@@ -33,7 +35,19 @@ const OrderItemSignup = ({ signup }) => (
       <UserName user={signup.participant} />
     </Link>
     <div className="text-muted">
-      {signup.troop.batch.expedition.title}: {signup.troop.ageGroup.title}
+      <Link
+        route="expeditionBatchDetail"
+        params={{
+          expeditionBatchSlug: slug(
+            signup.troop.batch.id,
+            signup.troop.batch.expedition.title
+          ),
+        }}
+      >
+        {signup.troop.batch.expedition.title}{' '}
+        <DateRange start={signup.troop.startsAt} end={signup.troop.endsAt} />
+      </Link>{' '}
+      ({signup.troop.ageGroup.title})
     </div>
   </>
 )
