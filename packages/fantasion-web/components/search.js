@@ -40,7 +40,10 @@ const SearchEmpty = ({ query, show }) => (
 
 const SearchLoader = ({ show }) => (
   <SearchElement show={show}>
-    <Spinner /> {useTranslation().t('search-loading')}
+    <span className="text-muted">
+      <Spinner animation="border" role="status" size="sm" />{' '}
+      {useTranslation().t('search-loading')}
+    </span>
   </SearchElement>
 )
 
