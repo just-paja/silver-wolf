@@ -24,7 +24,7 @@ export const Linker = ({
   if (activeProp) {
     extraProps = {}
     const routerPath = `/${i18n.resolvedLanguage}${router.asPath}`
-    extraProps[activeProp] = `${target}/` === routerPath
+    extraProps[activeProp] = routerPath.startsWith(`${target}/`)
   }
 
   return (
