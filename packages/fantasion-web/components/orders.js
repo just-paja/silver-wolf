@@ -11,14 +11,15 @@ import { bool, string } from 'yup'
 import { CancelIcon } from './icons'
 import { Heading, Section } from './media'
 import { InteractiveButton } from './buttons'
+import { Link } from './links'
 import { Money } from './money'
 import { OrderItemDescription } from './orders/OrderItem'
 import { OrderStatus } from './orders/OrderStatus.js'
+import { Trans, useTranslation } from 'next-i18next'
 import { useFetch, useUser } from './context'
 import { useFormContext } from 'react-hook-form'
 import { UserName } from './users'
 import { useState } from 'react'
-import { useTranslation } from 'next-i18next'
 import {
   OrderMoneyRow,
   OrderPaymentRow,
@@ -413,7 +414,21 @@ export const ConfirmOrderForm = ({ onSubmit }) => {
       <Input
         type="checkbox"
         name="termsAndConditions"
-        label={t('order-agree-terms-and-conditions')}
+        label={
+          <Trans
+            i18nKey={'consent-with-plural'}
+            values={{ subject: t('order-agree-terms-and-conditions') }}
+            components={[
+              <Link
+                external
+                key="termsAndConditions"
+                route="termsAndConditions"
+              >
+                {t('order-agree-terms-and-conditions')}
+              </Link>,
+            ]}
+          />
+        }
         required
       />
       <FormControls size="lg" submitLabel={t('order-confirm')} />
