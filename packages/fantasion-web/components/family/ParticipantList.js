@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row'
 import { capitalize } from '../../api'
 import { CheckIcon } from '../icons'
 import { DateLabel } from '../dates'
+import { Link } from '../links'
 import { Form, FormControls } from '../forms'
 import { useState } from 'react'
 import { Heading, Section } from '../media'
@@ -222,7 +223,7 @@ const Trait = ({
   )
 }
 
-const ParticipantListItem = ({
+export const ParticipantListItem = ({
   allergies,
   birthdate,
   diets,
@@ -239,7 +240,9 @@ const ParticipantListItem = ({
     <Card as={Section}>
       <Card.Header>
         <Heading>
-          <UserName user={props} />
+          <Link route="participantDetail" params={{ participantId: id }}>
+            <UserName user={props} />
+          </Link>
         </Heading>
         <div>
           <DateLabel date={birthdate} year="numeric" />

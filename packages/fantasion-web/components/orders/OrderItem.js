@@ -26,7 +26,12 @@ const OrderItemPromotionCode = () => useTranslation().t('order-promotion-code')
 
 const OrderItemSignup = ({ signup }) => (
   <>
-    <UserName user={signup.participant} />
+    <Link
+      route="participantDetail"
+      params={{ participantId: signup.participant.id }}
+    >
+      <UserName user={signup.participant} />
+    </Link>
     <div className="text-muted">
       {signup.troop.batch.expedition.title}: {signup.troop.ageGroup.title}
     </div>

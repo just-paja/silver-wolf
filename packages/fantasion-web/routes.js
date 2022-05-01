@@ -77,6 +77,10 @@ const cs = {
     source: '/ucastnici',
     destination: '/family/participants',
   },
+  participantDetail: {
+    source: '/ucastnici/:participantId',
+    destination: '/family/:participantId',
+  },
   profileDetail: {
     source: '/tym/:profileSlug',
     destination: '/team/:profileSlug',
