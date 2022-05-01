@@ -24,18 +24,21 @@ from . import models
 
 
 class UserAddressSerializer(ModelSerializer):
+
     class Meta:
         model = UserAddress
         fields = address_fields
 
 
 class OrderInvoiceAddressSerializer(ModelSerializer):
+
     class Meta:
         model = models.OrderInvoiceAddress
         fields = address_fields
 
 
 class PriceLevelSerializer(ModelSerializer):
+
     class Meta:
         model = models.PriceLevel
         fields = (
@@ -74,6 +77,7 @@ class ProductPriceSerializer(ModelSerializer):
 
 
 class OrderItemSerializer(ModelSerializer):
+
     class Meta:
         model = models.OrderItem
         fields = (
@@ -84,12 +88,14 @@ class OrderItemSerializer(ModelSerializer):
 
 
 class OrderPromotionCodeSerializer(ModelSerializer):
+
     class Meta:
         model = models.OrderPromotionCode
         fields = OrderItemSerializer.Meta.fields
 
 
 class ParticipantSerializer(ModelSerializer):
+
     class Meta:
         model = Participant
         fields = (
@@ -100,6 +106,7 @@ class ParticipantSerializer(ModelSerializer):
 
 
 class AgeGroupSerializer(ModelSerializer):
+
     class Meta:
         model = AgeGroup
         fields = (
@@ -111,6 +118,7 @@ class AgeGroupSerializer(ModelSerializer):
 
 
 class ExpeditionSerializer(ModelSerializer):
+
     class Meta:
         model = Expedition
         fields = (
@@ -246,14 +254,21 @@ class InvoiceSerializer(ModelSerializer):
     bank_account = ReadOnlyField(default=settings.BANK_ACCOUNT_NUMBER)
 
     def get_debts(self, inst):
+        promise = inst.promise
+        if not promise:
+            return []
         return inst.promise.debts.all()
 
     def get_partial_debts(self, inst):
+        promise = inst.promise
+        if not promise:
+            return []
         return inst.promise.debts.exclude(
-            debt_type=models.DEBT_TYPE_FULL_PAYMENT,
-        ).all()
+            debt_type=models.DEBT_TYPE_FULL_PAYMENT, ).all()
 
     def get_due_date(self, inst):
+        if not inst.promise:
+            return None
         query = inst.promise.debts
         debt = query.first()
         return debt.maturity
