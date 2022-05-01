@@ -1,8 +1,9 @@
 import React from 'react'
 
 import { asPage, MetaPage } from '../../components/meta'
+import { Breadcrumbs } from '../../components/breadcrumbs'
 import { GenericPage } from '../../components/layout'
-import { Heading, Main } from '../../components/media'
+import { Heading } from '../../components/media'
 import { ParticipantList } from '../../components/family/ParticipantList'
 import { ProfileLayout } from '../../components/family/ProfileLayout'
 import { requireUser, withPageProps } from '../../server/props'
@@ -26,14 +27,23 @@ const ParticipantsPage = ({ participants, updateParticipantsItem }) => {
         description={t('family-participants-description')}
       />
       <ProfileLayout>
-        <Main>
-          <Heading>{title}</Heading>
-          <ParticipantList
-            {...participants}
-            onParticipantUpdate={updateParticipantsItem}
-            className="mt-3"
-          />
-        </Main>
+        <Breadcrumbs
+          links={[
+            {
+              children: t('my-status'),
+              route: 'status',
+            },
+            {
+              children: title,
+            },
+          ]}
+        />
+        <Heading>{title}</Heading>
+        <ParticipantList
+          {...participants}
+          onParticipantUpdate={updateParticipantsItem}
+          className="mt-3"
+        />
       </ProfileLayout>
     </GenericPage>
   )

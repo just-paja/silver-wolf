@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { asPage, MetaPage } from '../components/meta'
+import { Breadcrumbs } from '../components/breadcrumbs'
 import { GenericPage } from '../components/layout'
 import { Heading } from '../components/media'
 import { OrderList } from '../components/orders/OrderList'
@@ -28,10 +29,17 @@ const Status = ({ defaultOrders }) => {
   return (
     <GenericPage>
       <MetaPage
-        title={t('fantasion-title')}
+        title={t('my-status')}
         description={t('fantasion-general-description')}
       />
       <ProfileLayout>
+        <Breadcrumbs
+          links={[
+            {
+              children: t('my-status'),
+            },
+          ]}
+        />
         <Heading>{t('orders')}</Heading>
         <OrderList orders={orders} onOrderCancel={onOrderCancel} />
       </ProfileLayout>

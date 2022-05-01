@@ -1,8 +1,9 @@
 import React from 'react'
 
 import { asPage, MetaPage } from '../../components/meta'
+import { Breadcrumbs } from '../../components/breadcrumbs'
 import { GenericPage } from '../../components/layout'
-import { Heading, Main } from '../../components/media'
+import { getFullName } from '../../components/users'
 import { ParticipantListItem } from '../../components/family/ParticipantList'
 import { ProfileLayout } from '../../components/family/ProfileLayout'
 import { requireUser, withPageProps } from '../../server/props'
@@ -18,7 +19,7 @@ export const getServerSideProps = withPageProps(
 
 const ParticipantDetailPage = ({ participant, setParticipants }) => {
   const { t } = useTranslation()
-  const title = t('family-participants')
+  const title = getFullName(participant)
   return (
     <GenericPage>
       <MetaPage
@@ -26,14 +27,26 @@ const ParticipantDetailPage = ({ participant, setParticipants }) => {
         description={t('family-participants-description')}
       />
       <ProfileLayout>
-        <Main>
-          <Heading>{title}</Heading>
-          <ParticipantListItem
-            {...participant}
-            onParticipantUpdate={setParticipants}
-            className="mt-3"
-          />
-        </Main>
+        <Breadcrumbs
+          links={[
+            {
+              children: t('my-status'),
+              route: 'status',
+            },
+            {
+              children: t('family-participants'),
+              route: 'participants',
+            },
+            {
+              children: title,
+            },
+          ]}
+        />
+        <ParticipantListItem
+          {...participant}
+          onParticipantUpdate={setParticipants}
+          className="mt-3"
+        />
       </ProfileLayout>
     </GenericPage>
   )
