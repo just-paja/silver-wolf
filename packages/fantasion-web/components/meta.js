@@ -38,14 +38,17 @@ export const MetaUrl = ({ noRobots, url }) => (
 )
 
 export const asPage = (PageComp) =>
-  function MetaPageWrapper({ statusCode, ...props }) {
+  function MetaPageWrapper({ noRobots, statusCode, ...props }) {
     const router = useRouter()
     if (statusCode >= 400) {
       return <Error statusCode={statusCode} />
     }
     return (
       <>
-        <MetaUrl noRobots url={`${props.baseUrl}${router.pathname}`} />
+        <MetaUrl
+          noRobots={noRobots}
+          url={`${props.baseUrl}${router.pathname}`}
+        />
         <PageComp {...props} />
       </>
     )
