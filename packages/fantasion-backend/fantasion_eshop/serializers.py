@@ -54,13 +54,13 @@ class ProductPriceSerializer(ModelSerializer):
     future = SerializerMethodField()
 
     def get_active(self, inst):
-        return inst.available_until >= timezone.now() >= inst.available_since
+        return not (self.get_expired(inst) or self.get_future(inst))
 
     def get_expired(self, inst):
-        return inst.available_until < timezone.now()
+        return inst.available_until and inst.available_until < timezone.now()
 
     def get_future(self, inst):
-        return timezone.now() < inst.available_since
+        return inst.available_since and timezone.now() < inst.available_since
 
     class Meta:
         model = models.ProductPrice
