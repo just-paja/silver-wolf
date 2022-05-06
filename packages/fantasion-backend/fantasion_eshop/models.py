@@ -339,6 +339,7 @@ class Order(TimeStampedModel):
                 debt_type=DEBT_TYPE_FULL_PAYMENT,
                 maturity=self.get_deposit_maturity(),
             )
+        self.promise.save()
         self.save()
 
     def notify_order_confirmed(self):
