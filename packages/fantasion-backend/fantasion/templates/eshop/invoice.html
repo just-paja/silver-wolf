@@ -212,7 +212,10 @@
         <div id="client">
           <div class="to">{% trans "Subscriber" %}:</div>
           <h2 class="name">{{owner.full_name}}</h2>
-          <div class="address">{{owner.address}}</div>
+          <div class="address">
+            {{invoice_address.street}} {{invoice_address.street_number}}<br />
+            {{invoice_address.postal_code}} {{invoice_address.city}}
+          </div>
           <div class="email">{{owner.email}}</div>
         </div>
         <div id="invoice">

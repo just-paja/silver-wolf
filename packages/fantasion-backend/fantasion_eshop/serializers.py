@@ -249,6 +249,7 @@ class InvoiceSerializer(ModelSerializer):
     due_date = SerializerMethodField()
     items = SerializerMethodField()
     owner = OrderOwnerSerializer()
+    invoice_address = UserAddressSerializer()
     partial_debts = SerializerMethodField()
     total = SerializerMethodField()
     bank_account = ReadOnlyField(default=settings.BANK_ACCOUNT_NUMBER)
@@ -287,6 +288,7 @@ class InvoiceSerializer(ModelSerializer):
             'debts',
             'owner',
             'due_date',
+            'invoice_address',
             'variable_symbol',
             'deposit',
             'items',
