@@ -213,6 +213,12 @@ class UserAddressBase(Address, TimeStampedModel):
         on_delete=CASCADE,
     )
 
+    def __str__(self):
+        return (
+            f"{self.street} {self.street_number}, "
+            f"{self.postal_code} {self.city} ({self.user})"
+        )
+
 
 class UserAddress(UserAddressBase):
     title = CharField(

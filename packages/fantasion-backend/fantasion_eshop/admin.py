@@ -60,6 +60,19 @@ class OrderPromotionCodeAdmin(NestedStackedInline):
         return super().get_fields(request, obj)
 
 
+class OrderInvoiceAddressAdmin(BaseAdmin):
+    model = models.OrderInvoiceAddress
+    list_display = ('city', 'street', 'street_number', 'postal_code', 'user')
+    search_fields = (
+        'user__last_name',
+        'user__first_name',
+        'street',
+        'city',
+        'street_number',
+        'postal_code',
+    )
+
+
 class OrderAdmin(BaseAdmin):
     model = models.Order
     change_form_template = 'admin/order_change_form.html'
@@ -79,7 +92,7 @@ class OrderAdmin(BaseAdmin):
         'owner__first_name',
         'owner__last_name',
     )
-    autocomplete_fields = ('owner', )
+    autocomplete_fields = ('owner', 'invoice_address')
     readonly_fields = (
         'deposit',
         'get_surcharge',
@@ -93,6 +106,7 @@ class OrderAdmin(BaseAdmin):
     )
     fields_edit = (
         'owner',
+        'invoice_address',
         'status',
         'promise',
         'use_deposit_payment',
