@@ -1,0 +1,7 @@
+{% extends 'admin/change_form.html' %}
+{% load i18n admin_modify %}
+
+{% block object-tools-items %}
+  <li><a href="{% url 'admin:expeditionbatch_export_thorough' expeditionbatch_id=original.id %}">{% trans "Export all data" %}</a></li>
+  {% change_form_object_tools %}
+{% endblock %}

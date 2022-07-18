@@ -1,7 +1,15 @@
+import io
+import csv
+
+from datetime import date
+from django.http import HttpResponse
+from django.urls import path
+from django.utils.translation import ugettext_lazy as _
 from fantasion_generics.admin import BaseAdmin, MediaAdmin, TranslatedAdmin
 from nested_admin import NestedStackedInline
 
 from fantasion_eshop.models import ProductPrice
+from fantasion_signups.models import Signup
 from . import models
 
 
@@ -156,8 +164,86 @@ class ExpeditionBatchAdmin(BaseAdmin):
         'public',
     )
     autocomplete_fields = ('expedition', 'leisure_centre')
+    change_form_template = 'admin/expeditionbatch_change_form.html'
     search_fields = (
         'expedition__title',
         'expedition__description',
         'starts_at',
     )
+
+    def get_urls(self):
+        return super().get_urls() + [
+            path(
+                '<expeditionbatch_id>/exports/thorough',
+                self.admin_site.admin_view(self.export_thorough),
+                name='expeditionbatch_export_thorough',
+            ),
+        ]
+
+    def concat_trait(self, collection, name):
+        return ', '.join([getattr(item, name).title for item in collection])
+
+    def get_age(self, born):
+        today = date.today()
+        leap = ((today.month, today.day) < (born.month, born.day))
+        return today.year - born.year - leap
+
+    def format_address(self, address):
+        return (f"{address.street} {address.street_number}, "
+                f"{address.postal_code} {address.city}")
+
+    def export_thorough(self, request, expeditionbatch_id):
+        batch = models.ExpeditionBatch.objects.filter(
+            pk=expeditionbatch_id).get()
+        signups = Signup.objects.filter(troop__batch=batch)
+        data = [[
+            _('Signup ID'),
+            _('Signup Status'),
+            _('Age Group'),
+            _('First name'),
+            _('Last name'),
+            _('Birth date'),
+            _('Age'),
+            _('Parent'),
+            _('Parent phone'),
+            _('Parent e-mail'),
+            _('Address'),
+            _('Note'),
+            _('Allergies'),
+            _('Diets'),
+        ]]
+        for signup in signups.all():
+            data.append([
+                signup.id,
+                signup.get_status_display(),
+                signup.troop.age_group.title,
+                signup.participant.first_name,
+                signup.participant.last_name,
+                signup.participant.birthdate,
+                self.get_age(signup.participant.birthdate),
+                ' '.join([
+                    signup.participant.family.owner.first_name,
+                    signup.participant.family.owner.last_name,
+                ]),
+                signup.participant.family.owner.phone,
+                signup.participant.family.owner.email,
+                self.format_address(signup.order.invoice_address),
+                signup.note,
+                self.concat_trait(
+                    signup.participant.participant_allergies.all(),
+                    'allergy',
+                ),
+                self.concat_trait(
+                    signup.participant.participant_diets.all(),
+                    'diet',
+                ),
+            ])
+
+        buffer = io.StringIO()
+        wr = csv.writer(buffer, quoting=csv.QUOTE_ALL)
+        wr.writerows(data)
+        buffer.seek(0)
+        response = HttpResponse(buffer, content_type='text/csv; charset=utf-8')
+        disposition = f'attachment; filename=dukladny-prehled-{batch.pk}.csv'
+        response['Content-Disposition'] = disposition
+        return response
