@@ -31,7 +31,7 @@ const LoginPage = () => {
       sameSite: 'strict',
     })
     const redirectTo =
-      localStorage.getItem('redirectTo') || reverse(lang, 'home')
+      localStorage.getItem('redirectTo') || reverse(lang, 'status')
     router.push(redirectTo)
     localStorage.removeItem('redirectTo')
   }
