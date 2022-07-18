@@ -30,6 +30,7 @@ from fantasion_eshop.models import (
 
 
 class Participant(TimeStampedModel):
+
     class Meta:
         verbose_name = _("Participant")
         verbose_name_plural = _("Participants")
@@ -67,6 +68,7 @@ class Participant(TimeStampedModel):
 
 
 class ParticipantAllergy(TimeStampedModel):
+
     class Meta:
         verbose_name = _("Participant Allergy")
         verbose_name_plural = _("Participant Allergies")
@@ -75,7 +77,7 @@ class ParticipantAllergy(TimeStampedModel):
     participant = ForeignKey(
         Participant,
         on_delete=CASCADE,
-        related_name="participant_allergies"
+        related_name="participant_allergies",
     )
     allergy = ForeignKey(
         "fantasion_people.Allergy",
@@ -84,8 +86,12 @@ class ParticipantAllergy(TimeStampedModel):
         verbose_name=_('Allergy'),
     )
 
+    def __str__(self):
+        return f'{self.participant}: {self.allergy}'
+
 
 class ParticipantDiet(TimeStampedModel):
+
     class Meta:
         verbose_name = _("Participant Diet")
         verbose_name_plural = _("Participant Diets")
@@ -94,7 +100,7 @@ class ParticipantDiet(TimeStampedModel):
     participant = ForeignKey(
         Participant,
         on_delete=CASCADE,
-        related_name="participant_diets"
+        related_name="participant_diets",
     )
     diet = ForeignKey(
         "fantasion_people.Diet",
@@ -103,8 +109,12 @@ class ParticipantDiet(TimeStampedModel):
         verbose_name=_('Diet'),
     )
 
+    def __str__(self):
+        return f'{self.participant}: {self.diet}'
+
 
 class ParticipantHobby(TimeStampedModel):
+
     class Meta:
         verbose_name = _("Participant Hobby")
         verbose_name_plural = _("Participant Hobbies")
@@ -113,7 +123,7 @@ class ParticipantHobby(TimeStampedModel):
     participant = ForeignKey(
         Participant,
         on_delete=CASCADE,
-        related_name="participant_hobbies"
+        related_name="participant_hobbies",
     )
     hobby = ForeignKey(
         "fantasion_people.Hobby",
@@ -121,6 +131,9 @@ class ParticipantHobby(TimeStampedModel):
         related_name="participant_hobbies",
         verbose_name=_('Hobby'),
     )
+
+    def __str__(self):
+        return f'{self.participant}: {self.hobby}'
 
 
 SIGNUP_STATUS_NEW = 1
@@ -138,12 +151,12 @@ SIGNUP_STATES = (
 
 def validate_legal_guardian(value):
     if not value:
-        raise ValidationError(_(
-            "Cannot create a signup unless you are a legal guardian"
-        ))
+        raise ValidationError(
+            _("Cannot create a signup unless you are a legal guardian"))
 
 
 class Signup(OrderItem):
+
     class Meta:
         verbose_name = _("Signup")
         verbose_name_plural = _("Signups")
@@ -187,8 +200,7 @@ class Signup(OrderItem):
         null=True,
         verbose_name=_('Note'),
         help_text=_(
-            'Extra information that does not fit in any of the fields'
-        ),
+            'Extra information that does not fit in any of the fields'),
     )
     cancelled_for = TextField(
         blank=True,
@@ -214,11 +226,10 @@ class Signup(OrderItem):
         Owner must have permission to create signups on behalf of a family
         """
         if self.family.can_user_own_order(self.order.owner):
+            err = ("User {user_name} is not allowed to make signups on"
+                   "behalf of Family#{family_id}.")
             raise ValidationError(
-                _((
-                    "User {user_name} is not allowed to make signups on"
-                    "behalf of Family#{family_id}."
-                )).format(
+                _(err).format(
                     user_name=self.order.owner.get_full_name(),
                     family_id=self.family.id,
                 ))
@@ -240,10 +251,8 @@ class Signup(OrderItem):
         status = self.order.status
         if status == ORDER_STATUS_NEW:
             self.status = SIGNUP_STATUS_NEW
-        elif (
-            status == ORDER_STATUS_CONFIRMED
-            or status == ORDER_STATUS_DISPATCHED
-        ):
+        elif (status == ORDER_STATUS_CONFIRMED
+              or status == ORDER_STATUS_DISPATCHED):
             self.status = SIGNUP_STATUS_CONFIRMED
         elif status == ORDER_STATUS_RESOLVED:
             self.status = SIGNUP_STATUS_ACTIVE
@@ -252,6 +261,7 @@ class Signup(OrderItem):
 
 
 class SignupDocumentType(PublicModel):
+
     class Meta:
         verbose_name = _("Signup Document Type")
         verbose_name_plural = _("Signup Document Type")
@@ -265,6 +275,7 @@ class SignupDocumentType(PublicModel):
 
 
 class SignupDocument(TimeStampedModel):
+
     class Meta:
         verbose_name = _("Signup Document")
         verbose_name_plural = _("Signup Document")
@@ -292,6 +303,7 @@ class SignupDocumentMedia(MediaModelMixin, PrivatePhotoModel):
 
 
 class SignupDocumentVerification(TimeStampedModel):
+
     class Meta:
         verbose_name = _("Document Verification")
         verbose_name_plural = _("Document Verifications")

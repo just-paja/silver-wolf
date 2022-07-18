@@ -19,11 +19,15 @@ from .titles import (
 
 
 class NamedModel(TimeStampedModel):
+
     class Meta:
         abstract = True
 
     title = FacultativeTitleField()
     description = FacultativeDescriptionField()
+
+    def __str__(self):
+        return self.title
 
 
 class MediaObjectModel(
@@ -31,6 +35,7 @@ class MediaObjectModel(
         LocalPhotoModel,
         LocalVideoModel,
 ):
+
     class Meta:
         abstract = True
         verbose_name = _("Media Object")
@@ -47,6 +52,7 @@ class MediaObjectModel(
 
 
 class PublicModel(NamedModel):
+
     class Meta:
         abstract = True
 
@@ -58,6 +64,7 @@ class PublicModel(NamedModel):
 
 
 class VisibilityField(BooleanField):
+
     def __init__(self, *args, **kwargs):
         kwargs.setdefault("default", True)
         kwargs.setdefault("verbose_name", _("Public"))
@@ -69,6 +76,7 @@ class VisibilityField(BooleanField):
 
 
 class ImportanceField(IntegerField):
+
     def __init__(self, *args, **kwargs):
         kwargs.setdefault("default", 0)
         kwargs.setdefault("verbose_name", _("Object Importance"))
@@ -81,6 +89,7 @@ class ImportanceField(IntegerField):
 
 
 class MarkdownWidget(widgets.Textarea):
+
     def render(self, name, value, attrs=None, renderer=None):
         if "class" not in attrs.keys():
             attrs["class"] = ""
@@ -101,6 +110,7 @@ class MarkdownWidget(widgets.Textarea):
 
 
 class MarkdownField(TextField):
+
     def __init__(self, *args, **kwargs):
         self.widget = MarkdownWidget()
         super().__init__(*args, **kwargs)
@@ -115,6 +125,7 @@ class MarkdownField(TextField):
 
 
 class DetailedDescriptionField(MarkdownField):
+
     def __init__(self, *args, **kwargs):
         kwargs.setdefault("verbose_name", _("Detailed Description"))
         kwargs.setdefault(
