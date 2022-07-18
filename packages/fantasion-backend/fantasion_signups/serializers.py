@@ -159,7 +159,8 @@ class ParticipantSerializer(ModelSerializer):
         if seri.is_valid():
             stored = seri.save()
             ids = [item.pk for item in stored]
-            serializer.Meta.model.objects.exclude(id__in=ids).delete()
+            serializer.Meta.model.objects.filter(participant=inst).exclude(
+                id__in=ids).delete()
             return stored
 
     def update(self, inst, data):
