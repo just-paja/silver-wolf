@@ -21,7 +21,7 @@
     "downshift": "^6.1.7",
     "flexsearch": "^0.7.21",
     "locale": "^0.1.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "next": "^12.1.0",
     "next-i18next": "^10.2.0",
     "query-string-manipulator": "^1.2.2",
