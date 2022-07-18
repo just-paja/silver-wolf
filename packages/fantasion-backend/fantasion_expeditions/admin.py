@@ -189,6 +189,8 @@ class ExpeditionBatchAdmin(BaseAdmin):
         return today.year - born.year - leap
 
     def format_address(self, address):
+        if not address:
+            return ''
         return (f"{address.street} {address.street_number}, "
                 f"{address.postal_code} {address.city}")
 
