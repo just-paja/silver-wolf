@@ -39,7 +39,8 @@ class PromiseManager(TimeLimitedManager):
 
     def filter_by_transaction(self, variable_symbol, specific_symbol):
         query = self.filter(variable_symbol=variable_symbol)
-        if specific_symbol:
+        # Ignore empty specific symbol and treat 0 as empty
+        if specific_symbol and specific_symbol != '0':
             query = query.filter(specific_symbol=specific_symbol)
         return query
 
