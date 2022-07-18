@@ -9,8 +9,7 @@ import { CreatePasswordForm } from '../components/register'
 import { ForgottenPasswordForm } from '../components/login'
 import { GenericPage } from '../components/layout'
 import { Heading } from '../components/media'
-import { useAlerts } from '../components/alerts'
-import { useSite } from '../components/context'
+import { useAlerts, useSite } from '../components/context'
 import { useTranslation } from 'next-i18next'
 import { withPageProps } from '../server/props'
 
@@ -40,14 +39,14 @@ export const getServerSideProps = withPageProps(async ({ fetch, query }) => {
 })
 
 const ForgottenPasswordPage = ({ secret, token }) => {
+  const alerts = useAlerts()
   const { fetch } = useSite()
-  const { addAlert } = useAlerts()
   const { t } = useTranslation()
   const [submitted, setSubmitted] = useState()
   const requestPasswordRestore = async (values) => {
     await restorePassword(fetch, values)
     setSubmitted(true)
-    addAlert({
+    alerts.add({
       id: 'renewed-password',
       severity: 'success',
       text: t('forgotten-password-submitted'),
@@ -70,7 +69,7 @@ const ForgottenPasswordPage = ({ secret, token }) => {
         body: values,
       })
       setSubmitted(true)
-      addAlert({
+      alerts.add({
         id: 'restored-password',
         severity: 'success',
         text: t('forgotten-password-restored'),
