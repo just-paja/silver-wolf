@@ -73,7 +73,7 @@ export const TroopCard = ({ expedition, batch, troop }) => {
       </ListGroup>
 
       <Card.Body>
-        <SignupButton expedition={expedition} batch={batch} />
+        <SignupButton expedition={expedition} batch={batch} troop={troop} />
       </Card.Body>
     </Section>
   )

@@ -40,9 +40,13 @@ const Troop = ({ ageMin, ageMax, startsAt, endsAt }) => {
   )
 }
 
-export const SignupButton = ({ expedition, batch }) => {
+export const SignupButton = ({ expedition, batch, troop }) => {
   const router = useRouter()
-  const [show, setShow] = useState(router?.query?.action === 'signup')
+  const [show, setShow] = useState(
+    troop
+      ? parseInt(router?.query?.signup, 10) === troop.id
+      : parseInt(router?.query?.signup, 10) === batch?.id
+  )
   const { t } = useTranslation()
   const { fetch, lang, user } = useSite()
   const [participants, setParticipants] = useState([])
@@ -54,7 +58,7 @@ export const SignupButton = ({ expedition, batch }) => {
     const redirectPath = reverse(lang, 'expeditionDetail', {
       expeditionSlug: slug(expedition),
     })
-    const query = '?action=signup'
+    const query = `?signup=${(troop || batch).id}`
     const redirectTo = `${redirectPath}${query}`
     router.push(
       `${reverse(lang, 'login')}?redirectTo=${encodeURIComponent(redirectTo)}`
@@ -153,7 +157,7 @@ const ExpeditionBatch = ({ batch, expedition }) => {
         </Col>
         <Col className={styles.batchButtons} lg={6}>
           {batch.troops.length === 0 ? null : (
-            <SignupButton expedition={expedition} />
+            <SignupButton expedition={expedition} batch={batch} />
           )}
           <Link
             as={Button}
