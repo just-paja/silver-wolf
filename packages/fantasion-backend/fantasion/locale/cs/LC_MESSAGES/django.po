@@ -275,7 +275,7 @@ msgstr "Vaše objednávka je tímto splacena a příhláška/y jsou aktivní."
 
 #: fantasion/templates/mail/full_paid.html:14
 msgid "email-full-paid-amount"
-msgstr "Celá zaplacená částka činí:"
+msgstr "Celá zaplacená částka činí"
 
 #: fantasion/templates/mail/full_paid.html:18
 msgid "email-full-paid-wish"
