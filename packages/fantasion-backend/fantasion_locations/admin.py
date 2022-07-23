@@ -25,6 +25,17 @@ class LocationAdmin(TranslatedAdmin):
         'country__name',
     )
     autocomplete_fields = ('country', )
+    fields = (
+        'name',
+        'fuzzy_name',
+        'country',
+        'city',
+        'street',
+        'street_number',
+        'postal_code',
+        'lat',
+        'lng',
+    )
 
     def street_and_number(self, inst):
         if not inst.street:
