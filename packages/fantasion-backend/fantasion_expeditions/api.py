@@ -21,3 +21,8 @@ class ExpeditionCollection(ReadOnlyModelViewSet):
 class ExpeditionBatchCollection(ReadOnlyModelViewSet):
     queryset = models.ExpeditionBatch.objects.filter(public=True).all()
     serializer_class = serializers.ExpeditionBatchSerializer
+
+
+class TransportCollection(ReadOnlyModelViewSet):
+    queryset = models.Transport.objects.filter(public=True).all()
+    serializer_class = serializers.TransportSerializer

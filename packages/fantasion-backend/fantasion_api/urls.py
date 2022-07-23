@@ -66,6 +66,11 @@ router.register(
     basename='leisure_centres',
 )
 router.register(
+    r'transports',
+    expeditions.TransportCollection,
+    basename='transports',
+)
+router.register(
     r'profiles',
     people.ProfileCollection,
     basename='profiles',

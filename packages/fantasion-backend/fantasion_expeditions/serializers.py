@@ -1,5 +1,6 @@
 from rest_framework.serializers import (
     HyperlinkedModelSerializer,
+    ModelSerializer,
     SerializerMethodField,
 )
 
@@ -15,7 +16,66 @@ from fantasion_eshop.serializers import ProductPriceSerializer
 from fantasion_people import models as people
 
 
+class TransportVehicleMediaSerializer(PublicMediaSerializer):
+
+    class Meta:
+        model = models.TransportVehicleMedia
+        fields = media_fields
+
+
+class TransportVehicleSerializer(ModelSerializer):
+    media = TransportVehicleMediaSerializer(many=True)
+
+    class Meta:
+        model = models.TransportVehicle
+        fields = (
+            'id',
+            'brand',
+            'model',
+            'color',
+            'year',
+            'media',
+            'description',
+            'title',
+        )
+
+
+class TransportSerializer(ModelSerializer):
+    vehicle = TransportVehicleSerializer()
+    departs_from = LocationSerializer()
+    arrives_to = LocationSerializer()
+
+    class Meta:
+        model = models.Transport
+        fields = (
+            'id',
+            'arrived',
+            'arrives_at',
+            'arrives_to',
+            'boarding',
+            'departs_at',
+            'departs_from',
+            'description',
+            'gps_tracking_url',
+            'public',
+            'vehicle',
+        )
+
+
+class TroopTransportSerializer(ModelSerializer):
+    transport = TransportSerializer()
+
+    class Meta:
+        model = models.TroopTransport
+        fields = (
+            'id',
+            'transport',
+            'troop',
+        )
+
+
 class LeisureCentreMediaSerializer(PublicMediaSerializer):
+
     class Meta:
         model = models.LeisureCentreMedia
         fields = media_fields
@@ -70,6 +130,7 @@ class LeisureCentreSerializer(LeisureCentreBaseSerializer):
 
 
 class ExpeditionThemeMediaSerializer(PublicMediaSerializer):
+
     class Meta:
         model = models.ExpeditionThemeMedia
         fields = media_fields
@@ -90,6 +151,7 @@ class ExpeditionThemeBaseSerializer(HyperlinkedModelSerializer):
 
 
 class PlainExpeditionSerializer(HyperlinkedModelSerializer):
+
     class Meta:
         model = models.Expedition
         fields = (
@@ -116,12 +178,14 @@ class ExpeditionThemeSerializer(ExpeditionThemeBaseSerializer):
 
 
 class ExpeditionMediaSerializer(PublicMediaSerializer):
+
     class Meta:
         model = models.ExpeditionMedia
         fields = media_fields
 
 
 class AgeGroupSerializer(HyperlinkedModelSerializer):
+
     class Meta:
         model = models.AgeGroup
         fields = (
@@ -133,6 +197,7 @@ class AgeGroupSerializer(HyperlinkedModelSerializer):
 
 
 class ExpeditionProgramMediaSerializer(PublicMediaSerializer):
+
     class Meta:
         model = models.ExpeditionProgramMedia
         fields = media_fields
@@ -152,10 +217,11 @@ class ExpeditionProgramSerializer(HyperlinkedModelSerializer):
         )
 
 
-class TroopSerializer(HyperlinkedModelSerializer):
+class TroopSerializer(ModelSerializer):
     age_group = AgeGroupSerializer()
     prices = ProductPriceSerializer(many=True)
     program = ExpeditionProgramSerializer()
+    troop_transports = TroopTransportSerializer(many=True)
 
     class Meta:
         model = models.Troop
@@ -167,10 +233,12 @@ class TroopSerializer(HyperlinkedModelSerializer):
             "program",
             "starts_at",
             "price_includes",
+            "troop_transports",
         )
 
 
 class StaffRoleSerializer(HyperlinkedModelSerializer):
+
     class Meta:
         model = models.StaffRole
         fields = ("id", "title", "description")
