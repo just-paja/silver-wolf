@@ -112,16 +112,33 @@ fieldset.module {
   z-index: 8;
 } 
 
-/* Fix Markdown Editor label position */
-.editor-toolbar {
-  clear: both;
-}
-
 /* Fix Markdown Editor responsive flow */
 .mde-container {
   flex-direction: column;
 }
 
 .mde-container .cm-s-paper {
+  background: var(--input-bg);
+  border-color: var(--hairline-color);
+  color: var(--input-fg);
   cursor: text;
+}
+
+.mde-container .editor-toolbar {
+  background: var(--darkened-bg);
+  border-color: var(--hairline-color);
+  clear: both; /* Fix Markdown Editor label position */
+}
+
+.mde-container .editor-toolbar a {
+  cursor: default;
+  color: var(--body-fg) !important;
+}
+
+.mde-container .editor-toolbar a:hover {
+  color: var(--body-bg) !important;
+}
+
+.mde-container .CodeMirror-cursor {
+  border-color: var(--body-fg);
 }
