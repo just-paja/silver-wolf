@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from rest_framework.serializers import CharField, ModelSerializer, IntegerField
 
 from . import models
@@ -284,14 +285,18 @@ class SignupSerializer(ModelSerializer):
         participant = models.Participant.objects.get(
             pk=data.get('participant_id'), )
         troop = Troop.objects.get(pk=data.get('troop_id'))
-        inst = models.Signup(
-            family=participant.family,
-            legal_guardian=data.get('legal_guardian'),
-            note=data.get('note'),
-            order=order,
-            participant=participant,
-            product_price=troop.get_active_price(),
-            troop=troop,
-        )
-        inst.save()
+        try:
+            inst = models.Signup(
+                family=participant.family,
+                legal_guardian=data.get('legal_guardian'),
+                note=data.get('note'),
+                order=order,
+                participant=participant,
+                product_price=troop.get_active_price(),
+                troop=troop,
+            )
+            inst.save()
+        except eshop.ProductPrice.DoesNotExist:
+            raise PermissionDenied
+
         return inst
