@@ -12,6 +12,10 @@ import { useTranslation } from 'next-i18next'
 
 import styles from './troops.module.scss'
 
+export const isPriceAvailable = (price) => price.active
+
+export const isTroopAvailable = (troop) => troop.prices.some(isPriceAvailable)
+
 export const TroopLabel = ({ ageMin, ageMax, startsAt, endsAt }) => {
   const { t } = useTranslation()
   return (
@@ -71,10 +75,11 @@ export const TroopCard = ({ expedition, batch, troop }) => {
           </ListGroup.Item>
         )}
       </ListGroup>
-
-      <Card.Body>
-        <SignupButton expedition={expedition} batch={batch} troop={troop} />
-      </Card.Body>
+      {isTroopAvailable(troop) ? (
+        <Card.Body>
+          <SignupButton expedition={expedition} batch={batch} troop={troop} />
+        </Card.Body>
+      ) : null}
     </Section>
   )
 }

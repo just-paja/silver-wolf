@@ -14,7 +14,7 @@ import { PriceLabel } from './money'
 import { reverse } from '../routes'
 import { slug } from './slugs'
 import { SignupDialog } from './signups'
-import { TroopLabel } from './troops'
+import { TroopLabel, isTroopAvailable } from './troops'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
@@ -114,6 +114,8 @@ export const SignupButton = ({ expedition, batch, troop }) => {
   )
 }
 
+const isBatchAvailable = (batch) => batch.troops.some(isTroopAvailable)
+
 const ExpeditionBatch = ({ batch, expedition }) => {
   const { t } = useTranslation()
   const lowestPrice = batch.troops.reduce((aggr, troop) => {
@@ -156,9 +158,9 @@ const ExpeditionBatch = ({ batch, expedition }) => {
           )}
         </Col>
         <Col className={styles.batchButtons} lg={6}>
-          {batch.troops.length === 0 ? null : (
+          {isBatchAvailable(batch) ? (
             <SignupButton expedition={expedition} batch={batch} />
-          )}
+          ) : null}
           <Link
             as={Button}
             className={styles.detailsButton}
