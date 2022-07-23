@@ -200,6 +200,7 @@ class ExpeditionBatchAdmin(BaseAdmin):
         signups = Signup.objects.filter(troop__batch=batch)
         data = [[
             _('Signup ID'),
+            _('Order ID'),
             _('Signup Status'),
             _('Age Group'),
             _('First name'),
@@ -217,6 +218,7 @@ class ExpeditionBatchAdmin(BaseAdmin):
         for signup in signups.all():
             data.append([
                 signup.id,
+                signup.order.id,
                 signup.get_status_display(),
                 signup.troop.age_group.title,
                 signup.participant.first_name,
