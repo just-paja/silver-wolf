@@ -13,11 +13,11 @@ import { Link } from './links'
 import { LocationFuzzyName } from './locations'
 import { PriceLabel } from './money'
 import { reverse } from '../routes'
-import { slug } from './slugs'
 import { SignupDialog } from './signups'
+import { slug } from './slugs'
 import { TroopLabel } from './troops'
+import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
 import {
   useActiveOrder,
@@ -41,13 +41,14 @@ const Troop = ({ ageMin, ageMax, startsAt, endsAt }) => {
   )
 }
 
+const shouldOpen = (router, batch, troop) =>
+  troop
+    ? parseInt(router?.query?.signup, 10) === troop.id
+    : parseInt(router?.query?.signup, 10) === batch?.id
+
 export const SignupButton = ({ expedition, batch, troop }) => {
   const router = useRouter()
-  const [show, setShow] = useState(
-    troop
-      ? parseInt(router?.query?.signup, 10) === troop.id
-      : parseInt(router?.query?.signup, 10) === batch?.id
-  )
+  const [show, setShow] = useState(false)
   const { t } = useTranslation()
   const { fetch, lang, user } = useSite()
   const [participants, setParticipants] = useState([])
@@ -65,11 +66,16 @@ export const SignupButton = ({ expedition, batch, troop }) => {
       `${reverse(lang, 'login')}?redirectTo=${encodeURIComponent(redirectTo)}`
     )
   }
-  const showDialog = async () => {
+  const showDialog = useCallback(async () => {
     const p = await fetch('/participants')
     setParticipants(p.results)
     setShow(true)
-  }
+  }, [fetch, setParticipants, setShow])
+  useEffect(() => {
+    if (shouldOpen) {
+      showDialog(router, batch, troop)
+    }
+  }, [router, batch, troop, showDialog])
   const addParticipant = (participant) => {
     setParticipants([...participants, participant])
   }
