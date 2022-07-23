@@ -100,6 +100,12 @@ class ProductPriceAdmin(NestedStackedInline):
     search_fields = ('product__title', 'price_level__title')
 
 
+class TroopTransportInlineAdmin(NestedStackedInline):
+    model = models.TroopTransport
+    extra = 0
+    autocomplete_fields = ('transport', )
+
+
 class TroopAdmin(BaseAdmin):
     model = models.Troop
     list_display = (
@@ -118,7 +124,7 @@ class TroopAdmin(BaseAdmin):
         'program',
     )
     readonly_fields = ('description', )
-    inlines = (ProductPriceAdmin, )
+    inlines = (ProductPriceAdmin, TroopTransportInlineAdmin)
     autocomplete_fields = ('batch', 'program')
     search_fields = (
         'expedition__title',
@@ -136,7 +142,10 @@ class TroopAdmin(BaseAdmin):
 class TroopInlineAdmin(NestedStackedInline):
     model = models.Troop
     extra = 0
-    inlines = (ProductPriceAdmin, )
+    inlines = (
+        ProductPriceAdmin,
+        TroopTransportInlineAdmin,
+    )
     readonly_fields = ('description', )
 
 
@@ -251,3 +260,54 @@ class ExpeditionBatchAdmin(BaseAdmin):
         disposition = f'attachment; filename=dukladny-prehled-{batch.pk}.csv'
         response['Content-Disposition'] = disposition
         return response
+
+
+class TransportVehicleMediaAdmin(MediaAdmin):
+    model = models.TransportVehicleMedia
+
+
+class TransportVehicleAdmin(TranslatedAdmin):
+    model = models.TransportVehicle
+    inlines = (TransportVehicleMediaAdmin, )
+    list_display = ('pk', 'title', 'brand', 'model', 'color', 'year')
+    list_filter = ('brand', 'model', 'color', 'year')
+    search_fields = ('title', 'brand', 'model', 'color', 'year')
+    fields = (
+        'title',
+        'brand',
+        'model',
+        'year',
+        'color',
+        'public',
+        'description',
+    )
+
+
+class TransportAdmin(TranslatedAdmin):
+    model = models.Transport
+    list_display = (
+        'pk',
+        'vehicle',
+        'departs_from',
+        'departs_at',
+        'arrives_to',
+        'arrives_at',
+        'boarding',
+        'arrived',
+        'public',
+    )
+    list_filter = ('vehicle', )
+    search_fields = ('departs_from__name', 'arrives_to__name')
+    autocomplete_fields = ('arrives_to', 'departs_from', 'vehicle')
+    fields = (
+        'vehicle',
+        'departs_from',
+        'departs_at',
+        'arrives_to',
+        'arrives_at',
+        'gps_tracking_url',
+        'public',
+        'boarding',
+        'arrived',
+        'description',
+    )

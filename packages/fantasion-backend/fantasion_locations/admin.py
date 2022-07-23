@@ -19,6 +19,11 @@ class LocationAdmin(TranslatedAdmin):
         'coordinates',
     )
     list_filter = ('country', )
+    search_fields = (
+        'name',
+        'city',
+        'country__name',
+    )
     autocomplete_fields = ('country', )
 
     def street_and_number(self, inst):
