@@ -184,7 +184,9 @@ class ProductPrice(TimeStampedModel):
 
     def is_available(self):
         now = timezone.now()
-        return self.available_since <= now <= self.available_until
+        since = not self.available_since or self.available_since <= now
+        until = not self.available_until or now <= self.available_until
+        return since and until
 
 
 class OrderInvoiceAddress(UserAddressBase):
