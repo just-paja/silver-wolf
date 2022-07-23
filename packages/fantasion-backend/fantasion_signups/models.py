@@ -25,6 +25,13 @@ from fantasion_eshop.models import (
     ORDER_STATUS_CONFIRMED,
     ORDER_STATUS_DISPATCHED,
     ORDER_STATUS_NEW,
+    ORDER_STATUS_PAID,
+    ORDER_STATUS_RESOLVED,
+)
+
+ORDER_SIGNUP_ACCEPTED = (
+    ORDER_STATUS_DISPATCHED,
+    ORDER_STATUS_PAID,
     ORDER_STATUS_RESOLVED,
 )
 
@@ -254,7 +261,7 @@ class Signup(OrderItem):
         elif (status == ORDER_STATUS_CONFIRMED
               or status == ORDER_STATUS_DISPATCHED):
             self.status = SIGNUP_STATUS_CONFIRMED
-        elif status == ORDER_STATUS_RESOLVED:
+        elif status in ORDER_SIGNUP_ACCEPTED:
             self.status = SIGNUP_STATUS_ACTIVE
         elif status == ORDER_STATUS_CANCELLED:
             self.status = SIGNUP_STATUS_CANCELLED
