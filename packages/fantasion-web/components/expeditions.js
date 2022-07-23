@@ -72,8 +72,8 @@ export const SignupButton = ({ expedition, batch, troop }) => {
     setShow(true)
   }, [fetch, setParticipants, setShow])
   useEffect(() => {
-    if (shouldOpen) {
-      showDialog(router, batch, troop)
+    if (shouldOpen(router, batch, troop)) {
+      showDialog()
     }
   }, [router, batch, troop, showDialog])
   const addParticipant = (participant) => {
