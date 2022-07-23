@@ -2,6 +2,13 @@
 {% load i18n admin_modify %}
 
 {% block object-tools-items %}
+  {% if original.is_payable %}
+    <li>
+      <a href="{% url 'admin:fantasion_banking_statement_add' %}?promise={{original.promise.id}}">
+        {% trans "Pay" %}
+      </a>
+    </li>
+  {% endif %}
   <li><a href="{% url 'admin:order_preview_invoice' order_id=original.id %}">{% trans "Preview invoice" %}</a></li>
   {% change_form_object_tools %}
 {% endblock %}

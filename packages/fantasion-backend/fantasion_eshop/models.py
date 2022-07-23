@@ -237,8 +237,7 @@ class Order(TimeStampedModel):
         verbose_name=_("Insurance Request"),
         help_text=_(
             "The Order Owner requested assistance with getting insurance and "
-            "expects to be contacted by Fantasion staff."
-        ),
+            "expects to be contacted by Fantasion staff."),
     )
     submitted_at = DateTimeField(
         null=True,
@@ -410,6 +409,9 @@ class Order(TimeStampedModel):
                 _(f"Cannot delete order in status {self.status}"))
         self.status = ORDER_STATUS_CANCELLED
         self.save()
+
+    def is_payable(self):
+        return self.status in ORDER_REACTS_TO_PAYMENTS
 
     calculate_price.short_description = _('Price')
     get_surcharge.short_description = _('Surcharge')
@@ -589,7 +591,9 @@ class OrderPromotionCode(OrderItem):
 
 @receiver(post_save, sender="fantasion_banking.Promise")
 def set_order_state(sender, instance, **kwargs):
-    orders = Order.objects.filter(promise=instance,
-                                  status__in=ORDER_REACTS_TO_PAYMENTS)
+    orders = Order.objects.filter(
+        promise=instance,
+        status__in=ORDER_REACTS_TO_PAYMENTS,
+    )
     for order in orders:
         order.sync_with_promise(instance)
