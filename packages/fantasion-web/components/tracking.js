@@ -9,7 +9,7 @@ import styles from './tracking.module.scss'
 import { getCookie, setCookies } from 'cookies-next'
 import { InteractiveButton } from './buttons'
 import { Form, FormControls, Input } from './forms'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'next-i18next'
 
 const COOKIE_CONSENT = 'cookieConsent'
@@ -163,11 +163,28 @@ const getConsentValue = () => {
     .reduce((aggr, key) => Object.assign(aggr, { [key]: true }), {})
 }
 
+const publishConsent = (consent) => {
+  if (consent) {
+    global.dataLayer.push({
+      event: 'cookieConsentSubmit',
+      marketingConsent: Boolean(consent[CONSENT_MARKETING]),
+      trackingConsent: Boolean(consent[CONSENT_TRACKING]),
+    })
+  }
+}
+
 const FIVE_YEARS = 60 * 60 * 24 * 365 * 5
 
 export const Tracking = () => {
   const [consent, setConsent] = useState(getConsentValue())
-  const [showDialog, setShowDialog] = useState(!consent)
+  const [showDialog, setShowDialog] = useState(false)
+  global.showConsentDialog = useCallback(
+    () => setShowDialog(true),
+    [setShowDialog]
+  )
+  useEffect(() => {
+    publishConsent(consent)
+  }, [consent])
   const saveConsent = (values) => {
     setConsent(values)
     const cookieValue = Object.entries(values)
@@ -188,7 +205,7 @@ export const Tracking = () => {
           onResolve={saveConsent}
         />
       )}
-      {consent?.tracking && <GoogleTagManager />}
+      <GoogleTagManager />
     </>
   )
 }
