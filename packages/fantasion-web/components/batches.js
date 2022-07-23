@@ -5,10 +5,12 @@ import { Heading } from './media'
 import { Link } from './links'
 import { ProfileAvatar } from './profiles'
 import { slug } from './slugs'
-import { TroopCard } from './troops'
+import { TroopCard, isTroopAvailable } from './troops'
 import { useTranslation } from 'next-i18next'
 
 import styles from './batches.module.scss'
+
+export const isBatchAvailable = (batch) => batch.troops.some(isTroopAvailable)
 
 export const BatchTroops = ({ expedition, batch, troops }) => {
   return (

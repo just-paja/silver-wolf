@@ -12,6 +12,8 @@ import { CancelIcon } from './icons'
 import { DateRange, formatDateRange } from './dates'
 import { Form, FormControls, Input, useValidator } from './forms'
 import { InteractiveButton } from './buttons'
+import { isBatchAvailable } from './batches'
+import { isTroopAvailable } from './troops'
 import { Money } from './money'
 import { useActiveOrder, useExpedition, useFetch } from './context'
 import { useFormContext } from 'react-hook-form'
@@ -22,12 +24,10 @@ import { useTranslation } from 'next-i18next'
 const BatchSelection = (props) => {
   const { i18n, t } = useTranslation()
   const { batches } = useExpedition()
-  const options = batches
-    .filter((batch) => batch.troops.length !== 0)
-    .map((batch) => ({
-      label: formatDateRange(i18n.lang, batch.startsAt, batch.endsAt),
-      value: batch.id,
-    }))
+  const options = batches.filter(isBatchAvailable).map((batch) => ({
+    label: formatDateRange(i18n.lang, batch.startsAt, batch.endsAt),
+    value: batch.id,
+  }))
   return (
     <Input
       {...props}
@@ -59,7 +59,7 @@ const TroopSelection = (props) => {
   const { t } = useTranslation()
   const batch = useBatch()
   const options = batch
-    ? batch.troops.map((troop) => ({
+    ? batch.troops.filter(isTroopAvailable).map((troop) => ({
         label: formatTroopLabel(troop),
         value: troop.id,
       }))

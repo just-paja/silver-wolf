@@ -8,13 +8,14 @@ import { ArticleBody } from './articles'
 import { DateRange } from './dates'
 import { Heading } from './media'
 import { InteractiveButton } from './buttons'
+import { isBatchAvailable } from './batches'
 import { Link } from './links'
 import { LocationFuzzyName } from './locations'
 import { PriceLabel } from './money'
 import { reverse } from '../routes'
 import { slug } from './slugs'
 import { SignupDialog } from './signups'
-import { TroopLabel, isTroopAvailable } from './troops'
+import { TroopLabel } from './troops'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
@@ -113,8 +114,6 @@ export const SignupButton = ({ expedition, batch, troop }) => {
     </>
   )
 }
-
-const isBatchAvailable = (batch) => batch.troops.some(isTroopAvailable)
 
 const ExpeditionBatch = ({ batch, expedition }) => {
   const { t } = useTranslation()
