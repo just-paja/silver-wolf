@@ -3,7 +3,7 @@ from datetime import date, timedelta
 from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.db.models import Sum
+from django.db.models import Q, Sum
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django_extensions.db.models import TimeStampedModel
@@ -135,8 +135,8 @@ class EshopProduct(TimeStampedModel):
     def get_active_price(self):
         now = timezone.now()
         return self.prices.filter(
-            available_since__lte=now,
-            available_until__gt=now,
+            Q(available_since__isnull=True) | Q(available_since__lte=now),
+            Q(available_until__isnull=True) | Q(available_until__gt=now),
         ).get()
 
 
