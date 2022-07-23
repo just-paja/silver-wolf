@@ -121,3 +121,7 @@ fieldset.module {
 .mde-container {
   flex-direction: column;
 }
+
+.mde-container .cm-s-paper {
+  cursor: text;
+}
