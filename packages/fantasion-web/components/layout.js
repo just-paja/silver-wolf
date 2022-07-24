@@ -110,11 +110,11 @@ const UserMenu = () => {
         ]),
     ...(user?.passwordCreated
       ? [
-          <Link as={Nav.Link} key="basket" route="basket">
-            <BasketIcon /> {t('order-basket')}: <Money amount={basketPrice} />
-          </Link>,
           <Link as={Nav.Link} key="status" route="status">
             <HomeIcon /> {t('my-status')}
+          </Link>,
+          <Link as={Nav.Link} key="basket" route="basket">
+            <BasketIcon /> {t('order-basket')}: <Money amount={basketPrice} />
           </Link>,
           <Nav.Link key="logout" onClick={logout}>
             <LogoutIcon /> {t('logout')}
