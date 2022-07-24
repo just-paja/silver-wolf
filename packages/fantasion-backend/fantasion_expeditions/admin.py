@@ -103,7 +103,7 @@ class ProductPriceAdmin(NestedStackedInline):
 class TroopTransportInlineAdmin(NestedStackedInline):
     model = models.TroopTransport
     extra = 0
-    autocomplete_fields = ('transport', )
+    autocomplete_fields = ('transport', 'troop')
 
 
 class TroopAdmin(BaseAdmin):
@@ -285,6 +285,7 @@ class TransportVehicleAdmin(TranslatedAdmin):
 
 class TransportAdmin(TranslatedAdmin):
     model = models.Transport
+    inlines = (TroopTransportInlineAdmin, )
     list_display = (
         'pk',
         'status',
