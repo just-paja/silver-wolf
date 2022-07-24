@@ -70,6 +70,7 @@ class TroopTransportSerializer(ModelSerializer):
             'id',
             'transport',
             'troop',
+            'direction',
         )
 
 
@@ -352,8 +353,8 @@ class TroopTransportReverseSerializer(ModelSerializer):
     troop = TroopTransportTroopSerializer()
 
     class Meta:
-        model = models.Troop
-        fields = ('id', 'troop',)
+        model = models.TroopTransport
+        fields = ('id', 'troop', 'direction',)
 
 
 class TransportStandaloneSerializer(TransportSerializer):

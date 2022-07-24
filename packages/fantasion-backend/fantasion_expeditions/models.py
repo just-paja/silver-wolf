@@ -386,6 +386,15 @@ class Transport(Model):
         return f'{self.departs_from} {self.departs_at}'
 
 
+TRANSPORT_DIRECTION_THERE = 1
+TRANSPORT_DIRECTION_BACK = 2
+
+TRANSPORT_DIRECTION_CHOICES = (
+    (TRANSPORT_DIRECTION_THERE, _('Transport There')),
+    (TRANSPORT_DIRECTION_BACK, _('Transport Back')),
+)
+
+
 class TroopTransport(TimeStampedModel):
     troop = ForeignKey(
         Troop,
@@ -398,4 +407,9 @@ class TroopTransport(TimeStampedModel):
         on_delete=RESTRICT,
         related_name='troop_transports',
         verbose_name=_('Transport'),
+    )
+    direction = PositiveIntegerField(
+        choices=TRANSPORT_DIRECTION_CHOICES,
+        null=True,
+        blank=True,
     )
