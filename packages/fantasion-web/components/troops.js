@@ -9,6 +9,7 @@ import { PriceTag } from './money'
 import { SignupButton } from './expeditions'
 import { useTranslation } from 'next-i18next'
 import { Link } from './links'
+import { slug } from './slugs'
 import {
   TRANSPORT_THERE,
   TRANSPORT_BACK,
@@ -114,7 +115,17 @@ export const TroopCard = ({ expedition, batch, troop }) => {
           />
         </ListGroup.Item>
         <ListGroup.Item>
-          <IconLabel icon={StoryIcon} text={troop.program.title} />
+          <IconLabel
+            icon={StoryIcon}
+            text={
+              <Link
+                route="adventureDetail"
+                params={{ expeditionThemeSlug: slug(troop.program) }}
+              >
+                {troop.program.title}
+              </Link>
+            }
+          />
         </ListGroup.Item>
         {troop.troopTransports.map((tt) => (
           <ListGroup.Item key={tt.id}>
