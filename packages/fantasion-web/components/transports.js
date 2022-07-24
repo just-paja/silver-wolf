@@ -98,8 +98,28 @@ const ItineraryStep = ({
   )
 }
 
-const TransportDirection = ({ transport }) =>
-  transport.status === TRANSPORT_DEPARTED ? <TravelSpinner /> : <DownIcon />
+const TransportGpsLink = ({ transport }) => {
+  const { t } = useTranslation()
+  return (
+    <div className="ms-2">
+      <Link href={transport.gpsTrackingUrl} external>
+        {t('transport-watch')}
+      </Link>
+    </div>
+  )
+}
+
+const TransportStatus = ({ transport }) => {
+  if (transport.status === TRANSPORT_DEPARTED) {
+    return (
+      <div className="d-flex align-items-center">
+        <TravelSpinner />
+        {transport.gpsTrackingUrl && <TransportGpsLink transport={transport} />}
+      </div>
+    )
+  }
+  return <DownIcon />
+}
 
 export const Itinerary = ({ transport }) => {
   const { t } = useTranslation()
@@ -117,7 +137,7 @@ export const Itinerary = ({ transport }) => {
         location={transport.departsFrom}
         title={t('transport-departure')}
       />
-      <TransportDirection transport={transport} />
+      <TransportStatus transport={transport} />
       <ItineraryStep
         date={transport.arrivesAt}
         arrived={transport.status === TRANSPORT_ARRIVED}
