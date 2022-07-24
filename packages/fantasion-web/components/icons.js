@@ -1,6 +1,6 @@
 import styles from './icons.module.scss'
 
-import { BsBasket2Fill, BsPersonFill, BsPinMapFill } from 'react-icons/bs'
+import { BsBasket2Fill, BsPersonFill } from 'react-icons/bs'
 import { HiHome, HiMenu, HiMailOpen } from 'react-icons/hi'
 import { GiJourney } from 'react-icons/gi'
 import { IoPricetags } from 'react-icons/io5'
@@ -11,9 +11,11 @@ import {
   MdCancel,
   MdCheck,
   MdContentCopy,
+  MdDepartureBoard,
   MdGppGood,
   MdGppBad,
   MdGppMaybe,
+  MdLocationPin,
   MdLogout,
 } from 'react-icons/md'
 import {
@@ -31,6 +33,7 @@ import {
  * icon for the same purpose. */
 
 export const BasketIcon = BsBasket2Fill
+export const BusDepartureIcon = MdDepartureBoard
 export const CancelIcon = MdCancel
 export const CheckIcon = MdCheck
 export const CloseIcon = MdCancel
@@ -44,7 +47,7 @@ export const HamburgerMenuIcon = HiMenu
 export const HomeIcon = HiHome
 export const InsecureIcon = MdGppBad
 export const InstagramIcon = FaInstagram
-export const LocationPinIcon = BsPinMapFill
+export const LocationPinIcon = MdLocationPin
 export const LogoutIcon = MdLogout
 export const NextIcon = MdArrowRight
 export const PersonIcon = BsPersonFill

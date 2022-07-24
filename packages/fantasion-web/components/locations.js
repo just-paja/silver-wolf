@@ -13,6 +13,19 @@ export const LocationAddress = ({ location, title }) => (
   </address>
 )
 
+export const Location = ({ location }) => {
+  return (
+    <div className="d-flex">
+      <div className="me-2">
+        <LocationPinIcon />
+      </div>
+      <div>
+        <LocationAddress location={location} />
+      </div>
+    </div>
+  )
+}
+
 export const LocationMap = ({ location }) => {
   const key = 'AIzaSyDZAOm63J4-B0hXyWW0dC9wr8gug5JEnN0'
   const query =
