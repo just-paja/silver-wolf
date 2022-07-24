@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-24 13:08+0200\n"
+"POT-Creation-Date: 2022-07-24 15:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1136,8 +1136,8 @@ msgstr "ID Objednávky"
 msgid "Signup Status"
 msgstr "Stav přihlášky"
 
-#: fantasion_expeditions/admin.py:214 fantasion_expeditions/models.py:193
-#: fantasion_expeditions/models.py:246
+#: fantasion_expeditions/admin.py:214 fantasion_expeditions/models.py:192
+#: fantasion_expeditions/models.py:245
 msgid "Age Group"
 msgstr "Věková skupina"
 
@@ -1189,194 +1189,202 @@ msgstr "Diety"
 msgid "Fantasion Expeditions"
 msgstr "Tábory"
 
-#: fantasion_expeditions/models.py:31 fantasion_expeditions/models.py:133
+#: fantasion_expeditions/models.py:30 fantasion_expeditions/models.py:132
 msgid "Leisure Centre"
 msgstr "Rekreační středisko"
 
-#: fantasion_expeditions/models.py:32
+#: fantasion_expeditions/models.py:31
 msgid "Leisure Centres"
 msgstr "Rekreační střediska"
 
-#: fantasion_expeditions/models.py:42
+#: fantasion_expeditions/models.py:41
 msgid "This location will be posted on the map and used for navigation."
 msgstr "Umístění bude zobrazeno na mapě a použito k navigaci"
 
-#: fantasion_expeditions/models.py:46 fantasion_locations/models.py:64
+#: fantasion_expeditions/models.py:45 fantasion_locations/models.py:64
 msgid "Location"
 msgstr "Umístění"
 
-#: fantasion_expeditions/models.py:51
+#: fantasion_expeditions/models.py:50
 msgid ""
 "This location will be used as a postal address,instruct people to mail here."
 msgstr ""
 "Umístění bude označeno jako poštovní adresa a uživatelé budou naváděni aby "
 "posílali poštu sem"
 
-#: fantasion_expeditions/models.py:56
+#: fantasion_expeditions/models.py:55
 msgid "Mailing address"
 msgstr "Poštovní adresa"
 
-#: fantasion_expeditions/models.py:62
+#: fantasion_expeditions/models.py:61
 msgid "Website"
 msgstr "Webové stránky"
 
-#: fantasion_expeditions/models.py:76 fantasion_expeditions/models.py:105
+#: fantasion_expeditions/models.py:75 fantasion_expeditions/models.py:104
 msgid "Expedition Theme"
 msgstr "Táborové téma"
 
-#: fantasion_expeditions/models.py:77
+#: fantasion_expeditions/models.py:76
 msgid "Expedition Themes"
 msgstr "Táborová témata"
 
-#: fantasion_expeditions/models.py:94 fantasion_expeditions/models.py:127
+#: fantasion_expeditions/models.py:93 fantasion_expeditions/models.py:126
 msgid "Expedition"
 msgstr "Tábor"
 
-#: fantasion_expeditions/models.py:95
+#: fantasion_expeditions/models.py:94
 msgid "Expeditions"
 msgstr "Tábory"
 
-#: fantasion_expeditions/models.py:120 fantasion_expeditions/models.py:168
-#: fantasion_expeditions/models.py:240
+#: fantasion_expeditions/models.py:119 fantasion_expeditions/models.py:167
+#: fantasion_expeditions/models.py:239
 msgid "Expedition Batch"
 msgstr "Turnus"
 
-#: fantasion_expeditions/models.py:121
+#: fantasion_expeditions/models.py:120
 msgid "Expedition Batches"
 msgstr "Turnusy"
 
-#: fantasion_expeditions/models.py:135 fantasion_expeditions/models.py:256
+#: fantasion_expeditions/models.py:134 fantasion_expeditions/models.py:255
 msgid "Starts at"
 msgstr "Začátek"
 
-#: fantasion_expeditions/models.py:136 fantasion_expeditions/models.py:257
+#: fantasion_expeditions/models.py:135 fantasion_expeditions/models.py:256
 msgid "Ends at"
 msgstr "Konec"
 
-#: fantasion_expeditions/models.py:150
+#: fantasion_expeditions/models.py:149
 msgid "Staff Role"
 msgstr "Zaměstnanecká role"
 
-#: fantasion_expeditions/models.py:151
+#: fantasion_expeditions/models.py:150
 msgid "Staff Roles"
 msgstr "Zaměstnanecké role"
 
-#: fantasion_expeditions/models.py:161 fantasion_expeditions/models.py:162
+#: fantasion_expeditions/models.py:160 fantasion_expeditions/models.py:161
 msgid "Batch Staff"
 msgstr "Zaměstnanci"
 
-#: fantasion_expeditions/models.py:174 fantasion_people/models.py:30
+#: fantasion_expeditions/models.py:173 fantasion_people/models.py:30
 msgid "Profile"
 msgstr "Profil"
 
-#: fantasion_expeditions/models.py:180
+#: fantasion_expeditions/models.py:179
 msgid "Role"
 msgstr "Role"
 
-#: fantasion_expeditions/models.py:194
+#: fantasion_expeditions/models.py:193
 msgid "Age Groups"
 msgstr "Věkové skupiny"
 
-#: fantasion_expeditions/models.py:197
+#: fantasion_expeditions/models.py:196
 msgid "Minimal age"
 msgstr "Minimální věk"
 
-#: fantasion_expeditions/models.py:198
+#: fantasion_expeditions/models.py:197
 msgid "Maximal age"
 msgstr "Maximální věk"
 
-#: fantasion_expeditions/models.py:215 fantasion_expeditions/models.py:254
+#: fantasion_expeditions/models.py:214 fantasion_expeditions/models.py:253
 msgid "Expedition Program"
 msgstr "Táborový program"
 
-#: fantasion_expeditions/models.py:216
+#: fantasion_expeditions/models.py:215
 msgid "Expedition Programs"
 msgstr "Táborové programy"
 
-#: fantasion_expeditions/models.py:233 fantasion_expeditions/models.py:395
+#: fantasion_expeditions/models.py:232 fantasion_expeditions/models.py:403
 #: fantasion_signups/models.py:181
 msgid "Troop"
 msgstr "Oddíl"
 
-#: fantasion_expeditions/models.py:234
+#: fantasion_expeditions/models.py:233
 msgid "Troops"
 msgstr "Oddíly"
 
-#: fantasion_expeditions/models.py:273 fantasion_expeditions/models.py:356
+#: fantasion_expeditions/models.py:272 fantasion_expeditions/models.py:355
 msgid "Transport Vehicle"
 msgstr "Vozidlo"
 
-#: fantasion_expeditions/models.py:274
+#: fantasion_expeditions/models.py:273
 msgid "Transport Vehicles"
 msgstr "Vozidla"
 
-#: fantasion_expeditions/models.py:281
+#: fantasion_expeditions/models.py:280
 msgid "Vehicle Brand"
 msgstr "Značka vozidla"
 
-#: fantasion_expeditions/models.py:287
+#: fantasion_expeditions/models.py:286
 msgid "Vehicle Model"
 msgstr "Model vozidla"
 
-#: fantasion_expeditions/models.py:292
+#: fantasion_expeditions/models.py:291
 msgid "Vehicle Manufactured Year"
 msgstr "Rok výroby"
 
-#: fantasion_expeditions/models.py:298
+#: fantasion_expeditions/models.py:297
 msgid "Vehicle Colour"
 msgstr "Barva vozidla"
 
-#: fantasion_expeditions/models.py:320
+#: fantasion_expeditions/models.py:319
 msgid "Planned"
 msgstr "Naplánováno"
 
-#: fantasion_expeditions/models.py:321
+#: fantasion_expeditions/models.py:320
 msgid "In Position"
 msgstr "Na místě"
 
-#: fantasion_expeditions/models.py:322
+#: fantasion_expeditions/models.py:321
 msgid "Boarding"
 msgstr "Nastupuje se"
 
-#: fantasion_expeditions/models.py:323
+#: fantasion_expeditions/models.py:322
 msgid "Departed"
 msgstr "Odjel"
 
-#: fantasion_expeditions/models.py:324
+#: fantasion_expeditions/models.py:323
 msgid "Arrived"
 msgstr "Dorazil"
 
-#: fantasion_expeditions/models.py:336 fantasion_expeditions/models.py:401
+#: fantasion_expeditions/models.py:335 fantasion_expeditions/models.py:409
 msgid "Transport"
 msgstr "Transport"
 
-#: fantasion_expeditions/models.py:337
+#: fantasion_expeditions/models.py:336
 msgid "Transports"
 msgstr "Transporty"
 
-#: fantasion_expeditions/models.py:344
+#: fantasion_expeditions/models.py:343
 msgid "Departs from"
 msgstr "Nástup"
 
-#: fantasion_expeditions/models.py:349
+#: fantasion_expeditions/models.py:348
 msgid "Departs at"
 msgstr "Odjezd"
 
-#: fantasion_expeditions/models.py:362
+#: fantasion_expeditions/models.py:361
 msgid "Arrives to"
 msgstr "Cíl"
 
-#: fantasion_expeditions/models.py:367
+#: fantasion_expeditions/models.py:366
 msgid "Arrives at"
 msgstr "Příjezd"
 
-#: fantasion_expeditions/models.py:375
+#: fantasion_expeditions/models.py:374
 msgid "GPS Tracking URL"
 msgstr "URL GPS Sledování"
 
-#: fantasion_expeditions/models.py:380
+#: fantasion_expeditions/models.py:379
 msgid "Transport Status"
 msgstr "Stav Dopravy"
+
+#: fantasion_expeditions/models.py:393
+msgid "Transport There"
+msgstr "Tam"
+
+#: fantasion_expeditions/models.py:394
+msgid "Transport Back"
+msgstr "Zpátky"
 
 #: fantasion_expeditions/templates/admin/expeditionbatch_change_form.html:5
 msgid "Export all data"
