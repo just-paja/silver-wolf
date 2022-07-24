@@ -318,3 +318,49 @@ class ExpeditionSerializer(HyperlinkedModelSerializer):
             context=self.context,
         )
         return serializer.data
+
+
+class TroopTransportBatchSerializer(ModelSerializer):
+    expedition = PlainExpeditionSerializer()
+
+    class Meta:
+        model = models.ExpeditionBatch
+        fields = (
+            "ends_at",
+            "expedition",
+            "expedition_id",
+            "id",
+            "leisure_centre",
+            "starts_at",
+        )
+
+class TroopTransportTroopSerializer(ModelSerializer):
+    age_group = AgeGroupSerializer()
+    batch = TroopTransportBatchSerializer()
+
+    class Meta:
+        model = models.Troop
+        fields = (
+            "age_group",
+            "batch",
+            "ends_at",
+            "id",
+            "starts_at",
+        )
+
+class TroopTransportReverseSerializer(ModelSerializer):
+    troop = TroopTransportTroopSerializer()
+
+    class Meta:
+        model = models.Troop
+        fields = ('id', 'troop',)
+
+
+class TransportStandaloneSerializer(TransportSerializer):
+    troop_transports = TroopTransportReverseSerializer(many=True)
+
+    class Meta:
+        model = models.Transport
+        fields = TransportSerializer.Meta.fields + (
+            'troop_transports',
+        )

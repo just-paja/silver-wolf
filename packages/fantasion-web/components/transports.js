@@ -2,11 +2,13 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Spinner from 'react-bootstrap/Spinner'
 
 import { ArticleBody } from './articles'
-import { DateTimeLabel } from './dates'
-import { Location } from './locations'
-import { Heading, Section, ThumbGallery } from './media'
-import { useTranslation } from 'next-i18next'
 import { BusDepartureIcon, CheckIcon, DownIcon, IconLabel } from './icons'
+import { DateRange, DateTimeLabel } from './dates'
+import { Heading, Section, ThumbGallery } from './media'
+import { Link } from './links'
+import { Location } from './locations'
+import { slug } from './slugs'
+import { useTranslation } from 'next-i18next'
 
 import styles from './transports.module.scss'
 
@@ -151,6 +153,43 @@ export const Vehicle = ({ vehicle }) => {
         )}
       </ListGroup>
       <ThumbGallery media={vehicle.media} />
+    </Section>
+  )
+}
+
+const Troop = ({ troop }) => {
+  return (
+    <Link
+      route="expeditionBatchDetail"
+      params={{
+        expeditionBatchSlug: slug(troop.batch.id, troop.batch.expedition.title),
+      }}
+    >
+      {troop.batch.expedition.title}
+      {' - '}
+      {troop.ageGroup.title} (
+      <DateRange start={troop.startsAt} end={troop.endsAt} />)
+    </Link>
+  )
+}
+
+export const TransportTroops = ({ troopTransports }) => {
+  const { t } = useTranslation()
+
+  if (troopTransports.length === 0) {
+    return 0
+  }
+
+  return (
+    <Section className="mt-3">
+      <Heading>{t('transport-carries')}</Heading>
+      <ul>
+        {troopTransports.map((tt) => (
+          <li key={tt.id}>
+            <Troop troop={tt.troop} />
+          </li>
+        ))}
+      </ul>
     </Section>
   )
 }

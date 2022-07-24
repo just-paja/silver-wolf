@@ -8,7 +8,11 @@ import { asPage, MetaPage } from '../../components/meta'
 import { Breadcrumbs } from '../../components/breadcrumbs'
 import { GenericPage } from '../../components/layout'
 import { Heading } from '../../components/media'
-import { Itinerary, Vehicle } from '../../components/transports'
+import {
+  Itinerary,
+  Vehicle,
+  TransportTroops,
+} from '../../components/transports'
 import { useTranslation } from 'next-i18next'
 import { withPageProps } from '../../server/props'
 
@@ -44,6 +48,7 @@ const TransportDetailPage = ({ transport, transportId }) => {
         <Row>
           <Col md={6} lg={5} xl={6} className="mt-3">
             <Itinerary transport={transport} />
+            <TransportTroops troopTransports={transport.troopTransports} />
           </Col>
           <Col md={6} lg={5} xl={6} className="mt-3">
             <Vehicle vehicle={transport.vehicle} />

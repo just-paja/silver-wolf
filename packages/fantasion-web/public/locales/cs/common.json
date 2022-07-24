@@ -219,6 +219,7 @@
   "transport-arrival": "Příjezd",
   "transport-arrived": "Přijel",
   "transport-boarding": "Nastupuje se",
+  "transport-carries": "Koho se to týká",
   "transport-departed": "Odjel",
   "transport-departure": "Odjezd",
   "transport-detail": "Detail dopravy {{transportId}}",
