@@ -15,7 +15,7 @@ from django.db.models import (
 
 from fantasion_eshop.models import EshopProduct
 from fantasion_generics.media import MediaParentField
-from fantasion_generics.titles import TitleField, FacultativeTitleField
+from fantasion_generics.titles import TitleField
 from fantasion_locations.models import Location
 from fantasion_generics.models import (
     DetailedDescriptionField,
@@ -273,7 +273,7 @@ class TransportVehicle(Model):
         verbose_name = _('Transport Vehicle')
         verbose_name_plural = _('Transport Vehicles')
 
-    title = FacultativeTitleField()
+    title = TitleField()
     brand = CharField(
         blank=True,
         null=True,
@@ -324,8 +324,6 @@ class Transport(Model):
     description = DetailedDescriptionField()
     departs_from = ForeignKey(
         'fantasion_locations.Location',
-        blank=True,
-        null=True,
         on_delete=RESTRICT,
         related_name='expedition_transports',
         verbose_name=_('Departs from'),
@@ -344,8 +342,6 @@ class Transport(Model):
     )
     arrives_to = ForeignKey(
         'fantasion_locations.Location',
-        blank=True,
-        null=True,
         on_delete=RESTRICT,
         related_name='expedition_transport_destinations',
         verbose_name=_('Arrives to'),
