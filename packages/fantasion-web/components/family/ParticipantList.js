@@ -164,7 +164,7 @@ export const ParticipantListItem = ({
 }) => {
   const { t } = useTranslation()
   return (
-    <Card as={Section}>
+    <Card as={Section} className="mt-3">
       <Card.Header>
         <Heading>
           <Link route="participantDetail" params={{ participantId: id }}>
