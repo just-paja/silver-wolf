@@ -53,6 +53,7 @@ class TransportSerializer(ModelSerializer):
             'arrives_at',
             'arrives_to',
             'boarding',
+            'departed',
             'departs_at',
             'departs_from',
             'description',

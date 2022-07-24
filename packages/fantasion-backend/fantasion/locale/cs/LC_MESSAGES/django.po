@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-23 23:58+0200\n"
+"POT-Creation-Date: 2022-07-24 12:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1124,64 +1124,64 @@ msgstr "Slevové kódy"
 msgid "Preview invoice"
 msgstr "Náhled faktury"
 
-#: fantasion_expeditions/admin.py:202
+#: fantasion_expeditions/admin.py:211
 msgid "Signup ID"
 msgstr "ID Přihlášky"
 
-#: fantasion_expeditions/admin.py:203
+#: fantasion_expeditions/admin.py:212
 msgid "Order ID"
 msgstr "ID Objednávky"
 
-#: fantasion_expeditions/admin.py:204 fantasion_signups/models.py:195
+#: fantasion_expeditions/admin.py:213 fantasion_signups/models.py:195
 msgid "Signup Status"
 msgstr "Stav přihlášky"
 
-#: fantasion_expeditions/admin.py:205 fantasion_expeditions/models.py:193
+#: fantasion_expeditions/admin.py:214 fantasion_expeditions/models.py:193
 #: fantasion_expeditions/models.py:246
 msgid "Age Group"
 msgstr "Věková skupina"
 
-#: fantasion_expeditions/admin.py:206
+#: fantasion_expeditions/admin.py:215
 msgid "First name"
 msgstr "Křestní jméno"
 
-#: fantasion_expeditions/admin.py:207
+#: fantasion_expeditions/admin.py:216
 msgid "Last name"
 msgstr "Příjmení"
 
-#: fantasion_expeditions/admin.py:208 fantasion_signups/models.py:59
+#: fantasion_expeditions/admin.py:217 fantasion_signups/models.py:59
 msgid "Birth date"
 msgstr "Datum narození"
 
-#: fantasion_expeditions/admin.py:209
+#: fantasion_expeditions/admin.py:218
 msgid "Age"
 msgstr "Věk"
 
-#: fantasion_expeditions/admin.py:210
+#: fantasion_expeditions/admin.py:219
 msgid "Parent"
 msgstr "Rodič"
 
-#: fantasion_expeditions/admin.py:211
+#: fantasion_expeditions/admin.py:220
 msgid "Parent phone"
 msgstr "Telefon rodiče"
 
-#: fantasion_expeditions/admin.py:212
+#: fantasion_expeditions/admin.py:221
 msgid "Parent e-mail"
 msgstr "E-mail rodiče"
 
-#: fantasion_expeditions/admin.py:213
+#: fantasion_expeditions/admin.py:222
 msgid "Address"
 msgstr "Adresa"
 
-#: fantasion_expeditions/admin.py:214 fantasion_signups/models.py:208
+#: fantasion_expeditions/admin.py:223 fantasion_signups/models.py:208
 msgid "Note"
 msgstr "Poznámka"
 
-#: fantasion_expeditions/admin.py:215 fantasion_people/models.py:76
+#: fantasion_expeditions/admin.py:224 fantasion_people/models.py:76
 msgid "Allergies"
 msgstr "Alergie"
 
-#: fantasion_expeditions/admin.py:216 fantasion_people/models.py:84
+#: fantasion_expeditions/admin.py:225 fantasion_people/models.py:84
 msgid "Diets"
 msgstr "Diety"
 
@@ -1293,7 +1293,7 @@ msgstr "Táborový program"
 msgid "Expedition Programs"
 msgstr "Táborové programy"
 
-#: fantasion_expeditions/models.py:233 fantasion_expeditions/models.py:389
+#: fantasion_expeditions/models.py:233 fantasion_expeditions/models.py:394
 #: fantasion_signups/models.py:181
 msgid "Troop"
 msgstr "Oddíl"
@@ -1326,7 +1326,7 @@ msgstr "Rok výroby"
 msgid "Vehicle Colour"
 msgstr "Barva vozidla"
 
-#: fantasion_expeditions/models.py:321 fantasion_expeditions/models.py:395
+#: fantasion_expeditions/models.py:321 fantasion_expeditions/models.py:400
 msgid "Transport"
 msgstr "Transport"
 
@@ -1363,10 +1363,18 @@ msgid "Boarding"
 msgstr "Nastupuje se"
 
 #: fantasion_expeditions/models.py:373
+msgid "The transport has departed"
+msgstr "Zaškrtni, pokud už transport odjel"
+
+#: fantasion_expeditions/models.py:374
+msgid "Departed"
+msgstr "Odjel"
+
+#: fantasion_expeditions/models.py:378
 msgid "The transport has reached the destination"
 msgstr "Zaškrtni, pokud transport dorazil do cíle"
 
-#: fantasion_expeditions/models.py:374
+#: fantasion_expeditions/models.py:379
 msgid "Arrived"
 msgstr "Dorazil"
 

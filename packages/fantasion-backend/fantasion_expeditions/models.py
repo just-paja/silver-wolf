@@ -368,6 +368,11 @@ class Transport(Model):
         help_text=_('The transport is boarding at the moment'),
         verbose_name=_('Boarding'),
     )
+    departed = BooleanField(
+        default=False,
+        help_text=_('The transport has departed'),
+        verbose_name=_('Departed'),
+    )
     arrived = BooleanField(
         default=False,
         help_text=_('The transport has reached the destination'),
