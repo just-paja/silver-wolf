@@ -13,12 +13,14 @@ export const formatDate = (lang, date, props) =>
 export const formatDateRange = (lang, start, end) =>
   getFormat(lang).formatRange(new Date(start), new Date(end)).replace(' ', ' ')
 
-export const DateLabel = ({ date, year }) => (
+export const DateLabel = ({ date, ...props }) => (
   <time dateTime={`${date}`}>
-    {formatDate(useTranslation().language, date, {
-      year,
-    })}
+    {formatDate(useTranslation().language, date, props)}
   </time>
+)
+
+export const DateTimeLabel = ({ ...props }) => (
+  <DateLabel hour="numeric" minute="numeric" {...props} />
 )
 
 export const DateRange = ({ start, end }) => {

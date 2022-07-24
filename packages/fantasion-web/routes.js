@@ -41,6 +41,10 @@ const cs = {
     source: '/turnusy/:expeditionBatchSlug',
     destination: '/expedition-batches/:expeditionBatchSlug',
   },
+  transportDetail: {
+    source: '/doprava/:transportId',
+    destination: '/transports/:transportId',
+  },
   forgottenPassword: {
     source: '/zapomenute-heslo',
     destination: '/forgotten-password',

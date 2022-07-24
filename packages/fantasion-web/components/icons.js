@@ -7,6 +7,7 @@ import { IoPricetags } from 'react-icons/io5'
 import {
   MdArrowLeft,
   MdArrowRight,
+  MdArrowDownward,
   MdCancel,
   MdCheck,
   MdContentCopy,
@@ -18,6 +19,7 @@ import {
 import {
   FaCampground,
   FaCalendarWeek,
+  FaClock,
   FaFacebook,
   FaInstagram,
   FaTiktok,
@@ -33,6 +35,8 @@ export const CancelIcon = MdCancel
 export const CheckIcon = MdCheck
 export const CloseIcon = MdCancel
 export const CopyIcon = MdContentCopy
+export const DateTimeIcon = FaClock
+export const DownIcon = MdArrowDownward
 export const DurationIcon = FaCalendarWeek
 export const EmailContactIcon = HiMailOpen
 export const FacebookIcon = FaFacebook

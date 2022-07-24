@@ -5,17 +5,11 @@ import { IconLabel, LocationPinIcon } from './icons'
 
 export const LocationAddress = ({ location, title }) => (
   <address>
-    {[
-      title && <strong>{title}</strong>,
-      title !== location.name && location.name,
-      location.city,
-      [location.street, location.streetNumber],
-      [location.postalCode, location.country?.name],
-    ]
-      .filter(Boolean)
-      .map((value, index, src) => (
-        <AddressLine key={value} value={value} br={index !== src.length - 1} />
-      ))}
+    <AddressLine value={title} />
+    <AddressLine value={location.name} />
+    <AddressLine value={[location.street, location.streetNumber]} />
+    <AddressLine value={[location.city, location.postalCode]} />
+    <AddressLine value={location.country?.name} />
   </address>
 )
 
