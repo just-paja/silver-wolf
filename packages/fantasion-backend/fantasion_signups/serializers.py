@@ -1,5 +1,5 @@
 from django.core.exceptions import PermissionDenied
-from rest_framework.serializers import CharField, ModelSerializer, IntegerField
+from rest_framework.serializers import CharField, ModelSerializer, IntegerField, SerializerMethodField
 
 from . import models
 from fantasion_people import models as people
@@ -118,12 +118,14 @@ class ParticipantSerializer(ModelSerializer):
         required=False,
         source='participant_hobbies',
     )
+    can_delete = SerializerMethodField()
 
     class Meta:
         model = models.Participant
         fields = (
             'allergies',
             'birthdate',
+            'can_delete',
             'diets',
             'family',
             'first_name',
@@ -146,6 +148,9 @@ class ParticipantSerializer(ModelSerializer):
             )
             family.save()
         return family
+
+    def get_can_delete(self, obj):
+        return obj.signups.count() == 0
 
     def create(self, validated_data):
         inst = models.Participant(

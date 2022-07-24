@@ -2,6 +2,8 @@ import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Row from 'react-bootstrap/Row'
+import Dropdown from 'react-bootstrap/Dropdown'
+import DropdownButton from 'react-bootstrap/DropdownButton'
 
 import { capitalize } from '../../api'
 import { CheckIcon } from '../icons'
@@ -150,6 +152,14 @@ const Trait = ({
   )
 }
 
+const ParticipantMenu = ({ id }) => {
+  return (
+    <DropdownButton id={`participant-context-menu-${id}`}>
+      <Dropdown.Item as="button">Delete</Dropdown.Item>
+    </DropdownButton>
+  )
+}
+
 export const ParticipantListItem = ({
   allergies,
   birthdate,
@@ -166,11 +176,16 @@ export const ParticipantListItem = ({
   return (
     <Card as={Section} className="mt-3">
       <Card.Header>
-        <Heading>
-          <Link route="participantDetail" params={{ participantId: id }}>
-            <UserName user={props} />
-          </Link>
-        </Heading>
+        <div className="d-flex justify-content-between">
+          <Heading>
+            <Link route="participantDetail" params={{ participantId: id }}>
+              <UserName user={props} />
+            </Link>
+          </Heading>
+          <div>
+            <ParticipantMenu id={id} />
+          </div>
+        </div>
         <div>
           <DateLabel date={birthdate} year="numeric" />
         </div>
