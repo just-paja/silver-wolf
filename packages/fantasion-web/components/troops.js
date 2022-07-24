@@ -3,12 +3,25 @@ import Card from 'react-bootstrap/Card'
 import ListGroup from 'react-bootstrap/ListGroup'
 
 import { ArticleStub } from './articles'
-import { DurationIcon, IconLabel, PersonIcon, StoryIcon } from './icons'
-import { getDaysDuration } from './dates'
+import { DateTimeLabel, getDaysDuration } from './dates'
 import { Heading, Section } from './media'
 import { PriceTag } from './money'
 import { SignupButton } from './expeditions'
 import { useTranslation } from 'next-i18next'
+import { Link } from './links'
+import {
+  TRANSPORT_THERE,
+  TRANSPORT_BACK,
+  TRANSPORT_DEPARTED,
+  TRANSPORT_ARRIVED,
+} from './constants'
+import {
+  BusDepartureIcon,
+  DurationIcon,
+  IconLabel,
+  PersonIcon,
+  StoryIcon,
+} from './icons'
 
 import styles from './troops.module.scss'
 
@@ -27,6 +40,53 @@ export const TroopLabel = ({ ageMin, ageMax, startsAt, endsAt }) => {
     />
   )
 }
+
+const TroopTransportLinkLabel = ({ direction, transport }) => {
+  const { t } = useTranslation()
+  if (transport.status === TRANSPORT_DEPARTED) {
+    return t('transport-en-route')
+  }
+  if (transport.status === TRANSPORT_ARRIVED) {
+    return t('transport-arrived')
+  }
+  const dest =
+    direction === TRANSPORT_BACK ? transport.arrivesTo : transport.departsFrom
+  const date =
+    direction === TRANSPORT_BACK ? transport.arrivesAt : transport.departsAt
+  if (date) {
+    return (
+      <>
+        {dest.name} (
+        <DateTimeLabel date={date} />)
+      </>
+    )
+  }
+  return dest.name
+}
+
+const TroopTransportDirection = ({ direction }) => {
+  const { t } = useTranslation()
+  if (direction === TRANSPORT_THERE) {
+    return `${t('transport-there')}: `
+  }
+  if (direction === TRANSPORT_BACK) {
+    return `${t('transport-back')}: `
+  }
+  return null
+}
+
+const TroopTransportLink = ({ troopTransport }) => (
+  <Link
+    route="transportDetail"
+    params={{ transportId: troopTransport.transport.id }}
+  >
+    <TroopTransportDirection direction={troopTransport.direction} />
+    <TroopTransportLinkLabel
+      direction={troopTransport.direction}
+      transport={troopTransport.transport}
+    />
+  </Link>
+)
 
 export const TroopCard = ({ expedition, batch, troop }) => {
   const { t } = useTranslation()
@@ -56,6 +116,14 @@ export const TroopCard = ({ expedition, batch, troop }) => {
         <ListGroup.Item>
           <IconLabel icon={StoryIcon} text={troop.program.title} />
         </ListGroup.Item>
+        {troop.troopTransports.map((tt) => (
+          <ListGroup.Item key={tt.id}>
+            <IconLabel
+              icon={BusDepartureIcon}
+              text={<TroopTransportLink troopTransport={tt} />}
+            />
+          </ListGroup.Item>
+        ))}
         <ListGroup.Item>
           <ul className="mb-0">
             {troop.prices.map((price) => (

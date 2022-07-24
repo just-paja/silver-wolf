@@ -9,13 +9,14 @@ import { Link } from './links'
 import { Location } from './locations'
 import { slug } from './slugs'
 import { useTranslation } from 'next-i18next'
+import {
+  TRANSPORT_IN_PLACE,
+  TRANSPORT_BOARDING,
+  TRANSPORT_DEPARTED,
+  TRANSPORT_ARRIVED,
+} from './constants'
 
 import styles from './transports.module.scss'
-
-const TRANSPORT_IN_PLACE = 2
-const TRANSPORT_BOARDING = 3
-const TRANSPORT_DEPARTED = 4
-const TRANSPORT_ARRIVED = 5
 
 const TravelSpinner = () => (
   <div className={styles.container}>
