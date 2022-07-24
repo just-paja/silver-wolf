@@ -335,6 +335,7 @@ class TroopTransportBatchSerializer(ModelSerializer):
             "starts_at",
         )
 
+
 class TroopTransportTroopSerializer(ModelSerializer):
     age_group = AgeGroupSerializer()
     batch = TroopTransportBatchSerializer()
@@ -349,12 +350,17 @@ class TroopTransportTroopSerializer(ModelSerializer):
             "starts_at",
         )
 
+
 class TroopTransportReverseSerializer(ModelSerializer):
     troop = TroopTransportTroopSerializer()
 
     class Meta:
         model = models.TroopTransport
-        fields = ('id', 'troop', 'direction',)
+        fields = (
+            'id',
+            'troop',
+            'direction',
+        )
 
 
 class TransportStandaloneSerializer(TransportSerializer):
@@ -362,6 +368,4 @@ class TransportStandaloneSerializer(TransportSerializer):
 
     class Meta:
         model = models.Transport
-        fields = TransportSerializer.Meta.fields + (
-            'troop_transports',
-        )
+        fields = TransportSerializer.Meta.fields + ('troop_transports', )
