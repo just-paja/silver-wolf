@@ -1,7 +1,6 @@
 from django_extensions.db.models import TimeStampedModel
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import (
-    BooleanField,
     CharField,
     DateField,
     DateTimeField,
@@ -310,6 +309,21 @@ class TransportVehicleMedia(MediaObjectModel):
     parent = MediaParentField(TransportVehicle)
 
 
+TRANSPORT_PLANNED = 1
+TRANSPORT_IN_POSITION = 2
+TRANSPORT_BOARDING = 3
+TRANSPORT_DEPARTED = 4
+TRANSPORT_ARRIVED = 5
+
+TRANSPORT_STATUS_CHOICES = (
+    (TRANSPORT_PLANNED, _('Planned')),
+    (TRANSPORT_IN_POSITION, _('In Position')),
+    (TRANSPORT_BOARDING, _('Boarding')),
+    (TRANSPORT_DEPARTED, _('Departed')),
+    (TRANSPORT_ARRIVED, _('Arrived')),
+)
+
+
 class Transport(Model):
     """
     Transport represents a planned journey used to transport expedition
@@ -359,20 +373,10 @@ class Transport(Model):
              'the destination')),
         verbose_name=_('GPS Tracking URL'),
     )
-    boarding = BooleanField(
-        default=False,
-        help_text=_('The transport is boarding at the moment'),
-        verbose_name=_('Boarding'),
-    )
-    departed = BooleanField(
-        default=False,
-        help_text=_('The transport has departed'),
-        verbose_name=_('Departed'),
-    )
-    arrived = BooleanField(
-        default=False,
-        help_text=_('The transport has reached the destination'),
-        verbose_name=_('Arrived'),
+    status = PositiveIntegerField(
+        default=TRANSPORT_PLANNED,
+        choices=TRANSPORT_STATUS_CHOICES,
+        verbose_name=_('Transport Status'),
     )
     public = VisibilityField()
 

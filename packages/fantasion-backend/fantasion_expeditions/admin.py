@@ -287,27 +287,25 @@ class TransportAdmin(TranslatedAdmin):
     model = models.Transport
     list_display = (
         'pk',
+        'status',
         'vehicle',
         'departs_from',
         'departs_at',
         'arrives_to',
         'arrives_at',
-        'boarding',
-        'arrived',
         'public',
     )
-    list_filter = ('vehicle', )
+    list_filter = ('vehicle', 'status')
     search_fields = ('departs_from__name', 'arrives_to__name')
     autocomplete_fields = ('arrives_to', 'departs_from', 'vehicle')
     fields = (
-        'vehicle',
         'departs_from',
         'departs_at',
         'arrives_to',
         'arrives_at',
+        'vehicle',
         'gps_tracking_url',
+        'status',
         'public',
-        'boarding',
-        'arrived',
         'description',
     )

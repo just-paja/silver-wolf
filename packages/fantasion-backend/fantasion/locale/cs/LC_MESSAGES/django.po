@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-24 12:16+0200\n"
+"POT-Creation-Date: 2022-07-24 13:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1293,7 +1293,7 @@ msgstr "Táborový program"
 msgid "Expedition Programs"
 msgstr "Táborové programy"
 
-#: fantasion_expeditions/models.py:233 fantasion_expeditions/models.py:394
+#: fantasion_expeditions/models.py:233 fantasion_expeditions/models.py:395
 #: fantasion_signups/models.py:181
 msgid "Troop"
 msgstr "Oddíl"
@@ -1302,7 +1302,7 @@ msgstr "Oddíl"
 msgid "Troops"
 msgstr "Oddíly"
 
-#: fantasion_expeditions/models.py:273 fantasion_expeditions/models.py:343
+#: fantasion_expeditions/models.py:273 fantasion_expeditions/models.py:356
 msgid "Transport Vehicle"
 msgstr "Vozidlo"
 
@@ -1326,57 +1326,57 @@ msgstr "Rok výroby"
 msgid "Vehicle Colour"
 msgstr "Barva vozidla"
 
-#: fantasion_expeditions/models.py:321 fantasion_expeditions/models.py:400
-msgid "Transport"
-msgstr "Transport"
+#: fantasion_expeditions/models.py:320
+msgid "Planned"
+msgstr "Naplánováno"
+
+#: fantasion_expeditions/models.py:321
+msgid "In Position"
+msgstr "Na místě"
 
 #: fantasion_expeditions/models.py:322
-msgid "Transports"
-msgstr "Transporty"
-
-#: fantasion_expeditions/models.py:331
-msgid "Departs from"
-msgstr "Nástup"
-
-#: fantasion_expeditions/models.py:336
-msgid "Departs at"
-msgstr "Odjezd"
-
-#: fantasion_expeditions/models.py:351
-msgid "Arrives to"
-msgstr "Cíl"
-
-#: fantasion_expeditions/models.py:356
-msgid "Arrives at"
-msgstr "Příjezd"
-
-#: fantasion_expeditions/models.py:364
-msgid "GPS Tracking URL"
-msgstr "URL GPS Sledování"
-
-#: fantasion_expeditions/models.py:368
-msgid "The transport is boarding at the moment"
-msgstr "Zaškrtni, pokud je transport v tuto chvíli otevřený pro nástup"
-
-#: fantasion_expeditions/models.py:369
 msgid "Boarding"
 msgstr "Nastupuje se"
 
-#: fantasion_expeditions/models.py:373
-msgid "The transport has departed"
-msgstr "Zaškrtni, pokud už transport odjel"
-
-#: fantasion_expeditions/models.py:374
+#: fantasion_expeditions/models.py:323
 msgid "Departed"
 msgstr "Odjel"
 
-#: fantasion_expeditions/models.py:378
-msgid "The transport has reached the destination"
-msgstr "Zaškrtni, pokud transport dorazil do cíle"
-
-#: fantasion_expeditions/models.py:379
+#: fantasion_expeditions/models.py:324
 msgid "Arrived"
 msgstr "Dorazil"
+
+#: fantasion_expeditions/models.py:336 fantasion_expeditions/models.py:401
+msgid "Transport"
+msgstr "Transport"
+
+#: fantasion_expeditions/models.py:337
+msgid "Transports"
+msgstr "Transporty"
+
+#: fantasion_expeditions/models.py:344
+msgid "Departs from"
+msgstr "Nástup"
+
+#: fantasion_expeditions/models.py:349
+msgid "Departs at"
+msgstr "Odjezd"
+
+#: fantasion_expeditions/models.py:362
+msgid "Arrives to"
+msgstr "Cíl"
+
+#: fantasion_expeditions/models.py:367
+msgid "Arrives at"
+msgstr "Příjezd"
+
+#: fantasion_expeditions/models.py:375
+msgid "GPS Tracking URL"
+msgstr "URL GPS Sledování"
+
+#: fantasion_expeditions/models.py:380
+msgid "Transport Status"
+msgstr "Stav Dopravy"
 
 #: fantasion_expeditions/templates/admin/expeditionbatch_change_form.html:5
 msgid "Export all data"
@@ -1733,6 +1733,3 @@ msgstr "Datum, kdy byl tento dokument zkontrolován"
 #: fantasion_signups/models.py:336
 msgid "This document will stay valid until it expires"
 msgstr "Dokument bude považován za platný, dokud neexpiruje"
-
-#~ msgid "ČSOB"
-#~ msgstr "ČSOB"

@@ -49,16 +49,14 @@ class TransportSerializer(ModelSerializer):
         model = models.Transport
         fields = (
             'id',
-            'arrived',
             'arrives_at',
             'arrives_to',
-            'boarding',
-            'departed',
             'departs_at',
             'departs_from',
             'description',
             'gps_tracking_url',
             'public',
+            'status',
             'vehicle',
         )
 
