@@ -1,5 +1,6 @@
 import secrets
 
+from django.apps import apps
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django_extensions.db.models import TimeStampedModel
@@ -14,11 +15,14 @@ from django.db.models import (
     ForeignKey,
     PositiveIntegerField,
     PositiveSmallIntegerField,
+    Q,
 )
 
 from phonenumber_field.modelfields import PhoneNumberField
 from fantasion_generics.emails import get_lang, send_mail
 from fantasion_locations.models import Address
+from fantasion_signups.constants import SIGNUP_STATUS_ACTIVE
+from fantasion_people.constants import get_escalated_family_roles
 
 
 class FantasionUserManager(BaseUserManager):
@@ -91,6 +95,28 @@ class User(AbstractUser):
 
     def get_default_invoice_address(self):
         return self.useraddress_set.first()
+
+    def get_family_ids(self, family_role):
+        roles = get_escalated_family_roles(family_role)
+        members = self.family_members.filter(role__in=roles).all()
+        families = self.families.all()
+        return [member.family_id
+                for member in members] + [family.id for family in families]
+
+    def get_accessible_troops(self, family_role):
+        family_ids = self.get_family_ids(family_role)
+        Troop = apps.get_model('fantasion_expeditions', 'Troop')
+        return Troop.objects.filter(
+            Q(signups__order__owner=self)
+            | Q(signups__participant__family__in=family_ids),
+            signups__status=SIGNUP_STATUS_ACTIVE,
+        ).distinct().all()
+
+    def get_accessible_troops_and_batch_ids(self, family_role):
+        troops = self.get_accessible_troops(family_role)
+        troop_ids = [troop.pk for troop in troops]
+        batch_ids = set([troop.batch_id for troop in troops])
+        return troop_ids, batch_ids
 
 
 NEXT_STEP_CREATE_PASSWORD = 1
@@ -214,10 +240,8 @@ class UserAddressBase(Address, TimeStampedModel):
     )
 
     def __str__(self):
-        return (
-            f"{self.street} {self.street_number}, "
-            f"{self.postal_code} {self.city} ({self.user})"
-        )
+        return (f"{self.street} {self.street_number}, "
+                f"{self.postal_code} {self.city} ({self.user})")
 
 
 class UserAddress(UserAddressBase):

@@ -369,3 +369,24 @@ class TransportStandaloneSerializer(TransportSerializer):
     class Meta:
         model = models.Transport
         fields = TransportSerializer.Meta.fields + ('troop_transports', )
+
+
+class ExpeditionLogArticleMediaSerializer(PublicMediaSerializer):
+
+    class Meta:
+        model = models.ExpeditionLogArticleMedia
+        fields = media_fields
+
+
+class ExpeditionLogArticleSerializer(ModelSerializer):
+    media = ExpeditionLogArticleMediaSerializer(many=True)
+
+    class Meta:
+        model = models.ExpeditionLogArticle
+        fields = (
+            'id',
+            'title',
+            'date',
+            'text',
+            'media',
+        )

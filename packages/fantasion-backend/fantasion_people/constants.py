@@ -12,3 +12,17 @@ FAMILY_ROLE_CHOICES = (
     (FAMILY_ROLE_REPRESENTATIVE, _("Legal representative")),
     (FAMILY_ROLE_SPECTATOR, _("Spectator")),
 )
+
+
+def get_escalated_family_roles(family_role):
+    if family_role == FAMILY_ROLE_SPECTATOR:
+        return [
+            FAMILY_ROLE_SPECTATOR,
+            FAMILY_ROLE_REPRESENTATIVE,
+            FAMILY_ROLE_ADMIN,
+        ]
+
+    if family_role == FAMILY_ROLE_REPRESENTATIVE:
+        return [FAMILY_ROLE_REPRESENTATIVE, FAMILY_ROLE_ADMIN]
+
+    return [family_role]

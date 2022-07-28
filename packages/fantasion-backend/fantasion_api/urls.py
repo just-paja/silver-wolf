@@ -56,6 +56,11 @@ router.register(
     basename='expedition_batches',
 )
 router.register(
+    r'expedition-log-articles',
+    expeditions.ExpeditionLogArticleCollection,
+    basename='expedition-log-articles',
+)
+router.register(
     r'expedition-themes',
     expeditions.ExpeditionThemeCollection,
     basename='expedition_themes',

@@ -418,6 +418,7 @@ class TroopTransport(TimeStampedModel):
 class ExpeditionLogArticle(TimeStampedModel):
 
     class Meta:
+        ordering = ('-date', '-created')
         verbose_name = _("Expedition Log Article")
         verbose_name_plural = _("Expedition Log Articles")
 
