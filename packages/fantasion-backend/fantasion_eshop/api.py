@@ -58,7 +58,7 @@ class OrderCollection(RWViewSet):
             body = json.loads(self.request.body)
             order.request_insurance = bool(
                 body.get(
-                    'request_insurance',
+                    'requestInsurance',
                     False,
                 ))
             order.confirm()
