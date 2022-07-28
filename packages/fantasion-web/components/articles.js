@@ -42,11 +42,12 @@ export const Article = ({
   text,
   title,
   subTitle,
+  ...props
 }) => {
   const headingLevel = useHeadingLevel()
   return (
     <HeadingContext baseLevel={headingLevel + 1}>
-      <article>
+      <article {...props}>
         <Row>
           <Col lg={7}>
             <header>
