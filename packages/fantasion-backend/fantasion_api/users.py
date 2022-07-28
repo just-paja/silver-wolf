@@ -1,6 +1,8 @@
 from datetime import timedelta
+from django.apps import apps
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import AnonymousUser
+from django.db.models import Q
 from django.http import Http404
 from django.urls import path
 from django.utils import timezone
@@ -12,16 +14,18 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.serializers import (
-    CharField,
     EmailField,
+    CharField,
     ModelSerializer,
     Serializer,
+    SerializerMethodField,
     ValidationError,
 )
 
 from fantasion import models
 from fantasion_generics.api import RWViewSet, address_fields
 from fantasion_locations import models as locations
+from fantasion_people import models as people
 
 from .decorators import public_endpoint, with_serializer
 
@@ -66,16 +70,28 @@ class LoginSerializer(Serializer):
         )
 
 
+class FamilySerializer(ModelSerializer):
+
+    class Meta:
+        model = people.Family
+        fields = (
+            'id',
+            'title',
+        )
+
+
 class RegistrationSerializer(ModelSerializer):
+    circles = SerializerMethodField()
 
     class Meta:
         model = models.User
         fields = (
-            'id',
-            'first_name',
-            'last_name',
+            'circles',
             'email',
             'email_verified',
+            'first_name',
+            'id',
+            'last_name',
             'password_created',
             'phone',
         )
@@ -90,6 +106,14 @@ class RegistrationSerializer(ModelSerializer):
                 'required': True,
             },
         }
+
+    def get_circles(self, obj):
+        Family = apps.get_model('fantasion_people', 'Family')
+        circles = Family.objects.filter(
+            Q(owner=obj) | Q(members__user=obj)
+        ).all()
+        serializer = FamilySerializer(circles, many=True)
+        return serializer.data
 
     def create(self, validated_data):
         user = models.User(**validated_data)
