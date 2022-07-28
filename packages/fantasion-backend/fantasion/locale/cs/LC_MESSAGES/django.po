@@ -1609,7 +1609,7 @@ msgstr "Administrátor"
 
 #: fantasion_people/models.py:136
 msgid "Legal representative"
-msgstr "Objednavatel je zákonný zástupce"
+msgstr "Zákonný zástupce"
 
 #: fantasion_people/models.py:137
 msgid "Spectator"
