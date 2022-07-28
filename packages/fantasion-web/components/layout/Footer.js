@@ -23,10 +23,13 @@ const FooterLinks = () => {
         <FooterLink route="codex" label={t('codex-title')} />
         <FooterLink route="cookiesPolicy" label={t('cookies')} />
         <FooterLink route="privacyPolicy" label={t('personal-information')} />
+      </ul>
+      <ul className={styles.quickLinks}>
         <FooterLink
           route="termsAndConditions"
           label={t('terms-and-conditions')}
         />
+        <FooterLink route="faq" label={t('faq-link')} />
       </ul>
     </nav>
   )

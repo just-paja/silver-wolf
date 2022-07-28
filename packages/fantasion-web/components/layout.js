@@ -85,9 +85,6 @@ const SiteMenu = () => {
       <Link as={Nav.Link} route="contacts">
         {t('contacts-link')}
       </Link>
-      <Link as={Nav.Link} route="faq">
-        {t('faq-link')}
-      </Link>
     </Nav>
   )
 }
