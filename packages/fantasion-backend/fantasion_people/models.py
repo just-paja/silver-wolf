@@ -23,8 +23,14 @@ from fantasion_generics.models import (
     VisibilityField,
 )
 
+from .constants import (
+    FAMILY_ROLE_SPECTATOR,
+    FAMILY_ROLE_CHOICES,
+)
+
 
 class Profile(PublicModel, WarmPhotoModel):
+
     class Meta:
         ordering = ["-importance"]
         verbose_name = _("Profile")
@@ -71,6 +77,7 @@ class ProfileMedia(MediaObjectModel):
 
 
 class Allergy(NamedModel):
+
     class Meta:
         verbose_name = _("Allergy")
         verbose_name_plural = _("Allergies")
@@ -79,6 +86,7 @@ class Allergy(NamedModel):
 
 
 class Diet(NamedModel):
+
     class Meta:
         verbose_name = _("Diet")
         verbose_name_plural = _("Diets")
@@ -87,6 +95,7 @@ class Diet(NamedModel):
 
 
 class Hobby(NamedModel):
+
     class Meta:
         verbose_name = _("Hobby")
         verbose_name_plural = _("Hobbies")
@@ -95,6 +104,7 @@ class Hobby(NamedModel):
 
 
 class Family(TimeStampedModel):
+
     class Meta:
         verbose_name = _("Family")
         verbose_name_plural = _("Families")
@@ -124,21 +134,8 @@ class Family(TimeStampedModel):
         )
 
 
-# Admin can assign family roles
-FAMILY_ROLE_ADMIN = 1
-# Representative can submit signups
-FAMILY_ROLE_REPRESENTATIVE = 2
-# Spectator can view content
-FAMILY_ROLE_SPECTATOR = 3
-
-FAMILY_ROLE_CHOICES = (
-    (FAMILY_ROLE_ADMIN, _("Administrator")),
-    (FAMILY_ROLE_REPRESENTATIVE, _("Legal representative")),
-    (FAMILY_ROLE_SPECTATOR, _("Spectator")),
-)
-
-
 class FamilyMember(TimeStampedModel):
+
     class Meta:
         verbose_name = _("Family member")
         verbose_name_plural = _("Family members")
