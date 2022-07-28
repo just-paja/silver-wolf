@@ -1,3 +1,4 @@
+import Container from 'react-bootstrap/Container'
 import React from 'react'
 
 import { Article } from './articles'
@@ -6,21 +7,23 @@ import { slug } from './slugs'
 
 const ExpeditionThemeArticle = ({ theme }) => {
   return (
-    <Article
-      description={theme.description}
-      media={theme.media}
-      text={theme.detailedDescription}
-      selfLink={{
-        route: 'adventureDetail',
-        params: { expeditionThemeSlug: slug(theme) },
-      }}
-      afterText={
-        theme.expeditions.length === 0 ? null : (
-          <ExpeditionLinks expeditions={theme.expeditions} />
-        )
-      }
-      title={theme.title}
-    />
+    <Container>
+      <Article
+        description={theme.description}
+        media={theme.media}
+        text={theme.detailedDescription}
+        selfLink={{
+          route: 'adventureDetail',
+          params: { expeditionThemeSlug: slug(theme) },
+        }}
+        afterText={
+          theme.expeditions.length === 0 ? null : (
+            <ExpeditionLinks expeditions={theme.expeditions} />
+          )
+        }
+        title={theme.title}
+      />
+    </Container>
   )
 }
 

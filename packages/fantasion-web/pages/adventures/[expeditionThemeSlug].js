@@ -1,3 +1,4 @@
+import Container from 'react-bootstrap/Container'
 import React from 'react'
 
 import { Article } from '../../components/articles'
@@ -23,12 +24,14 @@ const ExpeditionThemeDetail = ({ expeditionTheme }) => (
       title={expeditionTheme.title}
       description={expeditionTheme.description}
     />
-    <Article
-      media={expeditionTheme.media}
-      description={expeditionTheme.description}
-      text={expeditionTheme.detailedDescription}
-      title={expeditionTheme.title}
-    />
+    <Container>
+      <Article
+        media={expeditionTheme.media}
+        description={expeditionTheme.description}
+        text={expeditionTheme.detailedDescription}
+        title={expeditionTheme.title}
+      />
+    </Container>
   </GenericPage>
 )
 

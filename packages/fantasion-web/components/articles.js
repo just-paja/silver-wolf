@@ -46,7 +46,7 @@ export const Article = ({
   const headingLevel = useHeadingLevel()
   return (
     <HeadingContext baseLevel={headingLevel + 1}>
-      <Container as="article">
+      <article>
         <Row>
           <Col lg={7}>
             <header>
@@ -62,7 +62,7 @@ export const Article = ({
             <ThumbGallery media={media} />
           </Col>
         </Row>
-      </Container>
+      </article>
     </HeadingContext>
   )
 }
@@ -70,11 +70,13 @@ export const Article = ({
 export const StaticArticlePage = asPage(({ article }) => (
   <GenericPage>
     <MetaPage title={article.title} description={article.description} />
-    <Article
-      title={article.title}
-      description={article.description}
-      media={article.media}
-      text={article.text}
-    />
+    <Container>
+      <Article
+        title={article.title}
+        description={article.description}
+        media={article.media}
+        text={article.text}
+      />
+    </Container>
   </GenericPage>
 ))

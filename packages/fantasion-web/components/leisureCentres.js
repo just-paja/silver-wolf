@@ -1,6 +1,7 @@
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 import React from 'react'
 import Row from 'react-bootstrap/Row'
 
@@ -43,29 +44,31 @@ const LeisureCentreLocationBlock = ({ location, mailingAddress }) => {
 }
 
 export const LeisureCentre = ({ leisureCentre }) => (
-  <Article
-    description={leisureCentre.description}
-    media={leisureCentre.media}
-    beforeText={
-      <LeisureCentreLocationBlock
-        location={leisureCentre.location}
-        mailingAddress={leisureCentre.mailingAddress}
-      />
-    }
-    afterText={
-      leisureCentre.expeditions.length === 0 ? null : (
-        <ExpeditionLinks expeditions={leisureCentre.expeditions} />
-      )
-    }
-    selfLink={{
-      route: 'leisureCentreDetail',
-      params: {
-        leisureCentreSlug: slug(leisureCentre),
-      },
-    }}
-    text={leisureCentre.detailedDescription}
-    title={leisureCentre.title}
-  />
+  <Container>
+    <Article
+      description={leisureCentre.description}
+      media={leisureCentre.media}
+      beforeText={
+        <LeisureCentreLocationBlock
+          location={leisureCentre.location}
+          mailingAddress={leisureCentre.mailingAddress}
+        />
+      }
+      afterText={
+        leisureCentre.expeditions.length === 0 ? null : (
+          <ExpeditionLinks expeditions={leisureCentre.expeditions} />
+        )
+      }
+      selfLink={{
+        route: 'leisureCentreDetail',
+        params: {
+          leisureCentreSlug: slug(leisureCentre),
+        },
+      }}
+      text={leisureCentre.detailedDescription}
+      title={leisureCentre.title}
+    />
+  </Container>
 )
 
 export const LeisureCentreList = ({ leisureCentres }) =>

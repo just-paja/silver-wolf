@@ -1,6 +1,7 @@
 import classnames from 'classnames'
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 import React, { useEffect, useState } from 'react'
 import Row from 'react-bootstrap/Row'
 
@@ -74,10 +75,12 @@ export const MonsterList = ({ monsters }) => (
 )
 
 export const MonsterDetail = ({ monster }) => (
-  <Article
-    title={monster.title}
-    description={monster.description}
-    media={monster.media}
-    text={monster.text}
-  />
+  <Container>
+    <Article
+      title={monster.title}
+      description={monster.description}
+      media={monster.media}
+      text={monster.text}
+    />
+  </Container>
 )

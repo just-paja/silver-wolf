@@ -1,6 +1,7 @@
 import classnames from 'classnames'
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 import React, { useEffect, useState } from 'react'
 import Row from 'react-bootstrap/Row'
 
@@ -73,11 +74,13 @@ export const ProfileList = ({ profiles }) => (
 )
 
 export const ProfileDetail = ({ profile }) => (
-  <Article
-    description={profile.description}
-    media={profile.media}
-    subTitle={profile.jobTitle}
-    text={profile.text}
-    title={profile.title}
-  />
+  <Container>
+    <Article
+      description={profile.description}
+      media={profile.media}
+      subTitle={profile.jobTitle}
+      text={profile.text}
+      title={profile.title}
+    />
+  </Container>
 )
