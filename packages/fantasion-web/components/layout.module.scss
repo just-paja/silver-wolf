@@ -146,6 +146,16 @@
   &:nth-child(5) { animation-delay: -31s; }
 }
 
+.menuWidget {
+  align-items: center;
+  display: flex;
+  bottom: 0;
+  height: calc($spacer * 3);
+  right: 0;
+  top: 0;
+  position: absolute;
+}
+
 .menuUserName {
   font-size: $font-size-base;
   margin-right: calc($spacer / 2);
@@ -167,12 +177,7 @@
 
 @media (min-width: map-get($grid-breakpoints, 'lg')) {
   .menuWidget {
-    align-items: center;
-    bottom: 0;
-    display: flex;
-    position: absolute;
-    right: 0;
-    top: 0;
+    position: relative;
 
     button.navbarToggle {
       display: block;

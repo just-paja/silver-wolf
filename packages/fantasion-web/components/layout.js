@@ -66,8 +66,9 @@ const CurrentUserName = () => (
 
 const SiteMenu = () => {
   const { t } = useTranslation()
+  const { user } = useSite()
   return (
-    <Nav>
+    <Nav className="flex-grow-1">
       <Link as={Nav.Link} route="adventureList">
         {t('adventures-title')}
       </Link>
@@ -85,6 +86,16 @@ const SiteMenu = () => {
       <Link as={Nav.Link} route="contacts">
         {t('contacts-link')}
       </Link>
+      {!user && (
+        <Link
+          className="ms-lg-auto me-lg-2"
+          as={Nav.Link}
+          key="login"
+          route="login"
+        >
+          {t('login')}
+        </Link>
+      )}
     </Nav>
   )
 }
@@ -95,16 +106,6 @@ const UserMenu = () => {
   const order = useActiveOrder()
   const basketPrice = order ? order.price : 0
   const items = [
-    ...(user
-      ? []
-      : [
-          <Link as={Nav.Link} key="login" route="login">
-            {t('login')}
-          </Link>,
-          <Link as={Nav.Link} key="register" route="register">
-            {t('register-title')}
-          </Link>,
-        ]),
     ...(user?.passwordCreated
       ? [
           <Link as={Nav.Link} key="status" route="status">
@@ -120,6 +121,10 @@ const UserMenu = () => {
       : []),
   ].filter(Boolean)
 
+  if (items.length === 0) {
+    return null
+  }
+
   return <Nav className={styles.userMenu}>{items}</Nav>
 }
 
@@ -128,6 +133,7 @@ export const SiteNavbar = ({ fixed, sticky }) => {
   const ref = useRef(null)
   const [scrollTop] = useScroll()
   const [expanded, setExpanded] = useState(false)
+  const { user } = useSite()
 
   const handleClickOutside = () => {
     setExpanded(false)
@@ -160,6 +166,10 @@ export const SiteNavbar = ({ fixed, sticky }) => {
           <SiteLogo className={styles.logo} />{' '}
           <span>{t('fantasion-brand')}</span>
         </Link>
+        <Navbar.Collapse id="site-navbar">
+          <SiteMenu />
+          <UserMenu />
+        </Navbar.Collapse>
         <div className={styles.menuWidget}>
           <Navbar.Toggle
             aria-controls="site-navbar"
@@ -167,13 +177,9 @@ export const SiteNavbar = ({ fixed, sticky }) => {
           >
             <BasketNotice />
             <CurrentUserName />
-            <HamburgerMenuIcon />
+            {user?.passwordCreated && <HamburgerMenuIcon />}
           </Navbar.Toggle>
         </div>
-        <Navbar.Collapse id="site-navbar">
-          <SiteMenu />
-          <UserMenu />
-        </Navbar.Collapse>
       </Container>
     </Navbar>
   )
