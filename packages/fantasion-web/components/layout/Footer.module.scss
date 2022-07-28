@@ -1,0 +1,60 @@
+@import '../../styles/variables.scss';
+
+.footer {
+  color: $primary;
+  padding-bottom: $spacer;
+  padding-top: calc(2 * $spacer);
+  position: relative;
+}
+
+.social {
+  font-size: 2 * $spacer;
+
+  a {
+    margin-left: calc($spacer / 2);
+
+    &:first-child {
+      margin: 0
+    }
+  }
+}
+
+.footerInfo {
+  font-size: $font-size-sm;
+  margin-top: $spacer;
+  opacity: 0.66;
+}
+
+.footerLogo {
+  position: absolute;
+  right: $spacer;
+  top: $spacer;
+  width: $spacer * 5;
+}
+
+.quickLinks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    border-left: 1px solid $primary;
+    display: inline-block;
+    margin: 0 0 0 calc($spacer / 2);
+    padding: 0 0 0 calc($spacer / 2);
+
+    &:first-child {
+      border: none;
+      margin: 0;
+      padding: 0;
+    } 
+  }
+}
+
+@media (min-width: map-get($grid-breakpoints, 'md')) {
+  .footerLogo {
+    position: static;
+    top: 0;
+    width: $spacer * 7;
+  }
+}
