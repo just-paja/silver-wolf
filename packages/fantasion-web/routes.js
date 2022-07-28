@@ -78,12 +78,12 @@ const cs = {
     destination: '/login',
   },
   participants: {
-    source: '/ucastnici',
-    destination: '/family/participants',
+    source: '/druzina/ucastnici',
+    destination: '/circle/participants',
   },
   participantDetail: {
-    source: '/ucastnici/:participantId',
-    destination: '/family/:participantId',
+    source: '/druzina/ucastnici/:participantId',
+    destination: '/circle/participants/:participantId',
   },
   profileDetail: {
     source: '/tym/:profileSlug',
@@ -120,6 +120,10 @@ const cs = {
   signupDetail: {
     source: '/prihlasky/:signupId',
     destination: '/signups/:signupId',
+  },
+  circleLog: {
+    source: '/druzina/denik',
+    destination: '/circle/log',
   },
   status: {
     source: '/prehled',

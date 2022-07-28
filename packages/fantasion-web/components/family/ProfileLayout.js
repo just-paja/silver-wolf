@@ -14,6 +14,7 @@ const ProfileNav = () => {
     <Nav className="flex-md-column" variant="pills">
       <NavLink route="status">{t('my-status')}</NavLink>
       <NavLink route="participants">{t('family-participants')}</NavLink>
+      <NavLink route="circleLog">{t('circle-log')}</NavLink>
     </Nav>
   )
 }

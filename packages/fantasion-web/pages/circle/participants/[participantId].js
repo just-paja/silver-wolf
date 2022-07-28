@@ -1,14 +1,14 @@
 import React from 'react'
 
-import { asPage, MetaPage } from '../../components/meta'
-import { Breadcrumbs } from '../../components/breadcrumbs'
-import { GenericPage } from '../../components/layout'
-import { getFullName } from '../../components/users'
-import { ParticipantListItem } from '../../components/family/ParticipantList'
-import { ProfileLayout } from '../../components/family/ProfileLayout'
-import { requireUser, withPageProps } from '../../server/props'
+import { asPage, MetaPage } from '../../../components/meta'
+import { Breadcrumbs } from '../../../components/breadcrumbs'
+import { GenericPage } from '../../../components/layout'
+import { getFullName } from '../../../components/users'
+import { ParticipantListItem } from '../../../components/family/ParticipantList'
+import { ProfileLayout } from '../../../components/family/ProfileLayout'
+import { requireUser, withPageProps } from '../../../server/props'
 import { useTranslation } from 'next-i18next'
-import { withEntity } from '../../components/entities'
+import { withEntity } from '../../../components/entities'
 
 export const getServerSideProps = withPageProps(
   requireUser(async ({ fetch, params }) => {
