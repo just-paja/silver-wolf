@@ -29,6 +29,14 @@ from fantasion_eshop.models import (
     ORDER_STATUS_RESOLVED,
 )
 
+from .constants import (
+    SIGNUP_STATUS_NEW,
+    SIGNUP_STATUS_CONFIRMED,
+    SIGNUP_STATUS_ACTIVE,
+    SIGNUP_STATUS_CANCELLED,
+    SIGNUP_STATES,
+)
+
 ORDER_SIGNUP_ACCEPTED = (
     ORDER_STATUS_DISPATCHED,
     ORDER_STATUS_PAID,
@@ -141,19 +149,6 @@ class ParticipantHobby(TimeStampedModel):
 
     def __str__(self):
         return f'{self.participant}: {self.hobby}'
-
-
-SIGNUP_STATUS_NEW = 1
-SIGNUP_STATUS_CONFIRMED = 2
-SIGNUP_STATUS_ACTIVE = 3
-SIGNUP_STATUS_CANCELLED = 5
-
-SIGNUP_STATES = (
-    (SIGNUP_STATUS_NEW, _("New")),
-    (SIGNUP_STATUS_CONFIRMED, _("Confirmed")),
-    (SIGNUP_STATUS_ACTIVE, _("Active")),
-    (SIGNUP_STATUS_CANCELLED, _("Cancelled")),
-)
 
 
 def validate_legal_guardian(value):
