@@ -46,6 +46,7 @@ class HobbyAdmin(TranslatedAdmin):
 class FamilyMemberAdmin(NestedStackedInline):
     model = models.FamilyMember
     extra = 0
+    autocomplete_fields = ('user', )
 
 
 class FamilyAdmin(BaseAdmin):
