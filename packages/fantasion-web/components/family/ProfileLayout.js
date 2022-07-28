@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import React from 'react'
 
-import { Link } from '../links'
+import { NavLink } from '../links'
 import { Main } from '../media'
 import { useTranslation } from 'next-i18next'
 
@@ -12,12 +12,8 @@ const ProfileNav = () => {
   const { t } = useTranslation()
   return (
     <Nav className="flex-md-column" variant="pills">
-      <Link activeProp="active" as={Nav.Link} route="status">
-        {t('my-status')}
-      </Link>
-      <Link activeProp="active" as={Nav.Link} route="participants">
-        {t('family-participants')}
-      </Link>
+      <NavLink route="status">{t('my-status')}</NavLink>
+      <NavLink route="participants">{t('family-participants')}</NavLink>
     </Nav>
   )
 }

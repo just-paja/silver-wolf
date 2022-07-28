@@ -1,3 +1,4 @@
+import Nav from 'react-bootstrap/Nav'
 import NextLink from 'next/link'
 
 import { cloneElement } from 'react'
@@ -74,4 +75,10 @@ export const A = ({ href, children, props, As = 'a' }) => (
   <NextLink href={href} passHref>
     <As {...props}>{children}</As>
   </NextLink>
+)
+
+export const NavLink = ({ children, ...props }) => (
+  <Link activeProp="active" as={Nav.Link} {...props}>
+    {children}
+  </Link>
 )

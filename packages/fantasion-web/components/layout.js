@@ -15,7 +15,7 @@ import Rune05 from './runes/rune-05.svg'
 import { Alerts } from './alerts'
 import { Footer } from './layout/Footer.js'
 import { HeadingContext, PageTopGallery } from './media'
-import { Link } from './links'
+import { Link, NavLink } from './links'
 import { Money } from './money'
 import { reverse } from '../routes'
 import { SiteLogo } from './SiteLogo'
@@ -75,12 +75,8 @@ const SiteMenu = () => {
   const { user } = useSite()
   return (
     <Nav className="flex-grow-1">
-      <Link as={Nav.Link} route="adventureList">
-        {t('adventures-title')}
-      </Link>
-      <Link as={Nav.Link} route="leisureCentreList">
-        {t('leisure-centre-title')}
-      </Link>
+      <NavLink route="adventureList">{t('adventures-title')}</NavLink>
+      <NavLink route="leisureCentreList">{t('leisure-centre-title')}</NavLink>
       <NavDropdown title={t('about-fantasion')} id="about-nav">
         <Link as={NavDropdown.Item} route="about">
           {t('about-us')}
@@ -89,18 +85,11 @@ const SiteMenu = () => {
           {t('our-team')}
         </Link>
       </NavDropdown>
-      <Link as={Nav.Link} route="contacts">
-        {t('contacts-link')}
-      </Link>
+      <NavLink route="contacts">{t('contacts-link')}</NavLink>
       {!user && (
-        <Link
-          className="ms-lg-auto me-lg-2"
-          as={Nav.Link}
-          key="login"
-          route="login"
-        >
+        <NavLink className="ms-lg-auto me-lg-2" key="login" route="login">
           {t('login')}
-        </Link>
+        </NavLink>
       )}
     </Nav>
   )
@@ -114,10 +103,10 @@ const UserMenu = () => {
   const items = [
     ...(user?.passwordCreated
       ? [
-          <Link as={Nav.Link} key="status" route="status">
+          <NavLink key="status" route="status">
             <IconLabel icon={HomeIcon} text={t('my-status')} />
-          </Link>,
-          <Link as={Nav.Link} key="basket" route="basket">
+          </NavLink>,
+          <NavLink key="basket" route="basket">
             <IconLabel
               icon={BasketIcon}
               text={
@@ -126,7 +115,7 @@ const UserMenu = () => {
                 </>
               }
             />
-          </Link>,
+          </NavLink>,
           <Nav.Link key="logout" onClick={logout}>
             <IconLabel icon={LogoutIcon} text={t('logout')} />
           </Nav.Link>,
