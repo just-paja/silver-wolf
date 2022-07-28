@@ -413,3 +413,33 @@ class TroopTransport(TimeStampedModel):
         null=True,
         blank=True,
     )
+
+
+class ExpeditionLogArticle(TimeStampedModel):
+
+    class Meta:
+        verbose_name = _("Expedition Log Article")
+        verbose_name_plural = _("Expedition Log Articles")
+
+    batch = ForeignKey(
+        ExpeditionBatch,
+        on_delete=CASCADE,
+        verbose_name=_('Expedition Batch'),
+        related_name='log_stories',
+    )
+    troop = ForeignKey(
+        Troop,
+        blank=True,
+        null=True,
+        on_delete=CASCADE,
+        related_name='log_stories',
+        verbose_name=_('Troop'),
+    )
+    title = TitleField()
+    date = DateField()
+    text = DetailedDescriptionField(verbose_name=_("Story text"), )
+    public = VisibilityField()
+
+
+class ExpeditionLogArticleMedia(MediaObjectModel):
+    parent = MediaParentField(ExpeditionLogArticle)

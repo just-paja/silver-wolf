@@ -310,3 +310,23 @@ class TransportAdmin(TranslatedAdmin):
         'public',
         'description',
     )
+
+
+class ExpeditionLogArticleMediaAdmin(MediaAdmin):
+    model = models.ExpeditionLogArticleMedia
+
+
+class ExpeditionLogArticleAdmin(TranslatedAdmin):
+    model = models.ExpeditionLogArticle
+    inlines = (ExpeditionLogArticleMediaAdmin, )
+    list_display = ('date', 'title', 'public')
+    list_filter = ('batch', 'troop', 'public')
+    search_fields = ('title', 'text')
+    fields = (
+        'batch',
+        'troop',
+        'date',
+        'title',
+        'text',
+    )
+    autocomplete_fields = ('batch', 'troop')

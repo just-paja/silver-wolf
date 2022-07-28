@@ -89,3 +89,16 @@ class TransportVehicleOptions(TranslationOptions):
 @register(models.TransportVehicleMedia)
 class TransportVehicleMediaOptions(TranslationOptions):
     fields = ('description', )
+
+
+@register(models.ExpeditionLogArticle)
+class ExpeditionLogArticleOptions(TranslationOptions):
+    fields = (
+        'title',
+        'text',
+    )
+
+
+@register(models.ExpeditionLogArticleMedia)
+class ExpeditionLogArticleMediaOptions(TranslationOptions):
+    fields = ('description', )

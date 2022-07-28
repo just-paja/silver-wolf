@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-24 15:27+0200\n"
+"POT-Creation-Date: 2022-07-28 16:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1237,7 +1237,7 @@ msgid "Expeditions"
 msgstr "Tábory"
 
 #: fantasion_expeditions/models.py:119 fantasion_expeditions/models.py:167
-#: fantasion_expeditions/models.py:239
+#: fantasion_expeditions/models.py:239 fantasion_expeditions/models.py:427
 msgid "Expedition Batch"
 msgstr "Turnus"
 
@@ -1294,7 +1294,7 @@ msgid "Expedition Programs"
 msgstr "Táborové programy"
 
 #: fantasion_expeditions/models.py:232 fantasion_expeditions/models.py:403
-#: fantasion_signups/models.py:181
+#: fantasion_expeditions/models.py:436 fantasion_signups/models.py:181
 msgid "Troop"
 msgstr "Oddíl"
 
@@ -1385,6 +1385,18 @@ msgstr "Tam"
 #: fantasion_expeditions/models.py:394
 msgid "Transport Back"
 msgstr "Zpátky"
+
+#: fantasion_expeditions/models.py:421
+msgid "Expedition Log Article"
+msgstr "Deníkový článek"
+
+#: fantasion_expeditions/models.py:422
+msgid "Expedition Log Articles"
+msgstr "Deníkov0 články"
+
+#: fantasion_expeditions/models.py:440
+msgid "Story text"
+msgstr "Text příběhu"
 
 #: fantasion_expeditions/templates/admin/expeditionbatch_change_form.html:5
 msgid "Export all data"
