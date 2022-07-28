@@ -14,7 +14,6 @@ import Rune05 from './runes/rune-05.svg'
 
 import { Alerts } from './alerts'
 import { Footer } from './layout/Footer.js'
-import { HamburgerMenuIcon, HomeIcon, BasketIcon, LogoutIcon } from './icons'
 import { HeadingContext, PageTopGallery } from './media'
 import { Link } from './links'
 import { Money } from './money'
@@ -26,6 +25,13 @@ import { useOutsideClick, useScroll } from './window'
 import { UserName } from './users'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import {
+  HamburgerMenuIcon,
+  HomeIcon,
+  BasketIcon,
+  LogoutIcon,
+  IconLabel,
+} from './icons'
 
 import styles from './layout.module.scss'
 
@@ -109,13 +115,20 @@ const UserMenu = () => {
     ...(user?.passwordCreated
       ? [
           <Link as={Nav.Link} key="status" route="status">
-            <HomeIcon /> {t('my-status')}
+            <IconLabel icon={HomeIcon} text={t('my-status')} />
           </Link>,
           <Link as={Nav.Link} key="basket" route="basket">
-            <BasketIcon /> {t('order-basket')}: <Money amount={basketPrice} />
+            <IconLabel
+              icon={BasketIcon}
+              text={
+                <>
+                  {t('order-basket')}: <Money amount={basketPrice} />
+                </>
+              }
+            />
           </Link>,
           <Nav.Link key="logout" onClick={logout}>
-            <LogoutIcon /> {t('logout')}
+            <IconLabel icon={LogoutIcon} text={t('logout')} />
           </Nav.Link>,
         ]
       : []),
