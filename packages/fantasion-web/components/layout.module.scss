@@ -201,6 +201,7 @@
     .userMenu {
       background: $primary;
       border-radius: $border-radius-lg;
+      flex-direction: column;
       opacity: 0;
       padding: calc($spacer / 2) !important;
       pointer-events: none;
@@ -217,7 +218,7 @@
 
     :global(.show),
     :global(.collapsing) {
-       .userMenu {
+      .userMenu {
         opacity: 1;
         pointer-events: all;
       }
