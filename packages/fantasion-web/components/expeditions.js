@@ -72,10 +72,11 @@ export const SignupButton = ({ expedition, batch, troop }) => {
     setShow(true)
   }, [fetch, setParticipants, setShow])
   useEffect(() => {
-    if (shouldOpen(router, batch, troop)) {
+    if (!show && shouldOpen(router, batch, troop)) {
       showDialog()
     }
-  }, [router, batch, troop, showDialog])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   const addParticipant = (participant) => {
     setParticipants([...participants, participant])
   }
@@ -97,6 +98,15 @@ export const SignupButton = ({ expedition, batch, troop }) => {
         },
       ],
     })
+    const nextParams = { ...router.query }
+    delete nextParams.signup
+    router.replace(
+      { pathname: router.pathname, query: nextParams },
+      undefined,
+      {
+        shallow: true,
+      }
+    )
     setOrder(o)
     hideDialog()
   }
