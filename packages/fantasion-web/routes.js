@@ -118,7 +118,7 @@ const cs = {
     destination: '/orders/:orderId',
   },
   signupDetail: {
-    source: '/prehled/:signupId',
+    source: '/prihlasky/:signupId',
     destination: '/signups/:signupId',
   },
   status: {
