@@ -9,23 +9,24 @@ import { useTranslation } from 'next-i18next'
 
 import styles from './Footer.module.scss'
 
+const FooterLink = ({ route, label }) => (
+  <li>
+    <Link route={route}>{label}</Link>
+  </li>
+)
+
 const FooterLinks = () => {
   const { t } = useTranslation()
   return (
     <nav>
       <ul className={styles.quickLinks}>
-        <li>
-          <Link route="codex">{t('codex-title')}</Link>
-        </li>
-        <li>
-          <Link route="cookiesPolicy">{t('cookies')}</Link>
-        </li>
-        <li>
-          <Link route="privacyPolicy">{t('personal-information')}</Link>
-        </li>
-        <li>
-          <Link route="termsAndConditions">{t('terms-and-conditions')}</Link>
-        </li>
+        <FooterLink route="codex" label={t('codex-title')} />
+        <FooterLink route="cookiesPolicy" label={t('cookies')} />
+        <FooterLink route="privacyPolicy" label={t('personal-information')} />
+        <FooterLink
+          route="termsAndConditions"
+          label={t('terms-and-conditions')}
+        />
       </ul>
     </nav>
   )
