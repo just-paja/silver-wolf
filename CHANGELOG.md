@@ -3,6 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/fantasion/fantasion/compare/v1.2.0...v1.3.0) (2022-07-29)
+
+
+### Bug Fixes
+
+* **admin:** autocomplete family member ([6543868](https://github.com/fantasion/fantasion/commit/654386871df0762dacc3ac900a0174c169537a73))
+* **admin:** fix trnslation typo ([9a76425](https://github.com/fantasion/fantasion/commit/9a76425fe58c459339696a11ff627a84c72a998b))
+* **admin:** sort location change form fields ([cc61926](https://github.com/fantasion/fantasion/commit/cc619265a3f0c5164a88d05216604b2131463664))
+* **admin:** use markdown editor dark mode ([48a7547](https://github.com/fantasion/fantasion/commit/48a7547edbc84801769f209abd65e0358b760ad0)), closes [#179](https://github.com/fantasion/fantasion/issues/179)
+* **admin:** use text cursor on markdown paper ([e9ddb59](https://github.com/fantasion/fantasion/commit/e9ddb59b41dc17c3e9bff080fdea3bca9dbac457))
+* **api:** add missing direction locales ([bc79fd2](https://github.com/fantasion/fantasion/commit/bc79fd2348eb146f6e1bda64d863c0be594171f6)), closes [#182](https://github.com/fantasion/fantasion/issues/182)
+* **api:** allow unlimited product prices ([7b76c10](https://github.com/fantasion/fantasion/commit/7b76c10c3c5f773947ebd83e3712a9302bb41912))
+* **api:** fix linting issues ([90930ef](https://github.com/fantasion/fantasion/commit/90930ef6477185d7a97fd07d648c9db7f05868d9))
+* **api:** mark signup active for paid orders ([826fa49](https://github.com/fantasion/fantasion/commit/826fa49a6675f9ee7f82b051fc8083dc5fa8d5bb)), closes [#178](https://github.com/fantasion/fantasion/issues/178)
+* **api:** parse insurance request ([702447f](https://github.com/fantasion/fantasion/commit/702447f132bd8afff2050d92d55cee691073a439))
+* **api:** return 403 when price is unavailable ([a31ad0f](https://github.com/fantasion/fantasion/commit/a31ad0f0ec1d4c6f5b7828cc2df0450883105827))
+* **api:** treat null date limit as available ([9f0dfe8](https://github.com/fantasion/fantasion/commit/9f0dfe8623869a0933c8861fcd7c288944b97a8a))
+* **emails:** remove double colon ([f0e32a7](https://github.com/fantasion/fantasion/commit/f0e32a78d53038797892b56afce68a716a93d3be))
+* **ui:** expand user menu icon margin ([d429631](https://github.com/fantasion/fantasion/commit/d429631267d66be0971433b96ff82c67943e6b0f))
+* **ui:** hide signup dialog after success ([5b0b4db](https://github.com/fantasion/fantasion/commit/5b0b4db77406a8e7eb1099164e4b15c9144ef9c4))
+* **ui:** increase participant card spacing ([a69e029](https://github.com/fantasion/fantasion/commit/a69e0298f20324f1963f86b1f9151d7139f2a1e2))
+* **ui:** link troop adventure detail ([f6f7597](https://github.com/fantasion/fantasion/commit/f6f75972b26cbcfc5467eabe8a19a5732d757cce))
+* **ui:** load participants on programatic signup ([a800d0a](https://github.com/fantasion/fantasion/commit/a800d0a6a5a7c01d1e499518db93f3cd44d82655))
+* **ui:** rename signup url to signups ([a39c1c4](https://github.com/fantasion/fantasion/commit/a39c1c44bcd1d91ef9decc5b01e1a3ca9bf241a7))
+* **ui:** show dialog based on URL params ([dd62655](https://github.com/fantasion/fantasion/commit/dd626550e6b1f508112ea182c89909fd813c2bc8))
+* **ui:** stack user menu vertically in lg ([80b9820](https://github.com/fantasion/fantasion/commit/80b9820410814168f47cdeb7131f5cf6c4519510))
+
+
+### Features
+
+* **admin:** inline troop transport in transport ([9da1ef9](https://github.com/fantasion/fantasion/commit/9da1ef91f31250a8c6ddfaccb3ee11e645ca9ee7)), closes [#182](https://github.com/fantasion/fantasion/issues/182)
+* **admin:** pay order from order change form ([a1991fe](https://github.com/fantasion/fantasion/commit/a1991fe23f93f113134cdb35d75b1bb2b41827a4))
+* **api:** create expedition log article model ([6697f74](https://github.com/fantasion/fantasion/commit/6697f742c8b897bacb672d1b0eef5fbdc23faba2)), closes [#181](https://github.com/fantasion/fantasion/issues/181)
+* **api:** export order ID ([2f6af84](https://github.com/fantasion/fantasion/commit/2f6af840d2363eba211025fda3f12899ce5a3ca4)), closes [#183](https://github.com/fantasion/fantasion/issues/183)
+* **api:** pubish troop transports via API ([06e18f4](https://github.com/fantasion/fantasion/commit/06e18f4c9716948b31e7f149bf6172d2417a9185)), closes [#182](https://github.com/fantasion/fantasion/issues/182)
+* **api:** publish expedition log ([1e308c2](https://github.com/fantasion/fantasion/commit/1e308c206092bebaaedb885cfb0124fa0eada267)), closes [#181](https://github.com/fantasion/fantasion/issues/181)
+* **api:** publish transport departed status ([ccedcfb](https://github.com/fantasion/fantasion/commit/ccedcfbc3d9083880cd47f4008bec4bdff7c4fe0)), closes [#182](https://github.com/fantasion/fantasion/issues/182)
+* **api:** publish transport direction ([a2b7d36](https://github.com/fantasion/fantasion/commit/a2b7d36a596f0259851d69cabff50eb0d39ffcd2)), closes [#182](https://github.com/fantasion/fantasion/issues/182)
+* **api:** publish user's circles ([cdc6782](https://github.com/fantasion/fantasion/commit/cdc6782d98e3dc85a6c439db42408ba0a2c8d7d3))
+* **api:** require transport title and itinerary ([2253225](https://github.com/fantasion/fantasion/commit/225322592af2d4301f313b0ba02da6d7afc490f3)), closes [#182](https://github.com/fantasion/fantasion/issues/182)
+* **api:** store troop transports ([17d841b](https://github.com/fantasion/fantasion/commit/17d841b0da3fe4b6d55335d0ecae804aa0b69370)), closes [#182](https://github.com/fantasion/fantasion/issues/182)
+* **api:** turn transport flags into status ([11769bf](https://github.com/fantasion/fantasion/commit/11769bff98a3bb19982a342fba28b37285a2b9bb)), closes [#182](https://github.com/fantasion/fantasion/issues/182)
+* **ui:** display family log ([cd89107](https://github.com/fantasion/fantasion/commit/cd891078880d32474d259dac68c8c55a9544df42)), closes [#181](https://github.com/fantasion/fantasion/issues/181)
+* **ui:** display GPS watching link ([f8be9d5](https://github.com/fantasion/fantasion/commit/f8be9d582444b9004d08acf3b3a92ccf965d1ac5)), closes [#182](https://github.com/fantasion/fantasion/issues/182)
+* **ui:** display transport detail page ([be701fe](https://github.com/fantasion/fantasion/commit/be701febe688550c3b21cd48cc445455e42b3073)), closes [#182](https://github.com/fantasion/fantasion/issues/182)
+* **ui:** display troop transports ([45a83bd](https://github.com/fantasion/fantasion/commit/45a83bdce2fa6bb3be954911a820b33c93602b67)), closes [#182](https://github.com/fantasion/fantasion/issues/182)
+* **ui:** hide signup button for closed troops ([a5361bf](https://github.com/fantasion/fantasion/commit/a5361bfc772b20ebb7ce656a86af3c4ee008562d))
+* **ui:** hide unavailable batches in signup form ([963fcfc](https://github.com/fantasion/fantasion/commit/963fcfc5ff8314f458474c97b4da4bdd1370a812))
+* **ui:** move FAQ link to the footer ([5a81c7b](https://github.com/fantasion/fantasion/commit/5a81c7b4a1052b12c0ef16034533eb05d3b3925f)), closes [#184](https://github.com/fantasion/fantasion/issues/184)
+* **ui:** move login out of hamburger menu ([d0adfaa](https://github.com/fantasion/fantasion/commit/d0adfaa43de8e8974fb695a7ba825e7fea851d89)), closes [#184](https://github.com/fantasion/fantasion/issues/184)
+* **ui:** relate transport to the troops ([a59362b](https://github.com/fantasion/fantasion/commit/a59362bf347b2b412a5eecb651986ba960ba5f4e)), closes [#182](https://github.com/fantasion/fantasion/issues/182)
+* **ui:** render all transport states ([596267b](https://github.com/fantasion/fantasion/commit/596267bd7ddf898c13d5193bca1b1362989ac0b4)), closes [#182](https://github.com/fantasion/fantasion/issues/182)
+
+
+
+
+
 # [1.2.0](https://github.com/fantasion/fantasion/compare/v1.1.1...v1.2.0) (2022-07-18)
 
 
