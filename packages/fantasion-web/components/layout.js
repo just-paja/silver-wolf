@@ -175,7 +175,10 @@ export const SiteNavbar = ({ fixed, sticky }) => {
         <div className={styles.menuWidget}>
           <Navbar.Toggle
             aria-controls="site-navbar"
-            className={classnames(styles.navbarToggle, user?.passwordCreated && styles.navbarWithUser)}
+            className={classnames(
+              styles.navbarToggle,
+              user?.passwordCreated && styles.navbarWithUser
+            )}
           >
             <BasketNotice />
             <CurrentUserName />
