@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1](https://github.com/just-paja/fantasion/compare/v1.3.0...v1.3.1) (2022-07-31)
+
+
+### Bug Fixes
+
+* **api:** publish distinct log articles ([a020824](https://github.com/just-paja/fantasion/commit/a020824ba2a066d6caa8110f6a31db5eb745cdf5))
+
+
+
+
+
 # [1.3.0](https://github.com/just-paja/fantasion/compare/v1.2.0...v1.3.0) (2022-07-29)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1](https://github.com/fantasion/fantasion/compare/v1.3.0...v1.3.1) (2022-07-31)
+
+
+### Bug Fixes
+
+* **ui:** show hamburger icon on mobile ([ef9cc46](https://github.com/fantasion/fantasion/commit/ef9cc46e148ededbcb3ae821d8695da3bb546b09))
+
+
+
+
+
 # [1.3.0](https://github.com/fantasion/fantasion/compare/v1.2.0...v1.3.0) (2022-07-29)
 
 
