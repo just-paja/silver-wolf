@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.2](https://github.com/fantasion/fantasion/compare/v1.3.1...v1.3.2) (2022-07-31)
+
+
+### Bug Fixes
+
+* **ui:** fix linting issues ([fabb91f](https://github.com/fantasion/fantasion/commit/fabb91f0889485f54feaa1c5171c55ff829cd2bc))
+
+
+
+
+
 ## [1.3.1](https://github.com/fantasion/fantasion/compare/v1.3.0...v1.3.1) (2022-07-31)
 
 
