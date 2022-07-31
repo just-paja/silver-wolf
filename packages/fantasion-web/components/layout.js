@@ -175,11 +175,11 @@ export const SiteNavbar = ({ fixed, sticky }) => {
         <div className={styles.menuWidget}>
           <Navbar.Toggle
             aria-controls="site-navbar"
-            className={styles.navbarToggle}
+            className={classnames(styles.navbarToggle, user?.passwordCreated && styles.navbarWithUser)}
           >
             <BasketNotice />
             <CurrentUserName />
-            {user?.passwordCreated && <HamburgerMenuIcon />}
+            <HamburgerMenuIcon />
           </Navbar.Toggle>
         </div>
       </Container>

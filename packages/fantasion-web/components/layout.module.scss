@@ -12,6 +12,8 @@
 
   .navbarToggle {
     border: none;
+    display: flex;
+    align-items: center;
   }
 
   :global(.navbar-nav) + :global(.navbar-toggler) {
@@ -150,8 +152,8 @@
   align-items: center;
   display: flex;
   bottom: 0;
-  height: calc($spacer * 3);
-  right: 0;
+  height: calc($spacer * 2.5);
+  right: $spacer;
   top: 0;
   position: absolute;
 }
@@ -159,9 +161,18 @@
 .menuUserName {
   font-size: $font-size-base;
   margin-right: calc($spacer / 2);
+  max-width: calc($spacer * 12);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: none;
+  white-space: nowrap;
 }
 
 @media (min-width: map-get($grid-breakpoints, 'sm')) {
+  .menuUserName {
+    display: block;
+  }
+
   .rune {
     height: calc($spacer * 2.5);
     width: calc($spacer * 2.5);
@@ -177,10 +188,14 @@
 
 @media (min-width: map-get($grid-breakpoints, 'lg')) {
   .menuWidget {
-    position: relative;
+    position: static;
 
-    button.navbarToggle {
-      display: block;
+    .navbarToggle {
+      display: none;
+    }
+
+    button.navbarToggle.navbarWithUser {
+      display: flex;
     }
   }
 
@@ -206,7 +221,7 @@
       padding: calc($spacer / 2) !important;
       pointer-events: none;
       position: absolute;
-      right: calc($spacer / 2);
+      right: calc($spacer);
       top: calc($spacer * 3.5);
       transition: opacity 0.2s;
 
