@@ -36,7 +36,7 @@ class ExpeditionLogArticleCollection(ReadOnlyModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        query = models.ExpeditionLogArticle.objects.get_queryset()
+        query = models.ExpeditionLogArticle.objects.distinct()
         if not user.has_perm(
                 'fantasion_expeditions.can_view_expeditionlogarticle'):
             batch_ids, troop_ids = user.get_accessible_troops_and_batch_ids(
