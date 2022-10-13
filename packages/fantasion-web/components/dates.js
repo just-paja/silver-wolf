@@ -33,4 +33,4 @@ export const DateRange = ({ start, end }) => {
 }
 
 export const getDaysDuration = (startsAt, endsAt) =>
-  Math.max((new Date(endsAt) - new Date(startsAt)) / 1000 / 60 / 60 / 24 - 1, 1)
+  Math.max((new Date(endsAt) - new Date(startsAt)) / 1000 / 60 / 60 / 24 + 1, 1)
