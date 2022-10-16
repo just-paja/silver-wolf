@@ -309,11 +309,6 @@ msgstr ""
 "Abyste nepřišli o žádné novinky a akce, sledujte nás na Facebooku, "
 "Instagramu a TikToku!"
 
-#: fantasion/templates/mail/order_confirmation.html:49
-msgid "email-fill-in-documents"
-msgstr ""
-"Nezapomeňte také prosím vyplnit a nahrát nezbytné dokumenty k vaší přihlášce."
-
 #: fantasion/templates/mail/overpaid.html:5
 msgid "email-overpaid-thanks"
 msgstr "To jsme opravdu nečekali."
