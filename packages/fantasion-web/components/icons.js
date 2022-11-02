@@ -23,11 +23,12 @@ import {
   FaCalendarWeek,
   FaClock,
   FaFacebook,
-  FaInstagram,
   FaTiktok,
   FaTwitter,
   FaDiscord,
 } from 'react-icons/fa'
+import { RiInstagramFill } from 'react-icons/ri'
+
 
 /* These are icon bindings. Make sure that all icons used in the application
  * are here to prevent unnecessary confusion from accidentally using different
@@ -48,7 +49,7 @@ export const FacebookIcon = FaFacebook
 export const HamburgerMenuIcon = HiMenu
 export const HomeIcon = HiHome
 export const InsecureIcon = MdGppBad
-export const InstagramIcon = FaInstagram
+export const InstagramIcon = RiInstagramFill
 export const LocationPinIcon = MdLocationPin
 export const LogoutIcon = MdLogout
 export const NextIcon = MdArrowRight
