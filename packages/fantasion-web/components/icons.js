@@ -26,6 +26,7 @@ import {
   FaInstagram,
   FaTiktok,
   FaTwitter,
+  FaDiscord,
 } from 'react-icons/fa'
 
 /* These are icon bindings. Make sure that all icons used in the application
@@ -39,6 +40,7 @@ export const CheckIcon = MdCheck
 export const CloseIcon = MdCancel
 export const CopyIcon = MdContentCopy
 export const DateTimeIcon = FaClock
+export const DiscordIcon = FaDiscord
 export const DownIcon = MdArrowDownward
 export const DurationIcon = FaCalendarWeek
 export const EmailContactIcon = HiMailOpen

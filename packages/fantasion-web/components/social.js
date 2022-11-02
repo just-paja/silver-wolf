@@ -1,9 +1,9 @@
 import {
+  DiscordIcon,
   EmailContactIcon,
   FacebookIcon,
   InstagramIcon,
   TiktokIcon,
-  TwitterIcon,
 } from './icons'
 
 const icons = {
@@ -11,7 +11,7 @@ const icons = {
   facebook: FacebookIcon,
   instagram: InstagramIcon,
   tiktok: TiktokIcon,
-  twitter: TwitterIcon,
+  discord: DiscordIcon,
 }
 
 const linkToNewWindow = (e) => {
@@ -32,14 +32,14 @@ export const SocialNetworks = ({ subscribable, ...props }) => {
   return (
     <div {...props}>
       <SocialIcon service="facebook" link="https://fb.com/fantasioncz" />
-      <SocialIcon service="twitter" link="https://twitter.com/fantasion_cz" />
-      <SocialIcon
-        service="tiktok"
-        link="https://www.tiktok.com/@fantasion_tabory"
-      />
       <SocialIcon
         service="instagram"
         link="https://www.instagram.com/fantasion_cz/"
+      />
+      <SocialIcon service="discord" link="https://discord.gg/waYz7TAQCz" />
+      <SocialIcon
+        service="tiktok"
+        link="https://www.tiktok.com/@fantasion_tabory"
       />
       {subscribable ? (
         <SocialIcon service="email" link="mailto:info@fantasion.cz" />
