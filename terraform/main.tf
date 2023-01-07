@@ -90,7 +90,6 @@ module "frontend_static_files" {
   source = "./modules/next_static_files"
 }
 
-
 module "backend_cloudrun" {
   connection_name = module.db.db_instance.connection_name
   envs = [

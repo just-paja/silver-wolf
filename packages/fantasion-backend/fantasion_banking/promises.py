@@ -1,4 +1,5 @@
 import datetime
+import logging
 
 from dateutil.relativedelta import relativedelta
 from django.apps import apps
@@ -124,7 +125,12 @@ class Promise(StatementSpecification, TimeLimitedModel):
                 'overpayment': overpayment,
             },
         )
-        send_mail([self.get_owner_email()], subject, body)
+        try:
+            send_mail([self.get_owner_email()], subject, body)
+        except UnownedPromise:
+            logging.warning(
+                'Promise#%s does not have any owner. Cannot send "%s"' %
+                (self.id, subject))
 
     def notify_underpaid(self):
         subject = (_("Order {number}")).format(number=self.variable_symbol)
@@ -137,7 +143,12 @@ class Promise(StatementSpecification, TimeLimitedModel):
                 'debt': debt,
             },
         )
-        send_mail([self.get_owner_email()], subject, body)
+        try:
+            send_mail([self.get_owner_email()], subject, body)
+        except UnownedPromise:
+            logging.warning(
+                'Promise#%s does not have any owner. Cannot send "%s"' %
+                (self.id, subject))
 
     def notify_deposit_paid(self):
         subject = (_("Order {number}")).format(number=self.variable_symbol)
@@ -152,7 +163,12 @@ class Promise(StatementSpecification, TimeLimitedModel):
                 'deposit': deposit,
             },
         )
-        send_mail([self.get_owner_email()], subject, body)
+        try:
+            send_mail([self.get_owner_email()], subject, body)
+        except UnownedPromise:
+            logging.warning(
+                'Promise#%s does not have any owner. Cannot send "%s"' %
+                (self.id, subject))
 
     def notify_full_paid(self):
         subject = (_("Order {number}")).format(number=self.variable_symbol)
@@ -163,7 +179,12 @@ class Promise(StatementSpecification, TimeLimitedModel):
                 'amount': amount,
             },
         )
-        send_mail([self.get_owner_email()], subject, body)
+        try:
+            send_mail([self.get_owner_email()], subject, body)
+        except UnownedPromise:
+            logging.warning(
+                'Promise#%s does not have any owner. Cannot send "%s"' %
+                (self.id, subject))
 
     def create_debts(self):
         self.create_initial_debt()
