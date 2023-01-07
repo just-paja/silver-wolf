@@ -312,7 +312,7 @@ msgstr ""
 #: fantasion/templates/mail/order_confirmation.html:49
 msgid "email-fill-in-documents"
 msgstr ""
-"Nezapomeňte také prosím vyplnit a nahrát nezbytné dokumenty k vaší přihlášce."
+"Nezapomeňte také prosím vyplnit alergie a dtiety vašeho dítěte/dětí v přihlášce na stránkách."
 
 #: fantasion/templates/mail/overpaid.html:5
 msgid "email-overpaid-thanks"
