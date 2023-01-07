@@ -40,9 +40,9 @@ class IntValueFilter(SimpleListFilter):
             'The SimpleListFilter.lookups() method must be overridden to '
             'return a list of tuples (value, verbose value).')
 
-    def value(self):
+    def parse_value(self):
         try:
-            return super().value()
+            return int(super().value())
         except (TypeError, ValueError):
             return None
 
@@ -56,7 +56,7 @@ class TimeLimitedActiveFilter(IntValueFilter):
 
     def queryset(self, request, queryset):
         today = datetime.date.today()
-        filter_value = self.value()
+        filter_value = self.parse_value()
         if filter_value == ACTIVE_YES:
             return queryset.filter(Q(end__isnull=True)
                                    | Q(end__gt=today)).filter(
@@ -317,7 +317,7 @@ class KnownAccountAdmin(BaseAdmin):
 
 
 DIRECTION_INBOUND = 1
-DIRECTION_OUBOUND = 2
+DIRECTION_OUTBOUND = 2
 
 PAIR_YES = 1
 PAIR_NO = 2
@@ -330,14 +330,15 @@ class PaymentDirectionFilter(IntValueFilter):
     def lookups(self, request, model_admin):
         return (
             (DIRECTION_INBOUND, _('Inbound')),
-            (DIRECTION_OUBOUND, _('Outbound')),
+            (DIRECTION_OUTBOUND, _('Outbound')),
         )
 
     def queryset(self, request, queryset):
-        filter_value = self.value()
+        print(self.parse_value() == DIRECTION_OUTBOUND, flush=True)
+        filter_value = self.parse_value()
         if filter_value == DIRECTION_INBOUND:
             return queryset.filter(amount__gt=0)
-        if filter_value == DIRECTION_OUBOUND:
+        if filter_value == DIRECTION_OUTBOUND:
             return queryset.filter(amount__lt=0)
         return queryset
 
@@ -353,10 +354,10 @@ class PaymentPairingStatusFilter(IntValueFilter):
         )
 
     def queryset(self, request, queryset):
-        filter_value = self.value()
-        if filter_value == 1:
+        filter_value = self.parse_value()
+        if filter_value == PAIR_YES:
             return queryset.filter(promise__isnull=False)
-        if filter_value == 2:
+        if filter_value == PAIR_NO:
             return queryset.filter(promise__isnull=True)
         return queryset
 
