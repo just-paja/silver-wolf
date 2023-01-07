@@ -1,10 +1,15 @@
 locals {
+  npm = jsondecode(file("${var.path}/package.json"))
   default_envs = [
     {
       name = "GCP_PROJECT"
       value = var.project
     }
   ]
+}
+
+locals {
+  image_url = "${var.image_base_url}/${locals.npm.name}:${locals.npm.version}"
 }
 
 resource "google_project_service" "cf" {
@@ -19,7 +24,7 @@ resource "google_cloud_run_service" "service" {
   template {
     spec {
       containers {
-        image = var.image_url
+        image = locals.image_url
 
         dynamic "env" {
           for_each = concat(local.default_envs, var.envs)

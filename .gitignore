@@ -5,3 +5,5 @@ db.sqlite3
 *.tfstate*
 .terraform
 /env
+terraform-credentials.json
+.terraform-credentials.json

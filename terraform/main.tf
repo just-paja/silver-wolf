@@ -14,12 +14,14 @@ locals {
   root_dir = abspath("${var.ROOT_DIR == "" ? path.root : var.ROOT_DIR}/..")
 }
 
-locals {
-  db_name = "${local.project}-db-${terraform.workspace}"
-}
-
 data "external" "git_checkout" {
   program = ["${path.module}/get_sha.sh"]
+}
+
+locals {
+  db_name = "${local.project}-db-${terraform.workspace}"
+  revision = data.external.git_checkout.result.sha
+  image_base_url = "${locals.repo}/${locals.project}"
 }
 
 provider "google" {
@@ -50,7 +52,7 @@ module "db_migrations" {
   db_pass = var.DB_PASS
   db_user = var.DB_USER
   depends_on = [module.db]
-  revision = data.external.git_checkout.result.sha
+  revision = local.revision
   secret_key = var.SECRET_KEY
   source = "./modules/db_migrations"
   path = "${local.root_dir}/packages/fantasion-backend"
@@ -73,7 +75,7 @@ module "backend_static_files" {
   gcp_project = local.project
   gs_credentials = var.GS_CREDENTIALS
   path = "${local.root_dir}/packages/fantasion-backend"
-  revision = data.external.git_checkout.result.sha
+  revision = local.revision
   secret_key = var.SECRET_KEY
   source = "./modules/django_static_files"
 }
@@ -84,21 +86,10 @@ module "frontend_static_files" {
   gcp_project = local.project
   gs_credentials = var.GS_CREDENTIALS
   path = "${local.root_dir}/packages/fantasion-web"
-  revision = data.external.git_checkout.result.sha
+  revision = local.revision
   source = "./modules/next_static_files"
 }
 
-module "backend_docker" {
-  name = "fantasion-backend"
-  location = local.location
-  path = "${local.root_dir}/packages/fantasion-backend"
-  project = local.project
-  repo = local.repo
-  revision = data.external.git_checkout.result.sha
-  source = "./modules/docker"
-  user = local.gcp_user
-  depends_on = []
-}
 
 module "backend_cloudrun" {
   connection_name = module.db.db_instance.connection_name
@@ -173,28 +164,17 @@ module "backend_cloudrun" {
     },
   ]
   hostname = var.BACKEND_HOST
-  image_url = module.backend_docker.image_url
+  image_base_url = locals.image_base_url
   name = "fantasion-backend-${terraform.workspace}"
+  path = "${local.root_dir}/packages/fantasion-backend"
   project = local.project
   region = local.region
+  revision = local.revision
   source = "./modules/cloudrun"
   depends_on = [
     module.db,
-    module.backend_docker,
     module.backend_storage_public,
   ]
-}
-
-module "frontend_docker" {
-  name = "fantasion-frontend"
-  location = local.location
-  path = "${local.root_dir}/packages/fantasion-web"
-  project = local.project
-  repo = local.repo
-  revision = data.external.git_checkout.result.sha
-  source = "./modules/docker"
-  user = local.gcp_user
-  depends_on = []
 }
 
 module "frontend_cloudrun" {
@@ -221,14 +201,11 @@ module "frontend_cloudrun" {
     },
   ]
   hostname = var.FRONTEND_HOST
-  image_url = module.frontend_docker.image_url
   name = "fantasion-frontend-${terraform.workspace}"
+  path = "${local.root_dir}/packages/fantasion-web"
   project = local.project
   region = local.region
   source = "./modules/cloudrun"
-  depends_on = [
-    module.frontend_docker,
-  ]
 }
 
 resource "google_cloud_scheduler_job" "bank_sync" {

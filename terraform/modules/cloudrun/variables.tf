@@ -8,9 +8,8 @@ variable "connection_name" {
   default = ""
 }
 
-variable "image_url" {
-  type = string
-}
+variable "image_base_url" { type = string }
+variable "path" { type = string }
 
 variable "protocol" {
   type = string
