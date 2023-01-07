@@ -21,7 +21,7 @@ data "external" "git_checkout" {
 locals {
   db_name = "${local.project}-db-${terraform.workspace}"
   revision = data.external.git_checkout.result.sha
-  image_base_url = "${locals.repo}/${locals.project}"
+  image_base_url = "${local.repo}/${local.project}"
 }
 
 provider "google" {
@@ -164,7 +164,7 @@ module "backend_cloudrun" {
     },
   ]
   hostname = var.BACKEND_HOST
-  image_base_url = locals.image_base_url
+  image_base_url = local.image_base_url
   name = "fantasion-backend-${terraform.workspace}"
   path = "${local.root_dir}/packages/fantasion-backend"
   project = local.project
@@ -201,19 +201,21 @@ module "frontend_cloudrun" {
     },
   ]
   hostname = var.FRONTEND_HOST
+  image_base_url = local.image_base_url
   name = "fantasion-frontend-${terraform.workspace}"
   path = "${local.root_dir}/packages/fantasion-web"
   project = local.project
   region = local.region
+  revision = local.revision
   source = "./modules/cloudrun"
 }
 
 resource "google_cloud_scheduler_job" "bank_sync" {
-  name = "bank-sync-${terraform.workspace}"
+  attempt_deadline = "60s"
   description = "Sync payments with the banks"
+  name = "bank-sync-${terraform.workspace}"
   schedule = terraform.workspace == "production" ? "*/5 * * * *" : "*/30 * * * *"
   time_zone = "Europe/Prague"
-  attempt_deadline = "60s"
 
   http_target {
     http_method = "PUT"

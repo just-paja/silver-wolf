@@ -9,7 +9,7 @@ locals {
 }
 
 locals {
-  image_url = "${var.image_base_url}/${locals.npm.name}:${locals.npm.version}"
+  image_url = "${var.image_base_url}/${local.npm.name}:${local.npm.version}"
 }
 
 resource "google_project_service" "cf" {
@@ -24,7 +24,7 @@ resource "google_cloud_run_service" "service" {
   template {
     spec {
       containers {
-        image = locals.image_url
+        image = local.image_url
 
         dynamic "env" {
           for_each = concat(local.default_envs, var.envs)

@@ -13,7 +13,7 @@ if [ $1 ]; then
 fi
 
 registry=eu.gcr.io
-env=$TF_VAR_PROJECT_ENVIRONMENT
+env=$PROJECT_ENVIRONMENT
 
 echo "ENVIRONMENT $env"
 
@@ -31,7 +31,7 @@ for dir in $dirs; do
     version=$(cat package.json | jq ".version" | xargs echo)
   fi
 
-  project_name="${name}-${env}"
+  project_name="${name}"
   image_name="${registry}/${GCP_PROJECT}/${project_name}:${version}"
 
   echo $image_name
