@@ -1,10 +1,26 @@
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import path, reverse
 from fantasion_generics.admin import BaseAdmin, TranslatedAdmin
+from fantasion_generics.filters import YearFilter
 from fantasion_signups.models import Signup
 from nested_admin import NestedStackedInline
 
 from . import models
+
+
+class OrderYearFilter(YearFilter):
+    filter_fields = ['submitted_at']
+    current = True
+
+
+class ProductPriceYearFilter(YearFilter):
+    filter_fields = ('available_since', 'available_until')
+    current = True
+
+
+class PromotionCodeYearFilter(YearFilter):
+    filter_fields = ('valid_from', 'valid_until')
+    current = True
 
 
 class OrderSignupAdmin(NestedStackedInline):
@@ -85,7 +101,10 @@ class OrderAdmin(BaseAdmin):
         'owner',
         'created',
     )
-    list_filter = ('status', )
+    list_filter = (
+        OrderYearFilter,
+        'status',
+    )
     search_fields = (
         'pk',
         'promise__variable_symbol',
@@ -135,10 +154,12 @@ class OrderAdmin(BaseAdmin):
             models.Order,
             pk=order_id,
         )
-        return redirect(reverse('orders-invoice', kwargs={
-            "format": "html",
-            "pk": order.id,
-        }))
+        return redirect(
+            reverse('orders-invoice',
+                    kwargs={
+                        "format": "html",
+                        "pk": order.id,
+                    }))
 
 
 class PriceLevelAdmin(TranslatedAdmin):
@@ -158,13 +179,17 @@ class PromotionCodeAdmin(BaseAdmin):
         'valid_from',
         'valid_until',
     )
-    list_filter = ('enabled', )
+    list_filter = (
+        PromotionCodeYearFilter,
+        'enabled',
+    )
     search_fields = ('code', )
 
 
 class ProductPriceAdmin(BaseAdmin):
     model = models.ProductPrice
     extra = 0
+    list_filter = (ProductPriceYearFilter, 'price_level')
     search_fields = ('product__title', 'price_level__title')
     list_display = (
         'product',

@@ -11,6 +11,7 @@ from django.utils.translation import gettext_lazy as _
 from nested_admin import NestedStackedInline
 
 from fantasion_generics.admin import BaseAdmin, TranslatedAdmin
+from fantasion_generics.filters import YearFilter
 
 from . import models
 
@@ -28,6 +29,16 @@ ACTIVE_CHOICES = (
 
 def empty_value(value):
     return mark_safe('<span class="empty-value">%s</span>' % value)
+
+
+class StatementYearFilter(YearFilter):
+    filter_fields = ['received_at']
+    current = True
+
+
+class PromiseYearFilter(YearFilter):
+    filter_fields = ['start', 'end']
+    current = True
 
 
 class IntValueFilter(SimpleListFilter):
@@ -393,6 +404,7 @@ class PromiseAdmin(BaseAdmin, TimeLimitedAdmin):
     change_form_template = 'admin/promise_change_form.html'
     change_list_template = 'admin/promise_change_list.html'
     list_filter = (
+        PromiseYearFilter,
         TimeLimitedActiveFilter,
         'status',
         'repeat',
@@ -506,6 +518,7 @@ class StatementAdmin(BaseAdmin):
         'constant_symbol',
     )
     list_filter = (
+        StatementYearFilter,
         PaymentDirectionFilter,
         PaymentPairingStatusFilter,
     )
