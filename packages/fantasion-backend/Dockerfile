@@ -1,7 +1,7 @@
 FROM alpine:3.15
 
 # Copy the sdist archive
-COPY dist/fantasion-backend-*.tar.gz /tmp/app.tar.gz
+COPY dist/fantasion_backend-*.tar.gz /tmp/app.tar.gz
 
 # Install system dependencies
 # Install libs to build postresql bindings

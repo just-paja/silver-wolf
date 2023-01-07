@@ -117,24 +117,8 @@ jobs:
       name: ${{ needs.setenv.outputs.env_name }}
     env:
       GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
-      GS_CREDENTIALS: ${{ secrets.GS_CREDENTIALS }}
-      TF_VAR_ADMIN_SSO_CLIENT_ID: ${{ secrets.ADMIN_SSO_CLIENT_ID }}
-      TF_VAR_ADMIN_SSO_SECRET: ${{ secrets.ADMIN_SSO_SECRET }}
-      TF_VAR_ADMIN_SSO_SUPERUSER: ${{ secrets.ADMIN_SSO_SUPERUSER }}
-      TF_VAR_BACKEND_HOST: ${{ secrets.BACKEND_HOST }}
-      TF_VAR_BUCKET_PUBLIC: ${{ secrets.BUCKET_PUBLIC }}
-      TF_VAR_CRON_AUTH: ${{ secrets.CRON_AUTH }}
-      TF_VAR_DB_PASS: ${{ secrets.DB_PASS }}
-      TF_VAR_DB_USER: ${{ secrets.DB_USER }}
-      TF_VAR_EMAIL_ROBOT_HOST: ${{ secrets.EMAIL_ROBOT_HOST }}
-      TF_VAR_EMAIL_ROBOT_HOST_PASS: ${{ secrets.EMAIL_ROBOT_HOST_PASS }}
-      TF_VAR_EMAIL_ROBOT_HOST_USER: ${{ secrets.EMAIL_ROBOT_HOST_USER }}
-      TF_VAR_FRONTEND_HOST: ${{ secrets.FRONTEND_HOST }}
-      TF_VAR_GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
-      TF_VAR_GCP_USER: ${{ secrets.GCP_USER }}
-      TF_VAR_PROJECT_ENVIRONMENT: ${{ needs.setenv.outputs.env_name }}
-      TF_VAR_SECRET_KEY: ${{ secrets.SECRET_KEY }}
-      TF_VAR_WEBSITE_URL: ${{ secrets.WEBSITE_URL }}
+      GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+      PROJECT_ENVIRONMENT: ${{ needs.setenv.outputs.env_name }}
     steps:
       - uses: actions/checkout@v3
       - uses: docker/setup-qemu-action@v2
@@ -156,24 +140,8 @@ jobs:
       name: ${{ needs.setenv.outputs.env_name }}
     env:
       GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
-      GS_CREDENTIALS: ${{ secrets.GS_CREDENTIALS }}
-      TF_VAR_ADMIN_SSO_CLIENT_ID: ${{ secrets.ADMIN_SSO_CLIENT_ID }}
-      TF_VAR_ADMIN_SSO_SECRET: ${{ secrets.ADMIN_SSO_SECRET }}
-      TF_VAR_ADMIN_SSO_SUPERUSER: ${{ secrets.ADMIN_SSO_SUPERUSER }}
-      TF_VAR_BACKEND_HOST: ${{ secrets.BACKEND_HOST }}
-      TF_VAR_BUCKET_PUBLIC: ${{ secrets.BUCKET_PUBLIC }}
-      TF_VAR_CRON_AUTH: ${{ secrets.CRON_AUTH }}
-      TF_VAR_DB_PASS: ${{ secrets.DB_PASS }}
-      TF_VAR_DB_USER: ${{ secrets.DB_USER }}
-      TF_VAR_EMAIL_ROBOT_HOST: ${{ secrets.EMAIL_ROBOT_HOST }}
-      TF_VAR_EMAIL_ROBOT_HOST_PASS: ${{ secrets.EMAIL_ROBOT_HOST_PASS }}
-      TF_VAR_EMAIL_ROBOT_HOST_USER: ${{ secrets.EMAIL_ROBOT_HOST_USER }}
-      TF_VAR_FRONTEND_HOST: ${{ secrets.FRONTEND_HOST }}
-      TF_VAR_GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
-      TF_VAR_GCP_USER: ${{ secrets.GCP_USER }}
-      TF_VAR_PROJECT_ENVIRONMENT: ${{ needs.setenv.outputs.env_name }}
-      TF_VAR_SECRET_KEY: ${{ secrets.SECRET_KEY }}
-      TF_VAR_WEBSITE_URL: ${{ secrets.WEBSITE_URL }}
+      GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+      PROJECT_ENVIRONMENT: ${{ needs.setenv.outputs.env_name }}
     steps:
       - uses: actions/checkout@v3
       - uses: docker/setup-qemu-action@v2

@@ -32,7 +32,7 @@ for dir in $dirs; do
   fi
 
   project_name="${name}-${env}"
-  image_name="${registry}/${TF_VAR_GCP_PROJECT}/${project_name}:${version}"
+  image_name="${registry}/${GCP_PROJECT}/${project_name}:${version}"
 
   echo $image_name
 
