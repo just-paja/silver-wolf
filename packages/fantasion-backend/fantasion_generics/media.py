@@ -1,4 +1,4 @@
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.db.models import (
     CASCADE,
     ForeignKey,
@@ -8,6 +8,7 @@ from django.db.models import (
 
 
 class MediaModelMixin(Model):
+
     class Meta:
         abstract = True
 
@@ -24,6 +25,7 @@ class MediaModelMixin(Model):
 
 
 class MediaParentField(ForeignKey):
+
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('on_delete', CASCADE)
         kwargs.setdefault('related_name', 'media')

@@ -7,10 +7,11 @@ from django.utils.safestring import mark_safe
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import path, reverse
 from django.utils.html import format_html
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from nested_admin import NestedStackedInline
 
 from fantasion_generics.admin import BaseAdmin, TranslatedAdmin
+from fantasion_generics.filters import YearFilter
 
 from . import models
 
@@ -30,6 +31,16 @@ def empty_value(value):
     return mark_safe('<span class="empty-value">%s</span>' % value)
 
 
+class StatementYearFilter(YearFilter):
+    filter_fields = ['received_at']
+    current = True
+
+
+class PromiseYearFilter(YearFilter):
+    filter_fields = ['start', 'end']
+    current = True
+
+
 class IntValueFilter(SimpleListFilter):
 
     class Meta:
@@ -40,9 +51,9 @@ class IntValueFilter(SimpleListFilter):
             'The SimpleListFilter.lookups() method must be overridden to '
             'return a list of tuples (value, verbose value).')
 
-    def value(self):
+    def parse_value(self):
         try:
-            return super().value()
+            return int(super().value())
         except (TypeError, ValueError):
             return None
 
@@ -56,7 +67,7 @@ class TimeLimitedActiveFilter(IntValueFilter):
 
     def queryset(self, request, queryset):
         today = datetime.date.today()
-        filter_value = self.value()
+        filter_value = self.parse_value()
         if filter_value == ACTIVE_YES:
             return queryset.filter(Q(end__isnull=True)
                                    | Q(end__gt=today)).filter(
@@ -317,7 +328,7 @@ class KnownAccountAdmin(BaseAdmin):
 
 
 DIRECTION_INBOUND = 1
-DIRECTION_OUBOUND = 2
+DIRECTION_OUTBOUND = 2
 
 PAIR_YES = 1
 PAIR_NO = 2
@@ -330,14 +341,15 @@ class PaymentDirectionFilter(IntValueFilter):
     def lookups(self, request, model_admin):
         return (
             (DIRECTION_INBOUND, _('Inbound')),
-            (DIRECTION_OUBOUND, _('Outbound')),
+            (DIRECTION_OUTBOUND, _('Outbound')),
         )
 
     def queryset(self, request, queryset):
-        filter_value = self.value()
+        print(self.parse_value() == DIRECTION_OUTBOUND, flush=True)
+        filter_value = self.parse_value()
         if filter_value == DIRECTION_INBOUND:
             return queryset.filter(amount__gt=0)
-        if filter_value == DIRECTION_OUBOUND:
+        if filter_value == DIRECTION_OUTBOUND:
             return queryset.filter(amount__lt=0)
         return queryset
 
@@ -353,10 +365,10 @@ class PaymentPairingStatusFilter(IntValueFilter):
         )
 
     def queryset(self, request, queryset):
-        filter_value = self.value()
-        if filter_value == 1:
+        filter_value = self.parse_value()
+        if filter_value == PAIR_YES:
             return queryset.filter(promise__isnull=False)
-        if filter_value == 2:
+        if filter_value == PAIR_NO:
             return queryset.filter(promise__isnull=True)
         return queryset
 
@@ -392,6 +404,7 @@ class PromiseAdmin(BaseAdmin, TimeLimitedAdmin):
     change_form_template = 'admin/promise_change_form.html'
     change_list_template = 'admin/promise_change_list.html'
     list_filter = (
+        PromiseYearFilter,
         TimeLimitedActiveFilter,
         'status',
         'repeat',
@@ -427,7 +440,7 @@ class PromiseAdmin(BaseAdmin, TimeLimitedAdmin):
                     'created',
                     'modified',
                 ),
-            }),)
+            }), )
         return self.fieldsets
 
     def get_urls(self):
@@ -505,6 +518,7 @@ class StatementAdmin(BaseAdmin):
         'constant_symbol',
     )
     list_filter = (
+        StatementYearFilter,
         PaymentDirectionFilter,
         PaymentPairingStatusFilter,
     )

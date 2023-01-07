@@ -4,7 +4,7 @@ from dateutil.relativedelta import relativedelta
 from django.apps import apps
 from django.conf import settings
 from django.db.models import CharField, PositiveIntegerField, Sum
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from djmoney.money import Money
 from django.template.loader import render_to_string
 from fantasion_generics.emails import send_mail

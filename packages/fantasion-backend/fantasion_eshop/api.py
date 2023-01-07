@@ -1,8 +1,10 @@
 import json
 
+from django.db.models import Q
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
-from django.utils.translation import ugettext_lazy as _
+from django.utils.timezone import now
+from django.utils.translation import gettext_lazy as _
 
 from rest_framework import status
 from rest_framework import renderers
@@ -83,8 +85,14 @@ class OrderCollection(RWViewSet):
         order = self.get_object()
         try:
             body = json.loads(self.request.body)
-            code = models.PromotionCode.objects.filter(code=body.get(
-                'code', None), ).get()
+            code = models.PromotionCode.objects.filter(
+                Q(valid_from__lt=now())
+                | Q(valid_from__isnull=True),
+                Q(valid_until__gt=now())
+                | Q(valid_from__isnull=True),
+                enabled=True,
+                code=body.get('code', None),
+            ).get()
             existing = models.OrderPromotionCode.objects.filter(
                 order=order,
                 promotion_code=code,

@@ -1,9 +1,24 @@
 from datetime import date
 
 from fantasion_generics.admin import BaseAdmin
+from fantasion_generics.filters import YearFilter
 from nested_admin import NestedStackedInline
 
 from . import models
+
+
+class ParticipantYearFilter(YearFilter):
+    accept_null = False
+    current = True
+    filter_fields = (
+        'signups__troop__batch__starts_at',
+        'signups__troop__batch__ends_at',
+    )
+
+
+class SignupYearFilter(YearFilter):
+    current = True
+    filter_fields = ('troop__batch__starts_at', 'troop__batch__ends_at')
 
 
 class ParticipantAllergy(NestedStackedInline):
@@ -28,6 +43,7 @@ class ParticipantAdmin(BaseAdmin):
     model = models.Participant
     inlines = (ParticipantAllergy, ParticipantDiet, ParticipantHobby)
     search_fields = ('first_name', 'last_name', 'birthdate')
+    list_filter = (ParticipantYearFilter, )
     list_display = (
         'pk',
         'first_name',
@@ -79,6 +95,7 @@ class SignupAdmin(BaseAdmin):
         'submitted_at',
     )
     list_filter = (
+        SignupYearFilter,
         'troop__batch__expedition',
         'troop__batch',
         'troop__age_group',

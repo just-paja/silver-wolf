@@ -18,9 +18,9 @@ jobs:
         id: branch_check
         run: |
           if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
-            echo "::set-output name=env_name::production"
+            echo "env_name=production" >> $GITHUB_OUTPUT
           elif [[ "${{ github.ref }}" == "refs/heads/master" ]]; then
-            echo "::set-output name=env_name::staging"
+            echo "env_name=staging" >> $GITHUB_OUTPUT
           fi
 
   build_frontend:
@@ -31,11 +31,11 @@ jobs:
     environment:
       name: ${{ needs.setenv.outputs.env_name }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: '16'
-      - uses: actions/cache@v1
+      - uses: actions/cache@v3
         with:
           path: |
             ~/.npm
@@ -54,7 +54,7 @@ jobs:
           NODE_ENV: production
           STATIC_ROOT: https://storage.googleapis.com/${{secrets.BUCKET_PUBLIC}}
       - name: Store artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: frontend-dist
           path: |
@@ -71,14 +71,14 @@ jobs:
     env:
       dir_backend: ./packages/fantasion-backend
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
-          python-version: 3.10.1
-      - uses: abatilo/actions-poetry@v2.0.0
+          python-version: "3.10"
+      - uses: abatilo/actions-poetry@v2
         with:
-          poetry-version: 1.1.12
-      - uses: actions/cache@v1
+          poetry-version: 1.3.1
+      - uses: actions/cache@v3
         with:
           path: |
             ~/.cache/pypoetry
@@ -101,11 +101,89 @@ jobs:
           poetry build -f sdist
           poetry export -f requirements.txt --output requirements.txt
       - name: Store artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: backend-dist
           path: |
             packages/fantasion-backend/dist/
+
+  build_backend_docker:
+    name: Build backend docker
+    runs-on: ubuntu-latest
+    needs:
+      - setenv
+      - build_backend
+    environment:
+      name: ${{ needs.setenv.outputs.env_name }}
+    env:
+      GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+      GS_CREDENTIALS: ${{ secrets.GS_CREDENTIALS }}
+      TF_VAR_ADMIN_SSO_CLIENT_ID: ${{ secrets.ADMIN_SSO_CLIENT_ID }}
+      TF_VAR_ADMIN_SSO_SECRET: ${{ secrets.ADMIN_SSO_SECRET }}
+      TF_VAR_ADMIN_SSO_SUPERUSER: ${{ secrets.ADMIN_SSO_SUPERUSER }}
+      TF_VAR_BACKEND_HOST: ${{ secrets.BACKEND_HOST }}
+      TF_VAR_BUCKET_PUBLIC: ${{ secrets.BUCKET_PUBLIC }}
+      TF_VAR_CRON_AUTH: ${{ secrets.CRON_AUTH }}
+      TF_VAR_DB_PASS: ${{ secrets.DB_PASS }}
+      TF_VAR_DB_USER: ${{ secrets.DB_USER }}
+      TF_VAR_EMAIL_ROBOT_HOST: ${{ secrets.EMAIL_ROBOT_HOST }}
+      TF_VAR_EMAIL_ROBOT_HOST_PASS: ${{ secrets.EMAIL_ROBOT_HOST_PASS }}
+      TF_VAR_EMAIL_ROBOT_HOST_USER: ${{ secrets.EMAIL_ROBOT_HOST_USER }}
+      TF_VAR_FRONTEND_HOST: ${{ secrets.FRONTEND_HOST }}
+      TF_VAR_GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+      TF_VAR_GCP_USER: ${{ secrets.GCP_USER }}
+      TF_VAR_PROJECT_ENVIRONMENT: ${{ needs.setenv.outputs.env_name }}
+      TF_VAR_SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      TF_VAR_WEBSITE_URL: ${{ secrets.WEBSITE_URL }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/setup-qemu-action@v2
+      - uses: docker/setup-buildx-action@v2
+      - uses: actions/download-artifact@v3
+        with:
+          name: backend-dist
+          path: packages/fantasion-backend/dist/
+      - name: Build docker images
+        run: ./scripts/build-dockers.sh ./packages/fantasion-backend
+
+  build_frontend_docker:
+    name: Build frontend docker
+    runs-on: ubuntu-latest
+    needs:
+      - setenv
+      - build_frontend
+    environment:
+      name: ${{ needs.setenv.outputs.env_name }}
+    env:
+      GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+      GS_CREDENTIALS: ${{ secrets.GS_CREDENTIALS }}
+      TF_VAR_ADMIN_SSO_CLIENT_ID: ${{ secrets.ADMIN_SSO_CLIENT_ID }}
+      TF_VAR_ADMIN_SSO_SECRET: ${{ secrets.ADMIN_SSO_SECRET }}
+      TF_VAR_ADMIN_SSO_SUPERUSER: ${{ secrets.ADMIN_SSO_SUPERUSER }}
+      TF_VAR_BACKEND_HOST: ${{ secrets.BACKEND_HOST }}
+      TF_VAR_BUCKET_PUBLIC: ${{ secrets.BUCKET_PUBLIC }}
+      TF_VAR_CRON_AUTH: ${{ secrets.CRON_AUTH }}
+      TF_VAR_DB_PASS: ${{ secrets.DB_PASS }}
+      TF_VAR_DB_USER: ${{ secrets.DB_USER }}
+      TF_VAR_EMAIL_ROBOT_HOST: ${{ secrets.EMAIL_ROBOT_HOST }}
+      TF_VAR_EMAIL_ROBOT_HOST_PASS: ${{ secrets.EMAIL_ROBOT_HOST_PASS }}
+      TF_VAR_EMAIL_ROBOT_HOST_USER: ${{ secrets.EMAIL_ROBOT_HOST_USER }}
+      TF_VAR_FRONTEND_HOST: ${{ secrets.FRONTEND_HOST }}
+      TF_VAR_GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+      TF_VAR_GCP_USER: ${{ secrets.GCP_USER }}
+      TF_VAR_PROJECT_ENVIRONMENT: ${{ needs.setenv.outputs.env_name }}
+      TF_VAR_SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      TF_VAR_WEBSITE_URL: ${{ secrets.WEBSITE_URL }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/setup-qemu-action@v2
+      - uses: docker/setup-buildx-action@v2
+      - uses: actions/download-artifact@v3
+        with:
+          name: frontend-dist
+          path: packages/fantasion-web/
+      - name: Build docker images
+        run: ./scripts/build-dockers.sh ./packages/fantasion-web
 
   terraform:
     name: Deploy terraform resources
@@ -113,36 +191,36 @@ jobs:
     if: needs.setenv.outputs.env_name
     needs:
       - setenv
-      - build_backend
+      - build_backend_docker
       - build_frontend
     environment:
       name: ${{ needs.setenv.outputs.env_name }}
     steps:
-      - uses: docker/setup-qemu-action@v1
-      - uses: docker/setup-buildx-action@v1
-      - uses: hashicorp/setup-terraform@v1
+      - uses: docker/setup-qemu-action@v2
+      - uses: docker/setup-buildx-action@v2
+      - uses: hashicorp/setup-terraform@v2
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
           terraform_version: 1.1.2
           terraform_wrapper: false
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
           node-version: '16'
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
-          python-version: 3.10.1
-      - uses: abatilo/actions-poetry@v2.0.0
+          python-version: "3.10"
+      - uses: abatilo/actions-poetry@v2
         with:
-          poetry-version: 1.1.12
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v1
+          poetry-version: 1.3.1
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
         with:
           path: |
             ~/.npm
             ~/.cache/pypoetry
             .next/cache
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
-      - uses: actions/cache@v1
+      - uses: actions/cache@v3
         with:
           path: |
             ~/.npm
@@ -152,11 +230,11 @@ jobs:
         run: |
           npm ci
           npm run poetry-install
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: backend-dist
           path: packages/fantasion-backend/dist/
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: frontend-dist
           path: packages/fantasion-web/

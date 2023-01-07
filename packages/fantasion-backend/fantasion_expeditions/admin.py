@@ -4,9 +4,10 @@ import csv
 from datetime import date
 from django.http import HttpResponse
 from django.urls import path
-from django.utils.translation import ugettext_lazy as _
-from fantasion_generics.admin import BaseAdmin, MediaAdmin, TranslatedAdmin
+from django.utils.translation import gettext_lazy as _
 from nested_admin import NestedStackedInline
+from fantasion_generics.admin import BaseAdmin, MediaAdmin, TranslatedAdmin
+from fantasion_generics.filters import YearFilter
 
 from fantasion_eshop.models import ProductPrice
 from fantasion_signups.models import Signup
@@ -16,6 +17,14 @@ from . import models
 class AgeGroup(TranslatedAdmin):
     model = models.AgeGroup
     list_display = ('title', 'age_min', 'age_max', 'modified')
+
+
+class TimeLimitedYearFilter(YearFilter):
+    filter_fields = ('starts_at', 'ends_at')
+
+
+class TransportYearFilter(YearFilter):
+    filter_fields = ('departs_at', 'arrives_at')
 
 
 class StaffRoleMediaAdmin(MediaAdmin):
@@ -118,6 +127,7 @@ class TroopAdmin(BaseAdmin):
         'ends_at',
     )
     list_filter = (
+        TimeLimitedYearFilter,
         'batch__expedition',
         'age_group',
         'batch',
@@ -168,6 +178,7 @@ class ExpeditionBatchAdmin(BaseAdmin):
         'modified',
     )
     list_filter = (
+        TimeLimitedYearFilter,
         'expedition',
         'leisure_centre',
         'public',
@@ -296,7 +307,7 @@ class TransportAdmin(TranslatedAdmin):
         'arrives_at',
         'public',
     )
-    list_filter = ('vehicle', 'status')
+    list_filter = (TransportYearFilter, 'vehicle', 'status')
     search_fields = ('departs_from__name', 'arrives_to__name')
     autocomplete_fields = ('arrives_to', 'departs_from', 'vehicle')
     fields = (

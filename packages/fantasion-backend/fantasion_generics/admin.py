@@ -24,6 +24,7 @@ def get_module_admin_models(module):
 
 
 class BaseAdmin(NestedModelAdmin):
+
     class Media:
         css = {'all': ('css/fantasion-admin.css', )}
 
@@ -80,10 +81,8 @@ class MediaAdmin(NestedStackedInline, TranslationStackedInline):
 
     formfield_overrides = {
         models.TextField: {
-            'widget': Textarea(
-                attrs={
-                    'rows': 1,
-                }
-            )
+            'widget': Textarea(attrs={
+                'rows': 1,
+            })
         },
     }

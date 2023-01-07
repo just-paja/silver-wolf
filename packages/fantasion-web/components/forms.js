@@ -237,6 +237,9 @@ export const Submit = ({ children, ...props }) => (
 )
 
 const desecribeProcessingError = (t, err) => {
+  if (err?.nonFieldErrors) {
+    return err.nonFieldErrors.join(',')
+  }
   if (err?.body?.nonFieldErrors) {
     return err.body.nonFieldErrors.join(',')
   }
@@ -275,7 +278,7 @@ export const FormControls = ({
   const { formState } = useFormContext()
   return (
     <>
-      <FormError vague />
+      <FormError />
       <div className="mt-3">
         <Submit
           disabled={disabled}

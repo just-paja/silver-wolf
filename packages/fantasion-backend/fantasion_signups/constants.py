@@ -1,4 +1,4 @@
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 SIGNUP_STATUS_NEW = 1
 SIGNUP_STATUS_CONFIRMED = 2

@@ -1,8 +1,9 @@
 from django.db.models import CharField, TextField
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 class DescriptionField(TextField):
+
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('verbose_name', _('Short Description'))
         kwargs.setdefault(
@@ -15,6 +16,7 @@ class DescriptionField(TextField):
 
 
 class FacultativeDescriptionField(DescriptionField):
+
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('null', True)
         kwargs.setdefault('blank', True)
@@ -22,6 +24,7 @@ class FacultativeDescriptionField(DescriptionField):
 
 
 class TitleField(CharField):
+
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('max_length', 255)
         kwargs.setdefault('help_text', _('Object name'))
@@ -30,6 +33,7 @@ class TitleField(CharField):
 
 
 class FacultativeTitleField(TitleField):
+
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('null', True)
         kwargs.setdefault('blank', True)
