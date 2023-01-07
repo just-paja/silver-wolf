@@ -86,6 +86,7 @@ class Account(PublicModel):
                 driver.sync(self, scrape)
                 scrape.status = SCRAPE_STATUS_SUCCESS
                 scrape.save()
+                self.ballance = self.calculate_ballance()
             except Exception as exc:
                 scrape.status = SCRAPE_STATUS_FAILURE
                 scrape.save()
