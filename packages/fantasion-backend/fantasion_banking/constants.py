@@ -1,4 +1,4 @@
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 ACCOUNT_DRIVER_OFFLINE = 1
 ACCOUNT_DRIVER_FIO = 2

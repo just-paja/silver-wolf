@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import admin as auth_admin
 from django.contrib.auth import password_validation
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from nested_admin import NestedStackedInline
 
 from fantasion_generics.admin import BaseAdmin
@@ -18,8 +18,7 @@ fieldset_security = (
 fieldset_personal = (
     _('Personal information'),
     {
-        'fields':
-        (
+        'fields': (
             'first_name',
             'last_name',
             'email',

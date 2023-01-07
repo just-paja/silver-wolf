@@ -4,7 +4,7 @@ import csv
 from datetime import date
 from django.http import HttpResponse
 from django.urls import path
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from fantasion_generics.admin import BaseAdmin, MediaAdmin, TranslatedAdmin
 from nested_admin import NestedStackedInline
 

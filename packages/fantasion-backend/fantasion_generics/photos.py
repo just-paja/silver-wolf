@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db.models import Model, signals
 from django.dispatch import receiver
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from versatileimagefield.fields import VersatileImageField
 from versatileimagefield.image_warmer import VersatileImageFieldWarmer
@@ -11,6 +11,7 @@ from .storages import private_storage
 
 
 class LocalPhotoField(VersatileImageField):
+
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('blank', True)
         kwargs.setdefault('max_length', 255)
@@ -25,6 +26,7 @@ class WarmPhotoModel():
 
 
 class LocalPhotoModel(Model, WarmPhotoModel):
+
     class Meta:
         abstract = True
 
@@ -35,6 +37,7 @@ class LocalPhotoModel(Model, WarmPhotoModel):
 
 
 class PrivatePhotoModel(Model, WarmPhotoModel):
+
     class Meta:
         abstract = True
 

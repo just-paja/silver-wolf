@@ -1,6 +1,6 @@
 from django_extensions.db.models import TimeStampedModel
 from django.db.models import BooleanField, IntegerField, TextField
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.forms import widgets
 from django import forms
 from django.contrib.admin import widgets as admin_widgets

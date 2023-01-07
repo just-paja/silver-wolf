@@ -7,7 +7,7 @@ from django.utils.safestring import mark_safe
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import path, reverse
 from django.utils.html import format_html
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from nested_admin import NestedStackedInline
 
 from fantasion_generics.admin import BaseAdmin, TranslatedAdmin
@@ -427,7 +427,7 @@ class PromiseAdmin(BaseAdmin, TimeLimitedAdmin):
                     'created',
                     'modified',
                 ),
-            }),)
+            }), )
         return self.fieldsets
 
     def get_urls(self):

@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import admin as auth_admin
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from admin_sso.admin import AssignmentAdmin
 from admin_sso.models import Assignment

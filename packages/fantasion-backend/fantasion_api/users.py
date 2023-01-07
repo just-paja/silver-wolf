@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.http import Http404
 from django.urls import path
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -65,9 +65,7 @@ class LoginSerializer(Serializer):
         if user:
             self.user = user
             return values
-        raise ValidationError(
-            _('Invalid combination of e-mail and password')
-        )
+        raise ValidationError(_('Invalid combination of e-mail and password'))
 
 
 class FamilySerializer(ModelSerializer):
@@ -109,9 +107,8 @@ class RegistrationSerializer(ModelSerializer):
 
     def get_circles(self, obj):
         Family = apps.get_model('fantasion_people', 'Family')
-        circles = Family.objects.filter(
-            Q(owner=obj) | Q(members__user=obj)
-        ).all()
+        circles = Family.objects.filter(Q(owner=obj)
+                                        | Q(members__user=obj)).all()
         serializer = FamilySerializer(circles, many=True)
         return serializer.data
 
@@ -247,7 +244,7 @@ class UserAddressSerializer(ModelSerializer):
     class Meta:
         model = models.UserAddress
         fields = (*address_fields, 'title', 'country_code')
-        read_only_fields = ('country',)
+        read_only_fields = ('country', )
 
     def get_or_create_country(self, country_code):
         try:

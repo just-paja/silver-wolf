@@ -2,7 +2,7 @@ from django.apps import apps
 from django.db.models import Model, BigIntegerField
 from django.dispatch import Signal
 from django_extensions.db.models import TimeStampedModel
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.db.models import (
     CASCADE,
     DateTimeField,
@@ -16,7 +16,7 @@ from fantasion_generics.money import MoneyField
 
 from .fields import AccountNumberField, BankNumberField, IBanField, BicField
 
-statement_registered = Signal(providing_args=['instance'])
+statement_registered = Signal()
 
 
 class StatementSpecification(Model):

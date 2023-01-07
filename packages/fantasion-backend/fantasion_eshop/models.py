@@ -9,7 +9,7 @@ from django.dispatch import receiver
 from django_extensions.db.models import TimeStampedModel
 from django.template.loader import render_to_string
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.core.validators import (
     MaxValueValidator,
     MinLengthValidator,

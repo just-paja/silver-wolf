@@ -1,5 +1,5 @@
 from django_extensions.db.models import TimeStampedModel
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.db.models import (
     DecimalField,
     ForeignKey,
@@ -10,6 +10,7 @@ from django.db.models import (
 
 
 class Country(Model):
+
     class Meta:
         verbose_name = _('Country')
         verbose_name_plural = _('Countries')
@@ -30,6 +31,7 @@ class Country(Model):
 
 
 class Address(Model):
+
     class Meta:
         abstract = True
 
@@ -60,6 +62,7 @@ class Address(Model):
 
 
 class Location(TimeStampedModel, Address):
+
     class Meta:
         verbose_name = _('Location')
         verbose_name_plural = _('Locations')

@@ -1,7 +1,6 @@
 from django_extensions.db.models import TimeStampedModel
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.db.models import CharField, TextField
-
 
 from fantasion_generics.upload_path import kebab
 from fantasion_generics.media import MediaParentField
@@ -17,6 +16,7 @@ from fantasion_generics.models import (
 
 
 class FlavourText(TimeStampedModel):
+
     class Meta:
         ordering = ["-importance"]
         verbose_name = _("Flavour Text")
@@ -39,6 +39,7 @@ class FlavourText(TimeStampedModel):
 
 
 class FrequentlyAskedQuestion(TimeStampedModel):
+
     class Meta:
         ordering = ["-importance"]
         verbose_name = _("Frequently Asked Question")
@@ -70,6 +71,7 @@ class FrequentlyAskedQuestionMedia(MediaObjectModel):
 
 
 class StaticArticle(PublicModel):
+
     class Meta:
         verbose_name = _("Static Articles")
         verbose_name_plural = _("Static Articles")
@@ -93,10 +95,12 @@ class StaticArticleMedia(MediaObjectModel):
 
 
 class Monster(PublicModel, WarmPhotoModel):
+
     class Meta:
         ordering = ["-importance"]
         verbose_name = _("Monster")
         verbose_name_plural = _("Monsters")
+
     species = CharField(
         help_text=_("Name of the monster species."),
         max_length=30,

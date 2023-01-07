@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.dispatch import Signal
 from django_extensions.db.models import TimeStampedModel
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from encrypted_model_fields.fields import EncryptedCharField
 from django.db.models import (
     CASCADE,
@@ -25,7 +25,7 @@ from .constants import (
     SCRAPE_STATUS_SUCCESS,
 )
 
-statement_registered = Signal(providing_args=['instance'])
+statement_registered = Signal()
 
 
 class Account(PublicModel):
@@ -69,7 +69,8 @@ class Account(PublicModel):
     def clean(self):
         if self.driver == ACCOUNT_DRIVER_FIO and not self.fio_readonly_key:
             raise ValidationError({
-                'fio_readonly_key': _('The Fio Bank token must be provided'),
+                'fio_readonly_key':
+                _('The Fio Bank token must be provided'),
             })
 
     def sync(self, days_back=1, source=SCRAPE_SOURCE_MANUAL):

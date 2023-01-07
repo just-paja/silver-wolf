@@ -2,7 +2,7 @@ from django.core.files.base import File
 from django.core import checks
 from django.db.models import Model, PositiveBigIntegerField
 from django.db.models.fields.files import FileField, FieldFile, FileDescriptor
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from .upload_path import get_upload_path
 
