@@ -9,7 +9,11 @@ locals {
 }
 
 locals {
-  image_url = "${var.image_base_url}/${local.npm.name}:${local.npm.version}"
+  image_version = terraform.workspace == "production" ? local.npm.version : var.revision
+}
+
+locals {
+  image_url = "${var.image_base_url}/${local.npm.name}:${local.image_version}"
 }
 
 resource "google_project_service" "cf" {
