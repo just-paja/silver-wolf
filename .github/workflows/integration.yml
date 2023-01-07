@@ -18,9 +18,9 @@ jobs:
         id: branch_check
         run: |
           if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
-            echo "::set-output name=env_name::production"
+            echo "env_name=production" >> $GITHUB_OUTPUT
           elif [[ "${{ github.ref }}" == "refs/heads/master" ]]; then
-            echo "::set-output name=env_name::staging"
+            echo "env_name=staging" >> $GITHUB_OUTPUT
           fi
 
   build_frontend:
