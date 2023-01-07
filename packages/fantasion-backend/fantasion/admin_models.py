@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AdminPasswordChangeForm, UserCreationForm
 from django.contrib.auth import admin as auth_admin
 from django.contrib.auth import password_validation
 from django.utils.translation import gettext_lazy as _
@@ -24,7 +24,6 @@ fieldset_personal = (
             'email',
             'email_verified',
             'phone',
-            'password_created',
         ),
     },
 )
@@ -54,6 +53,13 @@ class FantasionUserCreationForm(UserCreationForm):
     )
 
 
+class FantasionPasswordChangeForm(AdminPasswordChangeForm):
+
+    def save(self, *args, **kwargs):
+        self.user.password_created = True
+        super().save(*args, **kwargs)
+
+
 class UserAddressAdmin(NestedStackedInline):
     model = models.UserAddress
     extra = 0
@@ -72,11 +78,12 @@ class UserAdmin(BaseAdmin, auth_admin.UserAdmin):
     inlines = (UserAddressAdmin, )
     ordering = ('last_name', )
     add_form = FantasionUserCreationForm
+    change_password_form = FantasionPasswordChangeForm
     search_fields = ('first_name', 'last_name', 'email')
     fieldsets = (
         fieldset_personal,
-        fieldset_permissions,
         fieldset_security,
+        fieldset_permissions,
     )
     add_fieldsets = ((None, {
         'classes': ('wide', ),
@@ -94,6 +101,7 @@ class UserAdmin(BaseAdmin, auth_admin.UserAdmin):
         'first_name',
         'last_name',
         'is_active',
+        'password_created',
         'is_staff',
         'is_superuser',
         'last_login',
