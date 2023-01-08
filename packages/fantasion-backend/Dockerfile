@@ -8,7 +8,7 @@ COPY dist/fantasion_backend-*.tar.gz /tmp/app.tar.gz
 # Install the application tarball
 # Cleanup after installation
 RUN \
-  apk add --no-cache --update "python3~=3.10" py-pip py3-magic jpeg-dev libffi libwebp-dev zlib-dev libjpeg postgresql-libs && \
+  apk add --no-cache --update "python3~=3.10" py-pip py3-magic jpeg-dev libffi libwebp-dev zlib-dev libjpeg postgresql-libs tzdata && \
   apk add --no-cache --virtual .build-deps libffi-dev gcc python3-dev musl-dev postgresql-dev rust cargo && \
   pip install /tmp/app.tar.gz && \
   rm /tmp/app.tar.gz && \
