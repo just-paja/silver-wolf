@@ -87,6 +87,7 @@ class Account(PublicModel):
                 scrape.status = SCRAPE_STATUS_SUCCESS
                 scrape.save()
                 self.ballance = self.calculate_ballance()
+                self.save()
             except Exception as exc:
                 scrape.status = SCRAPE_STATUS_FAILURE
                 scrape.save()
