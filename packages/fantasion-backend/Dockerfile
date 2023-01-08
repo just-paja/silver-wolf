@@ -17,4 +17,4 @@ RUN \
 # Start Django
 EXPOSE 80
 
-CMD gunicorn -c /usr/lib/python3.9/site-packages/fantasion/gunicorn.py fantasion.wsgi
+CMD gunicorn -c /usr/lib/python3.10/site-packages/fantasion/gunicorn.py fantasion.wsgi
