@@ -56,6 +56,7 @@ class ParticipantDetailView(PermissionRequiredMixin, DetailView):
         context['original'] = self.object
         context['has_view_permission'] = True
         context['change'] = True
+        context['has_signups'] = self.object.signups.count() > 0
         context = context | self.admin_site.each_context(self.request)
         return context
 

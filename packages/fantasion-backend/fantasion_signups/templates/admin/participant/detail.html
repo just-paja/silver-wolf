@@ -40,62 +40,71 @@
 
 <div>
 
-  <h1>{{object.first_name}} {{object.last_name}}</h1>
+  <h1>
+    <a href="{% url 'admin:fantasion_signups_participant_change' object.pk %}">
+      {{object.first_name}} {{object.last_name}}
+    </a>
+  </h1>
 
-  <div>
-    <ul>
-      <li>
-        {% include "admin/property.html" with label="First name" value=object.first_name %}
-      </li>
-      <li>
-        {% include "admin/property.html" with label="Last name" value=object.last_name %}
-      </li>
-      <li>
-        {% include "admin/property.html" with label="Birth date" value=object.birthdate %}
-      </li>
-      <li>
-        {% include "admin/tags.html" with none=object.no_allergies label="Allergies" label_none="Has no allergies" tags=object.participant_allergies.all  %}
-      </li>
-      <li>
-        {% include "admin/tags.html" with none=object.no_diets label="Diets" label_none="Has no diets" tags=object.participant_diets.all %}
-      </li>
-      <li>
-        {% include "admin/tags.html" with none=object.no_hobbies label="Hobbies" label_none="Has no hobbies" tags=object.participant_hobbies.all %}
-      </li>
-    </ul>
+  <div class="grid-row">
+    <div class="grid-col grid-col-md-6">
+      <h2>{% trans "Personal details" %}</h2>
+
+      <ul class="object-property-list">
+        <li>
+          {% include "admin/property.html" with label="First name" value=object.first_name %}
+        </li>
+        <li>
+          {% include "admin/property.html" with label="Last name" value=object.last_name %}
+        </li>
+        <li>
+          {% include "admin/property.html" with label="Birth date" value=object.birthdate %}
+        </li>
+        <li>
+          {% include "admin/tags.html" with none=object.no_allergies label="Allergies" label_none="Has no allergies" tags=object.participant_allergies.all  %}
+        </li>
+        <li>
+          {% include "admin/tags.html" with none=object.no_diets label="Diets" label_none="Has no diets" tags=object.participant_diets.all %}
+        </li>
+        <li>
+          {% include "admin/tags.html" with none=object.no_hobbies label="Hobbies" label_none="Has no hobbies" tags=object.participant_hobbies.all %}
+        </li>
+      </ul>
+    </div>
+
+    <div class="object-detail grid-col grid-col-md-6">
+      <h2>
+        <a href="{% url "admin:fantasion_people_family_change" object.family.pk %}">
+          {{object.family.title}}
+        </a>
+      </h2>
+
+      <ul class="object-property-list grid-row">
+        <li class="grid-col">
+          {% include "admin/contact.html" with value=object.family.owner role=_("Owner") col=True %}
+        </li>
+        {% for member in object.family.members.all %}
+          <li class="grid-col">
+            {% include "admin/contact.html" with value=member.user role=member.get_role_display col=True %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
   </div>
-  
+ 
+  {% if has_signups %}
   <div>
     <h2>{% translate "Signups" %}</h2>
 
-    <ul>
+    <ul class="object-property-list grid-row">
       {% for signup in object.signups.all %}
-        <li>
-          {% include "admin/participant/signup.html" with signup=signup %}
+        <li class="grid-col">
+          {% include "admin/participant/signup.html" with signup=signup col=True %}
         </li>
       {% endfor %}
     </ul>
   </div>
-
-  
-  <div>
-    <h2>
-      <a href="{% url "admin:fantasion_people_family_change" object.family.pk %}">
-        {{object.family.title}}
-      </a>
-    </h2>
-
-    <ul>
-      <li>
-        {% include "admin/contact.html" with value=object.family.owner role="Owner" %}
-      </li>
-      {% for member in object.family.members.all %}
-        <li>
-          {% include "admin/contact.html" with value=member.user role=member.get_role_display %}
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
+  {% endif %}
 
 </div>
 {% endblock %}

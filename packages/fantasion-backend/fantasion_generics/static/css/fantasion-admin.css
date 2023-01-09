@@ -142,3 +142,62 @@ fieldset.module {
 .mde-container .CodeMirror-cursor {
   border-color: var(--body-fg);
 }
+
+.object-property-list {
+  margin: 0;
+  padding: 0;
+}
+
+.object-property-list > li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.object-property {
+  display: flex;
+}
+
+.object-detail h2,
+.object-detail h3,
+.object-detail h4,
+.object-property h2,
+.object-property h3,
+.object-property h4
+{
+  margin-bottom: 0;
+}
+
+.object-property > .value {
+  margin-left: 0.25em;
+}
+
+.object-property-block {
+  flex-direction: column;
+}
+
+.object-property-block > .value {
+  margin-left: 0;
+  margin-top: 0.25em;
+}
+
+.object-property .object-property-block {
+  margin-left: 0.5em;
+}
+
+.grid-row {
+  display: flex;
+  margin: 0 -1rem;
+  flex-wrap: wrap;
+}
+
+.grid-row > .grid-col {
+  box-sizing: border-box;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .grid-col-md-6 {
+    width: 50%;
+  }
+}

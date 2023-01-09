@@ -2,25 +2,25 @@
 {% load i18n %}
 
 {% block label %}
-<a href="{% url "admin:fantasion_signups_signup_change" signup.pk %}">{% translate "Signup" %}#{{signup.pk}}</a>
+<h3><a href="{% url "admin:fantasion_signups_signup_change" signup.pk %}">{% translate "Signup" %}#{{signup.pk}}</a></h3>
 {% endblock %}
 
 {% block value %}
-  <ul>
+  <ul class="object-property-list">
     <li>
-      {% include "admin/property_link.html" with label="Expedition" value=signup.troop.batch.expedition target="admin:fantasion_expeditions_expedition_change" %}
+      {% include "admin/property_link.html" with label="Expedition" value=signup.troop.batch.expedition target="admin:fantasion_expeditions_expedition_change" col=False %}
     </li>
     <li>
-      {% include "admin/property_link.html" with label="Expedition Batch" value=signup.troop.batch target="admin:fantasion_expeditions_expeditionbatch_change" %}
+      {% include "admin/property_link.html" with label="Expedition Batch" value=signup.troop.batch target="admin:fantasion_expeditions_expeditionbatch_change" col=False %}
     </li>
     <li>
-      {% include "admin/property_link.html" with label="Troop" value=signup.troop target="admin:fantasion_expeditions_troop_change" description=signup.troop.age_group %}
+      {% include "admin/property_link.html" with label="Troop" value=signup.troop target="admin:fantasion_expeditions_troop_change" description=signup.troop.age_group col=False %}
     </li>
     <li>
-      {% include "admin/property.html" with label="Status" value=signup.get_status_display %}
+      {% include "admin/property.html" with label="Status" value=signup.get_status_display col=False %}
     </li>
     <li>
-      {% include "admin/property_order_status.html" with order=signup.order %}
+      {% include "admin/property_order_status.html" with order=signup.order col=True %}
     </li>
   </ul>
 {% endblock %}

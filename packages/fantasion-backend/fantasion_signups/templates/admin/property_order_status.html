@@ -2,20 +2,24 @@
 {% load i18n %}
 
 {% block label %}
-<a href="{% url "admin:fantasion_eshop_order_change" order.pk %}">{% translate "E-shop Order" %}#{{order.pk}}</a>:{% endblock %}
+<h4>
+  <a href="{% url "admin:fantasion_eshop_order_change" order.pk %}">{% translate "E-shop Order" %}#{{order.pk}}</a>
+</h4>
+  {% endblock %}
+
 {% block value %}
-  <ul>
+  <ul class="object-property-list">
     <li>
-      {% include "admin/property.html" with label="Status" value=order.get_status_display %}
+      {% include "admin/property.html" with label="Status" value=order.get_status_display col=False %}
     </li>
     <li>
-      {% include "admin/property_price.html" with label="Deposit" value=order.deposit %}
+      {% include "admin/property_price.html" with label="Deposit" value=order.deposit col=False %}
     </li>
     <li>
-      {% include "admin/property_price.html" with label="Surcharge" value=order.get_surcharge %}
+      {% include "admin/property_price.html" with label="Surcharge" value=order.get_surcharge col=False %}
     </li>
     <li>
-      {% include "admin/property_price.html" with label="Total Price" value=order.price %}
+      {% include "admin/property_price.html" with label="Total Price" value=order.price col=False %}
     </li>
   </ul>
 {% endblock %}

@@ -62,6 +62,7 @@ class Profile(PublicModel, WarmPhotoModel):
         null=True,
         on_delete=SET_DEFAULT,
         related_name="profiles",
+        verbose_name=_("Owner"),
     )
 
     @property
