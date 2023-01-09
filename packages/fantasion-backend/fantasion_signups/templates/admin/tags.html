@@ -1,0 +1,11 @@
+{% extends "admin/property.html" %}
+{% load i18n %}
+
+{% block value %}
+  {% for tag in tags %}
+    {% if not forloop.first %}, {% endif %}
+    {{tag.detail}}
+  {% empty %}
+    <strong class="missing-data">{% translate "Not filled in" %}</strong>
+  {% endfor %}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "admin/property.html" %}
+{% load i18n %}
+
+{% block label %}
+  <a href="{% url 'admin:fantasion_user_change' value.pk %}">{{value.get_full_name}}</a>
+{% endblock %}
+
+{% block value %}
+  <ul>
+    <li>
+      {% include "admin/property.html" with label="Role" no_colons=False value=role %}
+    </li>
+    <li>
+      {% include "admin/property_email.html" with value=value.email %}
+    </li>
+    <li>
+      {% include "admin/property_phone.html" with value=value.phone %}
+    </li>
+    {% for address in value.useraddress_set.all %}
+      <li>
+        {% include "admin/property_address.html" with value=address %}
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

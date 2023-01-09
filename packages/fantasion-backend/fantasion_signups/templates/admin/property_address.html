@@ -1,0 +1,9 @@
+{% extends "admin/property.html" %}
+{% load i18n %}
+
+{% block label %}{{value.title}}:{% endblock %}
+{% block value %}
+  {{value.street}} {{value.street_number}},
+  {{value.city}} {{value.postal_code}},
+  {{value.country}}
+{% endblock %}

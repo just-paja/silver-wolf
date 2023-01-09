@@ -1,0 +1,101 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_modify %}
+
+{% block extrahead %}{{ block.super }}
+<script src="{% url 'admin:jsi18n' %}"></script>
+{{ media }}
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static "admin/css/forms.css" %}">{% endblock %}
+
+{% block coltype %}colM{% endblock %}
+
+{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-form{% endblock %}
+
+{% if not is_popup %}
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+&rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+&rsaquo; {% if has_view_permission %}<a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>{% else %}{{ opts.verbose_name_plural|capfirst }}{% endif %}
+&rsaquo; {% if add %}{% blocktranslate with name=opts.verbose_name %}Add {{ name }}{% endblocktranslate %}{% else %}{{ original|truncatewords:"18" }}{% endif %}
+</div>
+{% endblock %}
+{% endif %}
+
+{% block content %}<div id="content-main">
+{% block object-tools %}
+{% if change %}{% if not is_popup %}
+  <ul class="object-tools">
+    {% block object-tools-items %}
+      <li>
+          {% url opts|admin_urlname:'change' original.pk|admin_urlquote as change_url %}
+          <a href="{% add_preserved_filters change_url %}">{% translate "Edit" %}</a>
+      </li>
+      {% change_form_object_tools %}
+    {% endblock %}
+  </ul>
+{% endif %}{% endif %}
+{% endblock %}
+
+<div>
+
+  <h1>{{object.first_name}} {{object.last_name}}</h1>
+
+  <div>
+    <ul>
+      <li>
+        {% include "admin/property.html" with label="First name" value=object.first_name %}
+      </li>
+      <li>
+        {% include "admin/property.html" with label="Last name" value=object.last_name %}
+      </li>
+      <li>
+        {% include "admin/property.html" with label="Birth date" value=object.birthdate %}
+      </li>
+      <li>
+        {% include "admin/tags.html" with none=object.no_allergies label="Allergies" label_none="Has no allergies" tags=object.participant_allergies.all  %}
+      </li>
+      <li>
+        {% include "admin/tags.html" with none=object.no_diets label="Diets" label_none="Has no diets" tags=object.participant_diets.all %}
+      </li>
+      <li>
+        {% include "admin/tags.html" with none=object.no_hobbies label="Hobbies" label_none="Has no hobbies" tags=object.participant_hobbies.all %}
+      </li>
+    </ul>
+  </div>
+  
+  <div>
+    <h2>{% translate "Signups" %}</h2>
+
+    <ul>
+      {% for signup in object.signups.all %}
+        <li>
+          {% include "admin/participant/signup.html" with signup=signup %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  
+  <div>
+    <h2>
+      <a href="{% url "admin:fantasion_people_family_change" object.family.pk %}">
+        {{object.family.title}}
+      </a>
+    </h2>
+
+    <ul>
+      <li>
+        {% include "admin/contact.html" with value=object.family.owner role="Owner" %}
+      </li>
+      {% for member in object.family.members.all %}
+        <li>
+          {% include "admin/contact.html" with value=member.user role=member.get_role_display %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,7 @@
+{% load i18n %}
+{% if none %}
+  <div class="label">{% translate label_none %}</div>
+{% else %}
+  <div class="label">{% block label %}{% translate label %}{% if not no_colons %}:{% endif %}{% endblock %}</div>
+  <div class="value">{% block value %}{{value}}{% endblock %}</div>
+{% endif %}

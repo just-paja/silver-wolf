@@ -1,8 +1,14 @@
 from datetime import date
 
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.views.generic.detail import DetailView
+from django.urls import path, reverse
+from django.utils.html import format_html
+from django.utils.translation import gettext_lazy as _
+from nested_admin import NestedStackedInline
+
 from fantasion_generics.admin import BaseAdmin
 from fantasion_generics.filters import YearFilter
-from nested_admin import NestedStackedInline
 
 from . import models
 
@@ -39,17 +45,55 @@ class ParticipantHobby(NestedStackedInline):
     autocomplete_fields = ('hobby', )
 
 
+class ParticipantDetailView(PermissionRequiredMixin, DetailView):
+    permission_required = 'fantasion_signups.view_participant'
+    template_name = 'admin/participant/detail.html'
+    model = models.Participant
+    admin_site = None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['original'] = self.object
+        context['has_view_permission'] = True
+        context['change'] = True
+        context = context | self.admin_site.each_context(self.request)
+        return context
+
+    get_context_data.verbose_name = _('PK')
+
+
 class ParticipantAdmin(BaseAdmin):
     model = models.Participant
     inlines = (ParticipantAllergy, ParticipantDiet, ParticipantHobby)
     search_fields = ('first_name', 'last_name', 'birthdate')
     list_filter = (ParticipantYearFilter, )
     list_display = (
-        'pk',
+        'detail_link',
         'first_name',
         'last_name',
         'created',
     )
+    detail_route_name = 'fantasion_signups_participant_detail'
+
+    def get_urls(self):
+        return [
+            path(
+                '<pk>/detail',
+                self.admin_site.admin_view(
+                    ParticipantDetailView.as_view(
+                        admin_site=self.admin_site,
+                        extra_context={
+                            'opts': self.model._meta,
+                        },
+                    )),
+                name=self.detail_route_name,
+            ),
+            *super().get_urls(),
+        ]
+
+    def detail_link(self, obj):
+        url = reverse(f'admin:{self.detail_route_name}', args=[obj.pk])
+        return format_html(f'<a href="{url}">{obj.pk}</a>')
 
 
 class SignupDocumentTypeAdmin(BaseAdmin):

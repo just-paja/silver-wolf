@@ -104,6 +104,9 @@ class ParticipantAllergy(TimeStampedModel):
     def __str__(self):
         return f'{self.participant}: {self.allergy}'
 
+    def detail(self):
+        return self.allergy
+
 
 class ParticipantDiet(TimeStampedModel):
 
@@ -127,6 +130,9 @@ class ParticipantDiet(TimeStampedModel):
     def __str__(self):
         return f'{self.participant}: {self.diet}'
 
+    def detail(self):
+        return self.diet
+
 
 class ParticipantHobby(TimeStampedModel):
 
@@ -149,6 +155,9 @@ class ParticipantHobby(TimeStampedModel):
 
     def __str__(self):
         return f'{self.participant}: {self.hobby}'
+
+    def detail(self):
+        return self.hobby
 
 
 def validate_legal_guardian(value):

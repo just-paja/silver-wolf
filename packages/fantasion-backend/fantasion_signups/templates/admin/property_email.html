@@ -1,0 +1,5 @@
+{% extends "admin/property.html" %}
+{% load i18n %}
+
+{% block label %}{% translate "E-mail" %}:{% endblock %}
+{% block value %}<a href="mailto:{{value}}">{{value}}</a>{% endblock %}

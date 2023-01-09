@@ -1,0 +1,6 @@
+{% extends "admin/property.html" %}
+{% load i18n %}
+
+{% block value %}
+  <a href="{% url target value.pk %}">{% if description %}{{description}}{% else %}{{value}}{% endif %}</a>
+{% endblock %}

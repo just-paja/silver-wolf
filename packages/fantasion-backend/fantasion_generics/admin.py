@@ -4,7 +4,6 @@ from django.conf import settings
 from django.contrib.admin import AdminSite
 from django.db import models
 from django.forms import Textarea
-from django.http import Http404
 from nested_admin import NestedModelAdmin, NestedStackedInline
 from modeltranslation.admin import (
     TranslationStackedInline,
@@ -45,24 +44,6 @@ class BaseAdminSite(AdminSite):
 
     def get_model_sort_helper(self, request):
         return lambda x: czech_sort.key(x['name'][0])
-
-    def get_app_list(self, request):
-        app_list = super().get_app_list(request)
-        sort_helper = self.get_model_sort_helper(request)
-        for app in app_list:
-            app['models'].sort(key=sort_helper)
-        app_list.sort(key=sort_helper)
-        return app_list
-
-    def app_index(self, request, app_label, extra_context=None):
-        app_dict = self._build_app_dict(request, app_label)
-        if not app_dict:
-            raise Http404('The requested admin page does not exist.')
-        app_dict['models'].sort(key=self.get_model_sort_helper(request))
-        app_list = [app_dict]
-        return super().app_index(request, app_label, {
-            **(extra_context or {}), 'app_list': app_list
-        })
 
     def hookup(self, admin_model):
         return self.register(admin_model.model, admin_model)

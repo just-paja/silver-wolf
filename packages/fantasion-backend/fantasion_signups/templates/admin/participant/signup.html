@@ -1,0 +1,26 @@
+{% extends "admin/property.html" %}
+{% load i18n %}
+
+{% block label %}
+<a href="{% url "admin:fantasion_signups_signup_change" signup.pk %}">{% translate "Signup" %}#{{signup.pk}}</a>
+{% endblock %}
+
+{% block value %}
+  <ul>
+    <li>
+      {% include "admin/property_link.html" with label="Expedition" value=signup.troop.batch.expedition target="admin:fantasion_expeditions_expedition_change" %}
+    </li>
+    <li>
+      {% include "admin/property_link.html" with label="Expedition Batch" value=signup.troop.batch target="admin:fantasion_expeditions_expeditionbatch_change" %}
+    </li>
+    <li>
+      {% include "admin/property_link.html" with label="Troop" value=signup.troop target="admin:fantasion_expeditions_troop_change" description=signup.troop.age_group %}
+    </li>
+    <li>
+      {% include "admin/property.html" with label="Status" value=signup.get_status_display %}
+    </li>
+    <li>
+      {% include "admin/property_order_status.html" with order=signup.order %}
+    </li>
+  </ul>
+{% endblock %}
