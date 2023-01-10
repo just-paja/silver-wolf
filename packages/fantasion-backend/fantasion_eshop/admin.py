@@ -190,7 +190,7 @@ class ProductPriceAdmin(BaseAdmin):
     model = models.ProductPrice
     extra = 0
     list_filter = (ProductPriceYearFilter, 'price_level')
-    search_fields = ('product__title', 'price_level__title')
+    search_fields = ('product__description', 'price_level__title')
     list_display = (
         'product',
         'price_level',

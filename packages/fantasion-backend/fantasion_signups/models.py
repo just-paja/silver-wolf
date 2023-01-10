@@ -78,8 +78,11 @@ class Participant(TimeStampedModel):
         verbose_name=_("Has no hobbies"),
     )
 
+    def ident(self):
+        return f"{self.first_name} {self.last_name} ({self.birthdate.year})"
+
     def __str__(self):
-        return f"{self.first_name} {self.last_name} ({self.birthdate})"
+        return f"🧑 {self.ident()}"
 
 
 class ParticipantAllergy(TimeStampedModel):
@@ -224,6 +227,9 @@ class Signup(OrderItem):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.initial_status = self.status
+
+    def __str__(self):
+        return f"🎫 {self.participant.ident()} {self.troop}"
 
     def get_description(self):
         return "Signup: {participant}".format(participant=self.participant)

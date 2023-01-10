@@ -104,6 +104,9 @@ class Expedition(PublicModel):
         verbose_name=_('Expedition Theme'),
     )
 
+    def __str__(self):
+        return f"⛺ {super().__str__()}"
+
 
 class ExpeditionMedia(MediaObjectModel):
     parent = MediaParentField(Expedition)
@@ -136,8 +139,8 @@ class ExpeditionBatch(TimeStampedModel):
     public = VisibilityField()
 
     def __str__(self):
-        return '{expedition_title} ({starts_at} - {ends_at})'.format(
-            expedition_title=self.expedition.title,
+        return '📅 {expedition.title} {starts_at} - {ends_at}'.format(
+            expedition=self.expedition,
             starts_at=self.starts_at,
             ends_at=self.ends_at,
         )
@@ -197,7 +200,7 @@ class AgeGroup(TimeStampedModel):
     age_max = PositiveIntegerField(verbose_name=_('Maximal age'))
 
     def __str__(self):
-        return '{title} ({age_min} - {age_max})'.format(
+        return '🎈 {title} ({age_min} - {age_max})'.format(
             title=self.title,
             age_min=self.age_min,
             age_max=self.age_max,
@@ -256,10 +259,13 @@ class Troop(EshopProduct):
     ends_at = DateField(verbose_name=_('Ends at'))
 
     def get_description(self):
-        return '{batch}, {age_group}'.format(
+        return '{age_group}, {batch}'.format(
             batch=self.batch,
             age_group=self.age_group,
         )
+
+    def __str__(self):
+        return f"{self.age_group} {self.batch}"
 
 
 class TransportVehicle(Model):
