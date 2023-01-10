@@ -79,7 +79,7 @@ class UserAdmin(BaseAdmin, auth_admin.UserAdmin):
     ordering = ('last_name', )
     add_form = FantasionUserCreationForm
     change_password_form = FantasionPasswordChangeForm
-    search_fields = ('first_name', 'last_name', 'email')
+    search_fields = ('first_name', 'last_name', 'email', 'phone')
     fieldsets = (
         fieldset_personal,
         fieldset_security,

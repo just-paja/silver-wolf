@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "fantasion_expeditions",
     "fantasion_signups",
     "fantasion_content",
+    "djangomni_search",
     "phonenumber_field",
     "corsheaders",
     "django.contrib.admin",

@@ -47,7 +47,7 @@ class LeisureCentreAdmin(TranslatedAdmin):
     inlines = (LeisureCentreMediaAdmin, )
     search_fields = (
         'title',
-        'location__title',
+        'location__name',
     )
 
 
@@ -137,7 +137,7 @@ class TroopAdmin(BaseAdmin):
     inlines = (ProductPriceAdmin, TroopTransportInlineAdmin)
     autocomplete_fields = ('batch', 'program')
     search_fields = (
-        'expedition__title',
+        'batch__expedition__title',
         'program__title',
         'age_group__title',
         'starts_at',

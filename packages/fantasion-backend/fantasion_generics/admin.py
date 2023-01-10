@@ -1,5 +1,6 @@
 import czech_sort
 
+from djangomni_search.admin import OmniSearchAdminSite
 from django.conf import settings
 from django.contrib.admin import AdminSite
 from django.db import models
@@ -32,7 +33,7 @@ class TranslatedAdmin(BaseAdmin, TabbedDjangoJqueryTranslationAdmin):
     pass
 
 
-class BaseAdminSite(AdminSite):
+class BaseAdminSite(OmniSearchAdminSite, AdminSite):
     site_header = "Fantasion"
     name = 'admin'
     site_url = settings.APP_WEBSITE_URL

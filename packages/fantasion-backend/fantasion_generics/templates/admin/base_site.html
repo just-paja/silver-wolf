@@ -5,6 +5,18 @@
 
 {% block extrastyle %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/fantasion-admin.css' %}" />
+{% if omni_search %}
+  <link
+    href="{% static 'djangomni-search/main.css' %}"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <script
+    data-config="{{omni_search}}"
+    id="djangomni-search"
+    src="{% static 'djangomni-search/main.js' %}"
+  ></script>
+{% endif %}
 {% endblock %}
 
 {% block branding %}
@@ -12,4 +24,3 @@
 {% endblock %}
 
 {% block nav-global %}{% endblock %}
-

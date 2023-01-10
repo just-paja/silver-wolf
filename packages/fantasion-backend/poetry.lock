@@ -464,6 +464,20 @@ Pillow = ">=2.4.0"
 python-magic = ">=0.4.15,<1.0.0"
 
 [[package]]
+name = "djangomni-search"
+version = "0.1.0"
+description = "Quick search anything in Django Admin from a single place"
+category = "main"
+optional = false
+python-versions = ">=3.10,<4.0"
+files = [
+    {file = "djangomni_search-0.1.0.tar.gz", hash = "sha256:21312816c9f8c64b335389fcb99346997fa11a8a05e591945c9f09dee3263b07"},
+]
+
+[package.dependencies]
+flake8 = ">=6.0.0,<7.0.0"
+
+[[package]]
 name = "djangorestframework"
 version = "3.14.0"
 description = "Web APIs for Django, made easy."
@@ -539,7 +553,7 @@ tests = ["coveralls", "mock", "pylama", "pytest", "pytest-cov", "pytest-runner",
 name = "flake8"
 version = "6.0.0"
 description = "the modular source code checker: pep8 pyflakes and co"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.8.1"
 files = [
@@ -852,7 +866,7 @@ testing = ["coverage", "pyyaml"]
 name = "mccabe"
 version = "0.7.0"
 description = "McCabe checker, plugin for flake8"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -1173,7 +1187,7 @@ pyasn1 = ">=0.4.6,<0.5.0"
 name = "pycodestyle"
 version = "2.10.0"
 description = "Python style guide checker"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -1197,7 +1211,7 @@ files = [
 name = "pyflakes"
 version = "3.0.1"
 description = "passive checker of Python programs"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -1457,4 +1471,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "8cfed9409e6672056d3e5f494acb330a3ce25dbaa738e5d1983e1aac3b37d1f0"
+content-hash = "8f331ef70475845f9662c2e3d5cbd2d01211918dc168900d43d3d186932b0965"

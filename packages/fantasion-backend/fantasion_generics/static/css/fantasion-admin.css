@@ -10,6 +10,7 @@
   --primary: var(--color-minsk);
   --secondary: var(--color-buddha-gold);
   --body-bg: var(--color-early-dawn);
+  --header-bg: var(--color-minsk);
   --header-branding-color: var(--color-buddha-gold);
   --header-color: var(--color-buddha-gold);
   --breadcrumbs-bg: var(--color-valhalla);
