@@ -20,6 +20,9 @@
       {% include "admin/property.html" with label="Status" value=signup.get_status_display col=False %}
     </li>
     <li>
+      {% include "admin/property.html" with label="Note" value=signup.note col=False %}
+    </li>
+    <li>
       {% include "admin/property_order_status.html" with order=signup.order col=True %}
     </li>
   </ul>
