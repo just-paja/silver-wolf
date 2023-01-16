@@ -2,9 +2,8 @@ from datetime import date
 
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic.detail import DetailView
-from django.urls import path, reverse
-from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
+from djangomni_search.admin import OmniSearchDetailMixin
 from nested_admin import NestedStackedInline
 
 from fantasion_generics.admin import BaseAdmin
@@ -63,7 +62,8 @@ class ParticipantDetailView(PermissionRequiredMixin, DetailView):
     get_context_data.verbose_name = _('PK')
 
 
-class ParticipantAdmin(BaseAdmin):
+class ParticipantAdmin(OmniSearchDetailMixin, BaseAdmin):
+    detail_view_class = ParticipantDetailView
     model = models.Participant
     inlines = (ParticipantAllergy, ParticipantDiet, ParticipantHobby)
     search_fields = ('first_name', 'last_name', 'birthdate')
@@ -74,27 +74,6 @@ class ParticipantAdmin(BaseAdmin):
         'last_name',
         'created',
     )
-    detail_route_name = 'fantasion_signups_participant_detail'
-
-    def get_urls(self):
-        return [
-            path(
-                '<pk>/detail',
-                self.admin_site.admin_view(
-                    ParticipantDetailView.as_view(
-                        admin_site=self.admin_site,
-                        extra_context={
-                            'opts': self.model._meta,
-                        },
-                    )),
-                name=self.detail_route_name,
-            ),
-            *super().get_urls(),
-        ]
-
-    def detail_link(self, obj):
-        url = reverse(f'admin:{self.detail_route_name}', args=[obj.pk])
-        return format_html(f'<a href="{url}">{obj.pk}</a>')
 
 
 class SignupDocumentTypeAdmin(BaseAdmin):
