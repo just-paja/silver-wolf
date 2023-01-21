@@ -20,7 +20,7 @@ from fantasion_generics.models import (
     MediaObjectModel,
     NamedModel,
     PublicModel,
-    VisibilityField,
+    VisibilityModel,
 )
 
 from .constants import (
@@ -29,7 +29,7 @@ from .constants import (
 )
 
 
-class Profile(PublicModel, WarmPhotoModel):
+class Profile(PublicModel, VisibilityModel, WarmPhotoModel):
 
     class Meta:
         ordering = ["-importance"]
@@ -53,7 +53,6 @@ class Profile(PublicModel, WarmPhotoModel):
         verbose_name=_("Profile text"),
     )
     importance = ImportanceField()
-    public = VisibilityField()
     owner = ForeignKey(
         settings.AUTH_USER_MODEL,
         blank=True,

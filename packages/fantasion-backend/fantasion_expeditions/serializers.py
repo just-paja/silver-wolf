@@ -5,6 +5,7 @@ from rest_framework.serializers import (
 )
 
 from fantasion_locations.api import LocationSerializer
+from fantasion_generics.visibility import VISIBILITY_PUBLIC
 from fantasion_generics.api import (
     PublicMediaSerializer,
     media_fields,
@@ -55,9 +56,9 @@ class TransportSerializer(ModelSerializer):
             'departs_from',
             'description',
             'gps_tracking_url',
-            'public',
             'status',
             'vehicle',
+            'visibility',
         )
 
 
@@ -116,12 +117,12 @@ class LeisureCentreSerializer(LeisureCentreBaseSerializer):
         )
 
     def get_expeditions(self, obj):
-        expedition_ids = (obj.expedition_batches.filter(
-            public=True).values("id").distinct())
+        expedition_ids = obj.expedition_batches.filter(
+            visibility=VISIBILITY_PUBLIC).values("id").distinct()
         serializer = PlainExpeditionSerializer(
             models.Expedition.objects.filter(
                 pk__in=expedition_ids,
-                public=True,
+                visibility=VISIBILITY_PUBLIC,
             ),
             many=True,
             context=self.context,
@@ -314,7 +315,7 @@ class ExpeditionSerializer(HyperlinkedModelSerializer):
 
     def get_batches(self, obj):
         serializer = PlainExpeditionBatchSerializer(
-            obj.batches.filter(public=True),
+            obj.batches.filter(visibility=VISIBILITY_PUBLIC),
             many=True,
             context=self.context,
         )

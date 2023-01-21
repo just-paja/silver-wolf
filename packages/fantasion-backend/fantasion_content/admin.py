@@ -19,9 +19,9 @@ class FrequentlyAskedQuestion(TranslatedAdmin):
         'id',
         'question',
         'modified',
-        'public',
+        'visibility',
     )
-    list_filter = ('public', )
+    list_filter = ('visibility', )
     inlines = (FrequentlyAskedQuestionMediaAdmin, )
 
 
@@ -36,9 +36,9 @@ class Monster(TranslatedAdmin):
         'species',
         'description',
         'importance',
-        'public',
+        'visibility',
     )
-    list_filter = ('public', )
+    list_filter = ('visibility', )
     inlines = (MonsterMediaAdmin, )
 
 
@@ -49,6 +49,6 @@ class StaticArticleMediaAdmin(MediaAdmin):
 class StaticArticleAdmin(TranslatedAdmin):
     model = models.StaticArticle
     list_display = ('key', 'title', 'modified')
-    list_filter = ('public', )
-    fields = ('key', 'title', 'description', 'text', 'public')
+    list_filter = ('visibility', )
+    fields = ('key', 'title', 'description', 'text', 'visibility')
     inlines = (StaticArticleMediaAdmin, )

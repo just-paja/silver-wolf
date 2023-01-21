@@ -4,31 +4,33 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from fantasion_people.constants import FAMILY_ROLE_SPECTATOR
+from fantasion_generics.api import PublicInfoViewSet
+
 from . import models, serializers
 
 
-class LeisureCentreCollection(ReadOnlyModelViewSet):
-    queryset = models.LeisureCentre.objects.all()
+class LeisureCentreCollection(PublicInfoViewSet):
+    queryset = models.LeisureCentre.objects
     serializer_class = serializers.LeisureCentreSerializer
 
 
-class ExpeditionThemeCollection(ReadOnlyModelViewSet):
-    queryset = models.ExpeditionTheme.objects.all()
+class ExpeditionThemeCollection(PublicInfoViewSet):
+    queryset = models.ExpeditionTheme.objects
     serializer_class = serializers.ExpeditionThemeSerializer
 
 
-class ExpeditionCollection(ReadOnlyModelViewSet):
-    queryset = models.Expedition.objects.filter(public=True).all()
+class ExpeditionCollection(PublicInfoViewSet):
+    queryset = models.Expedition.objects
     serializer_class = serializers.ExpeditionSerializer
 
 
-class ExpeditionBatchCollection(ReadOnlyModelViewSet):
-    queryset = models.ExpeditionBatch.objects.filter(public=True).all()
+class ExpeditionBatchCollection(PublicInfoViewSet):
+    queryset = models.ExpeditionBatch.objects
     serializer_class = serializers.ExpeditionBatchSerializer
 
 
-class TransportCollection(ReadOnlyModelViewSet):
-    queryset = models.Transport.objects.filter(public=True).all()
+class TransportCollection(PublicInfoViewSet):
+    queryset = models.Transport.objects
     serializer_class = serializers.TransportStandaloneSerializer
 
 

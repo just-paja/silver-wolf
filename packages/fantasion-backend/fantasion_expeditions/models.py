@@ -20,11 +20,12 @@ from fantasion_generics.models import (
     DetailedDescriptionField,
     MediaObjectModel,
     PublicModel,
-    VisibilityField,
+    VisibilityModel,
+    WebsiteModel,
 )
 
 
-class LeisureCentre(PublicModel):
+class LeisureCentre(WebsiteModel):
 
     class Meta:
         verbose_name = _('Leisure Centre')
@@ -66,7 +67,7 @@ class LeisureCentreMedia(MediaObjectModel):
     parent = MediaParentField(LeisureCentre)
 
 
-class ExpeditionTheme(PublicModel):
+class ExpeditionTheme(WebsiteModel):
     """
     ExpeditionTheme represents a theme for the entire expedition.
     """
@@ -82,7 +83,7 @@ class ExpeditionThemeMedia(MediaObjectModel):
     parent = MediaParentField(ExpeditionTheme)
 
 
-class Expedition(PublicModel):
+class Expedition(WebsiteModel):
     """
     Expedition represents an entire summer camp, it is composed of Expedition
     batches. People do not sign up for the expedition, but for the Expedition
@@ -94,7 +95,6 @@ class Expedition(PublicModel):
         verbose_name_plural = _('Expeditions')
 
     detailed_description = DetailedDescriptionField()
-    public = VisibilityField()
     theme = ForeignKey(
         ExpeditionTheme,
         blank=True,
@@ -112,7 +112,7 @@ class ExpeditionMedia(MediaObjectModel):
     parent = MediaParentField(Expedition)
 
 
-class ExpeditionBatch(TimeStampedModel):
+class ExpeditionBatch(VisibilityModel, TimeStampedModel):
     """
     ExpeditionBatch represents a single batch of the Expedition, it has a start
     and end date. Each ExpeditionBatch has different staff.
@@ -136,7 +136,6 @@ class ExpeditionBatch(TimeStampedModel):
     )
     starts_at = DateField(verbose_name=_('Starts at'))
     ends_at = DateField(verbose_name=_('Ends at'))
-    public = VisibilityField()
 
     def __str__(self):
         return '📅 {expedition.title} {starts_at} - {ends_at}'.format(
@@ -207,7 +206,7 @@ class AgeGroup(TimeStampedModel):
         )
 
 
-class ExpeditionProgram(PublicModel):
+class ExpeditionProgram(WebsiteModel):
     """
     ExpeditionProgram represents a story or adventure used for an age group on
     the expedition.
@@ -268,7 +267,7 @@ class Troop(EshopProduct):
         return f"{self.age_group} {self.batch}"
 
 
-class TransportVehicle(Model):
+class TransportVehicle(WebsiteModel):
     """
     TransportVehicle represents a car, bus or another kind of vehicle used
     as a Transport.
@@ -278,7 +277,6 @@ class TransportVehicle(Model):
         verbose_name = _('Transport Vehicle')
         verbose_name_plural = _('Transport Vehicles')
 
-    title = TitleField()
     brand = CharField(
         blank=True,
         null=True,
@@ -302,8 +300,6 @@ class TransportVehicle(Model):
         max_length=128,
         verbose_name=_('Vehicle Colour'),
     )
-    public = VisibilityField()
-    description = DetailedDescriptionField()
 
     def __str__(self):
         if self.title:
@@ -330,7 +326,7 @@ TRANSPORT_STATUS_CHOICES = (
 )
 
 
-class Transport(Model):
+class Transport(VisibilityModel, Model):
     """
     Transport represents a planned journey used to transport expedition
     participants to or from an expedition, or any other related kind of
@@ -384,7 +380,6 @@ class Transport(Model):
         choices=TRANSPORT_STATUS_CHOICES,
         verbose_name=_('Transport Status'),
     )
-    public = VisibilityField()
 
     def __str__(self):
         if self.vehicle:
@@ -421,7 +416,7 @@ class TroopTransport(TimeStampedModel):
     )
 
 
-class ExpeditionLogArticle(TimeStampedModel):
+class ExpeditionLogArticle(WebsiteModel, TimeStampedModel):
 
     class Meta:
         ordering = ('-date', '-created')
@@ -442,10 +437,8 @@ class ExpeditionLogArticle(TimeStampedModel):
         related_name='log_stories',
         verbose_name=_('Troop'),
     )
-    title = TitleField()
     date = DateField()
     text = DetailedDescriptionField(verbose_name=_("Story text"), )
-    public = VisibilityField()
 
 
 class ExpeditionLogArticleMedia(MediaObjectModel):

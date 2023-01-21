@@ -19,66 +19,114 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name='agegroup',
-            options={'ordering': ['age_min', 'age_max', 'title'], 'verbose_name': 'Age Group', 'verbose_name_plural': 'Age Groups'},
+            options={
+                'ordering': ['age_min', 'age_max', 'title'],
+                'verbose_name': 'Age Group',
+                'verbose_name_plural': 'Age Groups'
+            },
         ),
         migrations.AlterModelOptions(
             name='batchagegroup',
-            options={'verbose_name': 'Batch Age Group', 'verbose_name_plural': 'Batch Age Groups'},
+            options={
+                'verbose_name': 'Batch Age Group',
+                'verbose_name_plural': 'Batch Age Groups'
+            },
         ),
         migrations.AlterModelOptions(
             name='batchstaff',
-            options={'verbose_name': 'Batch Staff', 'verbose_name_plural': 'Batch Staff'},
+            options={
+                'verbose_name': 'Batch Staff',
+                'verbose_name_plural': 'Batch Staff'
+            },
         ),
         migrations.AlterModelOptions(
             name='expedition',
-            options={'verbose_name': 'Expedition', 'verbose_name_plural': 'Expeditions'},
+            options={
+                'verbose_name': 'Expedition',
+                'verbose_name_plural': 'Expeditions'
+            },
         ),
         migrations.AlterModelOptions(
             name='expeditionbatch',
-            options={'verbose_name': 'Expedition Batch', 'verbose_name_plural': 'Expedition Batches'},
+            options={
+                'verbose_name': 'Expedition Batch',
+                'verbose_name_plural': 'Expedition Batches'
+            },
         ),
         migrations.AlterModelOptions(
             name='expeditionmedia',
-            options={'verbose_name': 'Media Object', 'verbose_name_plural': 'Media Objects'},
+            options={
+                'verbose_name': 'Media Object',
+                'verbose_name_plural': 'Media Objects'
+            },
         ),
         migrations.AlterModelOptions(
             name='expeditionprogram',
-            options={'verbose_name': 'Expedition Program', 'verbose_name_plural': 'Expedition Programs'},
+            options={
+                'verbose_name': 'Expedition Program',
+                'verbose_name_plural': 'Expedition Programs'
+            },
         ),
         migrations.AlterModelOptions(
             name='expeditionprogrammedia',
-            options={'verbose_name': 'Media Object', 'verbose_name_plural': 'Media Objects'},
+            options={
+                'verbose_name': 'Media Object',
+                'verbose_name_plural': 'Media Objects'
+            },
         ),
         migrations.AlterModelOptions(
             name='leisurecentre',
-            options={'verbose_name': 'Leisure Centre', 'verbose_name_plural': 'Leisure Centres'},
+            options={
+                'verbose_name': 'Leisure Centre',
+                'verbose_name_plural': 'Leisure Centres'
+            },
         ),
         migrations.AlterModelOptions(
             name='leisurecentremedia',
-            options={'verbose_name': 'Media Object', 'verbose_name_plural': 'Media Objects'},
+            options={
+                'verbose_name': 'Media Object',
+                'verbose_name_plural': 'Media Objects'
+            },
         ),
         migrations.AlterModelOptions(
             name='staffrole',
-            options={'verbose_name': 'Staff Role', 'verbose_name_plural': 'Staff Roles'},
+            options={
+                'verbose_name': 'Staff Role',
+                'verbose_name_plural': 'Staff Roles'
+            },
         ),
         migrations.AlterModelOptions(
             name='staffrolemedia',
-            options={'verbose_name': 'Media Object', 'verbose_name_plural': 'Media Objects'},
+            options={
+                'verbose_name': 'Media Object',
+                'verbose_name_plural': 'Media Objects'
+            },
         ),
         migrations.AddField(
             model_name='expedition',
             name='public',
-            field=fantasion_generics.models.VisibilityField(default=True, help_text='Public objects will be visible on the website', verbose_name='Public'),
+            field=fantasion_generics.visibility.VisibilityField(
+                default=True,
+                help_text='Public objects will be visible on the website',
+                verbose_name='Public'),
         ),
         migrations.AlterField(
             model_name='batchagegroup',
             name='age_group',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.RESTRICT, related_name='age_group_batches', to='fantasion_expeditions.agegroup', verbose_name='Age Group'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.RESTRICT,
+                related_name='age_group_batches',
+                to='fantasion_expeditions.agegroup',
+                verbose_name='Age Group'),
         ),
         migrations.AlterField(
             model_name='batchagegroup',
             name='batch',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='age_groups', to='fantasion_expeditions.expeditionbatch', verbose_name='Expedition Batch'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='age_groups',
+                to='fantasion_expeditions.expeditionbatch',
+                verbose_name='Expedition Batch'),
         ),
         migrations.AlterField(
             model_name='batchagegroup',
@@ -88,7 +136,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='batchagegroup',
             name='program',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.RESTRICT, related_name='age_group_batches', to='fantasion_expeditions.expeditionprogram', verbose_name='Expedition Program'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.RESTRICT,
+                related_name='age_group_batches',
+                to='fantasion_expeditions.expeditionprogram',
+                verbose_name='Expedition Program'),
         ),
         migrations.AlterField(
             model_name='batchagegroup',
@@ -98,17 +150,29 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='batchstaff',
             name='batch',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='staff', to='fantasion_expeditions.expeditionbatch', verbose_name='Expedition Batch'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='staff',
+                to='fantasion_expeditions.expeditionbatch',
+                verbose_name='Expedition Batch'),
         ),
         migrations.AlterField(
             model_name='batchstaff',
             name='profile',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.RESTRICT, related_name='expedition_roles', to='fantasion_people.profile', verbose_name='Profile'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.RESTRICT,
+                related_name='expedition_roles',
+                to='fantasion_people.profile',
+                verbose_name='Profile'),
         ),
         migrations.AlterField(
             model_name='batchstaff',
             name='role',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.RESTRICT, related_name='staff', to='fantasion_expeditions.staffrole', verbose_name='Role'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.RESTRICT,
+                related_name='staff',
+                to='fantasion_expeditions.staffrole',
+                verbose_name='Role'),
         ),
         migrations.AlterField(
             model_name='expeditionbatch',
@@ -123,96 +187,173 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='expeditionmedia',
             name='height',
-            field=models.PositiveBigIntegerField(blank=True, null=True, verbose_name='Height'),
+            field=models.PositiveBigIntegerField(blank=True,
+                                                 null=True,
+                                                 verbose_name='Height'),
         ),
         migrations.AlterField(
             model_name='expeditionmedia',
             name='local_photo',
-            field=versatileimagefield.fields.VersatileImageField(blank=True, height_field='height', max_length=255, null=True, upload_to=fantasion_generics.upload_path.get_upload_path, verbose_name='Image file', width_field='width'),
+            field=versatileimagefield.fields.VersatileImageField(
+                blank=True,
+                height_field='height',
+                max_length=255,
+                null=True,
+                upload_to=fantasion_generics.upload_path.get_upload_path,
+                verbose_name='Image file',
+                width_field='width'),
         ),
         migrations.AlterField(
             model_name='expeditionmedia',
             name='parent',
-            field=fantasion_generics.media.MediaParentField(on_delete=django.db.models.deletion.CASCADE, related_name='media', to='fantasion_expeditions.expedition', verbose_name='Parent object'),
+            field=fantasion_generics.media.MediaParentField(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='media',
+                to='fantasion_expeditions.expedition',
+                verbose_name='Parent object'),
         ),
         migrations.AlterField(
             model_name='expeditionmedia',
             name='width',
-            field=models.PositiveBigIntegerField(blank=True, null=True, verbose_name='Width'),
+            field=models.PositiveBigIntegerField(blank=True,
+                                                 null=True,
+                                                 verbose_name='Width'),
         ),
         migrations.AlterField(
             model_name='expeditionprogrammedia',
             name='height',
-            field=models.PositiveBigIntegerField(blank=True, null=True, verbose_name='Height'),
+            field=models.PositiveBigIntegerField(blank=True,
+                                                 null=True,
+                                                 verbose_name='Height'),
         ),
         migrations.AlterField(
             model_name='expeditionprogrammedia',
             name='local_photo',
-            field=versatileimagefield.fields.VersatileImageField(blank=True, height_field='height', max_length=255, null=True, upload_to=fantasion_generics.upload_path.get_upload_path, verbose_name='Image file', width_field='width'),
+            field=versatileimagefield.fields.VersatileImageField(
+                blank=True,
+                height_field='height',
+                max_length=255,
+                null=True,
+                upload_to=fantasion_generics.upload_path.get_upload_path,
+                verbose_name='Image file',
+                width_field='width'),
         ),
         migrations.AlterField(
             model_name='expeditionprogrammedia',
             name='parent',
-            field=fantasion_generics.media.MediaParentField(on_delete=django.db.models.deletion.CASCADE, related_name='media', to='fantasion_expeditions.expeditionprogram', verbose_name='Parent object'),
+            field=fantasion_generics.media.MediaParentField(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='media',
+                to='fantasion_expeditions.expeditionprogram',
+                verbose_name='Parent object'),
         ),
         migrations.AlterField(
             model_name='expeditionprogrammedia',
             name='width',
-            field=models.PositiveBigIntegerField(blank=True, null=True, verbose_name='Width'),
+            field=models.PositiveBigIntegerField(blank=True,
+                                                 null=True,
+                                                 verbose_name='Width'),
         ),
         migrations.AlterField(
             model_name='leisurecentre',
             name='location',
-            field=models.ForeignKey(help_text='This location will be posted on the map and used for navigation.', on_delete=django.db.models.deletion.RESTRICT, related_name='leisure_centres', to='fantasion_locations.location', verbose_name='Location'),
+            field=models.ForeignKey(
+                help_text=
+                'This location will be posted on the map and used for navigation.',
+                on_delete=django.db.models.deletion.RESTRICT,
+                related_name='leisure_centres',
+                to='fantasion_locations.location',
+                verbose_name='Location'),
         ),
         migrations.AlterField(
             model_name='leisurecentre',
             name='mailing_address',
-            field=models.ForeignKey(blank=True, help_text='This location will be used as a postal address,instruct people to mail here.', null=True, on_delete=django.db.models.deletion.RESTRICT, related_name='leisure_centre_mailing_addresses', to='fantasion_locations.location', verbose_name='Mailing address'),
+            field=models.ForeignKey(
+                blank=True,
+                help_text=
+                'This location will be used as a postal address,instruct people to mail here.',
+                null=True,
+                on_delete=django.db.models.deletion.RESTRICT,
+                related_name='leisure_centre_mailing_addresses',
+                to='fantasion_locations.location',
+                verbose_name='Mailing address'),
         ),
         migrations.AlterField(
             model_name='leisurecentre',
             name='website',
-            field=models.URLField(blank=True, max_length=255, null=True, verbose_name='Website'),
+            field=models.URLField(blank=True,
+                                  max_length=255,
+                                  null=True,
+                                  verbose_name='Website'),
         ),
         migrations.AlterField(
             model_name='leisurecentremedia',
             name='height',
-            field=models.PositiveBigIntegerField(blank=True, null=True, verbose_name='Height'),
+            field=models.PositiveBigIntegerField(blank=True,
+                                                 null=True,
+                                                 verbose_name='Height'),
         ),
         migrations.AlterField(
             model_name='leisurecentremedia',
             name='local_photo',
-            field=versatileimagefield.fields.VersatileImageField(blank=True, height_field='height', max_length=255, null=True, upload_to=fantasion_generics.upload_path.get_upload_path, verbose_name='Image file', width_field='width'),
+            field=versatileimagefield.fields.VersatileImageField(
+                blank=True,
+                height_field='height',
+                max_length=255,
+                null=True,
+                upload_to=fantasion_generics.upload_path.get_upload_path,
+                verbose_name='Image file',
+                width_field='width'),
         ),
         migrations.AlterField(
             model_name='leisurecentremedia',
             name='parent',
-            field=fantasion_generics.media.MediaParentField(on_delete=django.db.models.deletion.CASCADE, related_name='media', to='fantasion_expeditions.leisurecentre', verbose_name='Parent object'),
+            field=fantasion_generics.media.MediaParentField(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='media',
+                to='fantasion_expeditions.leisurecentre',
+                verbose_name='Parent object'),
         ),
         migrations.AlterField(
             model_name='leisurecentremedia',
             name='width',
-            field=models.PositiveBigIntegerField(blank=True, null=True, verbose_name='Width'),
+            field=models.PositiveBigIntegerField(blank=True,
+                                                 null=True,
+                                                 verbose_name='Width'),
         ),
         migrations.AlterField(
             model_name='staffrolemedia',
             name='height',
-            field=models.PositiveBigIntegerField(blank=True, null=True, verbose_name='Height'),
+            field=models.PositiveBigIntegerField(blank=True,
+                                                 null=True,
+                                                 verbose_name='Height'),
         ),
         migrations.AlterField(
             model_name='staffrolemedia',
             name='local_photo',
-            field=versatileimagefield.fields.VersatileImageField(blank=True, height_field='height', max_length=255, null=True, upload_to=fantasion_generics.upload_path.get_upload_path, verbose_name='Image file', width_field='width'),
+            field=versatileimagefield.fields.VersatileImageField(
+                blank=True,
+                height_field='height',
+                max_length=255,
+                null=True,
+                upload_to=fantasion_generics.upload_path.get_upload_path,
+                verbose_name='Image file',
+                width_field='width'),
         ),
         migrations.AlterField(
             model_name='staffrolemedia',
             name='parent',
-            field=fantasion_generics.media.MediaParentField(on_delete=django.db.models.deletion.CASCADE, related_name='media', to='fantasion_expeditions.staffrole', verbose_name='Parent object'),
+            field=fantasion_generics.media.MediaParentField(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='media',
+                to='fantasion_expeditions.staffrole',
+                verbose_name='Parent object'),
         ),
         migrations.AlterField(
             model_name='staffrolemedia',
             name='width',
-            field=models.PositiveBigIntegerField(blank=True, null=True, verbose_name='Width'),
+            field=models.PositiveBigIntegerField(blank=True,
+                                                 null=True,
+                                                 verbose_name='Width'),
         ),
     ]

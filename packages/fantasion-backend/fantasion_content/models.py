@@ -10,8 +10,8 @@ from fantasion_generics.models import (
     ImportanceField,
     MarkdownField,
     MediaObjectModel,
-    PublicModel,
-    VisibilityField,
+    VisibilityModel,
+    WebsiteModel,
 )
 
 
@@ -38,7 +38,7 @@ class FlavourText(TimeStampedModel):
     importance = ImportanceField()
 
 
-class FrequentlyAskedQuestion(TimeStampedModel):
+class FrequentlyAskedQuestion(VisibilityModel, TimeStampedModel):
 
     class Meta:
         ordering = ["-importance"]
@@ -63,14 +63,13 @@ class FrequentlyAskedQuestion(TimeStampedModel):
         null=True,
     )
     importance = ImportanceField()
-    public = VisibilityField()
 
 
 class FrequentlyAskedQuestionMedia(MediaObjectModel):
     parent = MediaParentField(FrequentlyAskedQuestion)
 
 
-class StaticArticle(PublicModel):
+class StaticArticle(WebsiteModel):
 
     class Meta:
         verbose_name = _("Static Articles")
@@ -87,14 +86,13 @@ class StaticArticle(PublicModel):
         verbose_name=_("Article text"),
         help_text=_("Your article content formatted in Markdown"),
     )
-    public = VisibilityField()
 
 
 class StaticArticleMedia(MediaObjectModel):
     parent = MediaParentField(StaticArticle)
 
 
-class Monster(PublicModel, WarmPhotoModel):
+class Monster(WebsiteModel, WarmPhotoModel):
 
     class Meta:
         ordering = ["-importance"]
@@ -118,7 +116,6 @@ class Monster(PublicModel, WarmPhotoModel):
         verbose_name=_("Text"),
     )
     importance = ImportanceField()
-    public = VisibilityField()
 
     @property
     def upload_dir(self):

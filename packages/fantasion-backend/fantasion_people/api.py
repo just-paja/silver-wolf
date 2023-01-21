@@ -1,11 +1,13 @@
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
+from fantasion_generics.api import PublicInfoViewSet
+
 from . import models
 from . import serializers
 
 
-class ProfileCollection(ReadOnlyModelViewSet):
-    queryset = models.Profile.objects.filter(public=True)
+class ProfileCollection(PublicInfoViewSet):
+    queryset = models.Profile.objects
     serializer_class = serializers.ProfileSerializer
 
 

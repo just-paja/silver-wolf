@@ -14,6 +14,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='expeditionbatch',
             name='public',
-            field=fantasion_generics.models.VisibilityField(default=True, help_text='Public objects will be visible on the website', verbose_name='Public'),
+            field=fantasion_generics.visibility.VisibilityField(
+                default=True,
+                help_text='Public objects will be visible on the website',
+                verbose_name='Public'),
         ),
     ]

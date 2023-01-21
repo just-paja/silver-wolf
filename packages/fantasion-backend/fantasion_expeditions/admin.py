@@ -74,15 +74,15 @@ class ExpeditionAdmin(TranslatedAdmin):
     list_display = (
         'title',
         'modified',
-        'public',
+        'visibility',
     )
-    list_filter = ('public', )
+    list_filter = ('visibility', )
     fields = (
         'title',
         'theme',
         'description',
         'detailed_description',
-        'public',
+        'visibility',
     )
     inlines = (ExpeditionMediaAdmin, )
     search_fields = ('title', 'description')
@@ -174,14 +174,14 @@ class ExpeditionBatchAdmin(BaseAdmin):
         'leisure_centre',
         'starts_at',
         'ends_at',
-        'public',
+        'visibility',
         'modified',
     )
     list_filter = (
         TimeLimitedYearFilter,
         'expedition',
         'leisure_centre',
-        'public',
+        'visibility',
     )
     autocomplete_fields = ('expedition', 'leisure_centre')
     change_form_template = 'admin/expeditionbatch_change_form.html'
@@ -289,7 +289,7 @@ class TransportVehicleAdmin(TranslatedAdmin):
         'model',
         'year',
         'color',
-        'public',
+        'visibility',
         'description',
     )
 
@@ -305,7 +305,7 @@ class TransportAdmin(TranslatedAdmin):
         'departs_at',
         'arrives_to',
         'arrives_at',
-        'public',
+        'visibility',
     )
     list_filter = (TransportYearFilter, 'vehicle', 'status')
     search_fields = ('departs_from__name', 'arrives_to__name')
@@ -318,7 +318,7 @@ class TransportAdmin(TranslatedAdmin):
         'vehicle',
         'gps_tracking_url',
         'status',
-        'public',
+        'visibility',
         'description',
     )
 
@@ -330,8 +330,8 @@ class ExpeditionLogArticleMediaAdmin(MediaAdmin):
 class ExpeditionLogArticleAdmin(TranslatedAdmin):
     model = models.ExpeditionLogArticle
     inlines = (ExpeditionLogArticleMediaAdmin, )
-    list_display = ('date', 'title', 'public')
-    list_filter = ('batch', 'troop', 'public')
+    list_display = ('date', 'title', 'visibility')
+    list_filter = ('batch', 'troop', 'visibility')
     search_fields = ('title', 'text')
     fields = (
         'batch',

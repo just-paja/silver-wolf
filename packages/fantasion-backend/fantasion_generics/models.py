@@ -1,15 +1,16 @@
 from django_extensions.db.models import TimeStampedModel
-from django.db.models import BooleanField, IntegerField, TextField
 from django.utils.translation import gettext_lazy as _
 from django.forms import widgets
 from django import forms
 from django.contrib.admin import widgets as admin_widgets
 from django.utils.safestring import mark_safe
+from django.db.models import IntegerField, TextField
 
 from .media import MediaModelMixin
 from .photos import LocalPhotoModel
 from .upload_path import kebab
 from .videos import LocalVideoModel
+from .visibility import VisibilityModel
 from .titles import (
     DescriptionField,
     FacultativeDescriptionField,
@@ -61,18 +62,6 @@ class PublicModel(NamedModel):
 
     def __str__(self):
         return self.title
-
-
-class VisibilityField(BooleanField):
-
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault("default", True)
-        kwargs.setdefault("verbose_name", _("Public"))
-        kwargs.setdefault(
-            "help_text",
-            _("Public objects will be visible on the website"),
-        )
-        super().__init__(*args, **kwargs)
 
 
 class ImportanceField(IntegerField):
@@ -136,3 +125,11 @@ class DetailedDescriptionField(MarkdownField):
         kwargs.setdefault("null", True)
         kwargs.setdefault("blank", True)
         super().__init__(*args, **kwargs)
+
+
+class WebsiteModel(VisibilityModel, PublicModel):
+
+    class Meta:
+        abstract = True
+
+    description = DetailedDescriptionField(blank=True, null=True)

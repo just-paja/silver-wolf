@@ -21,17 +21,62 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='FrequentlyAskedQuestion',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', django_extensions.db.fields.CreationDateTimeField(auto_now_add=True, verbose_name='created')),
-                ('modified', django_extensions.db.fields.ModificationDateTimeField(auto_now=True, verbose_name='modified')),
-                ('question', models.TextField(help_text='Write the question from perspective of the person asking it.', verbose_name='Question')),
-                ('question_cs', models.TextField(help_text='Write the question from perspective of the person asking it.', null=True, verbose_name='Question')),
-                ('question_en', models.TextField(help_text='Write the question from perspective of the person asking it.', null=True, verbose_name='Question')),
-                ('answer', models.TextField(help_text='Write the best positive answer that resolves all issues of the questioner and gives hope for the future.', verbose_name='Answer')),
-                ('answer_cs', models.TextField(help_text='Write the best positive answer that resolves all issues of the questioner and gives hope for the future.', null=True, verbose_name='Answer')),
-                ('answer_en', models.TextField(help_text='Write the best positive answer that resolves all issues of the questioner and gives hope for the future.', null=True, verbose_name='Answer')),
-                ('importance', fantasion_generics.models.ImportanceField(default=0, help_text='More important objects will appear on the top or sooner on the page', verbose_name='Object Importance')),
-                ('public', fantasion_generics.models.VisibilityField(default=True, help_text='Public objects will be visible on the website', verbose_name='Public')),
+                ('id',
+                 models.BigAutoField(auto_created=True,
+                                     primary_key=True,
+                                     serialize=False,
+                                     verbose_name='ID')),
+                ('created',
+                 django_extensions.db.fields.CreationDateTimeField(
+                     auto_now_add=True, verbose_name='created')),
+                ('modified',
+                 django_extensions.db.fields.ModificationDateTimeField(
+                     auto_now=True, verbose_name='modified')),
+                ('question',
+                 models.TextField(
+                     help_text=
+                     'Write the question from perspective of the person asking it.',
+                     verbose_name='Question')),
+                ('question_cs',
+                 models.TextField(
+                     help_text=
+                     'Write the question from perspective of the person asking it.',
+                     null=True,
+                     verbose_name='Question')),
+                ('question_en',
+                 models.TextField(
+                     help_text=
+                     'Write the question from perspective of the person asking it.',
+                     null=True,
+                     verbose_name='Question')),
+                ('answer',
+                 models.TextField(
+                     help_text=
+                     'Write the best positive answer that resolves all issues of the questioner and gives hope for the future.',
+                     verbose_name='Answer')),
+                ('answer_cs',
+                 models.TextField(
+                     help_text=
+                     'Write the best positive answer that resolves all issues of the questioner and gives hope for the future.',
+                     null=True,
+                     verbose_name='Answer')),
+                ('answer_en',
+                 models.TextField(
+                     help_text=
+                     'Write the best positive answer that resolves all issues of the questioner and gives hope for the future.',
+                     null=True,
+                     verbose_name='Answer')),
+                ('importance',
+                 fantasion_generics.models.ImportanceField(
+                     default=0,
+                     help_text=
+                     'More important objects will appear on the top or sooner on the page',
+                     verbose_name='Object Importance')),
+                ('public',
+                 fantasion_generics.visibility.VisibilityField(
+                     default=True,
+                     help_text='Public objects will be visible on the website',
+                     verbose_name='Public')),
             ],
             options={
                 'verbose_name': 'Frequently Asked Question',
@@ -42,16 +87,64 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='FrequentlyAskedQuestionMedia',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('height', models.PositiveBigIntegerField(blank=True, null=True, verbose_name='Height')),
-                ('width', models.PositiveBigIntegerField(blank=True, null=True, verbose_name='Width')),
-                ('local_photo', versatileimagefield.fields.VersatileImageField(blank=True, height_field='height', max_length=255, null=True, upload_to=fantasion_generics.upload_path.get_upload_path, verbose_name='Image file', width_field='width')),
-                ('local_video', fantasion_generics.videos.VideoField(blank=True, duration_field='duration', height_field='height', max_length=255, null=True, upload_to=fantasion_generics.upload_path.get_upload_path, verbose_name='Video file', width_field='width')),
-                ('duration', models.PositiveBigIntegerField(blank=True, null=True)),
-                ('description', fantasion_generics.titles.FacultativeDescriptionField(blank=True, help_text='Object description', null=True, verbose_name='Description')),
-                ('description_cs', fantasion_generics.titles.FacultativeDescriptionField(blank=True, help_text='Object description', null=True, verbose_name='Description')),
-                ('description_en', fantasion_generics.titles.FacultativeDescriptionField(blank=True, help_text='Object description', null=True, verbose_name='Description')),
-                ('parent', fantasion_generics.media.MediaParentField(on_delete=django.db.models.deletion.CASCADE, related_name='media', to='fantasion_content.frequentlyaskedquestion', verbose_name='Parent object')),
+                ('id',
+                 models.BigAutoField(auto_created=True,
+                                     primary_key=True,
+                                     serialize=False,
+                                     verbose_name='ID')),
+                ('height',
+                 models.PositiveBigIntegerField(blank=True,
+                                                null=True,
+                                                verbose_name='Height')),
+                ('width',
+                 models.PositiveBigIntegerField(blank=True,
+                                                null=True,
+                                                verbose_name='Width')),
+                ('local_photo',
+                 versatileimagefield.fields.VersatileImageField(
+                     blank=True,
+                     height_field='height',
+                     max_length=255,
+                     null=True,
+                     upload_to=fantasion_generics.upload_path.get_upload_path,
+                     verbose_name='Image file',
+                     width_field='width')),
+                ('local_video',
+                 fantasion_generics.videos.VideoField(
+                     blank=True,
+                     duration_field='duration',
+                     height_field='height',
+                     max_length=255,
+                     null=True,
+                     upload_to=fantasion_generics.upload_path.get_upload_path,
+                     verbose_name='Video file',
+                     width_field='width')),
+                ('duration',
+                 models.PositiveBigIntegerField(blank=True, null=True)),
+                ('description',
+                 fantasion_generics.titles.FacultativeDescriptionField(
+                     blank=True,
+                     help_text='Object description',
+                     null=True,
+                     verbose_name='Description')),
+                ('description_cs',
+                 fantasion_generics.titles.FacultativeDescriptionField(
+                     blank=True,
+                     help_text='Object description',
+                     null=True,
+                     verbose_name='Description')),
+                ('description_en',
+                 fantasion_generics.titles.FacultativeDescriptionField(
+                     blank=True,
+                     help_text='Object description',
+                     null=True,
+                     verbose_name='Description')),
+                ('parent',
+                 fantasion_generics.media.MediaParentField(
+                     on_delete=django.db.models.deletion.CASCADE,
+                     related_name='media',
+                     to='fantasion_content.frequentlyaskedquestion',
+                     verbose_name='Parent object')),
             ],
             options={
                 'verbose_name': 'Media Object',

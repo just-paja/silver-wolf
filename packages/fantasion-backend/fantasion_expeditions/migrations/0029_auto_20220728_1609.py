@@ -7,32 +7,54 @@ import fantasion_generics.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fantasion_expeditions', '0028_expeditionlogarticle_expeditionlogarticlemedia'),
+        ('fantasion_expeditions',
+         '0028_expeditionlogarticle_expeditionlogarticlemedia'),
     ]
 
     operations = [
         migrations.AlterModelOptions(
             name='expeditionlogarticle',
-            options={'verbose_name': 'Expedition Log Article', 'verbose_name_plural': 'Expedition Log Articles'},
+            options={
+                'verbose_name': 'Expedition Log Article',
+                'verbose_name_plural': 'Expedition Log Articles'
+            },
         ),
         migrations.AddField(
             model_name='expeditionlogarticle',
             name='public',
-            field=fantasion_generics.models.VisibilityField(default=True, help_text='Public objects will be visible on the website', verbose_name='Public'),
+            field=fantasion_generics.visibility.VisibilityField(
+                default=True,
+                help_text='Public objects will be visible on the website',
+                verbose_name='Public'),
         ),
         migrations.AlterField(
             model_name='expeditionlogarticle',
             name='text',
-            field=fantasion_generics.models.DetailedDescriptionField(blank=True, help_text='Detailed verbose description formatted in Markdown. Thereis no text limit.', null=True, verbose_name='Story text'),
+            field=fantasion_generics.models.DetailedDescriptionField(
+                blank=True,
+                help_text=
+                'Detailed verbose description formatted in Markdown. Thereis no text limit.',
+                null=True,
+                verbose_name='Story text'),
         ),
         migrations.AlterField(
             model_name='expeditionlogarticle',
             name='text_cs',
-            field=fantasion_generics.models.DetailedDescriptionField(blank=True, help_text='Detailed verbose description formatted in Markdown. Thereis no text limit.', null=True, verbose_name='Story text'),
+            field=fantasion_generics.models.DetailedDescriptionField(
+                blank=True,
+                help_text=
+                'Detailed verbose description formatted in Markdown. Thereis no text limit.',
+                null=True,
+                verbose_name='Story text'),
         ),
         migrations.AlterField(
             model_name='expeditionlogarticle',
             name='text_en',
-            field=fantasion_generics.models.DetailedDescriptionField(blank=True, help_text='Detailed verbose description formatted in Markdown. Thereis no text limit.', null=True, verbose_name='Story text'),
+            field=fantasion_generics.models.DetailedDescriptionField(
+                blank=True,
+                help_text=
+                'Detailed verbose description formatted in Markdown. Thereis no text limit.',
+                null=True,
+                verbose_name='Story text'),
         ),
     ]
