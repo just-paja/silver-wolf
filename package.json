@@ -30,10 +30,13 @@
     "web": "lerna run dev --stream --no-prefix --scope fantasion-web"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/fantasion/fantasion.git"
-  }
+  },
+  "workspaces": [
+    "packages/**"
+  ]
 }
