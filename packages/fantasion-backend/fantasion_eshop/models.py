@@ -376,8 +376,6 @@ class Order(TimeStampedModel):
         self.save()
 
     def save(self, *args, **kwargs):
-        self.price = self.calculate_price()
-        self.deposit = self.calculate_deposit()
         super().save(*args, **kwargs)
         for item in self.order_items.all():
             Model = apps.get_model(item.product_type)
