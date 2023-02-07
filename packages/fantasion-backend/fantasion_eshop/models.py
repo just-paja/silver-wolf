@@ -163,7 +163,10 @@ class ProductPrice(TimeStampedModel):
         related_name="prices",
         verbose_name=_("Price level"),
     )
-    price = MoneyField(verbose_name=_("Price"))
+    price = MoneyField(
+        verbose_name=_("Price"),
+        default=0,
+    )
     available_since = DateTimeField(
         null=True,
         blank=True,
@@ -222,7 +225,7 @@ class Order(TimeStampedModel):
         on_delete=CASCADE,
         verbose_name=_("Payment Promise"),
     )
-    price = MoneyField(verbose_name=_("Total Price"))
+    price = MoneyField(default=0, verbose_name=_("Total Price"))
     deposit = MoneyField(
         default=0,
         verbose_name=_("Deposit"),
@@ -272,7 +275,7 @@ class Order(TimeStampedModel):
 
     def calculate_deposit(self):
         if self.use_deposit_payment:
-            base = self.calculate_price()
+            base = self.price
             return base / 2
         return 0
 
@@ -376,18 +379,16 @@ class Order(TimeStampedModel):
         self.save()
 
     def save(self, *args, **kwargs):
-        self.price = self.calculate_price()
-        self.deposit = self.calculate_deposit()
         super().save(*args, **kwargs)
         for item in self.order_items.all():
             Model = apps.get_model(item.product_type)
             Model.objects.get(pk=item.pk).save(avoid_order_save=True)
+        self.price = self.calculate_price()
+        self.deposit = self.calculate_deposit()
         if self.status == ORDER_STATUS_CONFIRMED and not self.promise:
             self.submitted_at = timezone.now()
             self.create_promise()
             self.notify_order_confirmed()
-        self.price = self.calculate_price()
-        self.deposit = self.calculate_deposit()
         super().save(*args, **kwargs)
 
     def sync_with_promise(self, promise=None):
