@@ -41,7 +41,7 @@ class ExpeditionLogArticleCollection(ReadOnlyModelViewSet):
         query = models.ExpeditionLogArticle.objects.distinct()
         if not user.has_perm(
                 'fantasion_expeditions.can_view_expeditionlogarticle'):
-            batch_ids, troop_ids = user.get_accessible_troops_and_batch_ids(
+            troop_ids, batch_ids = user.get_accessible_troops_and_batch_ids(
                 FAMILY_ROLE_SPECTATOR)
             query = query.filter(
                 Q(troop_id__in=troop_ids) | Q(troop_id__isnull=True),
