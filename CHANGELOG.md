@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.3](https://github.com/fantasion/fantasion/compare/v1.4.2...v1.4.3) (2023-07-30)
+
+### Bug Fixes
+
+- lock packages with their fixed versions ([6f44df7](https://github.com/fantasion/fantasion/commit/6f44df758a5ec1c03cf907670f4b22f71bfd016c))
+- show icons in visibility labels ([b6cd71b](https://github.com/fantasion/fantasion/commit/b6cd71b06d6016fbc6fe33f43d359eb1eb0251ca))
+
 ## [1.4.2](https://github.com/fantasion/fantasion/compare/v1.4.1...v1.4.2) (2023-07-30)
 
 ### Bug Fixes
