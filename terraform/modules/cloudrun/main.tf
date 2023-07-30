@@ -73,10 +73,6 @@ resource "google_cloud_run_domain_mapping" "default" {
   name = var.hostname
   metadata {
     namespace = var.project
-    annotations = {
-      "serving.knative.dev/creator" = "just.paja@gmail.com"
-      "serving.knative.dev/lastModifier" = "just.paja@gmail.com"
-    }
     labels = {
       "cloud.googleapis.com/location" = var.region
     }
