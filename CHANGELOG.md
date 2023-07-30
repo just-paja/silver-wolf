@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.2](https://github.com/fantasion/fantasion/compare/v1.4.1...v1.4.2) (2023-07-30)
+
+### Bug Fixes
+
+- pass batch and troop arguments to query ([917aa11](https://github.com/fantasion/fantasion/commit/917aa11bcbc52550765e68f501beb93d5ac639bd))
+
 ## [1.4.1](https://github.com/fantasion/fantasion/compare/v1.4.0...v1.4.1) (2023-02-07)
 
 ### Bug Fixes
