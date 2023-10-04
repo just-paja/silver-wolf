@@ -42,7 +42,7 @@ ffmpeg = "^1.4"
 fiobank = "3.0.0"
 gunicorn = "20.1.0"
 markdown = "3.3.6"
-pillow = "9.4.0"
+pillow = "10.0.1"
 psycopg2-binary = "2.9.5"
 python-dateutil = "2.8.2"
 python-magic-bin = {version = "0.4.14", platform = "win32"}
