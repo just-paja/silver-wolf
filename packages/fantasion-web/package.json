@@ -25,7 +25,7 @@
     "flexsearch": "^0.7.21",
     "locale": "^0.1.0",
     "moment": "^2.29.1",
-    "next": "^12.1.0",
+    "next": "^13.5.0",
     "next-i18next": "^10.2.0",
     "query-string-manipulator": "^1.2.2",
     "react": "17.0.2",
