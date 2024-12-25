@@ -509,17 +509,17 @@ class PromotionCode(TimeStampedModel):
     code = CharField(
         max_length=63,
         unique=True,
-        validators=[MinLengthValidator(8)],
+        validators=[MinLengthValidator(7)],
         verbose_name=_("Promotion Code"),
         help_text=_(
             "Type an unique code with combination of letters, numbers and "
             "symbols that are not too difficult to type"),
     )
     discount = DecimalField(
-        decimal_places=2,
+        decimal_places=3,
         max_digits=5,
         validators=[MaxValueValidator(100),
-                    MinValueValidator(0.01)],
+                    MinValueValidator(0.001)],
         verbose_name=_("Discount"),
         help_text=_("This percentage will be cut of the total order price."),
     )
