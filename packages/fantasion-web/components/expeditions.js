@@ -91,6 +91,8 @@ export const SignupButton = ({ expedition, batch, troop }) => {
     toasts.add({
       subject: t('signup-was-created'),
       message: t('signup-created-buy-it'),
+      persistent: true,
+      priority: 'high',
       actions: [
         {
           message: t('go-to-basket'),
