@@ -265,9 +265,36 @@ class Order(TimeStampedModel):
     @property
     def variable_symbol(self):
         ident = str(self.id)
-        padding = "0" * (8 - len(ident))
-        year = date.today().strftime("%y")
-        return f"{year}{padding}{ident}"
+        padding = "0" * (6 - len(ident))
+        first_item = self.order_items.first()
+        if not first_item:
+            year = date.today().strftime("%y")
+            return f"{year}00{padding}{ident}"
+        signup = first_item.remarshall()
+        year = signup.troop.starts_at.strftime("%y")
+        troop_sequence = self.get_troop_sequence_number()
+        return f"{year}{troop_sequence:02d}{padding}{ident}"
+
+    def get_troop_sequence_number(self):
+        Signup = apps.get_model('fantasion_signups', 'Signup')
+        Troop = apps.get_model('fantasion_signups', 'Troop')
+
+        signup = Signup.objects.filter(order=self).first()
+        if not signup:
+            return 0
+
+        troop_year = signup.troop.starts_at.year
+        troops_target_year = Troop.objects.filter(
+            starts_at__year=troop_year
+        ).order_by('created')
+
+        troop_sequence = list(troops_target_year.values_list('id', flat=True))
+
+        try:
+            sequence_number = troop_sequence.index(signup.troop.id) + 1
+            return sequence_number
+        except ValueError:
+            return 0
 
     def calculate_price(self):
         data = self.order_items.aggregate(Sum('price'))
