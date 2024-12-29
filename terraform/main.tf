@@ -21,13 +21,19 @@ data "external" "git_checkout" {
 locals {
   db_name = "${local.project}-db-${terraform.workspace}"
   revision = data.external.git_checkout.result.sha
-  image_base_url = "${local.repo}/${local.project}"
+  image_base_url = "${local.region}-docker.pkg.dev/${local.project}/${local.repo}"
 }
 
 provider "google" {
   project = local.project
   region = local.region
   credentials = var.GCP_CREDENTIALS
+}
+
+resource "google_artifact_registry_repository" "docker_repo" {
+  location      = local.region
+  repository_id = local.repo
+  format        = "DOCKER"
 }
 
 module "network" {
@@ -173,6 +179,7 @@ module "backend_cloudrun" {
   depends_on = [
     module.db,
     module.backend_storage_public,
+    google_artifact_registry_repository.docker_repo,
   ]
 }
 
@@ -207,6 +214,9 @@ module "frontend_cloudrun" {
   region = local.region
   revision = local.revision
   source = "./modules/cloudrun"
+  depends_on = [
+    google_artifact_registry_repository.docker_repo
+  ]
 }
 
 resource "google_cloud_scheduler_job" "bank_sync" {
