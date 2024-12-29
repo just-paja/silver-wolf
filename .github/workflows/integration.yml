@@ -110,6 +110,7 @@ jobs:
   build_backend_docker:
     name: Build backend docker
     runs-on: ubuntu-latest
+    if: needs.setenv.outputs.env_name
     needs:
       - setenv
       - build_backend
@@ -117,7 +118,9 @@ jobs:
       name: ${{ needs.setenv.outputs.env_name }}
     env:
       GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+      GCP_DOCKER_REPO: ${{ secrets.GCP_DOCKER_REPO }}
       GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+      GCP_REGION: ${{ secrets.GCP_REGION }}
       PROJECT_ENVIRONMENT: ${{ needs.setenv.outputs.env_name }}
     steps:
       - uses: actions/checkout@v3
@@ -133,6 +136,7 @@ jobs:
   build_frontend_docker:
     name: Build frontend docker
     runs-on: ubuntu-latest
+    if: needs.setenv.outputs.env_name
     needs:
       - setenv
       - build_frontend
@@ -140,7 +144,9 @@ jobs:
       name: ${{ needs.setenv.outputs.env_name }}
     env:
       GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+      GCP_DOCKER_REPO: ${{ secrets.GCP_DOCKER_REPO }}
       GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+      GCP_REGION: ${{ secrets.GCP_REGION }}
       PROJECT_ENVIRONMENT: ${{ needs.setenv.outputs.env_name }}
     steps:
       - uses: actions/checkout@v3
@@ -210,6 +216,8 @@ jobs:
         working-directory: ./terraform
         env:
           GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+          GCP_DOCKER_REPO: ${{ secrets.GCP_DOCKER_REPO }}
+          GCP_REGION: ${{ secrets.GCP_REGION }}
           GS_CREDENTIALS: ${{ secrets.GS_CREDENTIALS }}
           TF_VAR_ADMIN_SSO_CLIENT_ID: ${{ secrets.ADMIN_SSO_CLIENT_ID }}
           TF_VAR_ADMIN_SSO_SECRET: ${{ secrets.ADMIN_SSO_SECRET }}

@@ -12,7 +12,7 @@ if [ $1 ]; then
   dirs="$1"
 fi
 
-registry=eu.gcr.io
+registry="${GCP_REGION}-docker.pkg.dev"
 env=$PROJECT_ENVIRONMENT
 
 echo "ENVIRONMENT $env"
@@ -32,7 +32,7 @@ for dir in $dirs; do
   fi
 
   project_name="${name}"
-  image_name="${registry}/${GCP_PROJECT}/${project_name}:${version}"
+  image_name="${registry}/${GCP_PROJECT}/${GCP_DOCKER_REPO}/${project_name}:${version}"
 
   echo $image_name
 
@@ -41,7 +41,7 @@ for dir in $dirs; do
     echo "$GCP_CREDENTIALS" > $GOOGLE_APPLICATION_CREDENTIALS
 
     gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
-    gcloud auth configure-docker --quiet
+    gcloud auth configure-docker ${GCP_REGION}-docker.pkg.dev --quiet
   fi
 
   docker build -t $image_name .

@@ -27,7 +27,7 @@ variable "GCP_CREDENTIALS" {
 
 variable "GCP_DOCKER_REPO" {
   type = string
-  default = "eu.gcr.io"
+  default = "fantasion-docker"
 }
 
 variable "ROOT_DIR" {
