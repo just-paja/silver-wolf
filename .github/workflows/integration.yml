@@ -242,6 +242,6 @@ jobs:
           terraform validate
           terraform workspace select ${{ secrets.PROJECT_ENVIRONMENT }}
           terraform apply \
-            --var "GCP_CREDENTIALS=$(echo $GCP_CREDENTIALS | base64 -d)" \
+            --var "GCP_CREDENTIALS=$(echo $GCP_CREDENTIALS)" \
             --var "GS_CREDENTIALS=$(echo $GS_CREDENTIALS | base64 -d)" \
             --auto-approve
