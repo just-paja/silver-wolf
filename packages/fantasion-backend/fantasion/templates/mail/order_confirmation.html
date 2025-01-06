@@ -16,6 +16,10 @@
     <li>{% trans "Amount" %}: <strong>{{total}}</strong></li>
   </ul>
 
+  <div>
+    {{ qr_code_svg|safe }}
+  </div>
+
   <table>
     <thead>
       <tr>
