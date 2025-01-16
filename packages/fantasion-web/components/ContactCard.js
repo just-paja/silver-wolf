@@ -34,10 +34,10 @@ export const ContactCard = () => {
         <Card className="mt-3">
           <Card.Body>
             <Address
-              city="Praha 5 Smíchov"
-              street="Zborovská"
-              streetNumber="512/40"
-              postalCode="150 00"
+              city="Praha 4 Krč"
+              street="Blažíčkova"
+              streetNumber="984/20"
+              postalCode="140 00"
             />
           </Card.Body>
         </Card>
