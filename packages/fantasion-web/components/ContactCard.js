@@ -11,7 +11,7 @@ import {
   ACCOUNT_NUMBER,
 } from './money'
 
-const CONTACT_TEL = '+420 732 368 412'
+const CONTACT_TEL = '+420 703 629 310'
 
 export const ContactCard = () => {
   const { t } = useTranslation()
