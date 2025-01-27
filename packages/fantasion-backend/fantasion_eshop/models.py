@@ -1,3 +1,6 @@
+from io import BytesIO
+import qrcode
+import qrcode.image.svg
 from datetime import date, timedelta
 
 from django.apps import apps
@@ -10,6 +13,7 @@ from django_extensions.db.models import TimeStampedModel
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django.utils.html import escape
 from django.core.validators import (
     MaxValueValidator,
     MinLengthValidator,
@@ -73,6 +77,27 @@ ORDER_CAN_BE_CANCELLED = (
     ORDER_STATUS_CONFIRMED,
     ORDER_STATUS_DEPOSIT_PAID,
 )
+
+
+def generate_payment_qr_svg(
+    amount, iban, bic, currency, variable_symbol, message
+):
+    emv_header = "SPD*1.0*"
+    code_vars = [
+        f"ACC:{iban}+{bic}",
+        f"AM:{amount}",
+        f"CC:{currency}",
+        f"RF:{variable_symbol}",
+        f"MSG:{message}",
+        f"X-VS:{variable_symbol}",
+    ]
+    code = emv_header + "*".join(code_vars)
+    factory = qrcode.image.svg.SvgImage
+    buffer = BytesIO()
+    qr = qrcode.make(code, image_factory=factory)
+    qr.save(buffer)
+    buffer.seek(0)
+    return buffer.getvalue().decode('utf-8')
 
 
 class EnabledField(BooleanField):
@@ -350,6 +375,16 @@ class Order(TimeStampedModel):
         subject = (_("Order {number}")).format(number=self.variable_symbol)
         total = self.deposit if self.use_deposit_payment else self.price
         status_url = f"{settings.APP_WEBSITE_URL}/{get_lang()}/prehled"
+
+        qr_code_svg = generate_payment_qr_svg(
+            amount=total,
+            iban=settings.BANK_ACCOUNT_IBAN,
+            bic=settings.BANK_ACCOUNT_BIC,
+            currency="CZK",
+            variable_symbol=self.variable_symbol,
+            message=f"Platba za objednávku: {self.id}",
+        )
+
         body = render_to_string(
             'mail/order_confirmation.html',
             context={
@@ -359,6 +394,7 @@ class Order(TimeStampedModel):
                 'variable_symbol': self.variable_symbol,
                 'status_url': status_url,
                 'website_url': settings.APP_WEBSITE_URL,
+                'qr_code_svg': escape(qr_code_svg),
             },
         )
         send_mail([self.owner.email], subject, body)
